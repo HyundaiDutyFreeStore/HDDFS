@@ -28,8 +28,7 @@ public interface MemberService {
 
     // 로그인
     public MemberVO memberLogin(MemberVO member) throws Exception;
-    
-    public MemberVO memberLogin2(String mid) throws Exception;
+  
 
     public MemberVO myPage(String mid) throws Exception;
 
