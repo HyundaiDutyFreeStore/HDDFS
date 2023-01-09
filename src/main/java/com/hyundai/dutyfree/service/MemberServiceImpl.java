@@ -43,11 +43,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberVO memberLogin2(String mid) throws Exception {
-        return memberMapper.memberLogin2(mid);
-    }
-
-    @Override
     public int idCheck(String mid) throws Exception {
         return memberMapper.idCheck(mid);
     }

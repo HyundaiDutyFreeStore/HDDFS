@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.handsome.mapper.OrderMapper">
+    <select id="getOrderInfo" resultType="com.hyundai.handsome.vo.OrderViewVO">
+            select distinct * from order_view where  mid=#{mid} and pid = #{pid} and ccolorcode = #{ccolorcode} and ssize=#{ssize}
+    </select>
+    <insert id="addOrder">
+            insert ALL
+                into (oid, mid, ozipcode, oaddress1, oaddress2, odate, oreceiver, otel, ousedpoint, ousedcoupon, opayment, ostatus, oaccountdeadline, odiscounted) orderlist values(orderlist_seq.nextVal,#{mid},#{ozipcode},#{oaddress1},#{oaddress2}, sysdate,#{oreceiver},#{otel},#{ousedpoint},#{opayment},#{ostatus}, sysdate+7, #{odiscounted})
+                into (oid, pid, ccolorcode, ssize, oamount) orderitem values(order_seq.nextVal,#{pid},#{ccolorcode},#{ssize},#{oamount})
+    </insert>
+</mapper>

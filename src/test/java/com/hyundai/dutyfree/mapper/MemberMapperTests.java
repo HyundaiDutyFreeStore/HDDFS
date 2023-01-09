@@ -1,24 +1,23 @@
 package com.hyundai.dutyfree.mapper;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hyundai.dutyfree.mapper.MemberMapper;
+import com.hyundai.dutyfree.vo.MemberVO;
 
 /**
  * MemberVO
  * 
- * @author 김찬중, 이준석
- * @since 10.06
+ * @author 김찬중
+ * @since 01.09
  * 
  *        <pre>
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
- * 2022.10.06    김찬중                         최초 생성
- * 2022.10.06    이준석                         컬럼추가
- * 2022.10.07	  이준석			 로그인 테스트 케이스 생성
+ * 2023.01.09    김찬중                         최초 생성
  *        </pre>
  */
 
@@ -29,26 +28,24 @@ public class MemberMapperTests {
 	@Autowired
 	private MemberMapper membermapper; // MemberMapper.java 인터페이스 의존성 주입
 
-//	@Autowired
-//	private CouponMapper couponMapper;
 
-//	 회원가입 쿼리 테스트 메서드
-//	@Test
-//	public void memberJoin() throws Exception {
-//		MemberVO member = new MemberVO();
-//
-//		member.setMid("test10"); // 회원 id
-//		member.setMpassword("test10"); // 회원 비밀번호
-//		member.setMname("test10"); // 회원 이름
-//		member.setMemail("test10"); // 회원 메일
-//		member.setMtel("test10"); // 회원 전화번호
-//		member.setMaddress1("test10"); // 회원 주소
-//		member.setMaddress2("test10"); // 회원 상세주소
-//		member.setMaddress3("test10"); // 회원 상세주소
-//
-//		membermapper.memberJoin(member); // 쿼리 메서드 실행
-//
-//	}
+	 //회원가입 쿼리 테스트 메서드
+	
+	@Test
+	public void memberJoin() throws Exception {
+		MemberVO member = new MemberVO();
+
+		member.setMid("test1"); // 회원 id
+		member.setMpassword("test1"); // 회원 비밀번호
+		member.setMname("test1"); // 회원 이름
+		member.setMemail("test1"); // 회원 메일
+		member.setMphone("test1"); // 회원 전화번호
+		member.setMgender("male"); // 회원 성별
+		java.sql.Date d=java.sql.Date.valueOf("2004-06-22");
+	    member.setMbirth(d);
+		membermapper.memberJoin(member); // 쿼리 메서드 실행
+
+	}
 
 //	@Test
 //	public void memberLogin() throws Exception {

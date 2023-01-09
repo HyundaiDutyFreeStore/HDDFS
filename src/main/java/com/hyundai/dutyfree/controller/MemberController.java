@@ -138,24 +138,24 @@ public class MemberController {
     public String updateMemberPOST(HttpServletRequest request, MemberVO member)
             throws Exception {
 
-        MemberVO lvo = (MemberVO)request.getSession().getAttribute("member");
+        MemberVO mvo = (MemberVO)request.getSession().getAttribute("member");
         
-        logger.info("updateMember.........."+lvo);
+        logger.info("updateMember.........."+mvo);
         
         String rawPw = ""; // 인코딩 전 비밀번호
         String encodePw = ""; // 인코딩 후 비밀번호
         
-        member.setMid(lvo.getMid());
+        member.setMid(mvo.getMid());
         rawPw = member.getMpassword();// 비밀번호 데이터 얻음
         System.out.println(rawPw);
         encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
-        lvo.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-        lvo.setMname(member.getMname());
-        lvo.setMemail(member.getMemail());
-        lvo.setMtel(member.getMtel());
+        mvo.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
+        mvo.setMname(member.getMname());
+        mvo.setMemail(member.getMemail());
+        mvo.setMphone(member.getMphone());
 
         /* 회원가입 쿼리 실행 */
-        memberservice.updateMember(lvo);
+        memberservice.updateMember(mvo);
 
         return "redirect:/member/mypage";
     }
@@ -352,7 +352,6 @@ public class MemberController {
         MemberVO lvo = (MemberVO) request.getSession().getAttribute("member");
         model.addAttribute("mid", memberservice.myPage(lvo.getMid()));
         model.addAttribute("mname", memberservice.myPage(lvo.getMname()));
-        model.addAttribute("mpoint", memberservice.myPage(lvo.getMpoint()));
         model.addAttribute("mgrade", memberservice.myPage(lvo.getMid()));
 
     }
