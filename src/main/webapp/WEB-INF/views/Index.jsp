@@ -1,13 +1,13 @@
 
 
 <!--Intro-->
-<%@ include file="./Intro.jsp"%>
+<%@ include file="./common/Intro.jsp"%>
 
 <!--Header-->
-<%@ include file="./Mainheader.jsp"%>
+<%@ include file="./common/Mainheader.jsp"%>
 
 <!--Body-->
-<%@ include file="./Body.jsp"%>
+<%@ include file="./common/Body.jsp"%>
 
 <!--Footer-->
-<%@ include file="./Footer.jsp"%>
+<%@ include file="./common/Footer.jsp"%>
