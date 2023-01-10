@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <main id="container" class="container"> <script
-	type="text/javascript">
+	type="text/javascript"> 
 	//window.opener.name = 'authentication';
 	var lang = 'KR';
 	var dblFlag = false;
