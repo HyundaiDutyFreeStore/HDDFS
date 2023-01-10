@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.dutyfree.mapper.ProductMapper">
+
+<select id="getList" resultType="com.hyundai.dutyfree.vo.ProductVO">
+	select p.pcode, p.pname, p.pbrand, p.pprice, p.pdiscount, p.pstock, p.penable,
+	c.clarge, c.cmedium, c.csmall, i.img1, i.img2, i.img3, i.img4, i.img5
+	from product p, category c, productimg i
+	where p.pcode = c.pcode
+		and p.pcode = i.pcode
+		and c.clarge=#{clarge}
+		and c.cmedium=#{cmedium}
+		and c.csmall=#{csmall}
+</select>
+
+</mapper>
