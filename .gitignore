@@ -1,0 +1,9 @@
+/.metadata/
+log4j.xml
+pom.properties
+log4jdbc.log4j2.properties
+MANIFEST.MF
+/.classpath/
+HDDFS/.classpath
+Servers/
+.factorypath
