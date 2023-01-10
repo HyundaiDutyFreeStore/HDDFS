@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.0.7.RELEASE</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
 				<exclusion>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 
 		<!-- AspectJ -->
@@ -167,21 +167,21 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 
 		<!-- 스프링 jdbc 추가 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 
 		<!-- 스프링 transaction 추가 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -246,7 +246,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 
 		<!-- security -->
@@ -254,19 +254,19 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>5.4.2</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>5.4.2</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>5.4.2</version>
+			<version>5.0.7.RELEASE</version>
 		</dependency>
 
 	</dependencies>
