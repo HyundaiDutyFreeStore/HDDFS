@@ -9,5 +9,10 @@ import com.hyundai.dutyfree.vo.ProductVO;
 public interface ProductMapper {
 	// 카테고리별 상품리스트
     public List<ProductVO> getList(@Param("clarge")String clarge, @Param("cmedium")String cmedium, @Param("csmall")String csmall); 
-    //public List<ProductVO> getList(String clarge, String cmedium, String csmall); 
+    
+    public int CategoryCnt(String keyword);
+    
+    public List<String> getMedCategory(String clarge);
+    
+    public List<String> getSmallCategory(String cmedium);
 }

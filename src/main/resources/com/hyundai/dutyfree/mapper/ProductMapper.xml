@@ -4,15 +4,42 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.dutyfree.mapper.ProductMapper">
 
-<select id="getList" resultType="com.hyundai.dutyfree.vo.ProductVO">
-	select p.pcode, p.pname, p.pbrand, p.pprice, p.pdiscount, p.pstock, p.penable,
-	c.clarge, c.cmedium, c.csmall, i.img1, i.img2, i.img3, i.img4, i.img5
-	from product p, category c, productimg i
-	where p.pcode = c.pcode
+	<select id="getList"
+		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select p.pcode, p.pname, p.pbrand, p.pprice, p.pdiscount, p.pstock,
+		p.penable,
+		c.clarge, c.cmedium, c.csmall, i.img1, i.img2, i.img3,
+		i.img4, i.img5
+		from product p, category c, productimg i
+		where p.pcode =
+		c.pcode
 		and p.pcode = i.pcode
 		and c.clarge=#{clarge}
-		and c.cmedium=#{cmedium}
-		and c.csmall=#{csmall}
-</select>
+		<if test="cmedium !='' ">
+			and cmedium = #{cmedium}
+		</if>
+		<if test="csmall !='' ">
+			and csmall =#{csmall}
+		</if>
+	</select>
+
+	<select id="CategoryCnt" resultType="int">
+		select
+		count(distinct(cmedium))
+		from category
+		where clarge = #{clarge}
+	</select>
+
+	<select id="getMedCategory" resultType="String">
+		select distinct(cmedium)
+		from category
+		where clarge = #{clarge}
+	</select>
+
+	<select id="getSmallCategory" resultType="String">
+		select distinct(csmall)
+		from category
+		where cmedium = #{cmedium}
+	</select>
 
 </mapper>

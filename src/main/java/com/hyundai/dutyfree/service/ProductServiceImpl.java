@@ -20,5 +20,20 @@ public class ProductServiceImpl implements ProductService{
 		System.out.println("서비스들어옴"+clarge+" "+cmedium+" "+csmall);
 		return mapper.getList(clarge, cmedium, csmall);
 	}
+	
+	@Override
+	public List<String> getMedCategory(String clarge){
+		return mapper.getMedCategory(clarge);
+	}
+	
+	@Override
+	public List<String> getSmallCategory(String cmedium){
+		return mapper.getSmallCategory(cmedium);
+	}
+
+	@Override
+	public int CategoryCnt(String category) {
+		return mapper.CategoryCnt(category);
+	}
 
 }
