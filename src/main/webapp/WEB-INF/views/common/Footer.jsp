@@ -126,7 +126,7 @@
 		<!-- //escrow -->
 	</div>
 </footer>
-
+</div>
 <!-- 판매자별 사업자 정보 -->
 <div id="seller_information" title="판매자별 사업자 정보" style="display: none;">
 	<div class="layer_popup">
