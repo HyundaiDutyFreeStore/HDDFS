@@ -1,49 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<main id="container" class="container"> <script
+<head>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
+</head>
+
+<script
 	type="text/javascript">
-	$(function() {
-		// 다음버튼
-		$('#btnNext').click(
-				function() {
-					var vFlag = false;
-					var lang = $("input[name='lang']").val();
-					$('[name=agrYns]:not(:checked)').each(
-							function() {
-								vFlag = true;
-								if (lang == 'CN') {
-									alert("必选"
-											+ $(
-													'label[for='
-															+ $(this)
-																	.attr('id')
-															+ ']')
-													.attr('value'));
-								} else if (lang == 'EN') {
-									alert($(
-											'label[for=' + $(this).attr('id')
-													+ ']').attr('value')
-											+ " is required field");
-								} else {
-									alert($(
-											'label[for=' + $(this).attr('id')
-													+ ']').attr('value')
-											+ "는 필수 항목입니다.");
-								}
-
-								$(this).focus();
-								return false;
-							});
-
-					if (vFlag) {
-						return;
-					}
-					$('#frmTermsAgree').submit();
-				});
-
-		fnCheckboxClick('agrYns');
-	});
 
 	// 체크박스 체크 처리
 	function fnCheckboxClick(name) {
@@ -749,13 +716,12 @@
 				<div class="basic_btn_box mgtml">
 					<button type="button" class="btn_basic1"
 						onclick="javascript:history.back(-1);">이전</button>
-					<button type="button" class="btn_basic2" id="btnNext">다음</button>
+					<a class="btn_basic2" id="btnNext" href="./../authentication/">다음</a>
 				</div>
 			</form>
 		</div>
 	</section>
 </div>
 </main>
-
 
 <%@ include file="../common/Footer.jsp"%>

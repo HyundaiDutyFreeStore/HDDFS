@@ -42,322 +42,317 @@ import lombok.extern.log4j.Log4j;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping(value = "/member")
+@RequestMapping(value = "/join")
 @Log4j
 public class MemberController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-    @Autowired
-    private MemberService memberservice;
+	@Autowired
+	private MemberService memberservice;
 
-    @Autowired
-    private JavaMailSender mailSender;
-    @Autowired
-    private BCryptPasswordEncoder pwEncoder;
+	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder;
 
-    // 회원가입 페이지 이동
-    @RequestMapping(value = "joinstart", method = RequestMethod.GET)
-    public void joinfirGET() {
-        logger.info("회원가입 1 페이지 진입");
-    }
-
-    // 회원가입fir
-    @RequestMapping(value = "/joinstart", method = RequestMethod.POST)
-    public String joinfirPOST() throws Exception {
-        return "redirect:/member/join_sec";
-    }
-
-    // 회원가입 페이지 이동
-    @RequestMapping(value = "join_sec", method = RequestMethod.GET)
-    public void joinsecGET() {
-
-        logger.info("회원가입 2 페이지 진입");
+	// 회원가입 페이지 이동
+	@RequestMapping(value = "termsAgree", method = RequestMethod.GET)
+	public void joinfirGET() {
+		logger.info("회원가입 1 페이지 진입");
+	}
 
-    }
-
-    // 회원가입sec
-    @RequestMapping(value = "/join_sec", method = RequestMethod.POST)
-    public String joinsecPOST() throws Exception {
-        return "redirect:/member/join";
-    }
+	// 회원가입fir
+	@RequestMapping(value = "/termsAgree", method = RequestMethod.POST)
+	public String joinfirPOST() throws Exception {
+		return "redirect:/authentication";
+	}
 
-    // 회원가입 페이지 이동
-    @RequestMapping(value = "join", method = RequestMethod.GET)
-    public void joinGET() {
+	// 회원가입 페이지 이동
+	@RequestMapping(value = "authentication", method = RequestMethod.GET)
+	public void joinsecGET() {
+		logger.info("회원가입 2 페이지 진입");
+	}
 
-        logger.info("회원가입 3 페이지 진입");
+	// 회원가입sec
+	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
+	public String joinsecPOST() throws Exception {
+		return "redirect:/mbshInformation";
+	}
 
-    }
+	// 회원가입 페이지 이동
+	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
+	public void joinGET() {
+		logger.info("회원가입 3 페이지 진입");
+	}
 
-    // 회원가입
-    @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public String joinPOST(MemberVO member) throws Exception {
+	// 회원가입
+	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
+	public String joinPOST(MemberVO member) throws Exception {
 
-        String rawPw = ""; // 인코딩 전 비밀번호
-        String encodePw = ""; // 인코딩 후 비밀번호
+		String rawPw = ""; // 인코딩 전 비밀번호
+		String encodePw = ""; // 인코딩 후 비밀번호
 
-        rawPw = member.getMpassword();// 비밀번호 데이터 얻음
-        encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
-        member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
+		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
+		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
 
-        /* 회원가입 쿼리 실행 */
-        memberservice.memberJoin(member);
+		/* 회원가입 쿼리 실행 */
+		memberservice.memberJoin(member);
 
-        return "redirect:/member/join_final";
+		return "redirect:/member/join_final";
 
-    }
+	}
 
-    // 회원가입 페이지 이동
-    @RequestMapping(value = "join_final", method = RequestMethod.GET)
-    public void joinfianlGET() {
+	// 회원가입 페이지 이동
+	@RequestMapping(value = "join_final", method = RequestMethod.GET)
+	public void joinfianlGET() {
 
-        logger.info("회원가입 최종 페이지 진입");
+		logger.info("회원가입 최종 페이지 진입");
 
-    }
+	}
 
-    // 회원가입final
-    @RequestMapping(value = "/join_final", method = RequestMethod.POST)
-    public String joinfinalPOST() throws Exception {
-        return "redirect:/";
-    }
+	// 회원가입final
+	@RequestMapping(value = "/join_final", method = RequestMethod.POST)
+	public String joinfinalPOST() throws Exception {
+		return "redirect:/";
+	}
 
-    // 회원정보 수정 페이지 이동
-    @RequestMapping(value = "updateMember", method = RequestMethod.GET)
-    public void updateMemberGET() {
+	// 회원정보 수정 페이지 이동
+	@RequestMapping(value = "updateMember", method = RequestMethod.GET)
+	public void updateMemberGET() {
 
-        logger.info("멤버업데이트 페이지 진입");
+		logger.info("멤버업데이트 페이지 진입");
 
-    }
+	}
 
-    // 회원정보 수정
-    @RequestMapping(value = "/updateMember", method = RequestMethod.POST)
-    public String updateMemberPOST(HttpServletRequest request, MemberVO member)
-            throws Exception {
+	// 회원정보 수정
+	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
+	public String updateMemberPOST(HttpServletRequest request, MemberVO member) throws Exception {
 
-        MemberVO mvo = (MemberVO)request.getSession().getAttribute("member");
-        
-        logger.info("updateMember.........."+mvo);
-        
-        String rawPw = ""; // 인코딩 전 비밀번호
-        String encodePw = ""; // 인코딩 후 비밀번호
-        
-        member.setMid(mvo.getMid());
-        rawPw = member.getMpassword();// 비밀번호 데이터 얻음
-        System.out.println(rawPw);
-        encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
-        mvo.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-        mvo.setMname(member.getMname());
-        mvo.setMemail(member.getMemail());
-        mvo.setMphone(member.getMphone());
+		MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
 
-        /* 회원가입 쿼리 실행 */
-        memberservice.updateMember(mvo);
+		logger.info("updateMember.........." + mvo);
 
-        return "redirect:/member/mypage";
-    }
-    
-    /* 회원 정보 삭제 */
-    @PostMapping("/deleteMember")
-    public String deleteMemberPOST(String mid, HttpServletRequest request) throws Exception {
-        MemberVO mvo = (MemberVO)request.getSession().getAttribute("member");
-        
-        logger.info("deleteMemberPOST..........");
+		String rawPw = ""; // 인코딩 전 비밀번호
+		String encodePw = ""; // 인코딩 후 비밀번호
 
-                
-        /* 회원탈퇴 쿼리 실행 */
-        memberservice.deleteMember(mvo.getMid());
+		member.setMid(mvo.getMid());
+		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+		System.out.println(rawPw);
+		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
+		mvo.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
+		mvo.setMname(member.getMname());
+		mvo.setMemail(member.getMemail());
+		mvo.setMphone(member.getMphone());
 
-        return "redirect:/";
+		/* 회원가입 쿼리 실행 */
+		memberservice.updateMember(mvo);
 
-    }
+		return "redirect:/member/mypage";
+	}
 
-    // 로그인 페이지 이동
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public void loginGET() {
+	/* 회원 정보 삭제 */
+	@PostMapping("/deleteMember")
+	public String deleteMemberPOST(String mid, HttpServletRequest request) throws Exception {
+		MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
 
-        logger.info("로그인 페이지 진입");
+		logger.info("deleteMemberPOST..........");
 
-    }
+		/* 회원탈퇴 쿼리 실행 */
+		memberservice.deleteMember(mvo.getMid());
 
-    // 로그인 페이지 이동
-    @RequestMapping(value = "findID", method = RequestMethod.GET)
-    public void findIDGET() {
+		return "redirect:/";
 
-        logger.info("아이디 찾기 페이지 진입");
+	}
 
-    }
+	// 로그인 페이지 이동
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	public void loginGET() {
 
-    // 아이디 중복 검사
-    @RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)
-    @ResponseBody
-    public String memberIdChkPOST(String mid) throws Exception {
-        // logger.info("memberIdChk() 진입");
+		logger.info("로그인 페이지 진입");
 
-        int result = memberservice.idCheck(mid);
+	}
 
-        logger.info("결과값 = " + result);
+	// 로그인 페이지 이동
+	@RequestMapping(value = "findID", method = RequestMethod.GET)
+	public void findIDGET() {
 
-        if (result != 0) {
+		logger.info("아이디 찾기 페이지 진입");
 
-            return "fail"; // 중복 아이디가 존재
+	}
 
-        } else {
+	// 아이디 중복 검사
+	@RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)
+	@ResponseBody
+	public String memberIdChkPOST(String mid) throws Exception {
+		// logger.info("memberIdChk() 진입");
 
-            return "success"; // 중복 아이디 x
+		int result = memberservice.idCheck(mid);
 
-        }
-    }
+		logger.info("결과값 = " + result);
 
-    /* 로그인 */
-    @RequestMapping(value = "login.do", method = RequestMethod.POST)
-    public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
+		if (result != 0) {
 
-        HttpSession session = request.getSession();
-        String rawPw = "";
-        String encodePw = "";
+			return "fail"; // 중복 아이디가 존재
 
-        MemberVO mvo = memberservice.memberLogin(member); // 제출한아이디와 일치하는 아이디 있는지
+		} else {
 
-        if (mvo != null) { // 일치하는 아이디 존재시
+			return "success"; // 중복 아이디 x
 
-            rawPw = member.getMpassword(); // 사용자가 제출한 비밀번호
-            System.out.println(rawPw);
-            encodePw = mvo.getMpassword(); // 데이터베이스에 저장한 인코딩된 비밀번호
-            System.out.println(encodePw);
-            if (true == pwEncoder.matches(rawPw, encodePw)) { // 비밀번호 일치여부 판단
-                mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
-                session.setAttribute("member", mvo); // session에 사용자의 정보 저장
-                return "redirect:/"; // 메인페이지 이동
+		}
+	}
 
-            } else {
+	/* 로그인 */
+	@RequestMapping(value = "login.do", method = RequestMethod.POST)
+	public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
 
-                rttr.addFlashAttribute("result", 0);
-                return "redirect:/member/login"; // 로그인 페이지로 이동
+		HttpSession session = request.getSession();
+		String rawPw = "";
+		String encodePw = "";
 
-            }
+		MemberVO mvo = memberservice.memberLogin(member); // 제출한아이디와 일치하는 아이디 있는지
 
-        } else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
+		if (mvo != null) { // 일치하는 아이디 존재시
 
-            rttr.addFlashAttribute("result", 0);
-            return "redirect:/member/login"; // 로그인 페이지로 이동
+			rawPw = member.getMpassword(); // 사용자가 제출한 비밀번호
+			System.out.println(rawPw);
+			encodePw = mvo.getMpassword(); // 데이터베이스에 저장한 인코딩된 비밀번호
+			System.out.println(encodePw);
+			if (true == pwEncoder.matches(rawPw, encodePw)) { // 비밀번호 일치여부 판단
+				mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
+				session.setAttribute("member", mvo); // session에 사용자의 정보 저장
+				return "redirect:/"; // 메인페이지 이동
 
-        }
-    }
+			} else {
 
-    /* 아이디 찾기 */
-    @RequestMapping(value = "findID.do", method = RequestMethod.POST)
-    public String findIDPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
+				rttr.addFlashAttribute("result", 0);
+				return "redirect:/member/login"; // 로그인 페이지로 이동
 
-        HttpSession session = request.getSession();
-        String name = "";
-        String email = "";
-        String mname = "";
-        String memail = "";
+			}
 
-        MemberVO mvo = memberservice.findID(member); // 제출한 이름과 일치하는 아이디 있는지
+		} else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
 
-        if (mvo != null) { // 일치하는 아이디 존재시
+			rttr.addFlashAttribute("result", 0);
+			return "redirect:/member/login"; // 로그인 페이지로 이동
 
-            mname = member.getMname(); // 사용자가 제출한 이름
-            System.out.println(mname);
-            name = mvo.getMname(); // 데이터베이스에 저장된 이름
-            System.out.println(name);
+		}
+	}
 
-            memail = member.getMemail(); // 사용자가 제출한 이메일
-            System.out.println(memail);
-            email = mvo.getMemail(); // 데이터베이스에 저장한 이메일
-            System.out.println(email);
+	/* 아이디 찾기 */
+	@RequestMapping(value = "findID.do", method = RequestMethod.POST)
+	public String findIDPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
 
-            if (name.equals(mname) && email.equals(memail)) { // 일치여부 판단
+		HttpSession session = request.getSession();
+		String name = "";
+		String email = "";
+		String mname = "";
+		String memail = "";
 
-                session.setAttribute("member", mvo); // session에 사용자의 정보 저장
-                rttr.addFlashAttribute("result", 1);
-                return "redirect:/member/findID"; // 메인페이지 이동
+		MemberVO mvo = memberservice.findID(member); // 제출한 이름과 일치하는 아이디 있는지
 
-            } else {
+		if (mvo != null) { // 일치하는 아이디 존재시
 
-                rttr.addFlashAttribute("result", 0);
-                return "redirect:/member/findID"; // 로그인 페이지로 이동
+			mname = member.getMname(); // 사용자가 제출한 이름
+			System.out.println(mname);
+			name = mvo.getMname(); // 데이터베이스에 저장된 이름
+			System.out.println(name);
 
-            }
+			memail = member.getMemail(); // 사용자가 제출한 이메일
+			System.out.println(memail);
+			email = mvo.getMemail(); // 데이터베이스에 저장한 이메일
+			System.out.println(email);
 
-        } else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
+			if (name.equals(mname) && email.equals(memail)) { // 일치여부 판단
 
-            rttr.addFlashAttribute("result", 0);
-            return "redirect:/member/findID"; // 로그인 페이지로 이동
+				session.setAttribute("member", mvo); // session에 사용자의 정보 저장
+				rttr.addFlashAttribute("result", 1);
+				return "redirect:/member/findID"; // 메인페이지 이동
 
-        }
-    }
+			} else {
 
-    /* 이메일 인증 */
-    @RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
-    @ResponseBody
-    public String mailCheckGET(@RequestParam("email") String email) throws Exception {
+				rttr.addFlashAttribute("result", 0);
+				return "redirect:/member/findID"; // 로그인 페이지로 이동
 
-        /* 뷰(View)로부터 넘어온 데이터 확인 */
-        logger.info("이메일 데이터 전송 확인");
-        logger.info("인증번호 : " + email);
+			}
 
-        /* 인증번호(난수) 생성 */
-        Random random = new Random();
-        int checkNum = random.nextInt(888888) + 111111;
-        logger.info("인증번호 " + checkNum);
+		} else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
 
-        /* 이메일 보내기 */
-        String setFrom = "hdite1284@naver.com";
-        String toMail = email;
-        String title = "회원가입 인증 이메일 입니다.";
-        String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
-                + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+			rttr.addFlashAttribute("result", 0);
+			return "redirect:/member/findID"; // 로그인 페이지로 이동
 
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-            helper.setFrom(setFrom);
-            helper.setTo(toMail);
-            helper.setSubject(title);
-            helper.setText(content, true);
-            mailSender.send(message);
+		}
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String num = Integer.toString(checkNum);
+	/* 이메일 인증 */
+	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheckGET(@RequestParam("email") String email) throws Exception {
 
-        return num;
-    }
+		/* 뷰(View)로부터 넘어온 데이터 확인 */
+		logger.info("이메일 데이터 전송 확인");
+		logger.info("인증번호 : " + email);
 
-    /* 메인페이지 로그아웃 */
-    /* 비동기방식 로그아웃 메서드 */
-    @RequestMapping(value = "logout.do", method = RequestMethod.POST)
-    @ResponseBody
-    public void logoutPOST(HttpServletRequest request) throws Exception {
+		/* 인증번호(난수) 생성 */
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		logger.info("인증번호 " + checkNum);
 
-        logger.info("비동기 로그아웃 메서드 진입");
+		/* 이메일 보내기 */
+		String setFrom = "hdite1284@naver.com";
+		String toMail = email;
+		System.out.println("email"+email);
+		String title = "회원가입 인증 이메일 입니다.";
+		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
+				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 
-        HttpSession session = request.getSession();
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			mailSender.send(message);
 
-        session.invalidate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String num = Integer.toString(checkNum);
 
-    }
+		return num;
+	}
 
-    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
-    public void myPage(HttpServletRequest request, Model model) throws Exception {
-        log.info("마이페이지 접속");
+	/* 메인페이지 로그아웃 */
+	/* 비동기방식 로그아웃 메서드 */
+	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
+	@ResponseBody
+	public void logoutPOST(HttpServletRequest request) throws Exception {
 
-        MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
-        model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
-        model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
-        model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+		logger.info("비동기 로그아웃 메서드 진입");
 
-    }
+		HttpSession session = request.getSession();
 
-    // qna 페이지 이동
-    @RequestMapping(value = "qnaMain", method = RequestMethod.GET)
-    public void qnaMainGET() {
+		session.invalidate();
 
-        logger.info("qna 페이지 진입");
+	}
 
-    }
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public void myPage(HttpServletRequest request, Model model) throws Exception {
+		log.info("마이페이지 접속");
+
+		MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
+		model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
+		model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
+		model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+
+	}
+
+	// qna 페이지 이동
+	@RequestMapping(value = "qnaMain", method = RequestMethod.GET)
+	public void qnaMainGET() {
+
+		logger.info("qna 페이지 진입");
+
+	}
 }
