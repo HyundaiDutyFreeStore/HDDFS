@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.dutyfree.mapper.ProductMapper">
+
+	<select id="getList"
+		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select pp.*
+		from
+		(select p.*, rownum rn
+		from
+		(
+		select p.pcode, p.pname, p.pbrand, p.pprice,p.pregdate,
+		p.pdiscount, p.pstock, p.penable,p.psel,
+		c.clarge, c.cmedium, c.csmall, 
+		i.img1, i.img2, i.img3, i.img4, i.img5
+		from product p, category c, productimg i
+		where p.pcode = c.pcode
+		and p.pcode = i.pcode
+		and c.clarge=#{clarge}
+		<if test="cmedium !='' ">
+			and cmedium = #{cmedium}
+		</if>
+		<if test="csmall !='' ">
+			and csmall =#{csmall}
+		</if>
+		<if test="porder =='베스트순' ">
+			order by p.psel desc
+		</if>
+		<if test="porder =='신상품순' ">
+			order by p.pregdate desc
+		</if>
+		<if test="porder =='낮은가격순' ">
+			order by p.pprice asc
+		</if>
+		<if test="porder =='높은가격순' ">
+			order by p.pprice desc
+		</if>
+		<if test="porder =='높은할인순' ">
+			order by p.pdiscount desc
+		</if>
+		
+		)p)pp
+		<![CDATA[
+		WHERE pp.rn > (#{param1.pageNum} -1) * #{param1.amount} and pp.rn <= #{param1.pageNum} * #{param1.amount}
+    	]]>
+    	
+	</select>
+
+	<!-- <select  id="getAjaxList" resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select p.*
+		from
+		(
+			select p.pcode, p.pname, p.pbrand, p.pprice,
+				   p.pdiscount, p.pstock, p.penable,
+				   c.clarge, c.cmedium, c.csmall, i.img1,
+				   i.img2, i.img3, i.img4, i.img5,
+				   rownum rn
+			from product p, category c, productimg i
+			where p.pcode = c.pcode
+			and p.pcode = i.pcode
+			and c.clarge='스킨케어'
+		<if test="cmedium !='' ">
+			and cmedium = #{cmedium}
+		</if>
+		<if test="csmall !='' ">
+			and csmall =#{csmall}
+		</if>
+		)p
+		where p.rn between #{startRowNum} and #{endRowNum}
+	</select> -->
+	
+	<!-- productList페이징을 위한 category별 product 총개수 -->
+	<select id="getTotal" resultType="int">
+		select count(p.pcode)
+		from product p
+		join category c
+		on p.pcode = c.pcode
+		where c.clarge = #{clarge}
+		<if test="cmedium !='' ">
+			and c.cmedium = #{cmedium}
+		</if>
+		<if test="csmall !='' ">
+			and c.csmall =#{csmall}
+		</if>
+	</select>
+
+	<select id="CategoryCnt" resultType="int">
+		select
+		count(distinct(cmedium))
+		from category
+		where clarge = #{clarge}
+	</select>
+
+	<select id="getMedCategory" resultType="String">
+		select distinct(cmedium)
+		from category
+		where clarge = #{clarge}
+	</select>
+
+	<select id="getSmallCategory" resultType="String">
+		select distinct(csmall)
+		from category
+		where cmedium = #{cmedium}
+	</select>
+
+</mapper>

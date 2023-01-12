@@ -16,13 +16,27 @@ public class JDBCTests {
         }
     }
     
+//    @Test
+//    public void testConnection() {
+//        try(Connection con = 
+//                DriverManager.getConnection(
+//                        "jdbc:oracle:thin:@edudb_high?TNS_ADMIN=C:/dev/OracleWallet/Wallet_edudb",
+//                        "admin",
+//                        "xxxxxxAt21cc")){
+//            System.out.println(con);
+//        } catch (Exception e) {
+//            fail(e.getMessage());
+//        }
+//        
+//    }
+    
     @Test
     public void testConnection() {
         try(Connection con = 
                 DriverManager.getConnection(
-                        "jdbc:oracle:thin:@edudb_high?TNS_ADMIN=C:/dev/OracleWallet/Wallet_edudb",
-                        "admin",
-                        "xxxxxxAt21cc")){
+                        "jdbc:oracle:thin:@localhost:1521/xepdb1",
+                        "hddfs",
+                        "hddfs")){
             System.out.println(con);
         } catch (Exception e) {
             fail(e.getMessage());

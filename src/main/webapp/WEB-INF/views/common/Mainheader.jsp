@@ -645,9 +645,10 @@
 		</script>
 		<!-- 검색 레이어 영역 END-->
 		<div class="default_menu">
-			<a class="menu_login_join" href="javascript:" id="loginBtn"
-				onclick="login('');">로그인</a> <a class="menu_login_join"
-				href="https://www.hddfs.com/shop/mm/mbshJoin/join.do?MG=KR_PC_GNB_Signup">회원가입</a>
+			<a class="menu_login_join" id="loginBtn"
+				href="../join/login/">로그인</a>
+			<a id="menu_login_join" class="menu_login_join"
+				href="../join/termsAgree/">회원가입</a>
 			<ul>
 				<li class="item_01"><a
 					href="https://www.hddfs.com/shop/or/order/listCart.do?MG=KR_PC_GNB_Cart"><strong>장바<br>구니
@@ -1052,6 +1053,28 @@
 					</ul></li>
 				<li><strong>카테고리</strong>
 					<ul class="depth_02 serviceCtgList"></ul></li>
+
+				<li data-ctgid="ctg0001" class="open"><strong>스킨케어</strong>
+					<ul class="depth_03" style="display: block;">
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어
+								전체보기</a></li>
+						<li><a rel="nosublink" href="/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
+					</ul></li>
+
+
 				<li><strong>공식스토어</strong>
 					<ul class="depth_02 gnb_luxury luxuryAreaList">
 						<li><a

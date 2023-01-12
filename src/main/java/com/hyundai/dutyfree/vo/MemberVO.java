@@ -2,6 +2,8 @@ package com.hyundai.dutyfree.vo;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,7 @@ public class MemberVO {
     private Date mregdate; // 회원가입 날짜
     private String mgrade; // 회원 등급
     private String mgender; // 회원 성별
+    @DateTimeFormat(pattern = "YYYY-MM-dd")
     private Date mbirth; // 회원 생일
 
     @Override
