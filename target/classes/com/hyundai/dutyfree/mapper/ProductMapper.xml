@@ -6,14 +6,15 @@
 
 	<select id="getList"
 		resultType="com.hyundai.dutyfree.vo.ProductVO">
-		select p.*
+		select pp.*
+		from
+		(select p.*, rownum rn
 		from
 		(
-		select p.pcode, p.pname, p.pbrand, p.pprice,
-		p.pdiscount, p.pstock, p.penable,
+		select p.pcode, p.pname, p.pbrand, p.pprice,p.pregdate,
+		p.pdiscount, p.pstock, p.penable,p.psel,
 		c.clarge, c.cmedium, c.csmall, 
-		i.img1, i.img2, i.img3, i.img4, i.img5,
-		rownum rn
+		i.img1, i.img2, i.img3, i.img4, i.img5
 		from product p, category c, productimg i
 		where p.pcode = c.pcode
 		and p.pcode = i.pcode
@@ -24,10 +25,27 @@
 		<if test="csmall !='' ">
 			and csmall =#{csmall}
 		</if>
-		)p
+		<if test="porder =='베스트순' ">
+			order by p.psel desc
+		</if>
+		<if test="porder =='신상품순' ">
+			order by p.pregdate desc
+		</if>
+		<if test="porder =='낮은가격순' ">
+			order by p.pprice asc
+		</if>
+		<if test="porder =='높은가격순' ">
+			order by p.pprice desc
+		</if>
+		<if test="porder =='높은할인순' ">
+			order by p.pdiscount desc
+		</if>
+		
+		)p)pp
 		<![CDATA[
-			WHERE p.rn > (#{param1.pageNum} -1) * #{param1.amount} and p.rn <= #{param1.pageNum} * #{param1.amount}
+		WHERE pp.rn > (#{param1.pageNum} -1) * #{param1.amount} and pp.rn <= #{param1.pageNum} * #{param1.amount}
     	]]>
+    	
 	</select>
 
 	<!-- <select  id="getAjaxList" resultType="com.hyundai.dutyfree.vo.ProductVO">

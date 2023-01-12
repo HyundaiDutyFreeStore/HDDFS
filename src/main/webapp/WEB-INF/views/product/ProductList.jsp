@@ -1,7 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
-
+<!-- 상품정렬 -->
+<script>
+function prodOrder(str){
+	console.log("정렬방식: "+str);
+	location.href='/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
+	/* $.ajax({
+		url: "/list",
+		method: "GET",
+		data:"clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}"+"&order="+str,
+		success:function(data){
+			console.log("성공");
+		}
+	}); */
+} 
+</script>
 <main id="container">
 	<div class="location_all">
 		<article class="location">
@@ -41,12 +55,12 @@
 
 				<div>
 					<c:choose>
-					<c:when test="${category.cmedium ne ''}">
-						<strong>${category.cmedium}</strong>
-					</c:when>
-					<c:otherwise>
-						<strong>전체</strong>
-					</c:otherwise>
+						<c:when test="${category.cmedium ne ''}">
+							<strong>${category.cmedium}</strong>
+						</c:when>
+						<c:otherwise>
+							<strong>전체</strong>
+						</c:otherwise>
 					</c:choose>
 					<ul style="display: none;">
 						<li><a
@@ -68,12 +82,12 @@
 
 				<div>
 					<c:choose>
-					<c:when test="${category.csmall ne ''}">
-						<strong>${category.csmall}</strong>
-					</c:when>
-					<c:otherwise>
-						<strong>전체</strong>
-					</c:otherwise>
+						<c:when test="${category.csmall ne ''}">
+							<strong>${category.csmall}</strong>
+						</c:when>
+						<c:otherwise>
+							<strong>전체</strong>
+						</c:otherwise>
 					</c:choose>
 					<ul style="display: none;">
 						<li><a
@@ -102,18 +116,18 @@
 		<section>
 			<div class="productlist">
 				<h2 class="page_tit">
-				<c:choose>
-					<c:when test="${category.csmall ne ''}">
-						<strong>${category.csmall}</strong>
-					</c:when>
-					<c:when test="${category.cmedium ne ''}">
-						<strong>${category.cmedium}</strong>
-					</c:when>
-					<c:otherwise>
-						<strong>${category.clarge}</strong>
-					</c:otherwise>
+					<c:choose>
+						<c:when test="${category.csmall ne ''}">
+							<strong>${category.csmall}</strong>
+						</c:when>
+						<c:when test="${category.cmedium ne ''}">
+							<strong>${category.cmedium}</strong>
+						</c:when>
+						<c:otherwise>
+							<strong>${category.clarge}</strong>
+						</c:otherwise>
 					</c:choose>
-				
+
 				</h2>
 				<table class="depthlist">
 					<colgroup>
@@ -122,11 +136,11 @@
 						<col>
 						<col>
 					</colgroup>
-					
+
 					<tbody>
 						<c:forEach items="${cateList}" var="cate" varStatus="status">
 							<c:if test='${status.count eq 1}'>
-									<tr>
+								<tr>
 									<td>전체</td>
 							</c:if>
 							<c:if test='${status.index%4 eq 3}'>
@@ -137,7 +151,7 @@
 								</tr>
 							</c:if>
 						</c:forEach>
-						
+
 					</tbody>
 				</table>
 				<div class="filter_wrap goosFilterTabArea mt60">
@@ -288,11 +302,13 @@
 						id="reGoosListTotPage" value="12"> <input type="hidden"
 						name="filterResearchYn" id="filterResearchYn" value="N">
 					<div class="sort_r">
-						<select id="goodsListOrder" class="goodsListOrder">
-							<option value="new">신상품순</option>
-							<option value="priceAsc">낮은가격순</option>
-							<option value="priceDesc">높은가격순</option>
-							<option value="dcRate">높은할인순</option>
+						<select id="goodsListOrder" class="goodsListOrder" onchange="prodOrder(this.value)">
+							<option hidden="" disabled="disabled" selected="selected" value="${order}">${order}</option>
+							<option value="베스트순">베스트순</option>
+							<option value="신상품순">신상품순</option>
+							<option value="낮은가격순">낮은가격순</option>
+							<option value="높은가격순">높은가격순</option>
+							<option value="높은할인순">높은할인순</option>
 						</select>
 					</div>
 				</div>
@@ -333,9 +349,9 @@
 											<strong>${product.pdiscount}&#37;</strong>
 										</p>
 										<p class="price2">
-											<strong data-price="37.0">&#36;<fmt:formatNumber value="${product.pprice*(1-(product.pdiscount/100))}"  pattern="#,##0.##" /></strong> 
-											<span
-												data-price="46886.0"> <fmt:formatNumber
+											<strong data-price="37.0">&#36;<fmt:formatNumber
+													value="${product.pprice*(1-(product.pdiscount/100))}"
+													pattern="#,##0.##" /></strong> <span data-price="46886.0"> <fmt:formatNumber
 													value="${product.pprice*1267}" pattern="#,#00" /> <em>원</em></span>
 										</p>
 										<div class="por_icons">
@@ -350,34 +366,41 @@
 		</section>
 	</article>
 </main>
-<!-- 김가희 페이지 번호 처리  -->
+<!--페이지 번호 처리  -->
 <div class="paging" style="display: block;">
 	<input type="hidden" class="clarge" value="${category.clarge}">
 	<input type="hidden" class="cmedium" value="${category.cmedium}">
 	<input type="hidden" class="csmall" value="${category.csmall}">
 	<input type="hidden" class="realEnd" value="${pageMaker.realEnd}">
-	<a class="prev2" href="#"></a>
+
 	<c:if test="${pageMaker.prev}">
+		<a class="prev2"
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
+			<< </a>
 		<!-- 이전 버튼 -->
 		<a class="prev"
 			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
 	</c:if>
 
 	<!-- 1~10 버튼 -->
-	<span class="num">
-		<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	<span class="num"> <c:forEach var="num"
+			begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-				<a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
+				<a
+					href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
 					class="pageBtn">${num}</a>
 			</c:if>
 		</c:forEach>
 	</span>  
 	<c:if test="${pageMaker.next}">
 		<!-- 다음 버튼 -->
-		<a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
+		<a
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
 			class="next">Next</a>
+		<a class="next2"
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.realEnd}">>></a>
 	</c:if>
-	<a class="next2" href="#"></a>
+
 </div>
 <!--  end Pagination -->
 <%@ include file="/WEB-INF/views/common/Footer.jsp"%>

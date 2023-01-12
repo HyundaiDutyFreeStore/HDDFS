@@ -1,5 +1,9 @@
 package com.hyundai.dutyfree.vo;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -18,6 +22,11 @@ public class ProductVO {
 	private int pstock;
 	//품절여부
 	private boolean penable;
+	//상품등록일
+	@DateTimeFormat(pattern="yyyy-mm-dd")
+	private Date pregdate;
+	//판매량
+	private int psel;
 	//대분류
 	private String clarge;
 	//중분류

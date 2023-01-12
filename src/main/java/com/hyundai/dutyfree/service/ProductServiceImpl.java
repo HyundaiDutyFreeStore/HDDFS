@@ -18,8 +18,8 @@ public class ProductServiceImpl implements ProductService{
     private ProductMapper mapper;
 	
 	@Override
-	public List<ProductVO> getList(Criteria cri, String clarge, String cmedium, String csmall) {
-		return mapper.getList(cri,clarge, cmedium, csmall);
+	public List<ProductVO> getList(Criteria cri, String clarge, String cmedium, String csmall, String order) {
+		return mapper.getList(cri,clarge, cmedium, csmall,order);
 	}
 	
 	@Override

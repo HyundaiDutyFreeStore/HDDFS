@@ -1056,7 +1056,7 @@
 				<li data-ctgid="ctg0001" class="open"><strong>스킨케어</strong>
 					<ul class="depth_03" style="display: block;">
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=&csmall=">스킨케어
+							href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어
 								전체보기</a></li>
 						<li><a rel="nosublink" href="/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
 						<li><a rel="nosublink"

@@ -21,9 +21,10 @@ public class ListController {
 
 	@GetMapping("/list")
 	public String list(Criteria cri,Model model, @RequestParam("clarge") String clarge, @RequestParam("cmedium") String cmedium,
-			@RequestParam("csmall") String csmall) {
+			@RequestParam("csmall") String csmall,@RequestParam("order") String order) {
+		if(order.equals("")) order="베스트순";
 		// 카테고리 별 상품리스트를 model에 저장
-		List<ProductVO> list = service.getList(cri,clarge, cmedium, csmall);
+		List<ProductVO> list = service.getList(cri,clarge, cmedium, csmall,order);
 		List<String> cateList = null;
 		int cateCnt = 0;
 		if (cmedium.contentEquals("")) {
@@ -46,6 +47,33 @@ public class ListController {
 		model.addAttribute("cateCnt", cateCnt);
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("list", list);
+		model.addAttribute("order",order);
+		return "product/ProductList";
+	}
+	
+	@GetMapping("/listOrder")
+	public String listOrder(Criteria cri,Model model, @RequestParam("clarge") String clarge, @RequestParam("cmedium") String cmedium,
+			@RequestParam("csmall") String csmall,@RequestParam("order") String order) {
+		/*
+		 * // 카테고리 별 상품리스트를 model에 저장 List<ProductVO> list = service.getList(cri,clarge,
+		 * cmedium, csmall); List<String> cateList = null; int cateCnt = 0; if
+		 * (cmedium.contentEquals("")) { System.out.println("medium없음"); cateCnt =
+		 * service.CategoryCnt(clarge); cateList = service.getMedCategory(clarge); }
+		 * else { System.out.println("small없음"); cateList =
+		 * service.getSmallCategory(cmedium); }
+		 * 
+		 * //페이징 처리를 위해 총상품 개수와 pageDTO를 model로 넘김 int total = service.getTotal(clarge,
+		 * cmedium, csmall); model.addAttribute("pageMaker", new PageDTO(cri, total));
+		 * model.addAttribute("totalProducts", total);
+		 * 
+		 * CategoryVO category = new CategoryVO(clarge, cmedium, csmall);
+		 * model.addAttribute("category", category);
+		 * 
+		 * model.addAttribute("cateCnt", cateCnt); model.addAttribute("cateList",
+		 * cateList); model.addAttribute("list", list);
+		 */
+		System.out.println("listOrder컨트롤러");
+		System.out.println("clarge: "+clarge+"cmedium: "+cmedium+"csmall: "+csmall+"order: "+order);
 		return "product/ProductList";
 	}
 	
