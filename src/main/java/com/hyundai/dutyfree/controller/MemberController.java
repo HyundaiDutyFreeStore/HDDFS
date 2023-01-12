@@ -56,54 +56,52 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 
-	// 회원가입 페이지 이동
+	// 약관 동의 페이지 진입
 	@RequestMapping(value = "termsAgree", method = RequestMethod.GET)
 	public void joinfirGET() {
 		logger.info("회원가입 1 페이지 진입");
 	}
 
-	// 회원가입fir
 	@RequestMapping(value = "/termsAgree", method = RequestMethod.POST)
 	public String joinfirPOST() throws Exception {
 		return "redirect:/authentication";
 	}
 
-	// 회원가입 페이지 이동
+	// 이메일 인증 페이지 이동
 	@RequestMapping(value = "authentication", method = RequestMethod.GET)
 	public void joinsecGET() {
 		logger.info("회원가입 2 페이지 진입");
 	}
 
-	// 회원가입sec
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
 	public String joinsecPOST() throws Exception {
 		return "redirect:/mbshInformation";
 	}
 
-	// 회원가입 페이지 이동
+	// 회원 정보 입력 페이지 이동
 	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
 	public void joinGET() {
 		logger.info("회원가입 3 페이지 진입");
 	}
 
 	// 회원가입
-//	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
-//	public String joinPOST(MemberVO member) throws Exception {
-//
-//		String rawPw = ""; // 인코딩 전 비밀번호
-//		String encodePw = ""; // 인코딩 후 비밀번호
-//		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
-//		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
-//		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-//
-//		/* 회원가입 쿼리 실행 */
-//		memberservice.memberJoin(member);
-//
-//		return "redirect:/Signup";
-//
-//	}
+	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
+	public String joinPOST(MemberVO member) throws Exception {
 
-	// 회원가입 페이지 이동
+		String rawPw = ""; // 인코딩 전 비밀번호
+		String encodePw = ""; // 인코딩 후 비밀번호
+		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
+		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
+
+		/* 회원가입 쿼리 실행 */
+		memberservice.memberJoin(member);
+
+		return "redirect:/Signup";
+
+	}
+
+	// 회원가입 최종 페이지 이동
 	@RequestMapping(value = "Signup", method = RequestMethod.GET)
 	public void joinfianlGET() {
 
@@ -111,7 +109,6 @@ public class MemberController {
 
 	}
 
-	// 회원가입final
 	@RequestMapping(value = "/Signup", method = RequestMethod.POST)
 	public String joinfinalPOST() throws Exception {
 		return "redirect:/";
@@ -123,6 +120,45 @@ public class MemberController {
 
 		logger.info("멤버업데이트 페이지 진입");
 
+	}
+	
+	/* 이메일 인증 */
+	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public String mailCheckGET(@RequestParam("email") String email) throws Exception {
+
+		/* 뷰(View)로부터 넘어온 데이터 확인 */
+		logger.info("이메일 데이터 전송 확인");
+		logger.info("인증번호 : " + email);
+
+		/* 인증번호(난수) 생성 */
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		logger.info("인증번호 " + checkNum);
+
+		/* 이메일 보내기 */
+		String setFrom = "hdite1284@naver.com";
+		String toMail = email;
+		System.out.println("email" + email);
+		String title = "회원가입 인증 이메일 입니다.";
+		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
+				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			mailSender.send(message);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String num = Integer.toString(checkNum);
+
+		return num;
 	}
 
 	// 회원정보 수정
@@ -281,45 +317,6 @@ public class MemberController {
 			return "redirect:/member/findID"; // 로그인 페이지로 이동
 
 		}
-	}
-
-	/* 이메일 인증 */
-	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
-	@ResponseBody
-	public String mailCheckGET(@RequestParam("email") String email) throws Exception {
-
-		/* 뷰(View)로부터 넘어온 데이터 확인 */
-		logger.info("이메일 데이터 전송 확인");
-		logger.info("인증번호 : " + email);
-
-		/* 인증번호(난수) 생성 */
-		Random random = new Random();
-		int checkNum = random.nextInt(888888) + 111111;
-		logger.info("인증번호 " + checkNum);
-
-		/* 이메일 보내기 */
-		String setFrom = "hdite1284@naver.com";
-		String toMail = email;
-		System.out.println("email" + email);
-		String title = "회원가입 인증 이메일 입니다.";
-		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
-				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			helper.setFrom(setFrom);
-			helper.setTo(toMail);
-			helper.setSubject(title);
-			helper.setText(content, true);
-			mailSender.send(message);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String num = Integer.toString(checkNum);
-
-		return num;
 	}
 
 	/* 메인페이지 로그아웃 */

@@ -57,8 +57,8 @@
 						<div class="join_row" id="divSexCd">
 							<select name="mgender" class="sel_type" id="gender">
 								<option value="">성별</option>
-								<option value="1">남</option>
-								<option value="2">여</option>
+								<option value="남성">남성</option>
+								<option value="여성">여성</option>
 							</select>
 						</div>
 					</div>
@@ -94,14 +94,14 @@
 					<div class="join_row">
 						<div class="join_cols" id="divMailAddr">
 							<input type="text" id="email" name="memail"
-								value="${member.email}" disabled>
+								value="${memail}" disabled>
 						</div>
 					</div>
-					<div class="btnwrap">
-						<input type="button" value="취소" class="btn wt" id="cancleBtn"
-							onClick="javascript:history.back(-1);" />
-						<button type="submit" id="join_button" class="btn gray mr0">회원가입</button>
 
+					<div class="basic_btn_box mgtsm">
+						<button type="button" class="btn_basic1"
+							onclick="javascript:history.back(-1);">이전</button>
+						<button type="submit" id="join_button" class="btn_basic2">가입</button>
 					</div>
 				</div>
 
@@ -170,10 +170,12 @@
 							if (idCheck && idckCheck && pwCheck && pwckCheck
 									&& pwckcorCheck && nameCheck) {
 								$("#join_form").attr("action",
-										"/join/mbshInformation");
+										"/join/frmMbshInformation");
 								$("#join_form").submit();
 							}
-							return false;
+							else {
+								
+							}
 						});
 			});
 	//아이디 중복검사

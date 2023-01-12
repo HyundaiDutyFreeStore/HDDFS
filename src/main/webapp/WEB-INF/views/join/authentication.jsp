@@ -60,9 +60,9 @@
 				</div>
 
 				<div class="join_row blocks type2 join_time">
-					<div class="mail_check_input_box" id="mail_check_input_box_false">
+					<div class="join_col w06" id="mail_check_input_box_false">
 						<input class="mail_check_input" type="number" placeholder="인증번호"
-							maxlength="10">
+							maxlength="30">
 					</div>
 				</div>
 
@@ -123,28 +123,26 @@
 	/* 유효성 검사 통과유무 변수 */
 	var mailCheck = false; // 이메일
 
-	$(document).ready(
-			function() {
-				$(".btn_basic2").click(
-						function() {
-							/* 입력값 변수 */
-							var mail = $('.mail_input').val(); // 이메일 입력란
+	$(document).ready(function() {
+		$(".btn_basic2").click(function() {
+			/* 입력값 변수 */
+			var mail = $('.mail_input').val(); // 이메일 입력란
 
-							/* 이메일 유효성 검사 */
-							if (mail == "") {
-								mailCheck = false;
-							} else {
-								mailCheck = true;
-							}
+			/* 이메일 유효성 검사 */
+			if (mail == "") {
+				mailCheck = false;
+			} else {
+				mailCheck = true;
+			}
 
-							/* 최종 유효성 검사 */
-							if (mailCheck) {
-								location.href = "./../mbshInformation"; //페이지 이동
-							} else {
-								consol.log("fail");
-							}
-							return false;
-						});
-			});
+			/* 최종 유효성 검사 */
+			if (mailCheck) {
+				location.href = "./../mbshInformation"; //페이지 이동
+			} else {
+				consol.log("fail");
+			}
+			return false;
+		});
+	});
 </script>
 <%@ include file="../common/Footer.jsp"%>
