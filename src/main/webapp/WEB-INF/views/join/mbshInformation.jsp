@@ -9,8 +9,8 @@
 <div class="container">
 	<section>
 		<div class="join_wrap ">
-			<form id="frmMbshInformation" name="frmMbshInformation" method="post"
-				action="/join/mbshInformation" onsubmit="return joinCheck();">
+			<form method="post" action="/join/mbshInformation"
+				id="frmMbshInformation">
 
 				<h2 class="h2_type">회원가입(내국인)</h2>
 				<div class="join_step">
@@ -69,7 +69,7 @@
 
 					<div class="join_row blocks2 type2" id="divMophNo">
 						<div class="join_col w08 select">
-							<select name="mphone_fir" class="sel_type" id="phone_fir">
+							<select class="sel_type" id="phone_fir">
 								<option value="82" selected="selected">한국 (+82)</option>
 								<option value="86">중국 (+86)</option>
 								<option value="886">대만 (+886)</option>
@@ -82,8 +82,6 @@
 								<option value="64">뉴질랜드 (+64)</option>
 								<option value="1">미국/캐나다 (+1)</option>
 							</select>
-							<!-- 2020.10.30.추가함-->
-							<input type="hidden" name="mphone_fir" value="82">
 						</div>
 
 						<div class="join_col w09">
@@ -94,8 +92,7 @@
 					<div class="join_row">
 
 						<div class="join_cols" id="divMailAddr">
-							<input type="text" id="email" name="memail" value="${email}"
-								disabled>
+							<input type="text" id="email" name="memail" value="${email}">
 						</div>
 					</div>
 
@@ -115,10 +112,8 @@
 <script>
 	/* 유효성 검사 통과유무 변수 */
 	var idCheck = false; // 아이디
-	var idckCheck = false; // 아이디 중복 검사
 	var pwCheck = false; // 비번
 	var pwckCheck = false; // 비번 확인
-	var pwckcorCheck = false; // 비번 확인 일치 확인
 	var nameCheck = false; // 이름
 
 	$(document).ready(
@@ -141,14 +136,6 @@
 								idCheck = true;
 							}
 
-							/* 비밀번호 유효성 검사 */
-							if (pw == "") {
-								$('.final_pw_ck').css('display', 'block');
-								pwCheck = false;
-							} else {
-								$('.final_pw_ck').css('display', 'none');
-								pwCheck = true;
-							}
 							/* 비밀번호 확인 유효성 검사 */
 							if (pwck == "") {
 								$('.final_pwck_ck').css('display', 'block');
@@ -168,13 +155,13 @@
 							}
 
 							/* 최종 유효성 검사 */
-							if (idCheck && idckCheck && pwCheck && pwckCheck
-									&& pwckcorCheck && nameCheck) {
-								$("#join_form").attr("action",
-										"/join/frmMbshInformation");
-								$("#join_form").submit();
+							if (idCheck && pwCheck && pwckCheck && nameCheck) {
+								console.log('설마');
+								$("#frmMbshInformation").attr("action",
+										"/join/mbshInformation");
+								$("#frmMbshInformation").submit();
 							} else {
-
+								console.log('설마');
 							}
 						});
 			});

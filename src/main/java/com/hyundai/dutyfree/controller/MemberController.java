@@ -84,21 +84,21 @@ public class MemberController {
 	public void joinGET(@RequestParam("email_fir") String email_fir, @RequestParam("email_sec") String email_sec,
 			HttpServletRequest request, Model model) {
 		String email = email_fir + email_sec;
-
 		model.addAttribute("email", email);
 		logger.info("회원가입 3 페이지 진입");
 	}
 
 	// 회원가입
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
-	public String joinPOST(MemberVO member, Model model) throws Exception {
+	public String joinPOST(MemberVO member) throws Exception {
 
 		String rawPw = ""; // 인코딩 전 비밀번호
 		String encodePw = ""; // 인코딩 후 비밀번호
 		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+		System.out.println(rawPw);
 		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
 		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-
+		
 		/* 회원가입 쿼리 실행 */
 		memberservice.memberJoin(member);
 
