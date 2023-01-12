@@ -141,15 +141,51 @@ function prodOrder(str){
 						<c:forEach items="${cateList}" var="cate" varStatus="status">
 							<c:if test='${status.count eq 1}'>
 								<tr>
-									<td>전체</td>
+									<c:choose>
+									<c:when test="${category.cmedium eq ''}">
+										<td><a href="/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
+									</c:when>
+									<c:when test="${category.csmall eq ''}">
+										<td><a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
+									</c:when>
+									</c:choose>
 							</c:if>
-							<c:if test='${status.index%4 eq 3}'>
-								<tr>
-							</c:if>
-							<td>${cate}</td>
-							<c:if test='${status.index%4 eq 2}'>
-								</tr>
-							</c:if>
+							<c:choose>
+								<c:when test="${category.csmall eq ''}">
+									<c:if test='${status.index%4 eq 3}'>
+										<tr>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<c:if test='${status.index%4 eq 0}'>
+										<tr>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+							
+							<c:choose>
+							<c:when test="${category.cmedium eq ''}">
+								<td><a href="/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
+							</c:when>
+							<c:otherwise>
+								<td><a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
+							</c:otherwise>
+							</c:choose>
+							
+							<c:choose>
+								<c:when test="${category.csmall eq ''}">
+									<c:if test='${status.index%4 eq 2}'>
+										</tr>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<c:if test='${status.index%4 eq 3}'>
+										</tr>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+							
+							
 						</c:forEach>
 
 					</tbody>
@@ -375,11 +411,11 @@ function prodOrder(str){
 
 	<c:if test="${pageMaker.prev}">
 		<a class="prev2"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=1">
 			<< </a>
 		<!-- 이전 버튼 -->
 		<a class="prev"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${pageMaker.startPage - 1}">Previous</a>
 	</c:if>
 
 	<!-- 1~10 버튼 -->
@@ -387,7 +423,7 @@ function prodOrder(str){
 			begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
 				<a
-					href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
+					href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${num}"
 					class="pageBtn">${num}</a>
 			</c:if>
 		</c:forEach>
@@ -395,10 +431,10 @@ function prodOrder(str){
 	<c:if test="${pageMaker.next}">
 		<!-- 다음 버튼 -->
 		<a
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${pageMaker.endPage +1}"
 			class="next">Next</a>
 		<a class="next2"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.realEnd}">>></a>
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${pageMaker.realEnd}">>></a>
 	</c:if>
 
 </div>

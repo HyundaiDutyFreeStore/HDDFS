@@ -22,9 +22,20 @@ public class ListController {
 	@GetMapping("/list")
 	public String list(Criteria cri,Model model, @RequestParam("clarge") String clarge, @RequestParam("cmedium") String cmedium,
 			@RequestParam("csmall") String csmall,@RequestParam("order") String order) {
+		
+		//선택한 카테고리 model에 저장
+		CategoryVO category = new CategoryVO(clarge, cmedium, csmall);
+		model.addAttribute("category", category);
+		
+		//정렬지정안됬으면 베스트순으로 지정
 		if(order.equals("")) order="베스트순";
+		model.addAttribute("order",order);
+		
 		// 카테고리 별 상품리스트를 model에 저장
 		List<ProductVO> list = service.getList(cri,clarge, cmedium, csmall,order);
+		model.addAttribute("list", list);
+		
+		//하위카테고리 목록 받아오기(대분류->중분류, 중분류->소분류, 소분류->소분류)
 		List<String> cateList = null;
 		int cateCnt = 0;
 		if (cmedium.contentEquals("")) {
@@ -33,21 +44,18 @@ public class ListController {
 			cateList = service.getMedCategory(clarge);
 		} else {
 			System.out.println("small없음");
+			cateCnt = service.CategoryCnt(cmedium);
 			cateList = service.getSmallCategory(cmedium);
 		}
+		//하위카테고리수, 하위카테고리 리스트
+		model.addAttribute("cateCnt", cateCnt);
+		model.addAttribute("cateList", cateList);
 		
 		//페이징 처리를 위해 총상품 개수와 pageDTO를 model로 넘김
         int total = service.getTotal(clarge, cmedium, csmall);
         model.addAttribute("pageMaker", new PageDTO(cri, total));
         model.addAttribute("totalProducts", total);
 		
-		CategoryVO category = new CategoryVO(clarge, cmedium, csmall);
-		model.addAttribute("category", category);
-
-		model.addAttribute("cateCnt", cateCnt);
-		model.addAttribute("cateList", cateList);
-		model.addAttribute("list", list);
-		model.addAttribute("order",order);
 		return "product/ProductList";
 	}
 	
