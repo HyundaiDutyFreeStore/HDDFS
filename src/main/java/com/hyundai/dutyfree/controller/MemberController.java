@@ -87,23 +87,21 @@ public class MemberController {
 	}
 
 	// 회원가입
-	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
-	public String joinPOST(MemberVO member) throws Exception {
-
-		/*
-		 * String rawPw = ""; // 인코딩 전 비밀번호 String encodePw = ""; // 인코딩 후 비밀번호
-		 * 
-		 * rawPw = member.getMpassword();// 비밀번호 데이터 얻음 encodePw =
-		 * pwEncoder.encode(rawPw); // 비밀번호 인코딩 member.setMpassword(encodePw); // 인코딩된
-		 * 비밀번호 member객체에 다시 저장
-		 */
-		
-		/* 회원가입 쿼리 실행 */
-		memberservice.memberJoin(member);
-
-		return "redirect:/Signup";
-
-	}
+//	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
+//	public String joinPOST(MemberVO member) throws Exception {
+//
+//		String rawPw = ""; // 인코딩 전 비밀번호
+//		String encodePw = ""; // 인코딩 후 비밀번호
+//		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+//		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
+//		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
+//
+//		/* 회원가입 쿼리 실행 */
+//		memberservice.memberJoin(member);
+//
+//		return "redirect:/Signup";
+//
+//	}
 
 	// 회원가입 페이지 이동
 	@RequestMapping(value = "Signup", method = RequestMethod.GET)
@@ -302,7 +300,7 @@ public class MemberController {
 		/* 이메일 보내기 */
 		String setFrom = "hdite1284@naver.com";
 		String toMail = email;
-		System.out.println("email"+email);
+		System.out.println("email" + email);
 		String title = "회원가입 인증 이메일 입니다.";
 		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
