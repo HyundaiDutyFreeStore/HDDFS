@@ -1,50 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/Header.jsp"%>
 
-<main id="container" class="container"> <script
-	type="text/javascript">
-	$(function() {
-		// 다음버튼
-		$('#btnNext').click(
-				function() {
-					var vFlag = false;
-					var lang = $("input[name='lang']").val();
-					$('[name=agrYns]:not(:checked)').each(
-							function() {
-								vFlag = true;
-								if (lang == 'CN') {
-									alert("必选"
-											+ $(
-													'label[for='
-															+ $(this)
-																	.attr('id')
-															+ ']')
-													.attr('value'));
-								} else if (lang == 'EN') {
-									alert($(
-											'label[for=' + $(this).attr('id')
-													+ ']').attr('value')
-											+ " is required field");
-								} else {
-									alert($(
-											'label[for=' + $(this).attr('id')
-													+ ']').attr('value')
-											+ "는 필수 항목입니다.");
-								}
-
-								$(this).focus();
-								return false;
-							});
-
-					if (vFlag) {
-						return;
-					}
-					$('#frmTermsAgree').submit();
-				});
-
-		fnCheckboxClick('agrYns');
-	});
-
+<script type="text/javascript">
 	// 체크박스 체크 처리
 	function fnCheckboxClick(name) {
 		$('[name^=' + name + ']').on(
@@ -73,16 +31,12 @@
 				});
 	}
 </script>
+<main id="container" class="container">
 <div class="container">
 	<section>
 		<div class="join_wrap ">
-			<form id="frmTermsAgree" name="frmTermsAgree" method="post"
-				action="https://www.hddfs.com/shop/mm/mbshJoin/authentication.do">
-				<input type="hidden" name="foreignerYn" value="N"> <input
-					type="hidden" name="lang" value="KR"><input type="hidden"
-					name="offMbshYn" value="N">
+			<form id="frmTermsAgree" name="frmTermsAgree" method="post">
 				<h2 class="h2_type">회원가입(내국인)</h2>
-
 				<div class="join_step">
 					<ol>
 						<li class="ico_memb step01 active">STEP 01<em>약관동의</em></li>
@@ -99,9 +53,6 @@
 					</span>
 				</p>
 
-				<input type="hidden" name="mbshJoinTcndCds" value="001"> <input
-					type="hidden" name="mbshJoinTcndVerNos" value="2.1"> <input
-					type="hidden" name="joinNtnlCds" value="KR">
 				<p class="step_agree">
 					<span class="checkbox round"> <input type="checkbox"
 						name="agrYns" id="agree1" value="Y"> <label for="agree1"
@@ -224,9 +175,9 @@
 											인터넷면세점”(국문몰에 한함)에 동시에 가입한 고객으로서 H.Point 멤버십, “현대백화점 인터넷면세점”,
 											“현대백화점 시내면세점” 서비스 이용이 가능한 회원</li>
 										<li>2. <font color="#000000"><span lang="EN-US"
-												style="font-size: 9pt; font-family: &amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; quot; Times New Roman&amp;amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">H.Point
+												style="font-size: 9pt; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; amp; amp; amp; amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; amp; amp; amp; amp; amp; quot; Times New Roman&amp;amp; amp; amp; amp; amp; amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">H.Point
 											</span><span
-												style="font-size: 9pt; font-family: &amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; quot; Times New Roman&amp;amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">전환회원<span
+												style="font-size: 9pt; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; amp; amp; amp; amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; amp; amp; amp; amp; amp; quot; Times New Roman&amp;amp; amp; amp; amp; amp; amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">전환회원<span
 													lang="EN-US">: </span>기존 현대백화점 그룹이 운영하는<span lang="EN-US">
 														H.Point </span>멤버십에 가입된 고객으로 “현대백화점 인터넷면세점”<span lang="EN-US">
 														(</span>국문몰에 한함<span lang="EN-US">)</span>에 신규가입 후 통합회원으로 전환한
@@ -749,13 +700,12 @@
 				<div class="basic_btn_box mgtml">
 					<button type="button" class="btn_basic1"
 						onclick="javascript:history.back(-1);">이전</button>
-					<button type="button" class="btn_basic2" id="btnNext">다음</button>
+					<a class="btn_basic2" id="btnNext" href="./../authentication/">다음</a>
 				</div>
 			</form>
 		</div>
 	</section>
 </div>
 </main>
-
 
 <%@ include file="../common/Footer.jsp"%>

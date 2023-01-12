@@ -645,9 +645,10 @@
 		</script>
 		<!-- 검색 레이어 영역 END-->
 		<div class="default_menu">
-			<a class="menu_login_join" href="javascript:" id="loginBtn"
-				onclick="login('');">로그인</a> <a class="menu_login_join"
-				href="https://www.hddfs.com/shop/mm/mbshJoin/join.do?MG=KR_PC_GNB_Signup">회원가입</a>
+			<a class="menu_login_join" id="loginBtn"
+				href="../join/login/">로그인</a>
+			<a id="menu_login_join" class="menu_login_join"
+				href="../join/termsAgree/">회원가입</a>
 			<ul>
 				<li class="item_01"><a
 					href="https://www.hddfs.com/shop/or/order/listCart.do?MG=KR_PC_GNB_Cart"><strong>장바<br>구니

@@ -3,6 +3,7 @@ package com.hyundai.dutyfree.mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,29 +23,30 @@ import com.hyundai.dutyfree.vo.MemberVO;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml","file:src/main/webapp/WEB-INF/spring/appServlet/security-context.xml"})
 public class MemberMapperTests {
 
 	@Autowired
 	private MemberMapper membermapper; // MemberMapper.java 인터페이스 의존성 주입
 
-
-	 //회원가입 쿼리 테스트 메서드
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder;
 	
+	// 회원가입 쿼리 테스트 메서드
+
 	@Test
 	public void memberJoin() throws Exception {
 		MemberVO member = new MemberVO();
 
-		member.setMid("test1"); // 회원 id
-		member.setMpassword("test1"); // 회원 비밀번호
-		member.setMname("test1"); // 회원 이름
-		member.setMemail("test1"); // 회원 메일
-		member.setMphone("test1"); // 회원 전화번호
+		member.setMid("test2"); // 회원 id
+		member.setMpassword(pwEncoder.encode("test2")); // 회원 비밀번호
+		member.setMname("test2"); // 회원 이름
+		member.setMemail("test2"); // 회원 메일
+		member.setMphone("test2"); // 회원 전화번호
 		member.setMgender("male"); // 회원 성별
-		java.sql.Date d=java.sql.Date.valueOf("2004-06-22");
-	    member.setMbirth(d);
+		java.sql.Date d = java.sql.Date.valueOf("2004-06-22");
+		member.setMbirth(d);
 		membermapper.memberJoin(member); // 쿼리 메서드 실행
-
 	}
 
 //	@Test
@@ -70,7 +72,7 @@ public class MemberMapperTests {
 //		membermapper.idCheck(id);
 //		membermapper.idCheck(id2);
 //	}
-	
+
 	// my 페이지 접속 검사
 //	@Test
 //	public void myPage() throws Exception {
