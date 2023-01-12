@@ -9,7 +9,7 @@
 	<section>
 		<div class="join_wrap ">
 			<form id="frmLocalAuthentication" name="frmLocalAuthentication"
-				method="post" action="">
+				 action="">
 
 				<h2 class="h2_type">회원가입(내국인)</h2>
 				<div class="join_step">
@@ -123,26 +123,30 @@
 	/* 유효성 검사 통과유무 변수 */
 	var mailCheck = false; // 이메일
 
-	$(document).ready(function() {
-		$(".btn_basic2").click(function() {
-			/* 입력값 변수 */
-			var mail = $('.mail_input').val(); // 이메일 입력란
+	$(document).ready(
+			function() {
+				$(".btn_basic2").click(
+						function() {
+							/* 입력값 변수 */
+							var mail = $('.mail_input').val(); // 이메일 입력란
 
-			/* 이메일 유효성 검사 */
-			if (mail == "") {
-				mailCheck = false;
-			} else {
-				mailCheck = true;
-			}
+							/* 이메일 유효성 검사 */
+							if (mail == "") {
+								mailCheck = false;
+							} else {
+								mailCheck = true;
+							}
 
-			/* 최종 유효성 검사 */
-			if (mailCheck) {
-				location.href = "./../mbshInformation"; //페이지 이동
-			} else {
-				consol.log("fail");
-			}
-			return false;
-		});
-	});
+							/* 최종 유효성 검사 */
+							if (mailCheck) {
+								$("#frmLocalAuthentication").attr("action",
+										"/join/mbshInformation");
+								$("#frmLocalAuthentication").submit();
+							} else {
+								consol.log("fail");
+							}
+							return false;
+						});
+			});
 </script>
 <%@ include file="../common/Footer.jsp"%>

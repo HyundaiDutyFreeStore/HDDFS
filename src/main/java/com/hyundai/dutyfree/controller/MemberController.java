@@ -53,6 +53,7 @@ public class MemberController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 
@@ -75,18 +76,22 @@ public class MemberController {
 
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
 	public String joinsecPOST() throws Exception {
-		return "redirect:/mbshInformation";
+		return "redirect:/join/mbshInformation";
 	}
 
 	// 회원 정보 입력 페이지 이동
 	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
-	public void joinGET() {
+	public void joinGET(@RequestParam("email_fir") String email_fir, @RequestParam("email_sec") String email_sec,
+			HttpServletRequest request, Model model) {
+		String email = email_fir + email_sec;
+
+		model.addAttribute("email", email);
 		logger.info("회원가입 3 페이지 진입");
 	}
 
 	// 회원가입
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
-	public String joinPOST(MemberVO member) throws Exception {
+	public String joinPOST(MemberVO member, Model model) throws Exception {
 
 		String rawPw = ""; // 인코딩 전 비밀번호
 		String encodePw = ""; // 인코딩 후 비밀번호
@@ -121,7 +126,7 @@ public class MemberController {
 		logger.info("멤버업데이트 페이지 진입");
 
 	}
-	
+
 	/* 이메일 인증 */
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
 	@ResponseBody

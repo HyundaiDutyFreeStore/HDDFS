@@ -92,9 +92,10 @@
 
 					</div>
 					<div class="join_row">
+
 						<div class="join_cols" id="divMailAddr">
-							<input type="text" id="email" name="memail"
-								value="${memail}" disabled>
+							<input type="text" id="email" name="memail" value="${email}"
+								disabled>
 						</div>
 					</div>
 
@@ -172,9 +173,8 @@
 								$("#join_form").attr("action",
 										"/join/frmMbshInformation");
 								$("#join_form").submit();
-							}
-							else {
-								
+							} else {
+
 							}
 						});
 			});
