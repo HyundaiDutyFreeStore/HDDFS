@@ -6,13 +6,16 @@
 
 	<select id="getList"
 		resultType="com.hyundai.dutyfree.vo.ProductVO">
-		select p.pcode, p.pname, p.pbrand, p.pprice, p.pdiscount, p.pstock,
-		p.penable,
-		c.clarge, c.cmedium, c.csmall, i.img1, i.img2, i.img3,
-		i.img4, i.img5
+		select p.*
+		from
+		(
+		select p.pcode, p.pname, p.pbrand, p.pprice,
+		p.pdiscount, p.pstock, p.penable,
+		c.clarge, c.cmedium, c.csmall, 
+		i.img1, i.img2, i.img3, i.img4, i.img5,
+		rownum rn
 		from product p, category c, productimg i
-		where p.pcode =
-		c.pcode
+		where p.pcode = c.pcode
 		and p.pcode = i.pcode
 		and c.clarge=#{clarge}
 		<if test="cmedium !='' ">
@@ -20,6 +23,48 @@
 		</if>
 		<if test="csmall !='' ">
 			and csmall =#{csmall}
+		</if>
+		)p
+		<![CDATA[
+			WHERE p.rn > (#{param1.pageNum} -1) * #{param1.amount} and p.rn <= #{param1.pageNum} * #{param1.amount}
+    	]]>
+	</select>
+
+	<!-- <select  id="getAjaxList" resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select p.*
+		from
+		(
+			select p.pcode, p.pname, p.pbrand, p.pprice,
+				   p.pdiscount, p.pstock, p.penable,
+				   c.clarge, c.cmedium, c.csmall, i.img1,
+				   i.img2, i.img3, i.img4, i.img5,
+				   rownum rn
+			from product p, category c, productimg i
+			where p.pcode = c.pcode
+			and p.pcode = i.pcode
+			and c.clarge='스킨케어'
+		<if test="cmedium !='' ">
+			and cmedium = #{cmedium}
+		</if>
+		<if test="csmall !='' ">
+			and csmall =#{csmall}
+		</if>
+		)p
+		where p.rn between #{startRowNum} and #{endRowNum}
+	</select> -->
+	
+	<!-- productList페이징을 위한 category별 product 총개수 -->
+	<select id="getTotal" resultType="int">
+		select count(p.pcode)
+		from product p
+		join category c
+		on p.pcode = c.pcode
+		where c.clarge = #{clarge}
+		<if test="cmedium !='' ">
+			and c.cmedium = #{cmedium}
+		</if>
+		<if test="csmall !='' ">
+			and c.csmall =#{csmall}
 		</if>
 	</select>
 

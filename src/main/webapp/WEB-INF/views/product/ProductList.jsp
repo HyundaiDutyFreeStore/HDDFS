@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
+
 <main id="container">
 	<div class="location_all">
 		<article class="location">
@@ -123,16 +124,16 @@
 					</colgroup>
 					
 					<tbody>
-						
 						<c:forEach items="${cateList}" var="cate" varStatus="status">
-							<c:if test='${status.count%4 eq 1}'>
-								<tr>
-								<c:if test='${status.count eq 1}'>
+							<c:if test='${status.count eq 1}'>
+									<tr>
 									<td>전체</td>
-								</c:if>
+							</c:if>
+							<c:if test='${status.index%4 eq 3}'>
+								<tr>
 							</c:if>
 							<td>${cate}</td>
-							<c:if test='${status.index%4 eq 0}'>
+							<c:if test='${status.index%4 eq 2}'>
 								</tr>
 							</c:if>
 						</c:forEach>
@@ -295,7 +296,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="product_list goosMoreArea ">
+				<div class="product_list goosMoreArea">
 					<ul>
 						<c:forEach items="${list}" var="product" varStatus="status">
 							<li data-gooscd="10079280002701" data-minbuyqty="1"
@@ -349,5 +350,35 @@
 		</section>
 	</article>
 </main>
+<!-- 김가희 페이지 번호 처리  -->
+<div class="paging" style="display: block;">
+	<input type="hidden" class="clarge" value="${category.clarge}">
+	<input type="hidden" class="cmedium" value="${category.cmedium}">
+	<input type="hidden" class="csmall" value="${category.csmall}">
+	<input type="hidden" class="realEnd" value="${pageMaker.realEnd}">
+	<a class="prev2" href="#"></a>
+	<c:if test="${pageMaker.prev}">
+		<!-- 이전 버튼 -->
+		<a class="prev"
+			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
+	</c:if>
+
+	<!-- 1~10 버튼 -->
+	<span class="num">
+		<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
+				<a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
+					class="pageBtn">${num}</a>
+			</c:if>
+		</c:forEach>
+	</span>  
+	<c:if test="${pageMaker.next}">
+		<!-- 다음 버튼 -->
+		<a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
+			class="next">Next</a>
+	</c:if>
+	<a class="next2" href="#"></a>
+</div>
+<!--  end Pagination -->
 <%@ include file="/WEB-INF/views/common/Footer.jsp"%>
 
