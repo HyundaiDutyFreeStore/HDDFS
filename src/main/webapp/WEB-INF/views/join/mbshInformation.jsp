@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <script type="text/javascript">
 	
@@ -8,7 +9,7 @@
 <div class="container">
 	<section>
 		<div class="join_wrap ">
-			<form id="frmMbshInformation" name="frmMbshInformation"
+			<form id="frmMbshInformation" name="frmMbshInformation" method="post"
 				action="/join/mbshInformation" onsubmit="return joinCheck();">
 
 				<h2 class="h2_type">회원가입(내국인)</h2>
@@ -99,7 +100,7 @@
 					<div class="btnwrap">
 						<input type="button" value="취소" class="btn wt" id="cancleBtn"
 							onClick="javascript:history.back(-1);" />
-						<button id="join_button" class="btn gray mr0">회원가입</button>
+						<button type="submit" id="join_button" class="btn gray mr0">회원가입</button>
 
 					</div>
 				</div>

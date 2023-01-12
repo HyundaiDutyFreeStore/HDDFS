@@ -97,7 +97,6 @@
 			type : "GET",
 			url : "/join/mailCheck?email=" + email,
 			success : function(data) {
-				//console.log("data : " + data);
 				cehckBox.attr("disabled", false);
 				boxWrap.attr("id", "mail_check_input_box_true");
 				code = data;
@@ -140,9 +139,7 @@
 
 							/* 최종 유효성 검사 */
 							if (mailCheck) {
-								$("#frmLocalAuthentication").attr("action",
-										"/join/mbshInformation");
-								$("#frmLocalAuthentication").submit();
+								location.href = "./../mbshInformation"; //페이지 이동
 							} else {
 								consol.log("fail");
 							}
