@@ -35,13 +35,8 @@
 <div class="container">
 	<section>
 		<div class="join_wrap ">
-			<form id="frmTermsAgree" name="frmTermsAgree" method="post"
-				action="https://www.hddfs.com/shop/mm/mbshJoin/authentication.do">
-				<input type="hidden" name="foreignerYn" value="N"> <input
-					type="hidden" name="lang" value="KR"><input type="hidden"
-					name="offMbshYn" value="N">
+			<form id="frmTermsAgree" name="frmTermsAgree" method="post">
 				<h2 class="h2_type">회원가입(내국인)</h2>
-
 				<div class="join_step">
 					<ol>
 						<li class="ico_memb step01 active">STEP 01<em>약관동의</em></li>
@@ -58,9 +53,6 @@
 					</span>
 				</p>
 
-				<input type="hidden" name="mbshJoinTcndCds" value="001"> <input
-					type="hidden" name="mbshJoinTcndVerNos" value="2.1"> <input
-					type="hidden" name="joinNtnlCds" value="KR">
 				<p class="step_agree">
 					<span class="checkbox round"> <input type="checkbox"
 						name="agrYns" id="agree1" value="Y"> <label for="agree1"
@@ -183,9 +175,9 @@
 											인터넷면세점”(국문몰에 한함)에 동시에 가입한 고객으로서 H.Point 멤버십, “현대백화점 인터넷면세점”,
 											“현대백화점 시내면세점” 서비스 이용이 가능한 회원</li>
 										<li>2. <font color="#000000"><span lang="EN-US"
-												style="font-size: 9pt; font-family: &amp; amp; amp; amp; amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; amp; amp; amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; amp; amp; amp; amp; quot; Times New Roman&amp;amp; amp; amp; amp; amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">H.Point
+												style="font-size: 9pt; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; amp; amp; amp; amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; amp; amp; amp; amp; amp; quot; Times New Roman&amp;amp; amp; amp; amp; amp; amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">H.Point
 											</span><span
-												style="font-size: 9pt; font-family: &amp; amp; amp; amp; amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; amp; amp; amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; amp; amp; amp; amp; quot; Times New Roman&amp;amp; amp; amp; amp; amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">전환회원<span
+												style="font-size: 9pt; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; quot; 맑은 고딕&amp;amp; amp; amp; amp; amp; amp; amp; quot;; line-height: 107%; mso-bidi-font-family: &amp;amp; amp; amp; amp; amp; amp; amp; quot; Times New Roman&amp;amp; amp; amp; amp; amp; amp; amp; quot;; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: KO; mso-bidi-language: AR-SA; mso-ascii-theme-font: major-latin; mso-fareast-theme-font: major-latin; mso-hansi-theme-font: major-latin">전환회원<span
 													lang="EN-US">: </span>기존 현대백화점 그룹이 운영하는<span lang="EN-US">
 														H.Point </span>멤버십에 가입된 고객으로 “현대백화점 인터넷면세점”<span lang="EN-US">
 														(</span>국문몰에 한함<span lang="EN-US">)</span>에 신규가입 후 통합회원으로 전환한

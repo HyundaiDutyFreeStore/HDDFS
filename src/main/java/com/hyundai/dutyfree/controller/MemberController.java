@@ -90,22 +90,23 @@ public class MemberController {
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception {
 
-		String rawPw = ""; // 인코딩 전 비밀번호
-		String encodePw = ""; // 인코딩 후 비밀번호
-
-		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
-		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
-		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-
+		/*
+		 * String rawPw = ""; // 인코딩 전 비밀번호 String encodePw = ""; // 인코딩 후 비밀번호
+		 * 
+		 * rawPw = member.getMpassword();// 비밀번호 데이터 얻음 encodePw =
+		 * pwEncoder.encode(rawPw); // 비밀번호 인코딩 member.setMpassword(encodePw); // 인코딩된
+		 * 비밀번호 member객체에 다시 저장
+		 */
+		
 		/* 회원가입 쿼리 실행 */
 		memberservice.memberJoin(member);
 
-		return "redirect:/member/join_final";
+		return "redirect:/Signup";
 
 	}
 
 	// 회원가입 페이지 이동
-	@RequestMapping(value = "join_final", method = RequestMethod.GET)
+	@RequestMapping(value = "Signup", method = RequestMethod.GET)
 	public void joinfianlGET() {
 
 		logger.info("회원가입 최종 페이지 진입");
@@ -113,7 +114,7 @@ public class MemberController {
 	}
 
 	// 회원가입final
-	@RequestMapping(value = "/join_final", method = RequestMethod.POST)
+	@RequestMapping(value = "/Signup", method = RequestMethod.POST)
 	public String joinfinalPOST() throws Exception {
 		return "redirect:/";
 	}
