@@ -28,9 +28,8 @@ public class MemberMapperTests {
 	@Autowired
 	private MemberMapper membermapper; // MemberMapper.java 인터페이스 의존성 주입
 
+	// 회원가입 쿼리 테스트 메서드
 
-	 //회원가입 쿼리 테스트 메서드
-	
 	@Test
 	public void memberJoin() throws Exception {
 		MemberVO member = new MemberVO();
@@ -41,8 +40,8 @@ public class MemberMapperTests {
 		member.setMemail("test1"); // 회원 메일
 		member.setMphone("test1"); // 회원 전화번호
 		member.setMgender("male"); // 회원 성별
-		java.sql.Date d=java.sql.Date.valueOf("2004-06-22");
-	    member.setMbirth(d);
+		java.sql.Date d = java.sql.Date.valueOf("2004-06-22");
+		member.setMbirth(d);
 		membermapper.memberJoin(member); // 쿼리 메서드 실행
 
 	}
@@ -70,7 +69,7 @@ public class MemberMapperTests {
 //		membermapper.idCheck(id);
 //		membermapper.idCheck(id2);
 //	}
-	
+
 	// my 페이지 접속 검사
 //	@Test
 //	public void myPage() throws Exception {

@@ -77,7 +77,7 @@
 			<div class="basic_btn_box mgtsm">
 				<button type="button" class="btn_basic1"
 					onclick="javascript:history.back(-1);">이전</button>
-				<a href="#;" class="btn_basic2" id="btnConfirm">다음</a>
+				<a class="btn_basic2" id="btnConfirm">다음</a>
 			</div>
 		</div>
 	</section>
@@ -126,58 +126,28 @@
 
 	$(document).ready(
 			function() {
-				//회원가입 버튼(회원가입 기능 작동)
-				$(".join_button").click(
+				$(".btn_basic2").click(
 						function() {
-							$(".join_button").click(
-									function() {
+							/* 입력값 변수 */
+							var mail = $('.mail_input').val(); // 이메일 입력란
 
-										/* 입력값 변수 */
-										var mail = $('.mail_input').val(); // 이메일 입력란
+							/* 이메일 유효성 검사 */
+							if (mail == "") {
+								mailCheck = false;
+							} else {
+								mailCheck = true;
+							}
 
-										/* 이메일 유효성 검사 */
-										if (mail == "") {
-											$('.final_mail_ck').css('display',
-													'block');
-											mailCheck = false;
-										} else {
-											$('.final_mail_ck').css('display',
-													'none');
-											mailCheck = true;
-										}
-
-										/* 최종 유효성 검사 */
-										if (mailCheck) {
-											$("#frmLocalAuthentication")
-													.attr("action",
-															"/join/joinstart");
-											$("#frmLocalAuthentication")
-													.submit();
-										} else {
-											consol.log("fail");
-										}
-										return false;
-									});
+							/* 최종 유효성 검사 */
+							if (mailCheck) {
+								$("#frmLocalAuthentication").attr("action",
+										"/join/mbshInformation");
+								$("#frmLocalAuthentication").submit();
+							} else {
+								consol.log("fail");
+							}
+							return false;
 						});
 			});
-	// 클릭시 email함수 호출
-	$("#emailDubChkBtn").click(function() {
-		email();
-	});
-
-	//직접입력을 눌러야만 입력창이 나오는 함수
-	$("#emailDomainSel").click(function() {
-
-		if ($("#emailDomainSel").val() == "06") {
-
-			$("#emailDomain").show();
-			console.log($("#emailDomain").val());
-		} else {
-
-			$("#emailDomain").hide();
-
-		}
-
-	})
 </script>
 <%@ include file="../common/Footer.jsp"%>
