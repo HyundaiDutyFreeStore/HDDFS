@@ -1020,7 +1020,7 @@
 			<ul class="depth_01">
 				<li><strong>전체서비스</strong>
 					<ul class="depth_02 serviceMenu">
-						<li><a href="https://www.hddfs.com/shop/op/sale/saleShop.do">
+						<li><a href="/product/productlist">
 								세일</a></li>
 						<li><a href="https://www.hddfs.com/shop/dm/best/weekly.do">
 								베스트</a></li>

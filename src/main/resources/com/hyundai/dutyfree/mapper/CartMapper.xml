@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.hyundai.dutyfree.mapper.CartMapper">
+ 	<select id="getCartList"
+		resultType="com.hyundai.dutyfree.vo.CartVO">
+		select * from cart
+	</select>
+	
+	<insert id="insertCart">
+		insert into cart values(seq_id.nextval,#{cartstock},to_date(sysdate,'yy/mm/dd'),#{mid})
+	</insert>
+ 
+ 
+ </mapper>
+  
+  
