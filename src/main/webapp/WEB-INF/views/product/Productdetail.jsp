@@ -1706,7 +1706,7 @@ function getHiddenMenuEvntBnef(evntId){
 									<button class="close" onclick="closeMaxDcPrc();">닫기</button>
 								</div>
 							</div>
-						<a href="<c:out value="/cart/insertcart"/>" class="addcart">장바구니</a>
+						<a href="" class="addcart" onclick="addCart();">장바구니</a>
                               <a href="javascript:addCarts('buy')" class="buynow">바로구매</a>
 						  </div>
 				<ul class="layercall">
@@ -3146,7 +3146,7 @@ function dateChk(el,e){
 	}
 	
 	//선택 세트상품 장바구니 담기
-	function evtGoosAddCart(type){
+	function evtGoos(type){
 		var listLength = $(".setEvtGoosChoiList > li").length;
 		//이상세트
 		if(listLength > 0){
@@ -3273,7 +3273,7 @@ function dateChk(el,e){
         	</div>
         	<div class="selecteditem-prev"></div>
         	<div class="selecteditem-next"></div>
-        	<a href="javascript:" onclick="evtGoosAddCart('');" class="addcart_btn">장바구니 담기</a>
+        	<a href="javascript:" onclick="addCart();" class="addcart_btn">장바구니 담기</a>
         </div>
         <input type="hidden" name="targetListTotPage" id="targetListTotPage"/>
 		<input type="hidden" name="layerSetGoosId" id="layerSetGoosId" />
@@ -3714,7 +3714,7 @@ function dateChk(el,e){
             	    html += "<dt>$"+totalDorSum+"</dt>";
             	    html += "<dd>"+totalWonSum+" <em>"+priceUnit+"</em></dd>";
             	    html += "</dl>";
-            	    $('.totalamount').html(html);
+            	    $('.').html(html);
             	    $('.totalamount').show();
                 }else {
                 	$('.totalamount').hide();
@@ -3769,48 +3769,57 @@ function dateChk(el,e){
     function closeMaxDcPrc(){
     	$(".maxprice > .tooltip").removeClass("on");
     }
-      
     
-    $('#addProduct').on('click', function(){
-		let repre = repreFile.getAcceptedFiles();
-		let another = anotherFiles.getAcceptedFiles();
-		let Data = {
-			"name" : $('#name').val(),
-			"detail" : detail,
-			"bigCategory" : $('#bigCategory').val(),
-			"midCategory" : $('#midCategory').val(),
-			"stock" : $('#totalCnt').val(),
-			"price" : $('#totalWonSum').val()
-		};
-		if(!checkIt(otherData)){
-			alert("입력되지 않은 정보가 있습니다!");
-			return;
-      	    	}
-		formData.append("items", JSON.stringify(otherData));
-		formData.append("repreFile", repre[0]);
-		for(let i = 0; i < another.length; i++){
-			formData.append("anotherFile" + i, another[i]);
-    	    }
-		$.ajax({
-			type :"POST",
-		    data : Data,
-		    url : "/cart/insertCart",
-		    success : function(data){
-				const issf=data.split(':')[0];
-				let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
-				if(param=='true'){
-					location.href="/cart/cartlist";
-					/* location.href="/cart/cartlist?mid="+${member.mid}; */
-    	}
-				
-				document.getElementById()
-				
-			},
-			fail : function(){
-				console.log("실패 ㅠ");
+	function cartConsist(){
+    	
+    	console.log("카트 들어감!")
+    	const Data = {
+    			cartstock :$("#totalamount").text(),
+    			mid : "jjjj",
+    			pcode : "${product.pcode}"
+    		}
+
+    		$.ajax({
+    			type :"POST",
+    		    data : Data,
+    		    url : "/cart/insertCart",
+    		    success : function(data){
+    				let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
+    				if(param=='true'){
+    					location.href="/cart/cartlist";
+    					/* location.href="/cart/cartlist?mid="+${member.mid}; */
+        			}			
+    			},
+    			error : function(){
+    				console.log("실패 ㅠ");
+        		}
+    		});
     }
-		});
-	});
+    function addCart(){
+    	
+    	console.log("카트 들어감!")
+    	const Data = {
+    			cartstock :$("#totalamount").text(),
+    			mid : "jjjj",
+    			pcode : "${product.pcode}"
+    		}
+
+    		$.ajax({
+    			type :"POST",
+    		    data : Data,
+    		    url : "/cart/insertCart",
+    		    success : function(data){
+    				let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
+    				if(param=='true'){
+    					location.href="/cart/cartlist";
+    					/* location.href="/cart/cartlist?mid="+${member.mid}; */
+        			}			
+    			},
+    			error : function(){
+    				console.log("실패 ㅠ");
+        		}
+    		});
+    }
     
     
     function showEmlSendFormLayer(){
