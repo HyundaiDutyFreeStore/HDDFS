@@ -13,5 +13,6 @@ public class CartVO {
 	private int cartstock;
 	private Date cartregdate;
 	private String mid;
+	private String pcode;
 	
 }

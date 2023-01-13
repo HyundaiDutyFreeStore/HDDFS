@@ -9,7 +9,7 @@
 	</select>
 	
 	<insert id="insertCart">
-		insert into cart values(seq_id.nextval,#{cartstock},to_date(sysdate,'yy/mm/dd'),#{mid})
+		insert into cart values(seq_id.nextval,#{cartstock},to_date(sysdate,'yy/mm/dd'),#{mid},#{pcode})
 	</insert>
 	
 	<select id="">
