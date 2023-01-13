@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
-<!-- 상품정렬 -->
+<!-- 정렬방식 선택시 이동 -->
 <script>
 function prodOrder(str){
 	console.log("정렬방식: "+str);
@@ -15,41 +15,62 @@ function prodOrder(str){
 		}
 	}); */
 } 
+
+//필터설정 후 검색버튼눌렀을 때
+function goosSearchItemFilter(researchYn){
+	var html = "";
+	//쇼핑정보
+	var shopFilterLength = $("input[name='shopFilter']:checked").length;
+	if(shopFilterLength > 0){
+		$("#shoppingInfoFilterCnt").html( shopFilterLength > 0 ?  " "+shopFilterLength : "");
+		$(".shoppingInfoFilterCnt").show();
+		$(".shoppingInfoFilterCnt").find("button").show();
+	}else{
+		$("#shoppingInfoFilterCnt").html( shopFilterLength > 0 ?  " "+shopFilterLength : "");
+		$(".shoppingInfoFilterCnt").hide();
+		$(".shoppingInfoFilterCnt").find("button").hide();
+	}
+	$("input[name='shopFilter']:checked").each(function(){
+		var txt = $(this).next("label").text();
+		var pos = $(this).data("pos");
+		var filterId = $(this).attr("id");
+		console.log("filterId: "+filterId);
+		html+="<li>"+txt+" <button class='ic_x' data-id='"+this.id+"' data-name='"+this.name+"' data-pos='"+pos+"'  onclick=\"removeSearchItem(this,'"+this.id+"','"+this.name+"','"+pos+"');\">x</button></li>";
+	});
+	
+	$(".searchFilterArea").html(html);
+	if($(".searchFilterArea > li").length <1){
+		$(".sel_filter").hide();
+	}else{
+		$(".sel_filter").show();
+	}
+}
+
+//필터 초기화
+function goosSearchItemInit(reloadYn) {
+	 $("input[name='shopFilter']").prop("checked", false); // 쇼핑정보 초기화	
+     $("input[name='priceFilter']").prop("checked", false); // 가격 초기화
+     $(".sel_filter").hide();	//필터선택창 숨기기
+}
 </script>
 <main id="container">
 	<div class="location_all">
 		<article class="location">
+			<!-- 이동네비게이션, 모든대분류 + 선택한카테고리의 중/소분류 링크 -->
 			<section class="box">
-				<a href="https://www.hddfs.com/shop/dm/main.do" class="home">홈</a>
+				<a href="/" class="home">홈</a>
 
 				<div>
-					<strong>스킨케어</strong>
+					<strong>${category.clarge}</strong>
 					<ul style="display: none;">
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0001">스킨케어</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0002">메이크업</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0003">향수/헤어/바디</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0004">가방/지갑</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0005">시계/쥬얼리</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0007">패션/잡화</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0013">스포츠/레저</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0008">전자/리빙</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0009">식품</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0010">유아동</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0011">국내브랜드</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=0012">Adult
-								(19)</a></li>
+						<li><a href="/product/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어</a></li>
+						<li><a href="/product/list?clarge=메이크업&cmedium=&csmall=&order=">메이크업</a></li>
+						<li><a href="/product/list?clarge=향수/헤어/바디&cmedium=&csmall=&order=">향수/헤어/바디</a></li>
+						<li><a href="/product/list?clarge=가방/지갑&cmedium=&csmall=&order=">가방/지갑</a></li>
+						<li><a href="/product/list?clarge=패션/잡화&cmedium=&csmall=&order=">패션/잡화</a></li>
+						<li><a href="/product/list?clarge=스포츠/레저&cmedium=&csmall=&order=">스포츠/레저</a></li>
+						<li><a href="/product/list?clarge=전자/리빙&cmedium=&csmall=&order=">전자/리빙</a></li>
+						<li><a href="/product/list?clarge=식품&cmedium=&csmall=&order=">식품</a></li>
 					</ul>
 				</div>
 
@@ -63,23 +84,13 @@ function prodOrder(str){
 						</c:otherwise>
 					</c:choose>
 					<ul style="display: none;">
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000101">기초케어</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000102">선케어</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000103">클렌징</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000104">마스크팩</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000105">유아동</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000106">남성용</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=000107">미용기기/도구</a></li>
+						<c:forEach items="${cateMedList}" var="cMed">
+							<li><a href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=&order=">${cMed}</a></li>
+						</c:forEach>
 					</ul>
 				</div>
-
+				
+				<c:if test="${category.cmedium ne ''}">
 				<div>
 					<c:choose>
 						<c:when test="${category.csmall ne ''}">
@@ -90,31 +101,19 @@ function prodOrder(str){
 						</c:otherwise>
 					</c:choose>
 					<ul style="display: none;">
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010101">스킨/토너</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010102">에센스</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010103">크림</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010104">로션</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010105">페이스오일</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010106">미스트</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010107">기초케어세트</a></li>
-						<li><a
-							href="https://www.hddfs.com/shop/dm/ctg/category.do?goosCtgId=00010108">스페셜케어</a></li>
+						<c:forEach items="${cateSmallList}" var="cSmall">
+							<li><a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}&order=">${cSmall}</a></li>
+						</c:forEach>
 					</ul>
 				</div>
-
+				</c:if>
 			</section>
 		</article>
 	</div>
 	<article id="content">
 		<section>
 			<div class="productlist">
+				<!-- 선택한 카테고리 명 띄우기 -->
 				<h2 class="page_tit">
 					<c:choose>
 						<c:when test="${category.csmall ne ''}">
@@ -129,6 +128,7 @@ function prodOrder(str){
 					</c:choose>
 
 				</h2>
+				<!-- 선택한 카테고리의 하위카테고리 목록 표로 띄우기 -->
 				<table class="depthlist">
 					<colgroup>
 						<col>
@@ -141,15 +141,51 @@ function prodOrder(str){
 						<c:forEach items="${cateList}" var="cate" varStatus="status">
 							<c:if test='${status.count eq 1}'>
 								<tr>
-									<td>전체</td>
+									<c:choose>
+									<c:when test="${category.cmedium eq ''}">
+										<td><a href="/product/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
+									</c:when>
+									<c:when test="${category.csmall eq ''}">
+										<td><a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
+									</c:when>
+									</c:choose>
 							</c:if>
-							<c:if test='${status.index%4 eq 3}'>
-								<tr>
-							</c:if>
-							<td>${cate}</td>
-							<c:if test='${status.index%4 eq 2}'>
-								</tr>
-							</c:if>
+							<c:choose>
+								<c:when test="${category.csmall eq ''}">
+									<c:if test='${status.index%4 eq 3}'>
+										<tr>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<c:if test='${status.index%4 eq 0}'>
+										<tr>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+							
+							<c:choose>
+							<c:when test="${category.cmedium eq ''}">
+								<td><a href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
+							</c:when>
+							<c:otherwise>
+								<td><a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
+							</c:otherwise>
+							</c:choose>
+							
+							<c:choose>
+								<c:when test="${category.csmall eq ''}">
+									<c:if test='${status.index%4 eq 2}'>
+										</tr>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<c:if test='${status.index%4 eq 3}'>
+										</tr>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+							
+							
 						</c:forEach>
 
 					</tbody>
@@ -181,41 +217,18 @@ function prodOrder(str){
 											class="filter_checkbox"
 											onclick="searchTabFocus('shopFilter',1);"> <label
 											for="filterSoldOutYn"><strong>품절 상품 제외</strong></label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterLgoosYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterLgoosYn">명품 브랜드 상품</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterPrlIptYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterPrlIptYn">병행 수입 상품</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterBigSaleYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterBigSaleYn">바겐 세일</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
+										</span>
+										<span> <input type="checkbox" name="shopFilter"
 											value="Y" id="filterNewGoosYn" data-pos="1"
 											class="filter_checkbox"
 											onclick="searchTabFocus('shopFilter',1);"> <label
 											for="filterNewGoosYn">신상품</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterCupYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterCupYn">쿠폰</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
+										</span>
+										<span> <input type="checkbox" name="shopFilter"
 											value="Y" id="filterDcYn" data-pos="1"
 											class="filter_checkbox"
 											onclick="searchTabFocus('shopFilter',1);"> <label
 											for="filterDcYn">세일</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterFregfYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterFregfYn">사은 행사</label>
 										</span>
 									</div>
 								</td>
@@ -296,11 +309,12 @@ function prodOrder(str){
 					</div>
 				</div>
 				<div class="sorting_wrap">
-					<!-- <span class="txt_total">총 <strong id="goosListTotCnt">454</strong>개</span> -->
-					<input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt"
+					<span class="txt_total">총 <strong id="goosListTotCnt">${totalProducts}</strong>개</span>
+					<!-- <input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt"
 						value="454"> <input type="hidden" name="reGoosListTotPage"
 						id="reGoosListTotPage" value="12"> <input type="hidden"
-						name="filterResearchYn" id="filterResearchYn" value="N">
+						name="filterResearchYn" id="filterResearchYn" value="N"> -->
+					<!-- 정렬선택 -->
 					<div class="sort_r">
 						<select id="goodsListOrder" class="goodsListOrder" onchange="prodOrder(this.value)">
 							<option hidden="" disabled="disabled" selected="selected" value="${order}">${order}</option>
@@ -326,13 +340,13 @@ function prodOrder(str){
 								href="<c:url value='/product/Productdetail?pcode=${product.pcode }'/>">
 									<div class="img_w">
 										<img data-src="${product.img1}" src="${product.img1}"
-											alt="베르니 아 레브르 바이닐 크림 틴트#416"
+											alt="${product.pname}"
 											onerror="this.src='https://cdn.hddfs.com/front/images/KO/common/noimg.png?sf=webp&amp;RS=212X212';"
 											class="lazy-loaded">
 										<div class="on_btn">
-											<div class="on_btn_group">
+											<!-- <div class="on_btn_group">
 												<button class="btn_inner1" onclick="goLogin(event);">로그인</button>
-											</div>
+											</div> -->
 											<div class="on_btn_group">
 												<button class="btn_inner1 bg_black cartBtn"
 													onclick="goCart('10079280002701', '1', '', '', 'order','N',event);">장바구니</button>
@@ -374,28 +388,24 @@ function prodOrder(str){
 	<input type="hidden" class="realEnd" value="${pageMaker.realEnd}">
 
 	<c:if test="${pageMaker.prev}">
-		<a class="prev2"
-			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
+		<a class="prev2" href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
 			<< </a>
 		<!-- 이전 버튼 -->
-		<a class="prev"
-			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
+		<a class="prev" href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
 	</c:if>
 
 	<!-- 1~10 버튼 -->
 	<span class="num"> <c:forEach var="num"
 			begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-				<a
-					href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
+				<a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
 					class="pageBtn">${num}</a>
 			</c:if>
 		</c:forEach>
 	</span>  
 	<c:if test="${pageMaker.next}">
 		<!-- 다음 버튼 -->
-		<a
-			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
+		<a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
 			class="next">Next</a>
 		<a class="next2"
 			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.realEnd}">>></a>
