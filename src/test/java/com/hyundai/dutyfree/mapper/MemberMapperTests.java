@@ -44,8 +44,7 @@ public class MemberMapperTests {
 		member.setMemail("test3"); // 회원 메일
 		member.setMphone("test3"); // 회원 전화번호
 		member.setMgender("male"); // 회원 성별
-		java.sql.Date d = java.sql.Date.valueOf("2004-06-22");
-		member.setMbirth(d);
+
 		membermapper.memberJoin(member); // 쿼리 메서드 실행
 	}
 

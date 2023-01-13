@@ -8,8 +8,7 @@
 <div class="container">
 	<section>
 		<div class="join_wrap ">
-			<form id="frmLocalAuthentication" name="frmLocalAuthentication"
-				 action="">
+			<form id="frmLocalAuthentication" name="frmLocalAuthentication">
 
 				<h2 class="h2_type">회원가입(내국인)</h2>
 				<div class="join_step">
