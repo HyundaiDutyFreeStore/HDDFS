@@ -22,4 +22,6 @@ public interface ProductMapper {
     public List<String> getSmallCategory(String cmedium);
 
 	public List<ProductVO> getAjaxList(PageDTO pto);
+	
+	public ProductVO productdetail(String pcode);
 }

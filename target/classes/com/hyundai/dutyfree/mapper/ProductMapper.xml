@@ -105,4 +105,13 @@
 		where cmedium = #{cmedium}
 	</select>
 
+	<select id="productdetail" resultType="com.hyundai.dutyfree.vo.ProductVO">
+	select p.pcode,pname,pbrand,pprice,pdiscount,pstock,penable,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
+	from product p, productimg i,category c
+	where p.pcode=i.pcode and
+	p.pcode=c.pcode and
+	p.pcode=#{pcode}
+	</select>
+
+
 </mapper>

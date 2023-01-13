@@ -47,6 +47,12 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.getAjaxList(pto);
 	}
 
+	@Override
+	public ProductVO productdetail(String pcode) {
+		// TODO Auto-generated method stub
+		return mapper.productdetail(pcode);
+	}
+
 	
 
 }

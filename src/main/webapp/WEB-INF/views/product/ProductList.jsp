@@ -5,7 +5,7 @@
 <script>
 function prodOrder(str){
 	console.log("정렬방식: "+str);
-	location.href='/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
+	location.href='/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
 	/* $.ajax({
 		url: "/list",
 		method: "GET",
@@ -323,7 +323,7 @@ function prodOrder(str){
 									data-price="46886.0" data-priceus="37.0" data-stoc="46">
 									<label for="10079280002701_1">선택</label>
 							</span> <a
-								href="https://www.hddfs.com/shop/gd/dtl/goos.do?onlnGoosCd=10079280002701">
+								href="<c:url value='/product/Productdetail?pcode=${product.pcode }'/>">
 									<div class="img_w">
 										<img data-src="${product.img1}" src="${product.img1}"
 											alt="베르니 아 레브르 바이닐 크림 틴트#416"
@@ -375,11 +375,11 @@ function prodOrder(str){
 
 	<c:if test="${pageMaker.prev}">
 		<a class="prev2"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
+			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
 			<< </a>
 		<!-- 이전 버튼 -->
 		<a class="prev"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
+			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
 	</c:if>
 
 	<!-- 1~10 버튼 -->
@@ -387,7 +387,7 @@ function prodOrder(str){
 			begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
 				<a
-					href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
+					href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
 					class="pageBtn">${num}</a>
 			</c:if>
 		</c:forEach>
@@ -395,10 +395,10 @@ function prodOrder(str){
 	<c:if test="${pageMaker.next}">
 		<!-- 다음 버튼 -->
 		<a
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
+			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
 			class="next">Next</a>
 		<a class="next2"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.realEnd}">>></a>
+			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.realEnd}">>></a>
 	</c:if>
 
 </div>

@@ -32,6 +32,7 @@ public class CartController {
 	
 	@GetMapping("/cartlist")
 	public void cartlist(String mid,Model model){
+		
 		model.addAttribute("cartlist", cartservice.getCartList());
 	}
 	

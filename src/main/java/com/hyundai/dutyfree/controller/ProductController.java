@@ -1,11 +1,13 @@
 package com.hyundai.dutyfree.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hyundai.dutyfree.service.ProductService;
@@ -15,7 +17,8 @@ import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 @Controller
-public class ListController {
+@RequestMapping("/product")
+public class ProductController {
 	@Autowired
 	private ProductService service;
 
@@ -96,4 +99,32 @@ public class ListController {
 	 * request.setAttribute("list", list); return "product/ajax_page"; }
 	 */
 
+	@GetMapping("/Productdetail")
+	public String productdetail(@RequestParam("pcode") String pcode,Model model) {
+		List<String>imglist=new ArrayList<String>();
+		ProductVO product=service.productdetail(pcode);
+		System.out.println(product.toString());
+		if(product.getImg1()!=null) {
+			imglist.add(product.getImg1());
+		}
+		if(product.getImg2()!=null) {
+			imglist.add(product.getImg2());
+		}
+		if(product.getImg3()!=null) {
+			imglist.add(product.getImg3());
+		}
+		if(product.getImg4()!=null) {
+			imglist.add(product.getImg4());
+		}
+		if(product.getImg5()!=null) {
+			imglist.add(product.getImg5());
+		}
+		for(int i=0;i<imglist.size();i++) {
+			System.out.println(imglist.get(i));
+		}
+		model.addAttribute("product", product);
+		model.addAttribute("imglist", imglist);
+		
+		return "/product/Productdetail";
+	}
 }

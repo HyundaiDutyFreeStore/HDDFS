@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/order")
 public class OrderController {
 	
-	@GetMapping("/orderpay")
+	@GetMapping("/orderpays")
 	public void orderpay() {
 	}
 	
-	@GetMapping("DepartureInfo")
+	@GetMapping("/DepartureInfo")
 	public void DepartureInfo() {
 		
 	}
 	
-	@GetMapping("PassportInfo")
+	@GetMapping("/PassportInfo")
 	public void PassportInfo() {
 		
 	}

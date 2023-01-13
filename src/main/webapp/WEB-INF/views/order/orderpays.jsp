@@ -22,7 +22,7 @@
 	<article id="content">
 		<section class="orderpayment_wrap">
 			<ul class="title_tab">
-				<li><a href="https://www.hddfs.com/shop/or/order/listCart.do">장바구니</a></li>
+				<li><a href="/order">장바구니</a></li>
 				<li>여권정보</li>
 				<li>출국정보</li>
 				<li><strong class="on" id="tabOrder">주문결제</strong></li>

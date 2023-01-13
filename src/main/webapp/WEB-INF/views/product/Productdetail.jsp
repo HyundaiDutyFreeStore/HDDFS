@@ -1,313 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-	<title>현대백화점인터넷면세점</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="format-detection" content="telephone=no">
-	<meta name="title" content="현대백화점인터넷면세점">
-    <meta name="description" content="해외명품/화장품/시계/가방, 적립금/할인/쿠폰 등 다양한 혜택, 공동구매/가상착장(AR)서비스 제공">
-    <meta name="metaKeywords" content="현대면세점, 현대백화점인터넷면세점, 현대인터넷면세점, 현대백화점면세점, 현대면세, 인터넷현대면세점, 현대온라인면세점, 현대백화점온라인면세점, 현대백화점DUTYFREE,현대무역센터면세점, 현대무역센터점, 현대동대문면세점, 현대동대문점, 현대인천공항면세점, 현대인천공항점, 면세쇼핑몰, 인터넷면세점, 온라인면세점, 인천공항면세점, 인천공항면세, 공항면세, 공항면세점, 공항쇼핑, dutyfree, 면세할인, 면세점할인, 면세가격, 면세점할인방법, 면세추천, 면세선물, 면세점선물, 면세점선물추천, 현대면세점인도장, 면세점인도장, 면세점상품수령, 쇼핑, 쇼핑몰, 명품쇼핑, 해외여행, 인천공항, 출장, 출국, 신혼여행, 허니문, 여행선물, 선물인터넷면세점주문, 인터넷면세점주문가능시간, 출국3시간전, 출국전쇼핑, 출국전인터넷쇼핑, 쿠폰, 할인쿠폰, 면세쿠폰, 면세점쿠폰, 현대면세점쿠폰, 적립금, 면세점적립금, 면세적립금, 현대면세점적립금,화장품, 향수, 가방, 명품, 해외명품, 브랜드, 면세점주류, 면세점담배, 면세점홍삼, 면세점화장품, 면세점향수, 면세점명품, 면세점시계, 면세점가방, 명품가방, 면세점정품">
-	<meta property="og:title" content="[현대백화점인터넷면세점]SCRIPT LOGO HALF ZIP KNIT SWEATER_IVORY_M">
-		<meta property="og:url" content="https://www.hddfs.com/shop/gd/dtl/goos.do?onlnGoosCd=56638040000701">
-		<meta property="og:description" content="SCRIPT LOGO HALF ZIP KNIT SWEATER_IVORY_M">
-		<meta property="og:image" content="https://cdn.hddfs.com/files/goos/6638/20221209/1dbcad73.JPG?RS=200x200">
-	<meta property="groobee:member_id" content="">
-	<meta property="groobee:member_grade" content="">
-	<meta property="groobee:member_gender" content="">
-	<meta property="groobee:member_type" content="001">
-	<!-- <meta property="groobee:member_age" content=" ">  -->
-	<script src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/jquery-ui.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/lottie.min.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/jquery.bxslider.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/swiper-bundle.min.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyload.min.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/jquery.lazyloadxt.min.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/common.ui.js?ver=18"></script>
-	<script src="https://cdn.hddfs.com/front/js/KO/ga4Common.js?ver=18"></script>
-	<link rel="shortcut icon" href="https://cdn.hddfs.com/front/images/KO/common/favicon_H.ico">
-	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/jquery-ui.css?ver=18">
-	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/swiper-bundle.min.css?ver=18">
-	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/common.css?ver=18">
-	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/layout.css?ver=18">
-	<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/n_hgk.css?ver=18">
-	<script language="javascript">
-    // 현재 요청경로
-    var ctx_curr                = "//www.hddfs.com/shop";
-    var ctx_shop                = "https://www.hddfs.com/shop";
-    var isLogin                 = false;
-    var SERVER_IMAGE            = "https://cdn.hddfs.com/front";
-    var SERVER_IMAGE_MNG = "https://cdn.hddfs.com/files/";
-    var SERVER_SCRIPT_JSON      = "https://cdn.hddfs.com/files";    
-    var USER_AUTO_LOGOUT_TIME   = 1800;
-    var gUmbMbshUrl             = "https://www.h-point.co.kr"; // 통합멤버쉽 주소
-    
-</script>
-
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/crew.source.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/form/form.source.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/sns.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/jquery.cookie.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/common.js?ver=18"></script>
-
-<!-- S: 다이퀘스트 스크립트 추가 -->
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoCompleteCommon.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/diquest/dqHeader.js?ver=18"></script>
-<!-- E: 다이퀘스트 스크립트 추가 -->
-
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/cloud-zoom.1.0.2.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoAjax.js?ver=18"></script>
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/SsoHttpRequest.js?ver=18"></script>
-
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/makePCookie.js?ver=18"></script>
-
-
-<script type="text/javascript" src="https://cdn.hddfs.com/front/js/KO/crew/hash.js?ver=18"></script>
-<script>
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(document.referrer);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-var Naver_Previous_Query = getParameterByName('oquery');
-</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121444436-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  
-  
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('set', {'dimension1' :Naver_Previous_Query});
-  gtag('config', 'UA-121444436-1', {'send_page_view' : false});
-  
-  var gaMbshNo = "";
-  var gaCustNo = "";
-  
-  if(isLogin){
-	  if(gaCustNo == ""){
-		  dataLayer.push({
-              'dimension3' : gaMbshNo
-          });
-	  }else{
-		  dataLayer.push({
-	          'dimension3' : gaMbshNo,
-	          'dimension4' : gaCustNo
-	      });
-	  }
-  }
-  </script>
-
-<!-- Google Tag Manager -->
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-56VKRZT"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	
-	var pageviewObj = new Object();
-	var gaSiteNtnlCd = "KR";	// KR, CN, EN
-	var gaSiteChlCd = "PC";		// PC, MO, AP
-	
-	pageviewObj.ep_visit_channelOption = gaSiteChlCd;	// PC, MO, AP
-	pageviewObj.ep_visit_siteOption = gaSiteNtnlCd;		// KR, CN, EN
-	
-	dataLayer.push(pageviewObj);
-	
-	var gaStr = window.location.pathname;
-	var gaPathName = gaStr.split('/');
-	if(gaPathName[3] != "main.do"){
-		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-56VKRZT');
-	}
-</script>
-<!-- End Google Tag Manager -->
-
-<!-- beusable Tracking Code -->
-<script type="text/javascript">
-(function(w, d, a){
-    w.__beusablerumclient__ = {
-        load : function(src){
-            var b = d.createElement("script");
-            b.src = src; b.async=true; b.type = "text/javascript";
-            d.getElementsByTagName("head")[0].appendChild(b);
-        }
-    };w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
-})(window, document, "//rum.beusable.net/load/b220906e090106u517");
-</script>
-<!-- End beusable Tracking Code -->
-
-<!-- 네이버 연관채널 추가 2020.07.30 -->
-<script type="application/ld+json">
-{
- "@context": "http://schema.org",
- "@type": "Person",
- "name": "현대백화점면세점",
- "url": "https://www.hddfs.com",
- "sameAs": [
-   "https://www.facebook.com/HDDFS.official",
-   "https://www.instagram.com/hddfs.official",
-   "https://www.youtube.com/c/hddfs",
-   "https://apps.apple.com/kr/app/id1436812610",
-   "https://play.google.com/store/apps/details?id=com.ehyundai.HyunDaiDutyFreeShop"
- ]
-}
-</script>
-
-<!-- S: 2022-10-19 그루비 스크립트 추가 -->
-<script type="text/javascript">
-	(function(a,i,u,e,o) {
-		a[u]=a[u]||function(){(a[u].q=a[u].q||[]).push(arguments)};
-	})(window, document, "groobee");
-	groobee("serviceKey", "5b7f34a1c92b489d8d7fe12d39f82e4b");
-	groobee("siteType", "custom");
-</script>
-<script charset="utf-8" src="//static.groobee.io/dist/g2/groobee.init.min.js"></script>
-<!-- E: 2022-10-19 그루비 스크립트 추가 -->
- 
-<script>
-    //통합멤버쉽 가입팝업
-    function fnUmbJoinPop(joinType, ptnrChlCd, ptcoAlliPaonInf2) {
-        var $form = $('<form></form>');
-        $form.attr('action', gUmbMbshUrl + '/cu/join/start.nhd');
-        $form.attr('method', 'post');
-        $form.attr('target', 'umbJoinPop');
-        $form.append('<input type="hidden" value="02" name="prtnrReqGb">');
-        $form.append('<input type="hidden" value="D030" name="prtnrId">');
-        $form.append('<input type="hidden" value="1201" name="chnnlId">');
-        $form.append('<input type="hidden" value="PC" name="ptcoReqnMdaInf">');
-        $form.append('<input type="hidden" value="' + joinType + '" name="ptcoReqnOnoflnGb">');
-        $form.append('<input type="hidden" value="' + ptnrChlCd + '" name="ptcoAlliPaonInf1">');
-        $form.append('<input type="hidden" value="' + ptcoAlliPaonInf2 + '" name="ptcoAlliPaonInf2">');
-        $form.appendTo('body');
-
-        popOpen('', 'umbJoinPop', 600, 800);
-        $form.submit();
-    }
-
-
-    $(document).ready(function(evt){
-    	
-        // 회원 자동 로그아웃 타이머 구동(30분)
-        if(isLogin){
-            setTimeout(logoutAuto, USER_AUTO_LOGOUT_TIME * 1000);
-        }
-
-        // 숫자입력만 허용
-        $(".onlynum").keyup(onlynum);
-        
-        //HDDFS 리뉴얼 프로젝트 [ 김인호 - 2021.05.27 ] 숫자입력만 허용 
-        $("input[type='number']").keyup(onlynum2);
-
-        // lazy 적용
-        if(typeof($.fn.lazyload) == "function"){
-            //$("img.lazy").trigger("appear");
-            $("img.lazy").lazyload({ effect : "fadeIn", threshold:200, placeholder : SERVER_IMAGE + '/images/KO/common/loading.gif' });
-            $("img.lazy").removeClass("lazy");
-        }
-
-
-        //$.ajax 공통 설정
-        $.ajaxSetup({
-            complete : function(jqXHR, textStatus ){
-                if(typeof($.fn.lazyload) == "function"){
-                    $("img.lazy").lazyload({ effect : "fadeIn", threshold:200, placeholder : SERVER_IMAGE + '/images/KO/common/loading.gif' });
-                    $("img.lazy").removeClass("lazy");
-                }
-            }
-        });
-    });
-</script>
-
-<!-- S: 2022-05-25 이지웰 메인팝업 추가 -->
-<style>
-    .main_popup2 {display:none}
-    .main_popup2:after {display:none !important;}
-    .main_popup2 .pop_img {height:368px; overflow:hidden;} 
-    .main_popup2 .pop_img, .main_popup2 .close_section2 {position:relative; z-index:1;}
-    .close_section2 {padding:16px 20px 14px}
-    .close_section2::after {display:block; content:''; clear:both}
-    .today_close2 {display:block; float:left; font-size:14px; color:#5c6677; line-height:20px; position:relative}
-    .today_close2.chk input[type='checkbox'] {display:none;}
-    .today_close2.chk input[type='checkbox'] + label {padding-left:0;}
-    .today_close2.chk input[type='checkbox'] + label:before {display:none;}
-    .popup_close2 {display:block; cursor:pointer; float:right; font-size:14px; color:#1b1e23; line-height:20px; font-weight:600}
-    .ui-dialog.ui-widget.ui-widget-content.main_popup2_layer {position:fixed !important;background:#fff;border-radius:20px}
-    .ui-dialog.main_popup2_layer .ui-dialog-titlebar {display:none}
-    .main_popup2_layer {width:560px !important; height:422px !important; background-color:#fff; position:absolute !important; top:50% !important; left:50% !important; transform:translate(-50%, -50%) !important;}
-</style>
-
-<div class="main_popup2">
-    <div class="pop_img">
-        <a href="javascript:void(0);" onclick="login('')"> 
-            <img src="https://cdn.hddfs.com/files/editor/20220504/6b3d071d_202205041549127060.jpg" alt="로그인 한번으로 즐기는 간편한 면세쇼핑">
-        </a>
-    </div>
-    <div class="close_section2">
-        <span class="today_close2 chk">
-            <input type="checkbox" id="today_close2">
-            <label for="today_close2">오늘하루보지 않기</label>
-        </span>
-        <span class="popup_close2">닫기</span>
-    </div>
-</div>
-<script>
-    // main_popup2
-    $( function() {
-        $(".main_popup2").dialog({
-            dialogClass: "main_popup2_layer",
-            width:560,
-            autoOpen: false
-        });
-        
-        $(".popup_close2").click(function(){
-            $(".main_popup2").dialog("close");
-        });
-        
-        $("#today_close2").click(function(){
-        	// 쿠키 저장
-            var date = new Date();
-            date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
-            date.setHours(0);
-            date.setMinutes(0);
-            date.setSeconds(0);
-            $.cookie("closePopEz", "Y", { expires: date, path : "/" });
-            $(".main_popup2").dialog("close");
-        });
-        
-        // 이지웰 로그인 팝업
-        if(!isLogin && getCookie("closePopEz") != "Y" && getCookie("PTNR_CHL_GBN_KEY") == "00009902" 
-        		&& getCookie("EZWEL_USER_KEY_SESSION") != null && location.href.indexOf("membershipSleepRelease") == -1){
-        	if(location.href.indexOf("main") == -1){ // 메인이 아닐때 팝업 뜸
-                $(".main_popup2").css("display","block");
-                $(".main_popup2").dialog("open");
-            }
-        	else if(location.href.indexOf("main") != -1 && sessionStorage.getItem("selMainSwiperPos") != 0){//메인인 경우 인트로 아닐때 팝업뜸
-        		$(".main_popup2").css("display","block");
-                $(".main_popup2").dialog("open");
-        	}
-        }
-        
-        $(".intro_box").scroll(function(){
-            if(!isLogin && getCookie("closePopEz") != "Y" && getCookie("PTNR_CHL_GBN_KEY") == "00009902" 
-                    && getCookie("EZWEL_USER_KEY_SESSION") != null && location.href.indexOf("membershipSleepRelease") == -1
-                    && sessionStorage.getItem("selMainSwiperPos") != 0){
-                $(".main_popup2").css("display","block");
-                $(".main_popup2").dialog("open");
-            }
-        });
-    });
-
-</script>
-<!-- E: 2022-05-25 이지웰메인팝업 추가 --></head>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <body>
 	<div id="wrap">
 		<!-- header -->
@@ -1707,10 +1400,10 @@ function getHiddenMenuEvntBnef(evntId){
 		<div class="pd_visual">
 			<div class="info_button">
 				<div class="por_icons">
-					<span >세일</span></div>
+					<span >세일</span><span>사은품</span><span>품절임박</span></div>
 				
 				<div class="pd_share">
-					<a href="javascript://" onclick="mergeMyGoosCnt('56638040000701');" class="wish_popup">
+					<a href="javascript://" onclick="" class="wish_popup">
 						<button id="wishPop" class="btn_like likethis ">
                             <div class="motion_area" id="heart01_2"></div>
                         </button>
@@ -1732,28 +1425,34 @@ function getHiddenMenuEvntBnef(evntId){
 			
 			<div class="swiper-container swiper_visual">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-											<a href=<c:out value="${product.img1}"/>>이미지 크게보기</a>
-											<img src=<c:out value="${product.img1}"/>
-												alt=""
+					
+                        <c:forEach var="img" items="${imglist }">
+                            <div class="swiper-slide">
+											<img src=<c:out value="${img}"/>
+                                            alt=""
 												onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img500.jpg';" />
-										</div>
-									</div>
+                                            </div>
+                                            </c:forEach>
+												
+										
+				</div>
 			</div>
-			<div class="thumbnail_box">
+			<div class="thumbnail_box ">
 				<div class="swiper-container swiper_visual_thumbnail">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide ">
-											<img src=<c:out value="${product.img1}"/>
-												alt="" title=""
-												onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img60.jpg';" />
-										</div>
-									</div>
-				</div>
+					<c:forEach var="img" items="${imglist }">
+					
+					<div class="swiper-slide ">
+						<img src=<c:out value="${img}"/> alt="" title="" onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img60.jpg';"/>
+					</div>
+					</c:forEach>
+					</div>
+				</div>	
 				<div class="controller">
 					<div class="thumbnail-prev"></div>
 					<div class="thumbnail-next"></div>
 				</div>
+
 			</div>
 			<div class="summary_info">
 			    <div class="tit">
@@ -1768,15 +1467,22 @@ function getHiddenMenuEvntBnef(evntId){
 											<ul class="del">				
 												<li class="priceInfo">
 													<del>
-														$<c:out value="${product.pprice }"/></del>
+														$<fmt:formatNumber
+													value="${product.pprice}"
+													pattern="#,##0.##"/></del>
 													<del class="won">
-														<c:out value="${product.pprice*1200 }"/></del>
+														<fmt:formatNumber
+													value="${product.pprice*1267}"
+													pattern="#,#00"/>원</del>
 												</li>
 												<li class="dispriceInfo">
 													<strong>
-														$<c:out value="${product.pprice*(1-product.pdiscount/100) }"/></strong>
+														$<fmt:formatNumber
+													value="${product.pprice*(1-(product.pdiscount/100))}"
+													pattern="#,##0.##" /></strong>
 													<p>
-														<c:out value="${product.pprice*(1-product.pdiscount/100)*1200 }"/>원</p>
+														<fmt:formatNumber
+													value="${product.pprice*1267}" pattern="#,#00" />원</p>
 												</li>
 											</ul>
 										</div>
@@ -1808,7 +1514,7 @@ function getHiddenMenuEvntBnef(evntId){
 						
 							<div class="box">
 								
-									 일반적립금 3%
+									 일반적립금 30%
 								</div>
 						</li>
 					<li>
@@ -1840,9 +1546,13 @@ function getHiddenMenuEvntBnef(evntId){
                     <input type="number" class="counts" id="0" value="1" min="1" max="1091" onkeydown="return checkNumber(event);" onfocusout="return changeGoosList(this,event,'0','M','N');" onpaste="return false;">
                     <input value="+" count_range="p" type="button" class="plus" onclick="javascript:fn_qtyAdd(this);">
                 </div>
+                
                 <dl class="priceInfo">
-                	<dt class="dorPrice0" value=<c:out value="${product.pprice }"/>>$<c:out value="${product.pprice }"/></dt>
-                    <dd class="wonPrice0" value=<c:out value="${product.pprice*1200 }"/>><c:out value="${product.pprice*1200 }"/><em>원</em></dd>
+                	<dt class="dorPrice0" value=<c:out value="${product.pprice*(1-(product.pdiscount/100))}"/>>$<fmt:formatNumber
+													value="${product.pprice*(1-(product.pdiscount/100))}"
+								pattern="#,##0.##" /></dt>
+                    <dd class="wonPrice0" value=<c:out value="${product.pprice*1267}"/>><fmt:formatNumber
+													value="${product.pprice*1267}" pattern="#,#00" /> <em>원</em></dd>
                  </dl>
                 </div>
         </div>
@@ -1854,12 +1564,7 @@ function getHiddenMenuEvntBnef(evntId){
 <script>
 
 
-$(".del").find(".priceInfo").children().eq(0).text('$'+priceComma(${product.pprice}));
-$(".del").find(".priceInfo").children().eq(1).text(priceComma(${product.pprice*1200})+"원");
-$(".del").find(".dispriceInfo").children().eq(0).text('$'+priceComma(${product.pprice*(1-product.pdiscount/100) }));
-$(".del").find(".dispriceInfo").children().eq(1).text(priceComma(${product.pprice*(1-product.pdiscount/100)*1200 }+"원"));
-$(".detailBox").find(".priceInfo").children().eq(0).text(priceComma('$'+${product.pprice*(1-product.pdiscount/100)}));
-$(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pprice*(1-product.pdiscount/100)*1200}+"원"));
+
     function deleteCartList(onlnGoosCd, qty){
         for(var i=0;i<uniqGoosList.length;i++){
 			if(uniqGoosList[i] === onlnGoosCd){
@@ -1918,20 +1623,33 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
   //수량버튼 내렸을때! 무조건 1개 이상이여야겠지?
 	function fn_qtySubtraction(el) {
 		let count = parseInt($(".counts").val());
-		count--;
-		$(".counts").val(count);
+		if(count-1<1){
+			alert("해당 상품의 최소 주문 수량은 1개 입니다.");
+			return false;
+		}else{
+			count--;
+			$(".counts").val(count);
+				
+			var dorprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(0).attr("value");
+			var wonprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(1).attr("value");
+	      		
+			var chDorprice = count*dorprice;
+			var chWonprice = "${product.pprice*1267}"*count;
+			console.log(chDorprice.toFixed(2));
+				
+			$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
+			$(el).closest(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
+			$(el).closest(".detailBox").find(".priceInfo").children().eq(0).val(chDorprice.toFixed(2));
+			$(el).closest(".detailBox").find(".priceInfo").children().eq(1).val(chWonprice.toFixed(0));
 			
-		var dorprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(0).attr("value");
-		var wonprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(1).attr("value");
-      		
-		var chDorprice = count*dorprice;
-		var chWonprice = count*wonprice;
-		console.log(chDorprice);
+			$("#totalamount").text(count);
 			
-		$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toLocaleString());
-		$(el).closest(".detailBox").find(".priceInfo").children().eq(1).text(chWonprice.toLocaleString()+'원');
+			$(".totalamount").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
+			$(".totalamount").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
+			$(".totalamount").find(".priceInfo").children().eq(0).val(chDorprice.toFixed(2));
+			$(".totalamount").find(".priceInfo").children().eq(1).val(chWonprice.toFixed(0));
+		}
 		
-		$("#totalamount").text(count);
 	}
   
 	//수량버튼 올렸을때! 3개면 안된다고 경고!
@@ -1944,16 +1662,22 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
 		var wonprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(1).attr("value");
       		
 		var chDorprice = count*dorprice;
-		var chWonprice = count*wonprice;
+		var chWonprice = "${product.pprice*1267}"*count;
 			
 			
-		$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toLocaleString());
-		$(el).closest(".detailBox").find(".priceInfo").children().eq(1).text(chWonprice.toLocaleString()+'원');
+		$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
+		$(el).closest(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
+		$(el).closest(".detailBox").find(".priceInfo").children().eq(0).val(chDorprice.toFixed(2));
+		$(el).closest(".detailBox").find(".priceInfo").children().eq(1).val(chWonprice.toFixed(0));
+		
 		
 		$("#totalamount").text(count);
 		
-		$(".totalamount").find(".priceInfo").children().eq(0).text('$'+chDorprice.toLocaleString());
-		$(".totalamount").find(".priceInfo").children().eq(1).text(chWonprice.toLocaleString()+'원');
+		$(".totalamount").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
+		$(".totalamount").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
+		$(".totalamount").find(".priceInfo").children().eq(0).val(chDorprice.toFixed(2));
+		$(".totalamount").find(".priceInfo").children().eq(1).val(chWonprice.toFixed(0));
+		
 	}
 	
 	function priceComma(price) {
@@ -1962,8 +1686,12 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
 	
 
 </script></div>
-							<div class="totalamount"><div>총 <strong id="totalamount">1</strong> 개</div><dl class="priceInfo"><dt>$</dt><dd>183,638 <em>원</em></dd></dl></div>
-		                </div>
+							<div class="totalamount"><div>총 <strong id="totalamount">1</strong> 개</div><dl class="priceInfo">
+							<dt>$<fmt:formatNumber
+													value="${product.pprice*(1-(product.pdiscount/100))}"
+													pattern="#,##0.##" /></dt>
+													<dd><fmt:formatNumber value="${product.pprice*1267}" pattern="#,#00" /> <em>원</em></dd></dl>
+													</div>
 		                </div>
 					<div class="button_area">
 						<div class="square_tooltip maxprice">
@@ -1978,42 +1706,26 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
 									<button class="close" onclick="closeMaxDcPrc();">닫기</button>
 								</div>
 							</div>
-						<a href="javascript:addCarts('cart');" class="addcart">장바구니</a>
+						<a href="<c:out value="/cart/insertcart"/>" class="addcart">장바구니</a>
                               <a href="javascript:addCarts('buy')" class="buynow">바로구매</a>
 						  </div>
 				<ul class="layercall">
 				<li class="call_panel_b">
-						<a href="javascript://" onclick="callGoosInfo('56638040000701','663801','03380205','');"><p>사은품</p><em>2</em></a>
+						<a href="javascript://" onclick=""><p>사은품</p><em>2</em></a>
 					</li>
 				<li class="call_panel_c">
-					<a href="javascript://" onclick="callGoosInfo('56638040000701','663801','03380205','');"><p>상품정보</p></a>
+					<a href="javascript://" onclick=""><p>상품정보</p></a>
 				</li>
 				<li class="call_panel_d">
-					<a href="javascript://" onclick="callGoosInfo('56638040000701','663801','03380205','');">
+					<a href="javascript://" onclick="">
 						<p>추천상품</p></a>
 				</li>
 				<li class="call_panel_e">
-					<a href="javascript://" onclick="callGoosInfo('56638040000701','663801','03380205','');"><p>상품평</p></a>
+					<a href="javascript://" onclick=""><p>상품평</p></a>
 				</li>
 			</ul>
 		</div>
 		</section>
-	
-	<div class="productdetail_zoom">
-		<div class="zoomimg-swiper">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-								<img src="https://cdn.hddfs.com/files/goos/6638/20221209/1dbcad73.JPG"
-									alt=""
-									onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img500.jpg';" />
-							</div>
-						</div>
-		</div>
-		<div class="zoomimg-swiper-pagination"></div>
-		<div class="zoomimg-swiper-prev"></div>
-		<div class="zoomimg-swiper-next"></div>
-		<a href="javascript://" class="zoom_close">닫기</a>
-	</div>
 	</article>
 
 <section class="pd_full_layer">
@@ -2043,14 +1755,14 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
             			<li class="item">
             					<div class="tit">
             						<span class="img">
-            								<img src="https://cdn.hddfs.com/files/fregf/20221012/9cd4ada1_202210121115323880.jpg?sf=webp&RS=80X80"
-            									alt="SELLER LOGO SOCKS 증정"
+            								<img src="https://cdn.hddfs.com/files/fregf/20230106/c9c2d5f0_202301061545068210.jpg?sf=webp&RS=80X80"
+            									alt="SOCKS 랜덤1개 증정"
             									onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img160.jpg?sf=webp&RS=80X80';">
             							</span>
             						<div class="gift_content">
-	            						<strong class="sub_tit">SELLER LOGO SOCKS 증정</strong>
+	            						<strong class="sub_tit">SOCKS 랜덤1개 증정</strong>
             							<div>
-            								$1이상 구매시</div>	
+            								$150 이상 구매시</div>	
             							</div>
             					</div>
             					<ul class="screen">
@@ -2058,58 +1770,7 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
             							<strong>행사기간</strong>
             							<p>
             								이벤트 기간 : 
-            								2022-10-14
-            								~
-            								재고소진시까지</p>
-            						</li>
-            						<li>
-            								<strong>유의사항</strong>
-            								<ul class="dot_list">
-	<li>
-		사은품 이미지는 참고용이며, 실제 상품과 다를 수 있습니다</li>
-	<li>
-		본 사은품은 한정수량으로 조기품절 될 수 있습니다.</li>
-	<li>
-		한 주문번호에 한하며 주문번호당 합산되지 않습니다.</li>
-	<li>
-		타 사은행사와 중복 증정되지 않습니다</li>
-	<li>
-		사은품은 할인쿠폰 사용 후 최종 결제 금액 기준으로 증정됩니다.</li>
-	<li>
-		<span style="color: #0000ff">결제 단계에서 사은품 선택 옵션이 나오는 경우에만 사은품이 증정됩니다.</span></li>
-	<li>
-		<span style="color: #0000ff">사은품은 한 ID당 1일 1회 증정 가능합니다. </span></li>
-	<li>
-		<span style="color: #0000ff">주문 취소 후 재구매시 해당일에는 사은품이 지급되지 않습니다</span></li>
-	<li>
-		<span style="color: #0000ff">비회원은 사은품 증정대상에서 제외됩니다.</span></li>
-	<li>
-		<p>
-			화기류 증정품의 경우 제주공항 출국시 증정품 지급이&nbsp;불가합니다.&nbsp;</p>
-	</li>
-</ul>
-</li>
-            						</ul>
-            				</li>
-            			<li class="item">
-            					<div class="tit">
-            						<span class="img">
-            								<img src="https://cdn.hddfs.com/files/fregf/20221013/06c92f7d_202210131459022150.jpg?sf=webp&RS=80X80"
-            									alt="(비니/볼캡/에코백/티셔츠/목걸이)사은품 랜덤 1개 증정"
-            									onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img160.jpg?sf=webp&RS=80X80';">
-            							</span>
-            						<div class="gift_content">
-	            						<strong class="sub_tit">(비니/볼캡/에코백/티셔츠/목걸이)사은품 랜덤 1개 증정</strong>
-            							<div>
-            								무신사 DF&nbsp;브랜드 $70 이상 구매시</div>	
-            							</div>
-            					</div>
-            					<ul class="screen">
-            						<li>
-            							<strong>행사기간</strong>
-            							<p>
-            								이벤트 기간 : 
-            								2022-10-14
+            								2023-01-09
             								~
             								재고소진시까지</p>
             						</li>
@@ -2147,24 +1808,24 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
             <div id="panel_03" class="productdetail_03">
                 <h4>상품정보</h4>
                 <div class="brand_info">
-                    <a href="https://www.hddfs.com/shop/dm/bran/brand.do?onlnBranCd=642001" class="tit">
+                    <a href="https://www.hddfs.com/shop/dm/bran/brand.do?onlnBranCd=638101" class="tit">
 						<span class="img">
-							<img src="https://cdn.hddfs.com/files/gd/20220919/82b6896b_202209191311588540.png?sf=webp" alt="CAVISH">
+							<img src="https://cdn.hddfs.com/files/gd/20220513/c1e5ba7f_202205131542549050.png?sf=webp" alt="LACOSTE">
 						</span>
 						<p>
-							카비시</p>
+							라코스테(의류)</p>
 					</a>
 					<ul>
                         <li>
                             <button class="b_notice heart-motion after_login "
-								onclick="javascript:likeMyBrand('663801', this);">
+								onclick="javascript:likeMyBrand('638101', this);">
                             	<img src="https://cdn.hddfs.com/front/images/KO/common/btn_like_r.png" alt="좋아요">
                             	<div class="motion_area" id="heart01_1"></div>
                             </button>
                         </li>
                         <li>
                             <button class="b_favorites " id="alarmBtn"
-								onclick="javascript:showBrandAlarmViewLayer('663801');">
+								onclick="javascript:showBrandAlarmViewLayer('638101');">
 								관심브랜드 알람
 							</button>
                         </li>
@@ -2172,21 +1833,21 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
                     </div>
                 <div class="basic_information">
                     <ul class="productcode">
-                        <li>REF NO : CV2CFUK680AIVM</li>
-                        <li>SKU NO : 566380400007</li>
+                        <li>REF NO : BF533E-52N02S036</li>
+                        <li>SKU NO : 563811207990</li>
                     </ul>
                     <div class="tel">
-                    	<a href="tel:02-3668-8189,8190">
+                    	<a href="tel:02-3668-8206">
                     				<strong>
                     					동대문점</strong>
                     				<span>
-                    					02-3668-8189,8190</span>
+                    					02-3668-8206</span>
                     			</a>
                     		</div>
                     </div>
                 <div class="product_view">
                     	<div>
-                        	<img alt="" src="https://cdn.hddfs.com/files/editor/20221209/296e498f_202212091043420650.jpg" style="height: 6477px; width: 1000px" /></div>
+                        	<img alt="" src="https://cdn.hddfs.com/files/editor/20221019/4f1f6cab_202210191009566940.jpg" style="height: 1131px; width: 1000px" /></div>
                     	<a href="javascript://" class="more">더보기</a>
                 	</div>
                 <div class="pro_notice">
@@ -2201,39 +1862,39 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
 	                    			<tbody>
 	                    				<tr>
 	                    							<th scope="row">제품소재</th>
-	                    							<td>WOOL 50% POLY 30%<br/>NYLON 20%</td>
+	                    							<td>NYLON 100%</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">색상</th>
-	                    							<td>IVORY</td>
+	                    							<td>02S</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">치수</th>
-	                    							<td>M</td>
+	                    							<td>036</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">제조자/수입자</th>
-	                    							<td>CAVISH</td>
+	                    							<td>동일드방레</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">세탁방법 및 취급시 주의사항</th>
-	                    							<td>상세페이지참조</td>
+	                    							<td>품질 경영 촉진법에 의한 품질 표시를 꼭 참조하시어 세탁하십시오.</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">제조연월일</th>
-	                    							<td>2022</td>
+	                    							<td>2022년 8월</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">품질보증기준</th>
-	                    							<td>전자상거래 소비자 보호법에 규정되어 있는 소비자 청약철회 가능범위를 준수합니다.</td>
+	                    							<td>제품이상 있을 시 구매시점 기준 1년, 교환/반품은 반드시 원래의 포장(박스,비닐 및 택)의 훼손이 없어야 하며 착용 흔적이 있는 경우 교환/반품에서 제외 될 수 있습니다.</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">A/S 책임자와 전화번호</th>
-	                    							<td>1566-0409</td>
+	                    							<td>02-3668-8206</td>
 	                    								</tr>
 	                    					<tr>
 	                    							<th scope="row">원산지</th>
-	                    							<td> KOREA</td>
+	                    							<td>KOREA</td>
 	                    								</tr>
 	                    					</tbody>
 	                    		</table>	
@@ -2500,14 +2161,14 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
             <div class="product_list01">
                 <dl class="product_type">
                     <dt>
-                        <span class="brand_name">카비시</span>
-                        <span class="tit">SCRIPT LOGO HALF ZIP KNIT SWEATER_IVORY_M</span>
+                        <span class="brand_name">라코스테(의류)</span>
+                        <span class="tit">여성 푸퍼 다운 점퍼 036</span>
                         <span class="price">
                             <span class="price_name">정상가<em>(오프라인 매장가)</em></span>
-                            <span class="off_line">$89(110,431원)</span>
+                            <span class="off_line">$370(460,761원)</span>
                         </span>
                         </dt>
-                    <dd><img src="https://cdn.hddfs.com/files/goos/6638/20221209/1dbcad73.JPG?sf=webp" alt="" title=""></dd>
+                    <dd><img src="https://cdn.hddfs.com/files/goos/6381/20221117/69343c11.jpg?sf=webp" alt="" title=""></dd>
                 </dl>
 
             </div>
@@ -2515,7 +2176,7 @@ $(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(${product.pp
                 <p class="attention">유의사항</p>
                 <ul class="dot_list">
                     <li>발송일 기준의 정보이므로, 가격 등의 정보가 변경되었을 수 있습니다.</li>
-                    <li>2023-01-12 발송되었으며, 기준환율 $1 = <em>1,240.8</em>입니다.</li>
+                    <li>2023-01-13 발송되었으며, 기준환율 $1 = <em>1,245.3</em>입니다.</li>
                 </ul>
             </div>
             <div class="mail_write mgtmm">
@@ -3677,7 +3338,7 @@ function dateChk(el,e){
     
     if("N" == "Y"){
         if(isLogin){
-            isHSharePtcp("56638040000701","N");
+            isHSharePtcp("56381120799001","N");
         }else{
         	$("#addHSharePtcp").show();
         }
@@ -3708,7 +3369,7 @@ function dateChk(el,e){
     	
 		//묶음 상품이 아닌 경우 주문 카트 표시
 		
-			changeOrderList("56638040000701", "1", "${goosDtl.goosNm}", "", "N");
+			changeOrderList("56381120799001", "1", "${goosDtl.goosNm}", "", "N");
 		
     	
         //HDDFS 리뉴얼 프로젝트 [쿠폰 다운로드 퍼블 변경]
@@ -4124,12 +3785,12 @@ function dateChk(el,e){
 		if(!checkIt(otherData)){
 			alert("입력되지 않은 정보가 있습니다!");
 			return;
-		}
+      	    	}
 		formData.append("items", JSON.stringify(otherData));
 		formData.append("repreFile", repre[0]);
 		for(let i = 0; i < another.length; i++){
 			formData.append("anotherFile" + i, another[i]);
-		}
+    	    }
 		$.ajax({
 			type :"POST",
 		    data : Data,
@@ -4140,14 +3801,14 @@ function dateChk(el,e){
 				if(param=='true'){
 					location.href="/cart/cartlist";
 					/* location.href="/cart/cartlist?mid="+${member.mid}; */
-				}
+    	}
 				
 				document.getElementById()
 				
 			},
 			fail : function(){
 				console.log("실패 ㅠ");
-			}
+    }
 		});
 	});
     
@@ -4178,7 +3839,7 @@ function dateChk(el,e){
             type        : "POST",
             cache       : false,
             data        : {
-                onlnGoosCd  : '56638040000701',
+                onlnGoosCd  : '56381120799001',
                 fromName    : $('input[name=sndrNm]').val(),
                 fromEmail   : $('input[name=sndrEml1]').val() + "@" + $('input[name=sndrEml2]').val(),
                 toName      : $('input[name=reciNm]').val(),
@@ -4288,9 +3949,9 @@ function dateChk(el,e){
     function createGrvwsList(page, photoYn, mbshNo){
         var sort    = photoYn == 'Y'? $('#photoGrvwsSort').val():$('#normalGrvwsSort').val();
         var searchCondi = {
-            onlnGoosCd:'56638040000701',
-            onlnBranCd: '663801',
-            goosCtgCd:'A04011',
+            onlnGoosCd:'56381120799001',
+            onlnBranCd: '638101',
+            goosCtgCd:'A12031',
             photoYn:photoYn,
             mbshNo:mbshNo,
             page:page,
@@ -4351,8 +4012,8 @@ function dateChk(el,e){
  	// 리뷰 평균평점 조작
     function changeTotalReview(){
     	var searchCondi = {
-                onlnGoosCd:'56638040000701',
-                goosCtgCd:'A04011',
+                onlnGoosCd:'56381120799001',
+                goosCtgCd:'A12031',
                 photoYn:''
         }
     	// 데이터 요청
@@ -4402,7 +4063,7 @@ function dateChk(el,e){
             type        : "POST",
             cache       : false,
             data        : {
-                onlnGoosCd:'56638040000701',
+                onlnGoosCd:'56381120799001',
                 photoYn:photoYn,
                 grvwsSeq:grvwsSeq
             },
@@ -4421,7 +4082,7 @@ function dateChk(el,e){
             login();
             return;
         }
-        var url     = ctx_shop + '/gd/dtl/addGoosGrvwsPop.do?onlnGoosCd=56638040000701&photoYn='+photoYn;
+        var url     = ctx_shop + '/gd/dtl/addGoosGrvwsPop.do?onlnGoosCd=56381120799001&photoYn='+photoYn;
         var name    = 'GoosGrvwsForm';
         var width   = 730;
         var height  = 850;
@@ -4433,7 +4094,7 @@ function dateChk(el,e){
             login();
             return;
         }
-        var url     = ctx_shop + '/gd/dtl/uptGoosGrvwsPop.do?onlnGoosCd=56638040000701&photoYn='+photoYn+"&grvwsSeq="+grvwsSeq;
+        var url     = ctx_shop + '/gd/dtl/uptGoosGrvwsPop.do?onlnGoosCd=56381120799001&photoYn='+photoYn+"&grvwsSeq="+grvwsSeq;
         var name    = 'GoosGrvwsForm';
         var width   = 730;
         var height  = 850;
@@ -4456,8 +4117,8 @@ function dateChk(el,e){
             type        : "POST",
             cache       : false,
             data        : {
-                onlnGoosCd:'56638040000701',
-                goosCtgCd:'A04011',
+                onlnGoosCd:'56381120799001',
+                goosCtgCd:'A12031',
                 photoYn:photoYn,
                 mbshNo:mbshNo,
                 sort:sort,
@@ -4668,38 +4329,38 @@ function dateChk(el,e){
         goos_status = '';	
     }
               	
-    if("03" == '02'){
-        cat = "03380205";
-        catL = "0338";
-        catM = "033802";
-        catS = "03380205";
-        catD = "03380205";
+    if("00" == '02'){
+        cat = "00070201";
+        catL = "0007";
+        catM = "000702";
+        catS = "00070201";
+        catD = "00070201";
         cateNm = "";
-        cateLNm = "무신사";
-        cateMNm = "BRAND";
-        cateSNm = "CAVISH";
+        cateLNm = "패션/잡화";
+        cateMNm = "여성의류";
+        cateSNm = "상의";
         cateDNm = "";
     }else{
-        cat = "03380205";
-        catL = "0338";
-        catM = "033802";
-        catS = "03380205";
+        cat = "00070201";
+        catL = "0007";
+        catM = "000702";
+        catS = "00070201";
         catD = "";
-        cateNm = "CAVISH";
-        cateLNm = "무신사";
-        cateMNm = "BRAND";
-        cateSNm = "CAVISH";
+        cateNm = "상의";
+        cateLNm = "패션/잡화";
+        cateMNm = "여성의류";
+        cateSNm = "상의";
         cateDNm = "";
      }
               	
-     name = "SCRIPT LOGO HALF ZIP KNIT SWEATER_IVORY_M";
-     code = "56638040000701";
-     amt = "77301";
-     prc = "110431";
-     salePrc = "77301";
+     name = "여성 푸퍼 다운 점퍼 036";
+     code = "56381120799001";
+     amt = "322532";
+     prc = "460761";
+     salePrc = "322532";
      img = "https://cdn.hddfs.com/files/";
-     brand = "663801";
-     brandNm = "카비시";
+     brand = "638101";
+     brandNm = "라코스테(의류)";
            	
               	groobee( "VG",{
               			goods :[
@@ -5228,7 +4889,7 @@ function openDRMOKWindow(type,goodsCd,qty,buynow,setGoosId, cartSeq , cartSetId,
     
     
     window.name = 'sendJsp';
-    DRMOK_window = window.open(url+'?cpid=hddfs&rtn_url=http://www.hddfs.com/shop/mm/mbshAuca/adultAuca.do?goosInfo='+goosInfo+'&req_info=X4xnQ9XoDcY1LWIXocDCouE7UCGpCqSKMqriIMRQQpy00ksLVI%2BWhFERWBxbJT%2BvFR8VCUxBE4yaJiaWloyFBJjpCTSP9fXKT2ShKzukh%2F2YynSYkPjJ6DhD5aN4sKmF50bRA%2BglxpzuHyVwl1ScP79GFyVtuKKfPRjeMBR87UWkWC3gptf5TSCf1sTViPA6TpgZolL8q88JQjFiERIZbmWk7VaTfC%2FArfNQ5i%2BhUvcJZs0lCqJyRjmQX1sCFRh9tDRkqGw6kWN8q0lQGrnQ2eJ4smskoqaOC9GegqXohCtt7IVdQQ4hb2Fl24BrDhugJIMQWdXy%2B3SgUm34LmUnSw%3D%3D', 'DRMOKWindow', 'width=425,height=550,scrollbars=no,toolbar=no,location=no,directories=no,status=no' );
+    DRMOK_window = window.open(url+'?cpid=hddfs&rtn_url=http://www.hddfs.com/shop/mm/mbshAuca/adultAuca.do?goosInfo='+goosInfo+'&req_info=FjYe3bJKqz2REMTtKPdpKuSbabmfboZQBtqPtMnPxk%2FaPFPSvbJaHTFV1%2BgojR5UrU8oVLshZNrqsajVGZ5EmLJAroJaMNAj%2FeuerPhH8pnHqhyArMwYU2zEGSdy28f8JLxKKaeCzhnWxaANJkOdN2iw1oXZLfbpdcTZ6ef2BeGfJ%2FilC4Nrn1TCo4l4e0PuyX0Szzi0zt55PNUkwxDlrWBNDSA7%2Fx%2FLmLWtYXSO1u25GjeNnBgigA9tOz7SQvfwbHU8tFMaMnvBI889jkpzhml6DNCK2w7vpKqbxhjUVBPEkg9dr5Rm0SGmdXljNkWwmyT3zkBkmzTCP4vnfoyKvw%3D%3D', 'DRMOKWindow', 'width=425,height=550,scrollbars=no,toolbar=no,location=no,directories=no,status=no' );
     DRMOK_window.focus();
 
     if(DRMOK_window == null){

@@ -11,6 +11,13 @@
 	<insert id="insertCart">
 		insert into cart values(seq_id.nextval,#{cartstock},to_date(sysdate,'yy/mm/dd'),#{mid})
 	</insert>
+	
+	<select id="">
+		select 
+		from cart c and product p and productimg i
+		where c.pcode=p.pcode and
+		
+	</select>
  
  
  </mapper>

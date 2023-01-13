@@ -26,6 +26,8 @@ public interface ProductService {
 
     //페이징처리 리스트조회
 	public List<ProductVO> getAjaxList(PageDTO pto);
+	
+	public ProductVO productdetail(String pcode);
  
 }
 
