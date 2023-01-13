@@ -6,7 +6,44 @@
 function prodOrder(str){
 	console.log("정렬방식: "+str);
 	location.href='/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
-} 
+}
+
+//필터설정 후 검색버튼눌렀을 때
+function goosSearchItemFilter(researchYn){
+	var html = "";
+	//쇼핑정보
+	var shopFilterLength = $("input[name='shopFilter']:checked").length;
+	if(shopFilterLength > 0){
+		$("#shoppingInfoFilterCnt").html( shopFilterLength > 0 ?  " "+shopFilterLength : "");
+		$(".shoppingInfoFilterCnt").show();
+		$(".shoppingInfoFilterCnt").find("button").show();
+	}else{
+		$("#shoppingInfoFilterCnt").html( shopFilterLength > 0 ?  " "+shopFilterLength : "");
+		$(".shoppingInfoFilterCnt").hide();
+		$(".shoppingInfoFilterCnt").find("button").hide();
+	}
+	$("input[name='shopFilter']:checked").each(function(){
+		var txt = $(this).next("label").text();
+		var pos = $(this).data("pos");
+		var filterId = $(this).attr("id");
+		console.log("filterId: "+filterId);
+		html+="<li>"+txt+" <button class='ic_x' data-id='"+this.id+"' data-name='"+this.name+"' data-pos='"+pos+"'  onclick=\"removeSearchItem(this,'"+this.id+"','"+this.name+"','"+pos+"');\">x</button></li>";
+	});
+	
+	$(".searchFilterArea").html(html);
+	if($(".searchFilterArea > li").length <1){
+		$(".sel_filter").hide();
+	}else{
+		$(".sel_filter").show();
+	}
+}
+
+//필터 초기화
+function goosSearchItemInit(reloadYn) {
+	 $("input[name='shopFilter']").prop("checked", false); // 쇼핑정보 초기화	
+     $("input[name='priceFilter']").prop("checked", false); // 가격 초기화
+     $(".sel_filter").hide();	//필터선택창 숨기기
+}
 </script>
 <main id="container">
 	<div class="location_all">
@@ -44,6 +81,7 @@ function prodOrder(str){
 						</c:forEach>
 					</ul>
 				</div>
+				
 				<c:if test="${category.cmedium ne ''}">
 				<div>
 					<c:choose>
@@ -171,41 +209,18 @@ function prodOrder(str){
 											class="filter_checkbox"
 											onclick="searchTabFocus('shopFilter',1);"> <label
 											for="filterSoldOutYn"><strong>품절 상품 제외</strong></label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterLgoosYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterLgoosYn">명품 브랜드 상품</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterPrlIptYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterPrlIptYn">병행 수입 상품</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterBigSaleYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterBigSaleYn">바겐 세일</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
+										</span>
+										<span> <input type="checkbox" name="shopFilter"
 											value="Y" id="filterNewGoosYn" data-pos="1"
 											class="filter_checkbox"
 											onclick="searchTabFocus('shopFilter',1);"> <label
 											for="filterNewGoosYn">신상품</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterCupYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterCupYn">쿠폰</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
+										</span>
+										<span> <input type="checkbox" name="shopFilter"
 											value="Y" id="filterDcYn" data-pos="1"
 											class="filter_checkbox"
 											onclick="searchTabFocus('shopFilter',1);"> <label
 											for="filterDcYn">세일</label>
-										</span> <span> <input type="checkbox" name="shopFilter"
-											value="Y" id="filterFregfYn" data-pos="1"
-											class="filter_checkbox"
-											onclick="searchTabFocus('shopFilter',1);"> <label
-											for="filterFregfYn">사은 행사</label>
 										</span>
 									</div>
 								</td>
@@ -286,7 +301,7 @@ function prodOrder(str){
 					</div>
 				</div>
 				<div class="sorting_wrap">
-					<!-- <span class="txt_total">총 <strong id="goosListTotCnt">454</strong>개</span> -->
+					<span class="txt_total">총 <strong id="goosListTotCnt">${totalProducts}</strong>개</span>
 					<!-- <input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt"
 						value="454"> <input type="hidden" name="reGoosListTotPage"
 						id="reGoosListTotPage" value="12"> <input type="hidden"
