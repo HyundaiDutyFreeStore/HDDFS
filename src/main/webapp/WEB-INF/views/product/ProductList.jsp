@@ -5,8 +5,16 @@
 <script>
 function prodOrder(str){
 	console.log("정렬방식: "+str);
-	location.href='/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
-}
+	location.href='/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
+	/* $.ajax({
+		url: "/list",
+		method: "GET",
+		data:"clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}"+"&order="+str,
+		success:function(data){
+			console.log("성공");
+		}
+	}); */
+} 
 
 //필터설정 후 검색버튼눌렀을 때
 function goosSearchItemFilter(researchYn){
@@ -55,14 +63,14 @@ function goosSearchItemInit(reloadYn) {
 				<div>
 					<strong>${category.clarge}</strong>
 					<ul style="display: none;">
-						<li><a href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어</a></li>
-						<li><a href="/list?clarge=메이크업&cmedium=&csmall=&order=">메이크업</a></li>
-						<li><a href="/list?clarge=향수/헤어/바디&cmedium=&csmall=&order=">향수/헤어/바디</a></li>
-						<li><a href="/list?clarge=가방/지갑&cmedium=&csmall=&order=">가방/지갑</a></li>
-						<li><a href="/list?clarge=패션/잡화&cmedium=&csmall=&order=">패션/잡화</a></li>
-						<li><a href="/list?clarge=스포츠/레저&cmedium=&csmall=&order=">스포츠/레저</a></li>
-						<li><a href="/list?clarge=전자/리빙&cmedium=&csmall=&order=">전자/리빙</a></li>
-						<li><a href="/list?clarge=식품&cmedium=&csmall=&order=">식품</a></li>
+						<li><a href="/product/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어</a></li>
+						<li><a href="/product/list?clarge=메이크업&cmedium=&csmall=&order=">메이크업</a></li>
+						<li><a href="/product/list?clarge=향수/헤어/바디&cmedium=&csmall=&order=">향수/헤어/바디</a></li>
+						<li><a href="/product/list?clarge=가방/지갑&cmedium=&csmall=&order=">가방/지갑</a></li>
+						<li><a href="/product/list?clarge=패션/잡화&cmedium=&csmall=&order=">패션/잡화</a></li>
+						<li><a href="/product/list?clarge=스포츠/레저&cmedium=&csmall=&order=">스포츠/레저</a></li>
+						<li><a href="/product/list?clarge=전자/리빙&cmedium=&csmall=&order=">전자/리빙</a></li>
+						<li><a href="/product/list?clarge=식품&cmedium=&csmall=&order=">식품</a></li>
 					</ul>
 				</div>
 
@@ -77,7 +85,7 @@ function goosSearchItemInit(reloadYn) {
 					</c:choose>
 					<ul style="display: none;">
 						<c:forEach items="${cateMedList}" var="cMed">
-							<li><a href="/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=&order=">${cMed}</a></li>
+							<li><a href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=&order=">${cMed}</a></li>
 						</c:forEach>
 					</ul>
 				</div>
@@ -94,7 +102,7 @@ function goosSearchItemInit(reloadYn) {
 					</c:choose>
 					<ul style="display: none;">
 						<c:forEach items="${cateSmallList}" var="cSmall">
-							<li><a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}&order=">${cSmall}</a></li>
+							<li><a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}&order=">${cSmall}</a></li>
 						</c:forEach>
 					</ul>
 				</div>
@@ -135,10 +143,10 @@ function goosSearchItemInit(reloadYn) {
 								<tr>
 									<c:choose>
 									<c:when test="${category.cmedium eq ''}">
-										<td><a href="/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
+										<td><a href="/product/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
 									</c:when>
 									<c:when test="${category.csmall eq ''}">
-										<td><a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
+										<td><a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
 									</c:when>
 									</c:choose>
 							</c:if>
@@ -157,10 +165,10 @@ function goosSearchItemInit(reloadYn) {
 							
 							<c:choose>
 							<c:when test="${category.cmedium eq ''}">
-								<td><a href="/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
+								<td><a href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
 							</c:when>
 							<c:otherwise>
-								<td><a href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
+								<td><a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
 							</c:otherwise>
 							</c:choose>
 							
@@ -329,7 +337,7 @@ function goosSearchItemInit(reloadYn) {
 									data-price="46886.0" data-priceus="37.0" data-stoc="46">
 									<label for="10079280002701_1">선택</label>
 							</span> <a
-								href="https://www.hddfs.com/shop/gd/dtl/goos.do?onlnGoosCd=10079280002701">
+								href="<c:url value='/product/Productdetail?pcode=${product.pcode }'/>">
 									<div class="img_w">
 										<img data-src="${product.img1}" src="${product.img1}"
 											alt="${product.pname}"
@@ -380,31 +388,27 @@ function goosSearchItemInit(reloadYn) {
 	<input type="hidden" class="realEnd" value="${pageMaker.realEnd}">
 
 	<c:if test="${pageMaker.prev}">
-		<a class="prev2"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=1">
+		<a class="prev2" href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=1">
 			<< </a>
 		<!-- 이전 버튼 -->
-		<a class="prev"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${pageMaker.startPage - 1}">Previous</a>
+		<a class="prev" href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.startPage - 1}">Previous</a>
 	</c:if>
 
 	<!-- 1~10 버튼 -->
 	<span class="num"> <c:forEach var="num"
 			begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-				<a
-					href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${num}"
+				<a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
 					class="pageBtn">${num}</a>
 			</c:if>
 		</c:forEach>
 	</span>  
 	<c:if test="${pageMaker.next}">
 		<!-- 다음 버튼 -->
-		<a
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${pageMaker.endPage +1}"
+		<a href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.endPage +1}"
 			class="next">Next</a>
 		<a class="next2"
-			href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&pageNum=${pageMaker.realEnd}">>></a>
+			href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${pageMaker.realEnd}">>></a>
 	</c:if>
 
 </div>
