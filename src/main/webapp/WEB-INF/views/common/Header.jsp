@@ -783,15 +783,21 @@ keyframes rotateSpinner { 0%{
 transform
 
 
+
+
 :
 
 
+
+
 rotate
+
+
 (
-
-
 360
 deg
+
+
 
 
 )
@@ -913,11 +919,17 @@ keyframes fb_mpn_landing_page_slide_out { 0%{
 border-radius
 
 
+
+
 :
+
+
 
 
 18
 px
+
+
 
 
 }
@@ -927,14 +939,22 @@ px
 border-radius
 
 
+
+
 :
+
+
 
 
 50%;
 margin
 
 
+
+
 :
+
+
 
 
 0
@@ -942,15 +962,23 @@ margin
 px
 
 
+
+
 ;
 width
+
+
 
 
 :
 
 
+
+
 60
 px
+
+
 
 
 }
@@ -967,11 +995,17 @@ keyframes fb_mpn_landing_page_slide_out_from_left { 0%{
 border-radius
 
 
+
+
 :
+
+
 
 
 18
 px
+
+
 
 
 }
@@ -981,29 +1015,43 @@ px
 border-radius
 
 
+
+
 :
+
+
 
 
 50%;
 left
 
 
+
+
 :
+
+
 
 
 12
 px
+
+
 ;
-
-
 width
+
+
 
 
 :
 
 
+
+
 60
 px
+
+
 
 
 }
@@ -1020,18 +1068,26 @@ keyframes fb_mpn_landing_page_slide_up { 0%{
 bottom
 
 
+
+
 :
+
+
 
 
 24
 px
+
+
 ;
-
-
 opacity
 
 
+
+
 :
+
+
 
 
 1
@@ -1049,14 +1105,22 @@ keyframes fb_mpn_bounce_in { 0%{
 opacity
 
 
+
+
 :
+
+
 
 
 1;
 top
 
 
+
+
 :
+
+
 
 
 0
@@ -1074,14 +1138,22 @@ keyframes fb_mpn_fade_out { 0%{
 bottom
 
 
+
+
 :
+
+
 
 
 0;
 opacity
 
 
+
+
 :
+
+
 
 
 0
@@ -1099,17 +1171,27 @@ keyframes fb_mpn_bounce_out { 0%{
 opacity
 
 
+
+
 :
 
 
+
+
 .5
+
+
 
 
 ;
 top
 
 
+
+
 :
+
+
 
 
 100%
@@ -1128,10 +1210,16 @@ keyframes fb_bounce_in_v2 { 0%{
 transform
 
 
+
+
 :
 
 
+
+
 scale
+
+
 
 
 (
@@ -1142,17 +1230,27 @@ scale
 .03
 
 
+
+
 );
 transform-origin
+
+
 
 
 :
 
 
+
+
 bottom
 
 
+
+
 right
+
+
 
 
 }
@@ -1162,17 +1260,27 @@ right
 opacity
 
 
+
+
 :
+
+
 
 
 1;
 transform
 
 
+
+
 :
 
 
+
+
 scale
+
+
 
 
 (
@@ -1183,13 +1291,21 @@ scale
 transform-origin
 
 
+
+
 :
+
+
 
 
 bottom
 
 
+
+
 right
+
+
 
 
 }
@@ -1207,10 +1323,16 @@ keyframes fb_bounce_in_from_left { 0%{
 transform
 
 
+
+
 :
 
 
+
+
 scale
+
+
 
 
 (
@@ -1221,17 +1343,27 @@ scale
 .03
 
 
+
+
 );
 transform-origin
+
+
 
 
 :
 
 
+
+
 bottom
 
 
+
+
 left
+
+
 
 
 }
@@ -1241,17 +1373,27 @@ left
 opacity
 
 
+
+
 :
+
+
 
 
 1;
 transform
 
 
+
+
 :
 
 
+
+
 scale
+
+
 
 
 (
@@ -1262,13 +1404,21 @@ scale
 transform-origin
 
 
+
+
 :
+
+
 
 
 bottom
 
 
+
+
 left
+
+
 
 
 }
@@ -1286,17 +1436,27 @@ keyframes fb_bounce_out_v2 { 0%{
 opacity
 
 
+
+
 :
+
+
 
 
 0;
 transform
 
 
+
+
 :
 
 
+
+
 scale
+
+
 
 
 (
@@ -1307,13 +1467,21 @@ scale
 transform-origin
 
 
+
+
 :
+
+
 
 
 bottom
 
 
+
+
 right
+
+
 
 
 }
@@ -1331,17 +1499,27 @@ keyframes fb_bounce_out_from_left { 0%{
 opacity
 
 
+
+
 :
+
+
 
 
 0;
 transform
 
 
+
+
 :
 
 
+
+
 scale
+
+
 
 
 (
@@ -1352,13 +1530,21 @@ scale
 transform-origin
 
 
+
+
 :
+
+
 
 
 bottom
 
 
+
+
 left
+
+
 
 
 }
@@ -1375,20 +1561,28 @@ keyframes slideInFromBottom { 0%{
 opacity
 
 
+
+
 :
+
+
 
 
 1;
 transform
 
 
+
+
 :
 
 
+
+
 translateY
+
+
 (
-
-
 0
 )
 }
@@ -1404,17 +1598,27 @@ keyframes slideInFromBottomDelay { 0%{
 opacity
 
 
+
+
 :
+
+
 
 
 0;
 transform
 
 
+
+
 :
 
 
+
+
 translateY
+
+
 
 
 (
@@ -1427,20 +1631,28 @@ translateY
 opacity
 
 
+
+
 :
+
+
 
 
 1;
 transform
 
 
+
+
 :
 
 
+
+
 translateY
+
+
 (
-
-
 0
 )
 }
@@ -1461,8 +1673,7 @@ translateY
 					<img id="mainLogo"
 						src="https://cdn.hddfs.com/front/images/KO/common/logo.png?RS=192X40"
 						alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE"
-						onclick="location.href='/'"
-						>
+						onclick="location.href='/'">
 				</h1>
 				<form name="searchHeader" id="searchHeader" method="get"
 					onsubmit="return false;">
@@ -2128,9 +2339,12 @@ translateY
 				</script>
 				<!-- 검색 레이어 영역 END-->
 				<div class="default_menu">
-					<a class="menu_login_join" href="javascript:" id="loginBtn"
-						onclick="login('');">로그인</a> <a class="menu_login_join"
-						href="https://www.hddfs.com/shop/mm/mbshJoin/join.do?MG=KR_PC_GNB_Signup">회원가입</a>
+					<c:if test="${member == null }">
+						<a class="menu_login_join" href="javascript:" id="loginBtn"
+							onclick="login('');">로그인</a>
+						<a class="menu_login_join"
+							href="../join/termsAgree/">회원가입</a>
+					</c:if>
 					<ul>
 						<li class="item_01"><a
 							href="https://www.hddfs.com/shop/or/order/listCart.do?MG=KR_PC_GNB_Cart"><strong>장바<br>구니

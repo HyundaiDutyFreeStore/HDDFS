@@ -21,6 +21,13 @@
 						onkeyup="f_enterLogin()">
 				</div>
 			</div>
+
+			<c:if test="${result == 0 }">
+				<div class="dang_type">
+					<p class="d_txt" id="login_warn" style="color:red">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</p>
+				</div>
+			</c:if>
+
 			<div class="id_save">
 				<span class="checkbox small"> <input type="checkbox"
 					name="saveId" id="umbSaveId" value="Y"> <label
