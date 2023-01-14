@@ -1,9 +1,6 @@
 package com.hyundai.dutyfree.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyundai.dutyfree.service.CartService;
 import com.hyundai.dutyfree.vo.CartVO;
-import com.hyundai.dutyfree.vo.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -47,8 +43,8 @@ public class CartController {
 
 	      // 장바구니 담기 실시
 	      cartservice.insertCart(cart);
-	      
 		 return "success:"/* +count */;
+
 		 
 
 		}

@@ -53,6 +53,7 @@ public class MemberController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 
@@ -75,41 +76,48 @@ public class MemberController {
 
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
 	public String joinsecPOST() throws Exception {
-		return "redirect:/mbshInformation";
+		return "redirect:/join/mbshInformation";
 	}
 
 	// 회원 정보 입력 페이지 이동
 	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
-	public void joinGET() {
+	public void joinGET(@RequestParam("email_fir") String email_fir, @RequestParam("email_sec") String email_sec,
+			Model model) {
+		String email = email_fir + email_sec;
+		model.addAttribute("email", email);
 		logger.info("회원가입 3 페이지 진입");
 	}
 
 	// 회원가입
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception {
+		logger.info("회원가입 진입");
+		
+		System.out.println("제발 출력좀" + member.toString());
 
 		String rawPw = ""; // 인코딩 전 비밀번호
 		String encodePw = ""; // 인코딩 후 비밀번호
 		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+		System.out.println(rawPw);
 		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
 		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-
-		/* 회원가입 쿼리 실행 */
+		// 회원가입 쿼리 실행
 		memberservice.memberJoin(member);
 
-		return "redirect:/Signup";
+		logger.info("회원가입성공");
+		return "redirect:/join/done";
 
 	}
 
 	// 회원가입 최종 페이지 이동
-	@RequestMapping(value = "Signup", method = RequestMethod.GET)
+	@RequestMapping(value = "done", method = RequestMethod.GET)
 	public void joinfianlGET() {
 
 		logger.info("회원가입 최종 페이지 진입");
 
 	}
 
-	@RequestMapping(value = "/Signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/done", method = RequestMethod.POST)
 	public String joinfinalPOST() throws Exception {
 		return "redirect:/";
 	}
@@ -121,7 +129,7 @@ public class MemberController {
 		logger.info("멤버업데이트 페이지 진입");
 
 	}
-	
+
 	/* 이메일 인증 */
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
 	@ResponseBody
@@ -341,14 +349,6 @@ public class MemberController {
 		model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
 		model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
 		model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
-
-	}
-
-	// qna 페이지 이동
-	@RequestMapping(value = "qnaMain", method = RequestMethod.GET)
-	public void qnaMainGET() {
-
-		logger.info("qna 페이지 진입");
 
 	}
 }
