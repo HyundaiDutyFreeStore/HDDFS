@@ -88,7 +88,7 @@
 					</div>
 
 					<div class="join_row" id="divMbshHnglNm">
-						<input type="text" id="name" name="mname" value=""
+						<input type="text" id="name" name="mname" required
 							placeholder="성명" maxlength="50"
 							style="text-transform: uppercase;">
 					</div>

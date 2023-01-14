@@ -92,7 +92,7 @@ public class MemberController {
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception {
 		logger.info("회원가입 진입");
-		
+
 		System.out.println("제발 출력좀" + member.toString());
 
 		String rawPw = ""; // 인코딩 전 비밀번호
@@ -217,7 +217,7 @@ public class MemberController {
 
 	}
 
-	// 로그인 페이지 이동
+	// 아이디 찾기 이동
 	@RequestMapping(value = "findID", method = RequestMethod.GET)
 	public void findIDGET() {
 
@@ -247,7 +247,7 @@ public class MemberController {
 	}
 
 	/* 로그인 */
-	@RequestMapping(value = "login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
 
 		HttpSession session = request.getSession();
@@ -270,16 +270,19 @@ public class MemberController {
 			} else {
 
 				rttr.addFlashAttribute("result", 0);
-				return "redirect:/member/login"; // 로그인 페이지로 이동
+				System.out.println("비번틀림");
+				return "redirect:/join/login"; // 로그인 페이지로 이동
 
 			}
 
 		} else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
 
 			rttr.addFlashAttribute("result", 0);
-			return "redirect:/member/login"; // 로그인 페이지로 이동
+			System.out.println("아이디 없음");
+			return "redirect:/join/login"; // 로그인 페이지로 이동
 
 		}
+
 	}
 
 	/* 아이디 찾기 */
@@ -329,16 +332,15 @@ public class MemberController {
 
 	/* 메인페이지 로그아웃 */
 	/* 비동기방식 로그아웃 메서드 */
-	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
-	@ResponseBody
-	public void logoutPOST(HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	public String logoutPOST(HttpServletRequest request) throws Exception {
 
-		logger.info("비동기 로그아웃 메서드 진입");
+		logger.info("로그아웃");
 
 		HttpSession session = request.getSession();
 
 		session.invalidate();
-
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
