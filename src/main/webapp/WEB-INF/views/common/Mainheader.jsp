@@ -5,10 +5,12 @@
 	<section class="box">
 		<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
 		<!-- <h1 onclick="goMainPage();" style="cursor: pointer;">HYUNDAI DEPARTMENT SHOP - DUTY FREE</h1> -->
-		<h1 onclick="goMainPage();" style="cursor: pointer;">
+		<h1 style="cursor: pointer;">
 			<img id="mainLogo"
 				src="https://cdn.hddfs.com/front/images/KO/common/logo.png?RS=192X40"
-				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE">
+				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE"
+				onclick="location.href='/'"
+				>
 		</h1>
 		<form name="searchHeader" id="searchHeader" method="get"
 			onsubmit="return false;">
