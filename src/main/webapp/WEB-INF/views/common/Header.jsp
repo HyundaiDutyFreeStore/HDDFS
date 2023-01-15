@@ -785,7 +785,15 @@ transform
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -793,9 +801,17 @@ transform
 rotate
 
 
+
+
+
+
 (
 360
 deg
+
+
+
+
 
 
 
@@ -921,13 +937,25 @@ border-radius
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
 
 18
 px
+
+
+
+
 
 
 
@@ -941,7 +969,15 @@ border-radius
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -952,7 +988,15 @@ margin
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -964,8 +1008,16 @@ px
 
 
 
+
+
+
+
 ;
 width
+
+
+
+
 
 
 
@@ -975,8 +1027,16 @@ width
 
 
 
+
+
+
+
 60
 px
+
+
+
+
 
 
 
@@ -997,13 +1057,25 @@ border-radius
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
 
 18
 px
+
+
+
+
 
 
 
@@ -1017,7 +1089,15 @@ border-radius
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1028,7 +1108,15 @@ left
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1037,8 +1125,16 @@ left
 px
 
 
+
+
+
+
 ;
 width
+
+
+
+
 
 
 
@@ -1048,8 +1144,16 @@ width
 
 
 
+
+
+
+
 60
 px
+
+
+
+
 
 
 
@@ -1070,7 +1174,15 @@ bottom
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1079,13 +1191,25 @@ bottom
 px
 
 
+
+
+
+
 ;
 opacity
 
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1107,7 +1231,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1118,7 +1250,15 @@ top
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1140,7 +1280,15 @@ bottom
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1151,7 +1299,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1173,12 +1329,24 @@ opacity
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 .5
+
+
+
+
 
 
 
@@ -1189,7 +1357,15 @@ top
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1212,12 +1388,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 scale
+
+
+
+
 
 
 
@@ -1232,8 +1420,16 @@ scale
 
 
 
+
+
+
+
 );
 transform-origin
+
+
+
+
 
 
 
@@ -1243,12 +1439,24 @@ transform-origin
 
 
 
+
+
+
+
 bottom
 
 
 
 
+
+
+
+
 right
+
+
+
+
 
 
 
@@ -1262,7 +1470,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1273,12 +1489,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 scale
+
+
+
+
 
 
 
@@ -1293,7 +1521,15 @@ transform-origin
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1303,7 +1539,15 @@ bottom
 
 
 
+
+
+
+
 right
+
+
+
+
 
 
 
@@ -1325,12 +1569,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 scale
+
+
+
+
 
 
 
@@ -1345,8 +1601,16 @@ scale
 
 
 
+
+
+
+
 );
 transform-origin
+
+
+
+
 
 
 
@@ -1356,12 +1620,24 @@ transform-origin
 
 
 
+
+
+
+
 bottom
 
 
 
 
+
+
+
+
 left
+
+
+
+
 
 
 
@@ -1375,7 +1651,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1386,12 +1670,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 scale
+
+
+
+
 
 
 
@@ -1406,7 +1702,15 @@ transform-origin
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1416,7 +1720,15 @@ bottom
 
 
 
+
+
+
+
 left
+
+
+
+
 
 
 
@@ -1438,7 +1750,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1449,12 +1769,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 scale
+
+
+
+
 
 
 
@@ -1469,7 +1801,15 @@ transform-origin
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1479,7 +1819,15 @@ bottom
 
 
 
+
+
+
+
 right
+
+
+
+
 
 
 
@@ -1501,7 +1849,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1512,12 +1868,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 scale
+
+
+
+
 
 
 
@@ -1532,7 +1900,15 @@ transform-origin
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1542,7 +1918,15 @@ bottom
 
 
 
+
+
+
+
 left
+
+
+
+
 
 
 
@@ -1563,7 +1947,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1574,12 +1966,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 translateY
+
+
+
+
 
 
 (
@@ -1600,7 +2004,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1611,12 +2023,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 translateY
+
+
+
+
 
 
 
@@ -1633,7 +2057,15 @@ opacity
 
 
 
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -1644,12 +2076,24 @@ transform
 
 
 
+
+
+
+
 :
 
 
 
 
+
+
+
+
 translateY
+
+
+
+
 
 
 (
@@ -2334,7 +2778,10 @@ translateY
 						//}
 
 						$(".adsearch_dim").hide();
-
+						/* gnb_area 로그아웃 버튼 작동 */
+						$("#gnb_logout_button").click(function() {
+							alert("버튼 작동");
+						});
 					}
 				</script>
 				<!-- 검색 레이어 영역 END-->
@@ -2342,8 +2789,10 @@ translateY
 					<c:if test="${member == null }">
 						<a class="menu_login_join" href="javascript:" id="loginBtn"
 							onclick="login('');">로그인</a>
-						<a class="menu_login_join"
-							href="../join/termsAgree/">회원가입</a>
+						<a class="menu_login_join" href="../join/termsAgree/">회원가입</a>
+					</c:if>
+					<c:if test="${member != null }">
+						<a class="menu_login_join" id="logoutBtn" href="/join/logout.do">로그아웃</a>
 					</c:if>
 					<ul>
 						<li class="item_01"><a
@@ -2352,8 +2801,7 @@ translateY
 						<li class="item_02"><a
 							href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 							</strong></a></li>
-						<li class="item_03"><a rel="nosublink"
-							href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do?MG=KR_PC_GNB_MyHyundia"><strong>마이<br>현대
+						<li class="item_03"><a rel="nosublink" href="../join/Mypage/"><strong>마이<br>현대
 							</strong></a></li>
 						<li class="item_04"><a
 							href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터
