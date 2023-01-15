@@ -24,22 +24,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberVO {
-    private String mid; // 회원 id
-    private String mpassword; // 회원 pw
-    private String memail; // 회원 이메일
-    private String mphone; // 회원 전화번호
-    private String mname; // 회원 이름
-    private int mhpoint; // mpoint
-    private Date mregdate; // 회원가입 날짜
-    private String mgrade; // 회원 등급
-    private String mgender; // 회원 성별
-    private Date mbirth; // 회원 생일
+	private String mid; // 회원 id
+	private String mpassword; // 회원 pw
+	private String memail; // 회원 이메일
+	private String mphone; // 회원 전화번호
+	private String mname; // 회원 이름
+	private int mhpoint; // mpoint
+	private Date mregdate; // 회원가입 날짜
+	private String mgrade; // 회원 등급
+	private String mgender; // 회원 성별
 
-    @Override
-    public String toString() {
-        return "MemberVO [mid=" + mid + ", mpassword=" + mpassword + ", memail=" + memail
-                + ", mphone=" + mphone + ", mname=" + mname + ", mhpoint=" + mhpoint + ", mregdate=" + mregdate
-                + ", mgrade=" + mgrade + ", mgender=" + mgender + ", mbirth=" + mbirth + "]";
-    }
+	@Override
+	public String toString() {
+		return "MemberVO [mid=" + mid + ", mpassword=" + mpassword + ", memail=" + memail + ", mphone=" + mphone
+				+ ", mname=" + mname + ", mhpoint=" + mhpoint + ", mregdate=" + mregdate + ", mgrade=" + mgrade
+				+ ", mgender=" + mgender + "]";
+	}
 
 }

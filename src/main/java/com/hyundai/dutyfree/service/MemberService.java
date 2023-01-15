@@ -3,16 +3,15 @@ package com.hyundai.dutyfree.service;
 import com.hyundai.dutyfree.vo.MemberVO;
 
 /**
- * MemberMepper
+ * MemberService
  *
- * @author 김찬중, 이준석
- * @since 10.06
+ * @author 김찬중
+ * @since 01.12
  *
  *        <pre>
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
- * 2022.10.05	  이준석			최초 생성, 리스트 테스트 코드 작성
- * 2022.10.07	  이준석			로그인 작성
+ * 2023.01.12	 김찬중			최초 생성
  *        </pre>
  */
 public interface MemberService {

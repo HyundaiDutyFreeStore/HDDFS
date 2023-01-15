@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <header id="header">
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+		crossorigin="anonymous"></script>
 	<section class="box">
 		<a href="javascript:" class="btn_gnb">Navigation Drawer</a>
 		<!-- <h1 onclick="goMainPage();" style="cursor: pointer;">HYUNDAI DEPARTMENT SHOP - DUTY FREE</h1> -->
-		<h1 onclick="goMainPage();" style="cursor: pointer;">
+		<h1 style="cursor: pointer;">
 			<img id="mainLogo"
 				src="https://cdn.hddfs.com/front/images/KO/common/logo.png?RS=192X40"
-				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE">
+				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE"
+				onclick="location.href='/'">
 		</h1>
 		<form name="searchHeader" id="searchHeader" method="get"
 			onsubmit="return false;">
@@ -642,12 +647,24 @@
 				$(".adsearch_dim").hide();
 
 			}
+			
+			 /* gnb_area 로그아웃 버튼 작동 */
+		    $("#gnb_logout_button").click(function(){
+		        alert("버튼 작동");
+		    });
+			
 		</script>
 		<!-- 검색 레이어 영역 END-->
 		<div class="default_menu">
-			<a class="menu_login_join" href="javascript:" id="loginBtn"
-				onclick="login('');">로그인</a> <a class="menu_login_join"
-				href="https://www.hddfs.com/shop/mm/mbshJoin/join.do?MG=KR_PC_GNB_Signup">회원가입</a>
+			<c:if test="${member == null }">
+				<a class="menu_login_join" id="loginBtn" href="../join/login/">로그인</a>
+				<a id="menu_login_join" class="menu_login_join"
+					href="../join/termsAgree/">회원가입</a>
+			</c:if>
+			<c:if test="${member != null }">
+				<a class="menu_login_join" id="logoutBtn" href="/join/logout.do">로그아웃</a>
+			</c:if>
+
 			<ul>
 				<li class="item_01"><a
 					href="https://www.hddfs.com/shop/or/order/listCart.do?MG=KR_PC_GNB_Cart"><strong>장바<br>구니
@@ -656,7 +673,7 @@
 					href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 					</strong></a></li>
 				<li class="item_03"><a rel="nosublink"
-					href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do?MG=KR_PC_GNB_MyHyundia"><strong>마이<br>현대
+					href="../join/Mypage/"><strong>마이<br>현대
 					</strong></a></li>
 				<li class="item_04"><a
 					href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터
@@ -864,31 +881,6 @@
 						});
 			}
 
-			//쿠폰 다운로드
-			function issueHiddenCoupon(cupId) {
-				var lgcpBuyMbshGrpCd = '';
-				var mbshGrpNm = '';
-
-				// 로그인 체크
-				if (!isLogin) {
-					alert('로그인 후 이용 가능합니다.'); /*로그인 후 이용 가능합니다.*/
-					login();
-					return;
-				}
-
-				if (lgcpBuyMbshGrpCd == "MG" || mbshGrpNm == "MG") {
-					alert('본 쿠폰은 현대백화점면세점 일반 회원만 다운로드 및 사용할 수 있습니다.'); /*본 쿠폰은 현대백화점면세점 일반 회원만 다운로드 및 사용할 수 있습니다.*/
-					return;
-				}
-
-				issueCoupon(cupId, function(data) {
-					if (data.resultCode == 1) {
-						alert('쿠폰이 다운로드 되었습니다.'); /*쿠폰이 다운로드 되었습니다.*/
-					} else {
-						alert(data.message);
-					}
-				});
-			}
 
 			// 적립금 다운로드
 			function issueHiddenSvmt(svmtId, baseRsvgAmt) {
@@ -899,11 +891,6 @@
 						alert(data.message);
 					}
 				});
-			}
-
-			// 이벤트 혜택받기
-			function getHiddenMenuEvntBnef(evntId) {
-				addEvnt(evntId);
 			}
 		</script>
 
@@ -1020,8 +1007,7 @@
 			<ul class="depth_01">
 				<li><strong>전체서비스</strong>
 					<ul class="depth_02 serviceMenu">
-						<li><a href="https://www.hddfs.com/shop/op/sale/saleShop.do">
-								세일</a></li>
+						<li><a href="/product/productlist"> 세일</a></li>
 						<li><a href="https://www.hddfs.com/shop/dm/best/weekly.do">
 								베스트</a></li>
 						<li><a href="https://www.hddfs.com/event/op/evnt/evntShop.do">
@@ -1052,6 +1038,28 @@
 					</ul></li>
 				<li><strong>카테고리</strong>
 					<ul class="depth_02 serviceCtgList"></ul></li>
+
+				<li data-ctgid="ctg0001" class="open"><strong>스킨케어</strong>
+					<ul class="depth_03" style="display: block;">
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어 전체보기</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
+						<li><a rel="nosublink"
+							href="/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
+					</ul></li>
+
+
 				<li><strong>공식스토어</strong>
 					<ul class="depth_02 gnb_luxury luxuryAreaList">
 						<li><a
