@@ -1057,21 +1057,21 @@
 				<li data-ctgid="ctg0001" class="open"><strong>스킨케어</strong>
 					<ul class="depth_03" style="display: block;">
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어
+							href="/product/list?clarge=스킨케어&cmedium=&csmall=">스킨케어
 								전체보기</a></li>
-						<li><a rel="nosublink" href="/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
+						<li><a rel="nosublink" href="/product/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
 					</ul></li>
 
 

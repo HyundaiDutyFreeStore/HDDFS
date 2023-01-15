@@ -10,23 +10,20 @@ import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 public interface ProductMapper {
+	
+	//목록띄우기
+	public List<ProductVO> getList(HashMap<String, Object> listMap);
+	
+	//조건에 맞는 총 상품개수
+	public int getTotal(HashMap<String, Object> listMap);
 
-	public List<ProductVO> getFilterList(HashMap<String, Object> listMap);
-	public int getTotal2(HashMap<String, Object> listMap);
-
-	// 카테고리별 상품리스트
-	public List<ProductVO> getList(Criteria cri, @Param("clarge") String clarge, @Param("cmedium") String cmedium,
-			@Param("csmall") String csmall, @Param("porder") String order);
-
-	// 카테고리별 상품 총 개수
-	public int getTotal(@Param("clarge") String clarge, @Param("cmedium") String cmedium,
-			@Param("csmall") String csmall, @Param("keyword") String keyword);
-
-	public int CategoryCnt(String keyword);
-
+	//해당 대분류의 중분류 가져오기
 	public List<String> getMedCategory(String clarge);
 
+	//해당 중분류의 소분류 가져오기
 	public List<String> getSmallCategory(String cmedium);
+	
+	//상품디테일
+	public ProductVO productdetail(String pcode);
 
-	public List<ProductVO> getAjaxList(PageDTO pto);
 }

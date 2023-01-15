@@ -3,14 +3,15 @@
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <!-- 정렬방식 선택시 이동 -->
 <script>
-
+const Presenturl = new URL(window.location.href);
+const urlParams = Presenturl.searchParams;
 //상품목록 리로드
 function prodLoad(Purl,page){
 	console.log("prodLoad함수 인자 url: "+Purl);
 	var productArr;
 	$.ajax({
 		type : 'GET',
-		url : "/filter?"+Purl,
+		url : "/product/filter?"+Purl,
 		data : {pageNum : page},
 		success: function(data){
 			console.log("ajax성공");
@@ -92,16 +93,21 @@ function prodLoad(Purl,page){
 	
 }
 
-//가격 직접 입력 클릭 시 
+//가격필터는 한가지 종류만 선택가능 (직접입력 / 필터선택)
 $(function(){
+	//가격 직접 입력 클릭 시 가격필터선택 초기화
 	$("#priceFilterStr,#priceFilterEnd").on("focus", function(){
-		$("input[name='priceFilter']").prop("checked",false);		// 가격필터선택 초기화
+		$("input[name='priceFilter']").prop("checked",false);		
 	});
 	
-	/* $(".filter_checkbox").on("checked",function(){
-		alert("필터체크되어잇음");
-	}); */
-	
+	//가격 필터 선택시 가격 직접입력 초기화
+	$("input[name='priceFilter']").on('click', function() {
+	      if ($(this).prop('checked') ) {
+	    	//가격직접 입력 초기화
+	    	$("input[name=priceFilterStr]").val(0);
+	    	$("input[name=priceFilterEnd]").val(0);
+	      }
+	  });
 });
 
 //필터선택된거 체크
@@ -163,8 +169,11 @@ function prodOrder(str){
 
 //필터설정 후 검색버튼눌렀을 때
 function goosSearchItemFilter(researchYn){
+	//선택된 필터 표시할 html
 	var html = "";
-	//쇼핑정보
+	
+	//-----------쇼핑정보 필터------------------
+	//쇼핑정보 필터선택개수 표시
 	var shopFilterLength = $("input[name='shopFilter']:checked").length;
 	if(shopFilterLength > 0){
 		$("#shoppingInfoFilterCnt").html( shopFilterLength > 0 ?  " "+shopFilterLength : "");
@@ -175,67 +184,59 @@ function goosSearchItemFilter(researchYn){
 		$(".shoppingInfoFilterCnt").hide();
 		$(".shoppingInfoFilterCnt").find("button").hide();
 	}
-	//var filterList = [];
-	var filterList2 = "";
+	//적용한 필터 표시
 	$("input[name='shopFilter']:checked").each(function(){
 		var txt = $(this).next("label").text();
 		var pos = $(this).data("pos");
 		var filterId = $(this).attr("id");
-		console.log("filterId: "+filterId);
-		if(filterId=="filterSoldOutYn"){
-			filterList2 += "X"
-		}
-		if(filterId=="filterNewGoosYn"){
-			filterList2 += "N"
-		}
-		if(filterId=="filterDcYn"){
-			filterList2 += "S"
-		}
-		//filterList.push(filterId);
-		html+="<li>"+txt+" <button class='ic_x' data-id='"+this.id+"' data-name='"+this.name+"' data-pos='"+pos+"'  onclick=\"removeSearchItem(this,'"+this.id+"','"+this.name+"','"+pos+"');\">x</button></li>";
+		//html+="<li>"+txt+" <button class='ic_x' data-id='"+this.id+"' data-name='"+this.name+"' data-pos='"+pos+"'onclick=\"removeSearchItem(this,'"+this.id+"','"+this.name+"','"+pos+"');\">x</button></li>";
+		html+="<li>"+txt+"</li>";
 	});
-	var Purl = 'clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&type='+filterList2;
 	
+	//----------- 가격 필터------------------
 	//가격 직접 입력
 	var strPrice = parseInt($("#priceFilterStr").val());
 	var endPrice = parseInt($("#priceFilterEnd").val());
-	//값이 null일때
 	var strPrice2 = $("#priceFilterStr").val();
 	var endPrice2 = $("#priceFilterEnd").val();
-	
+	//가격 직접 입력시 유효성검사
 	if(strPrice > endPrice || strPrice2 == null || endPrice2 == null || strPrice2 == "" || endPrice2 == ""){
 			alert("가격범위를 다시 확인해주세요."); /* 가격범위를 다시 확인해주세요.*/
 			return false;
 	}
+	//가격직접입력 적용한 필터 표시
 	if(strPrice>=0 && endPrice>0){
-		alert("가격직접입력");
-		Purl += '&priceS='+strPrice2 +'&priceE='+endPrice2;
-	html+="<li>$"+strPrice2+"~"+endPrice2+" <button class='ic_x' data-id='"+this.id+"' data-name='"+this.name+"' data-str='"+strPrice2+"' data-end='"+endPrice2+"' onclick=\"removeSearchItem(this);\">x</button></li>";
+		html+="<li>$"+strPrice2+"~"+endPrice2+"</li>";
 	}
 	
-	
-	//가격필터
+	//가격 필터선택개수 표시
 	var priceFilterLength = $("input[name='priceFilter']:checked").length;
-	if(priceFilterLength>0){
-		var priceFilter = "";
-		$("input[name='priceFilter']:checked").each(function(){
-			var txt = $(this).next("label").text();
-			var pos = $(this).data("pos");
-			var priceLevel = $(this).val();
-			console.log("가격필터: "+priceLevel);
-			priceFilter += priceLevel;
-			html+="<li>"+txt+" <button class='ic_x' data-id='"+this.id+"' data-name='"+this.name+"' data-pos='"+pos+"'  onclick=\"removeSearchItem();\">x</button></li>";
-		});
-		Purl += '&priceFilter=' + priceFilter; 
+	if(priceFilterLength > 0){
+		$("#priceFilterCnt").html( priceFilterLength > 0 ?  " "+priceFilterLength : "");
+		$(".priceFilterCnt").show();
+		$(".priceFilterCnt").find("button").show();
+	}else{
+		$("#priceFilterCnt").html( priceFilterLength > 0 ?  " "+priceFilterLength : "");
+		$(".priceFilterCnt").hide();
+		$(".priceFilterCnt").find("button").hide();
 	}
+
+	//가격필터 적용한 필터 표시
+	$("input[name='priceFilter']:checked").each(function(){
+		var txt = $(this).next("label").text();
+		var pos = $(this).data("pos");
+		var priceLevel = $(this).val();
+		html+="<li>"+txt+"</li>";
+	});
+
+	//현재URL(카테고리선택)+필터적용 새 url만들기
+	var Purl = urlParams+filterChk();
+
 	
-	/* const urlParams = new URL(location.href).searchParams;
-	console.log('urlParams: '+urlParams); */
-	
-	//필터에 맞춰 목록다시띄우기
+	//필터에 맞춰 상품목록 다시 띄우기
 	prodLoad(Purl,1);
 	
-	
+	//적용된 필터 표시하기
 	$(".searchFilterArea").html(html);
 	if($(".searchFilterArea > li").length <1){
 		$(".sel_filter").hide();
@@ -246,32 +247,46 @@ function goosSearchItemFilter(researchYn){
 
 //필터 초기화
 function goosSearchItemInit(reloadYn) {
-	 $("input[name='shopFilter']").prop("checked", false); // 쇼핑정보 초기화	
-     $("input[name='priceFilter']").prop("checked", false); // 가격 초기화
-     $(".sel_filter").hide();	//필터선택창 숨기기
-     var purl = 'clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}';
-     prodLoad(purl,1);
+	 $("input[name='shopFilter']").prop("checked", false); // 쇼핑정보 체크표시 초기화	
+     $("input[name='priceFilter']").prop("checked", false); // 가격 체크표시 초기화
+     
+     //가격직접 입력 초기화
+     $("input[name=priceFilterStr]").val(0);
+	 $("input[name=priceFilterEnd]").val(0);
+	
+     //쇼핑정보 필터선택개수 초기화
+     $(".shoppingInfoFilterCnt").hide();
+	 $(".shoppingInfoFilterCnt").find("button").hide();
+	//가격정보 필터선택개수 초기화
+     $(".priceFilterCnt").hide();
+	 $(".priceFilterCnt").find("button").hide();
+	
+	//적용된 필터보여주는 창 숨기기
+     $(".sel_filter").hide();
+	
+	//카테고리 적용만 된 url(필터초기화)로 상품목록 리로드
+     prodLoad(urlParams,1);
 }
     
 </script>
 <main id="container">
 	<div class="location_all">
 		<article class="location">
-			<!-- 이동네비게이션, 모든대분류 + 선택한카테고리의 중/소분류 링크 -->
+			<!-- #######################이동네비게이션 S, 모든대분류 + 선택한카테고리의 중/소분류 링크 ####################### -->
 			<section class="box">
 				<a href="/" class="home">홈</a>
 
 				<div>
 					<strong>${category.clarge}</strong>
 					<ul style="display: none;">
-						<li><a href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어</a></li>
-						<li><a href="/list?clarge=메이크업&cmedium=&csmall=&order=">메이크업</a></li>
-						<li><a href="/list?clarge=향수/헤어/바디&cmedium=&csmall=&order=">향수/헤어/바디</a></li>
-						<li><a href="/list?clarge=가방/지갑&cmedium=&csmall=&order=">가방/지갑</a></li>
-						<li><a href="/list?clarge=패션/잡화&cmedium=&csmall=&order=">패션/잡화</a></li>
-						<li><a href="/list?clarge=스포츠/레저&cmedium=&csmall=&order=">스포츠/레저</a></li>
-						<li><a href="/list?clarge=전자/리빙&cmedium=&csmall=&order=">전자/리빙</a></li>
-						<li><a href="/list?clarge=식품&cmedium=&csmall=&order=">식품</a></li>
+						<li><a href="/product/list?clarge=스킨케어&cmedium=&csmall=">스킨케어</a></li>
+						<li><a href="/product/list?clarge=메이크업&cmedium=&csmall=">메이크업</a></li>
+						<li><a href="/product/list?clarge=향수/헤어/바디&cmedium=&csmall=">향수/헤어/바디</a></li>
+						<li><a href="/product/list?clarge=가방/지갑&cmedium=&csmall=">가방/지갑</a></li>
+						<li><a href="/product/list?clarge=패션/잡화&cmedium=&csmall=">패션/잡화</a></li>
+						<li><a href="/product/list?clarge=스포츠/레저&cmedium=&csmall=">스포츠/레저</a></li>
+						<li><a href="/product/list?clarge=전자/리빙&cmedium=&csmall=">전자/리빙</a></li>
+						<li><a href="/product/list?clarge=식품&cmedium=&csmall=">식품</a></li>
 					</ul>
 				</div>
 
@@ -287,7 +302,7 @@ function goosSearchItemInit(reloadYn) {
 					<ul style="display: none;">
 						<c:forEach items="${cateMedList}" var="cMed">
 							<li><a
-								href="/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=&order=">${cMed}</a></li>
+								href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=">${cMed}</a></li>
 						</c:forEach>
 					</ul>
 				</div>
@@ -305,18 +320,19 @@ function goosSearchItemInit(reloadYn) {
 						<ul style="display: none;">
 							<c:forEach items="${cateSmallList}" var="cSmall">
 								<li><a
-									href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}&order=">${cSmall}</a></li>
+									href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}">${cSmall}</a></li>
 							</c:forEach>
 						</ul>
 					</div>
 				</c:if>
 			</section>
+			<!-- ********************** 이동네비게이션 E ********************** -->
 		</article>
 	</div>
 	<article id="content">
 		<section>
 			<div class="productlist">
-				<!-- 선택한 카테고리 명 띄우기 -->
+				<!-- ####################### 선택한 카테고리 명 띄우기 S ####################### -->
 				<h2 class="page_tit">
 					<c:choose>
 						<c:when test="${category.csmall ne ''}">
@@ -329,9 +345,10 @@ function goosSearchItemInit(reloadYn) {
 							<strong>${category.clarge}</strong>
 						</c:otherwise>
 					</c:choose>
-
 				</h2>
-				<!-- 선택한 카테고리의 하위카테고리 목록 표로 띄우기 -->
+				<!-- ********************** 선택한 카테고리 명 띄우기 E ********************** -->
+				
+				<!-- ####################### 선택한 카테고리의 하위카테고리 목록 표로 띄우기 S ####################### -->
 				<table class="depthlist">
 					<colgroup>
 						<col>
@@ -347,11 +364,11 @@ function goosSearchItemInit(reloadYn) {
 									<c:choose>
 										<c:when test="${category.cmedium eq ''}">
 											<td><a
-												href="/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
+												href="/product/list?clarge=${category.clarge}&cmedium=&csmall=">전체</a></td>
 										</c:when>
 										<c:when test="${category.csmall eq ''}">
 											<td><a
-												href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
+												href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=">전체</a></td>
 										</c:when>
 									</c:choose>
 							</c:if>
@@ -371,11 +388,11 @@ function goosSearchItemInit(reloadYn) {
 							<c:choose>
 								<c:when test="${category.cmedium eq ''}">
 									<td><a
-										href="/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
+										href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=">${cate}</a></td>
 								</c:when>
 								<c:otherwise>
 									<td><a
-										href="/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
+										href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}">${cate}</a></td>
 								</c:otherwise>
 							</c:choose>
 
@@ -397,8 +414,10 @@ function goosSearchItemInit(reloadYn) {
 
 					</tbody>
 				</table>
+				<!-- ********************** 선택한 카테고리의 하위카테고리 목록 표로 띄우기 E ********************** -->
+				
+				<!-- ####################### 필터 선택 S ####################### -->
 				<div class="filter_wrap goosFilterTabArea mt60">
-
 					<input type="hidden" id="startPrice" value="0"> <input
 						type="hidden" id="endPrice" value="3411">
 
@@ -500,7 +519,7 @@ function goosSearchItemInit(reloadYn) {
 						</tbody>
 					</table>
 					<div class="filter_onoff">
-						<button>열기/닫기</button>
+						<!-- <button>열기/닫기</button> -->
 					</div>
 					<div class="search_btnarea">
 						<button class="reset_btn" onclick="goosSearchItemInit('Y');">
@@ -513,14 +532,20 @@ function goosSearchItemInit(reloadYn) {
 						<ul class="searchFilterArea"></ul>
 					</div>
 				</div>
-				<div class="sorting_wrap">
+				<!-- ********************** 필터 선택 E ********************** -->
+				
+				<div class="sorting_wrap" id="totalAndSort">
+					<!-- ####################### 상품 총 개수 띄우기 S ####################### -->
 					<span class="txt_total">총 <strong id="goosListTotCnt">${totalProducts}</strong>개
 					</span>
+					<!-- *********************** 상품 총 개수 띄우기 E *********************** -->
+					
 					<!-- <input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt"
 						value="454"> <input type="hidden" name="reGoosListTotPage"
 						id="reGoosListTotPage" value="12"> <input type="hidden"
 						name="filterResearchYn" id="filterResearchYn" value="N"> -->
-					<!-- 정렬선택 -->
+						
+					<!-- ####################### 정렬선택 S #######################  -->
 					<div class="sort_r">
 						<select id="goodsListOrder" class="goodsListOrder"
 							onchange="prodOrder(this.value)">
@@ -533,10 +558,11 @@ function goosSearchItemInit(reloadYn) {
 							<option value="높은할인순">높은할인순</option>
 						</select>
 					</div>
+					<!-- ********************** 정렬선택 E **********************  -->
 				</div>
 				<div class="product_list goosMoreArea">
 					<ul id="listBody">
-						<!-- 상품목록 띄우는 곳 -->
+						<!-- ####################### 상품목록 띄우는 곳 S (리로드시 여기 바뀜) ####################### -->
 						<c:forEach items="${list}" var="product" varStatus="status">
 							<!-- <li data-gooscd="10079280002701" data-minbuyqty="1"
 								class="product_itme goosList 10079280002701"> -->
@@ -547,8 +573,10 @@ function goosSearchItemInit(reloadYn) {
 									data-stat="1" data-minqty="1" data-index="1"
 									data-price="46886.0" data-priceus="37.0" data-stoc="46">
 									<label for="10079280002701_1">선택</label>
-								</span>  --> <a
-								href="/product/Productdetail?pcode=${product.pcode}">
+								</span>  --> 
+								
+								<!-- 상품상세 이동 링크 -->
+								<a href="/product/Productdetail?pcode=${product.pcode}">
 									<div class="img_w">
 										<img data-src="${product.img1}" src="${product.img1}"
 											alt="${product.pname}"
@@ -588,56 +616,54 @@ function goosSearchItemInit(reloadYn) {
 							</a>
 							</li>
 						</c:forEach>
+						<!-- ********************** 상품목록 띄우는 곳 E (리로드시 여기 바뀜) ********************** -->
 					</ul>
 				</div>
 			</div>
 		</section>
-	</article>
-</main>
-<!--페이지 번호 처리  -->
-<div class="paging" style="display: block;">
-	<c:if test="${pageMaker.prev}">
-		<a class="prev2"
-			href="1">
-			<< </a>
-		<!-- 이전 버튼 -->
-		<a class="prev"
-			href="${pageMaker.startPage - 1}">Previous</a>
-	</c:if>
+	<!--####################### 페이지 번호 처리 S #######################  -->
+	<div class="paging" style="display: block;">
+		<c:if test="${pageMaker.prev}">
+			<!-- 첫페이지로 -->
+			<a class="prev2" href="1"> << </a>
+			<!-- 이전 버튼 -->
+			<a class="prev" href="${pageMaker.startPage - 1}">prev</a>
+		</c:if>
 
-	<!-- 1~10 버튼 -->
-	<span class="num"> <c:forEach var="num"
-			begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+		<!-- 1~10 버튼 -->
+		<span class="num"> 
+		<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-				<a
-					href="${num}"
-					class="pageBtn">${num}</a>
+				<a href="${num}" class="pageBtn">
+					${num}
+				</a>
 			</c:if>
 		</c:forEach>
-	</span>  
-	<c:if test="${pageMaker.next}">
+		</span>  
+	
+		<c:if test="${pageMaker.next}">
 		<!-- 다음 버튼 -->
-		<a
-			href="${pageMaker.endPage +1}"
-			class="next">Next</a>
-		<a class="next2"
-			href="${pageMaker.realEnd}">>></a>
-	</c:if>
+		<a href="${pageMaker.endPage +1}" class="next">next</a>
+		<!-- 마지막페이지로 -->
+		<a class="next2" href="${pageMaker.realEnd}">>></a>
+		</c:if>
+	</div>
+	<!--********************** 페이지 번호 처리 E **********************  -->
+	</article>
+</main>
 
-</div>
-<!--  end Pagination -->
 
 <script>
-// 페이징 표시 자바스크립트
+
 var pageNum = 1;
 var pageNation = $(".paging");
 var filterUrl = "";
 					
-
+//페이지 번호표시
 function showProductPage(url,totalCnt,page) {
 	var pageHtml = "";
 	filterUrl = url;
-	var pagingurl = "/filterPaging?"+url+"&total="+totalCnt+"&pageNum="+page;
+	var pagingurl = "/product/filterPaging?"+url+"&total="+totalCnt+"&pageNum="+page;
 	console.log("paging찍기 url: "+pagingurl);
 	console.log("paging찍기 totalCnt: "+totalCnt);
 	$.ajax({
@@ -647,36 +673,38 @@ function showProductPage(url,totalCnt,page) {
 			console.log("paging갓다옴");
 			<!-- prev 버튼 -->
 			if(data.prev){
+				pageHtml += "<a class='prev2' href='";
+				pageHtml += 1;
+				pageHtml += "'> << </a>";
 				pageHtml += "<a class='prev' href='";
 				pageHtml += data.startPage-1;
 				pageHtml += "'> prev </a>";
 			}
-           /*  <a class="prev"
-                href="/filter?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order=${order}&filters=${filter}&pageNum=${pageMaker.startPage - 1}">Previous</a> */
+       
 			pageHtml += "<span class='num'>";
 			for(var i=data.startPage; i<=data.endPage; i++){
 				pageHtml += "<a href='"+i+"'>"+ i + "</a>";
 			}
 			pageHtml += "</span>";
+			
 			<!-- next 버튼 -->
 			if(data.next){
-				console.log("next있음");
 				pageHtml += "<a class='next' href='";
 				pageHtml += data.endPage+1;
 				pageHtml += "'> next </a>";
+				pageHtml += "<a class='next2' href='";
+				pageHtml += data.realEnd;
+				pageHtml += "'> >> </a>";
 			}
 			pageNation.html(pageHtml);
 		}
 	});
 }
 
+//페이지 눌렀을 때 이동
 $(".paging").on("click", "a", function(e) {
 	e.preventDefault(); //<a> 동작 중지
 	console.log("page click");
-	/* var Presenturl = new URL(window.location.href);
-	var urlParams = Presenturl.searchParams;  
-	console.log("이시점 url:"+Presenturl);
-	console.log("이시점 urlParams:"+urlParams);*/
 	
 	if(filterUrl===""){
 		var Presenturl = new URL(window.location.href);
@@ -685,13 +713,15 @@ $(".paging").on("click", "a", function(e) {
 		filterUrl = urlParams;
 	}
 	console.log("필터url: "+filterUrl);
-	var targetPageNum = $(this).attr("href"); //페이지넘버 가져오기	       
+	//누른 페이지넘버 가져오기	 
+	var targetPageNum = $(this).attr("href");       
 	console.log("targetPageNum: " + targetPageNum);
-	//console.log("filterUrl: "+filterUrl);
-	/* var tmpUrl = filterUrl+"&pageNum="+targetPageNum;
-	console.log("전달url:"+tmpUrl); */
+	//해당페이지 상품띄우기
 	prodLoad(filterUrl,targetPageNum);
+	//위로이동
+	window.scrollTo(0,200);
 });
 </script>
+
 <%@ include file="/WEB-INF/views/common/Footer.jsp"%>
 

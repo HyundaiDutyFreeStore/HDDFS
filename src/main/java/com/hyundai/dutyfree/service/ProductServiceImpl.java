@@ -19,37 +19,22 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired
     private ProductMapper mapper;
 	
-	
-	
 	@Override
-	public List<ProductVO> getFilterList(Criteria cri, CategoryVO cate) {
+	public List<ProductVO> getList(Criteria cri, CategoryVO cate) {
 		HashMap<String,Object> listMap = new HashMap<>();
 		listMap.put("cri", cri);
 		listMap.put("cate",cate);
-		//listMap.put("order",order);
-		return mapper.getFilterList(listMap);
+		return mapper.getList(listMap);
 	}
 	
 	@Override
-	public int getTotal2(Criteria cri, CategoryVO cate) {
+	public int getTotal(Criteria cri, CategoryVO cate) {
 		System.out.println("service에서 cri: "+cri);
 		System.out.println("service에서 cate: "+cate);
-		/* System.out.println("service에서 order: "+order); */
 		HashMap<String,Object> listMap = new HashMap<>();
 		listMap.put("cri", cri);
 		listMap.put("cate",cate);
-		/* listMap.put("order",order); */
-		return mapper.getTotal2(listMap);
-	}
-	
-	@Override
-	public List<ProductVO> getList(Criteria cri, String clarge, String cmedium, String csmall, String order) {
-		return mapper.getList(cri,clarge, cmedium, csmall,order);
-	}
-	
-	@Override
-	public int getTotal(String clarge, String cmedium, String csmall, String keyword) {
-		return mapper.getTotal(clarge, cmedium, csmall, keyword);
+		return mapper.getTotal(listMap);
 	}
 	
 	@Override
@@ -61,19 +46,11 @@ public class ProductServiceImpl implements ProductService{
 	public List<String> getSmallCategory(String cmedium){
 		return mapper.getSmallCategory(cmedium);
 	}
-
+	
 	@Override
-	public int CategoryCnt(String category) {
-		return mapper.CategoryCnt(category);
+	public ProductVO productdetail(String pcode) {
+		return mapper.productdetail(pcode);
 	}
 
-	@Override
-	public List<ProductVO> getAjaxList(PageDTO pto) {
-		return mapper.getAjaxList(pto);
-	}
-
-	
-
-	
 
 }

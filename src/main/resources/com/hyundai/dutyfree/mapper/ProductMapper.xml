@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.dutyfree.mapper.ProductMapper">
 
-	<!-- 필터를 위한 부분 -->
+	<!-- 쇼핑정보 필터를 위한 부분 -->
 	<sql id="filter">
 		<foreach item="type" collection="cri.typeArr">
 			<choose>
@@ -63,51 +63,8 @@
 		</trim>
 	</sql>
 	
+	<!-- 목록띄우기 -->
 	<select id="getList"
-		resultType="com.hyundai.dutyfree.vo.ProductVO">
-		select pp.*
-		from
-		(select p.*, rownum rn
-		from
-		(
-		select p.pcode, p.pname, p.pbrand, p.pprice,p.pregdate,
-		p.pdiscount, p.pstock, p.penable,p.psel,
-		c.clarge, c.cmedium, c.csmall, 
-		i.img1, i.img2, i.img3, i.img4, i.img5
-		from product p, category c, productimg i
-		where p.pcode = c.pcode
-		and p.pcode = i.pcode
-		and c.clarge=#{clarge}
-		<if test="cmedium !='' ">
-			and cmedium = #{cmedium}
-		</if>
-		<if test="csmall !='' ">
-			and csmall =#{csmall}
-		</if>
-		<if test="porder =='베스트순' ">
-			order by p.psel desc
-		</if>
-		<if test="porder =='신상품순' ">
-			order by p.pregdate desc
-		</if>
-		<if test="porder =='낮은가격순' ">
-			order by p.pprice asc
-		</if>
-		<if test="porder =='높은가격순' ">
-			order by p.pprice desc
-		</if>
-		<if test="porder =='높은할인순' ">
-			order by p.pdiscount desc
-		</if>
-		
-		)p)pp
-		<![CDATA[
-		WHERE pp.rn > (#{param1.pageNum} -1) * #{param1.amount} and pp.rn <= #{param1.pageNum} * #{param1.amount}
-    	]]>
-    	
-	</select>
-	
-	<select id="getFilterList"
 		resultType="com.hyundai.dutyfree.vo.ProductVO" parameterType="HashMap">
 		select pp.*
 		from
@@ -155,8 +112,8 @@
     	
 	</select>
 	
-	<!-- productList페이징을 위한 category별 product 총개수 -->
-	<select id="getTotal2" resultType="int" parameterType="HashMap">
+	<!-- 조건에 맞는 총 상품개수 -->
+	<select id="getTotal" resultType="int" parameterType="HashMap">
 		select count(p.pcode)
 		from product p
 		join category c
@@ -171,24 +128,6 @@
 		<include refid="filter"></include>
 		<include refid="filter2"></include>
 	</select>
-	
-	<!-- productList페이징을 위한 category별 product 총개수 -->
-	<select id="getTotal" resultType="int">
-		select count(p.pcode)
-		from product p
-		join category c
-		on p.pcode = c.pcode
-		where c.clarge = #{clarge}
-		<if test="cmedium !='' ">
-			and c.cmedium = #{cmedium}
-		</if>
-		<if test="csmall !='' ">
-			and c.csmall =#{csmall}
-		</if>
-		<if test="keyword !='' ">
-			and p.pregdate >= to_date('2022/09/01','YYYY/MM/DD')
-		</if>
-	</select>
 
 	<select id="CategoryCnt" resultType="int">
 		select
@@ -197,16 +136,27 @@
 		where clarge = #{clarge}
 	</select>
 
+	<!-- 해당 대분류의 중분류 가져오기  -->
 	<select id="getMedCategory" resultType="String">
 		select distinct(cmedium)
 		from category
 		where clarge = #{clarge}
 	</select>
 
+	<!-- 해당 중분류의 소분류 가져오기 -->
 	<select id="getSmallCategory" resultType="String">
 		select distinct(csmall)
 		from category
 		where cmedium = #{cmedium}
+	</select>
+	
+	<!-- 상품상세 불러오기 -->
+	<select id="productdetail" resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select p.pcode,pname,pbrand,pprice,pdiscount,pstock,penable,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
+		from product p, productimg i,category c
+		where p.pcode=i.pcode 
+			  and p.pcode=c.pcode 
+			  and p.pcode=#{pcode}
 	</select>
 
 </mapper>
