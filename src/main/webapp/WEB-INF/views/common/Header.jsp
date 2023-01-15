@@ -2353,7 +2353,7 @@ translateY
 							href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 							</strong></a></li>
 						<li class="item_03"><a rel="nosublink"
-							href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do?MG=KR_PC_GNB_MyHyundia"><strong>마이<br>현대
+							href="../join/Mypage/"><strong>마이<br>현대
 							</strong></a></li>
 						<li class="item_04"><a
 							href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터

@@ -192,7 +192,7 @@ public class MemberController {
 		/* 회원가입 쿼리 실행 */
 		memberservice.updateMember(mvo);
 
-		return "redirect:/member/mypage";
+		return "redirect:/join/Mypage";
 	}
 
 	/* 회원 정보 삭제 */
@@ -265,7 +265,7 @@ public class MemberController {
 			if (true == pwEncoder.matches(rawPw, encodePw)) { // 비밀번호 일치여부 판단
 				mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
 				session.setAttribute("member", mvo); // session에 사용자의 정보 저장
-				return "redirect:/"; // 메인페이지 이동
+				return "redirect:/join/Mypage"; // 메인페이지 이동
 
 			} else {
 
@@ -343,7 +343,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
 	public void myPage(HttpServletRequest request, Model model) throws Exception {
 		log.info("마이페이지 접속");
 
@@ -351,6 +351,7 @@ public class MemberController {
 		model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
 		model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
 		model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+		model.addAttribute("mhpoint", memberservice.myPage(String.valueOf(mvo.getMhpoint())));
 
 	}
 }
