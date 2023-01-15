@@ -10,41 +10,16 @@
 				src="https://cdn.hddfs.com/front/images/KO/common/logo.png?RS=192X40"
 				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE">
 		</h1>
+		<!-- ########################### 검색창 ###################################### -->
 		<form name="searchHeader" id="searchHeader" method="get"
-			onsubmit="return false;">
+			action="/product/search">
 			<fieldset class="searchfield">
 				<legend>통합검색</legend>
-				<div class="select_search">
-					<button class="tag_search" id="hashSrchCond">해시태그검색</button>
-					<button class="text_search" id="basicSrchCond">일반검색</button>
-					<div class="tooltip">해시태그로 검색하세요 :)</div>
-					<!-- 일반단어로 검색하세요 :) -->
-				</div>
 
 				<div class="mainsearchinput">
-					<input type="search" class="text_search" name="searchTerm"
+					<input type="search" class="text_search" name="keyword"
 						id="basicSearchTerm" maxlength="" value=""
-						placeholder="검색어를 입력해주세요"
-						onkeypress="javascript:if(event.keyCode == 13) { searchHeaderAction();}"
-						onmousedown="dq_setTextbox('1',event);" onfocusin="srchLayer();"
-						onkeydown="dq_setTextbox('1',event);" autocomplete="off" /> <input
-						type="search" class="tag_search" name="searchTerm"
-						id="hashSearchTerm" maxlength="" value=""
-						placeholder="해시태그를 입력해주세요"
-						onkeypress="javascript:if(event.keyCode == 13) { searchHeaderAction();}"
-						onmousedown="dq_setTextbox('1',event);" onfocusin="srchLayer();"
-						onkeydown="dq_setTextbox('1',event);" autocomplete="off" /> <input
-						type="hidden" id="movUrl" name="movUrl" value="" /> <input
-						type="hidden" id="rcntOffYn" name="rcntOffYn" value="" />
-					<!-- 최근검색어 저장 사용 유무 -->
-					<input type="hidden" id="rcntWrdYn" name="rcntWrdYn" value="" />
-					<!-- 최근검색어 존재 유무 여부 -->
-					<input type="hidden" id="autoOffYn" name="autoOffYn" value="" />
-					<!-- 자동완성 사용 여부 -->
-					<input type="hidden" id="searchType" name="searchType" value="" />
-					<!-- 검색 타입 구분 -->
-					<input type="hidden" id="searchOrder" name="order" value="" />
-					<!-- 정렬 구분 -->
+						placeholder="검색어를 입력해주세요"/> 
 				</div>
 				<button class="btn_search" onclick="searchHeaderAction();">검색</button>
 			</fieldset>
@@ -125,10 +100,10 @@
 			<a href="javascript:" class="search_close">닫기</a>
 		</div>
 
-		<script
-			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script>
+		<!-- <script
+			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script> -->
 		<script type="text/javascript">
-			$(function() {
+		<!--$(function() {
 
 				// 검색결과에 따라 검색창 변환
 				changeSearchArea();
@@ -264,8 +239,8 @@
 					$($this).addClass("on");
 					$($this).parent().find("div").addClass("on");
 				}
-			}
-
+			} -->
+/* 
 			// 검색어 목록 call json
 			function srchLayer() {
 				// 검색어 있는 상태일때 자동완성 실행
@@ -479,8 +454,9 @@
 
 				var html = "";
 
-				/* 최근검색어 삭제요청 */
-				$
+				
+						/* 최근검색어 삭제요청 */
+				/* $
 						.ajax({
 							async : true,
 							url : ctx_curr + "/sr/delSrchWrd.json",
@@ -556,7 +532,7 @@
 								//console.log(jqXHR.status);
 							}
 						});
-			}
+			} 
 
 			// 검색어 체크
 			function checkSearchTerm(searchTerm) {
@@ -569,79 +545,14 @@
 					ke = ke.replace("\'", "");
 
 				return ke;
-			}
+			} 
+			
+			*/
 
-			// form submit
+			 //########################## 검색form제출 ################################
 			function searchHeaderAction() {
-				wiseLogAggr("KR_PC_GNB_SearchIcon");
-				//$(".advanced_search").removeClass("adsearch_open");
-
-				// 검색어 미입력 시 삽입된 문구로 검색 혹은 지정된 url로 이동
-				/* if ($("#basicSearchTerm").val() === "" && $("#hashSearchTerm").val() === "") {
-					var url = $("#searchHeader").find("[name=movUrl]").val();
-				    
-					if(url != ""){
-						location.href = url;
-				    }else{
-				    	alert("검색어를 입력해주세요."); // 검색어를 입력해주세요 
-				    }
-				}else{ */
-				var result = '';
-				$("#movUrl").attr('disabled', true);
-
-				// 일반 검색 일때
-				if (!$(".mainsearchinput").hasClass('tag')) {
-					if ($("#basicSearchTerm").val() === "") {
-						var url = $("#searchHeader").find("[name=movUrl]")
-								.val();
-
-						if (url != "") {
-							location.href = url;
-						} else {
-							alert("검색어를 입력해주세요."); // 검색어를 입력해주세요 
-						}
-					} else {
-						$(".advanced_search").hide();
-
-						result = checkSearchTerm($("#basicSearchTerm").val());
-						$("#basicSearchTerm").val(result);
-						$("#hashSearchTerm").val('');
-						$("#basicSearchTerm").attr('disabled', false);
-						$("#hashSearchTerm").attr('disabled', true);
-						// 일반검색은 order값 제외
-						$("#searchOrder").attr('disabled', true);
-						// 검색 타입 구분
-						$("#searchType").val("basic");
-
-						searchHeader.action = ctx_curr + "/sr/searchResult.do";
-						searchHeader.submit();
-					}
-				} else {
-					// 해시태그 검색 일때
-					if ($("#hashSearchTerm").val() === "") {
-						alert("검색어를 입력해주세요."); // 검색어를 입력해주세요 
-					} else {
-						$(".advanced_search").hide();
-
-						result = checkSearchTerm($("#hashSearchTerm").val());
-						$("#hashSearchTerm").val(result);
-						$("#basicSearchTerm").val('');
-						$("#basicSearchTerm").attr('disabled', true);
-						$("#hashSearchTerm").attr('disabled', false);
-						// 검색 타입 구분
-						$("#searchType").val("hash");
-
-						searchHeader.action = ctx_curr
-								+ "/sr/hashSearchResult.do";
-						searchHeader.submit();
-					}
-				}
-
-				//}
-
-				$(".adsearch_dim").hide();
-
-			}
+				searchHeader.submit();
+			} 
 		</script>
 		<!-- 검색 레이어 영역 END-->
 		<div class="default_menu">

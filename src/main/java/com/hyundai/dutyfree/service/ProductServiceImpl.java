@@ -21,6 +21,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public List<ProductVO> getList(Criteria cri, CategoryVO cate) {
+		System.out.println("service에서 cri: "+cri);
+		System.out.println("service에서 cate: "+cate);
+		
 		HashMap<String,Object> listMap = new HashMap<>();
 		listMap.put("cri", cri);
 		listMap.put("cate",cate);
@@ -51,6 +54,5 @@ public class ProductServiceImpl implements ProductService{
 	public ProductVO productdetail(String pcode) {
 		return mapper.productdetail(pcode);
 	}
-
 
 }

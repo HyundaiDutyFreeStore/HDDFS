@@ -78,12 +78,20 @@
 		from product p, category c, productimg i
 		where p.pcode = c.pcode
 		and p.pcode = i.pcode
+		<if test="cate.clarge !='' ">
 		and c.clarge=#{cate.clarge}
+		</if>
 		<if test="cate.cmedium !='' ">
 			and cmedium = #{cate.cmedium}
 		</if>
 		<if test="cate.csmall !='' ">
 			and csmall =#{cate.csmall}
+		</if>
+		<if test="cri.keyword !='' ">
+			and (
+					p.pname like  '%'||#{cri.keyword}||'%'
+					OR p.pbrand like  '%'||#{cri.keyword}||'%'
+				    )
 		</if>
 		
 		<include refid="filter"></include>
@@ -118,7 +126,16 @@
 		from product p
 		join category c
 		on p.pcode = c.pcode
-		where c.clarge = #{cate.clarge}
+		where
+		<if test="cri.keyword !='' ">
+			 (
+				p.pname like  '%'||#{cri.keyword}||'%'
+				OR p.pbrand like  '%'||#{cri.keyword}||'%'
+			  )
+		</if>
+		<if test="cate.clarge !='' "> 
+			c.clarge = #{cate.clarge}
+		</if>
 		<if test="cate.cmedium !='' ">
 			and c.cmedium = #{cate.cmedium}
 		</if>

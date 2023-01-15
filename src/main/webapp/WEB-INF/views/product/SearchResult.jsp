@@ -272,59 +272,14 @@ function goosSearchItemInit(reloadYn) {
 <main id="container">
 	<div class="location_all">
 		<article class="location">
-			<!-- #######################이동네비게이션 S, 모든대분류 + 선택한카테고리의 중/소분류 링크 ####################### -->
+			<!-- #######################이동네비게이션 S, 검색어 보여주기 ####################### -->
 			<section class="box">
 				<a href="/" class="home">홈</a>
 
 				<div>
-					<strong>${category.clarge}</strong>
-					<ul style="display: none;">
-						<li><a href="/product/list?clarge=스킨케어&cmedium=&csmall=">스킨케어</a></li>
-						<li><a href="/product/list?clarge=메이크업&cmedium=&csmall=">메이크업</a></li>
-						<li><a href="/product/list?clarge=향수/헤어/바디&cmedium=&csmall=">향수/헤어/바디</a></li>
-						<li><a href="/product/list?clarge=가방/지갑&cmedium=&csmall=">가방/지갑</a></li>
-						<li><a href="/product/list?clarge=패션/잡화&cmedium=&csmall=">패션/잡화</a></li>
-						<li><a href="/product/list?clarge=스포츠/레저&cmedium=&csmall=">스포츠/레저</a></li>
-						<li><a href="/product/list?clarge=전자/리빙&cmedium=&csmall=">전자/리빙</a></li>
-						<li><a href="/product/list?clarge=식품&cmedium=&csmall=">식품</a></li>
-					</ul>
+					 ${cri.keyword} 검색결과
+<%-- 					<strong>${cri.keyword}</strong> --%>
 				</div>
-
-				<div>
-					<c:choose>
-						<c:when test="${category.cmedium ne ''}">
-							<strong>${category.cmedium}</strong>
-						</c:when>
-						<c:otherwise>
-							<strong>전체</strong>
-						</c:otherwise>
-					</c:choose>
-					<ul style="display: none;">
-						<c:forEach items="${cateMedList}" var="cMed">
-							<li><a
-								href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=">${cMed}</a></li>
-						</c:forEach>
-					</ul>
-				</div>
-
-				<c:if test="${category.cmedium ne ''}">
-					<div>
-						<c:choose>
-							<c:when test="${category.csmall ne ''}">
-								<strong>${category.csmall}</strong>
-							</c:when>
-							<c:otherwise>
-								<strong>전체</strong>
-							</c:otherwise>
-						</c:choose>
-						<ul style="display: none;">
-							<c:forEach items="${cateSmallList}" var="cSmall">
-								<li><a
-									href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}">${cSmall}</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</c:if>
 			</section>
 			<!-- ********************** 이동네비게이션 E ********************** -->
 		</article>
@@ -332,89 +287,11 @@ function goosSearchItemInit(reloadYn) {
 	<article id="content">
 		<section>
 			<div class="productlist">
-				<!-- ####################### 선택한 카테고리 명 띄우기 S ####################### -->
+				<!-- ####################### 검색어 띄우기 S ####################### -->
 				<h2 class="page_tit">
-					<c:choose>
-						<c:when test="${category.csmall ne ''}">
-							<strong>${category.csmall}</strong>
-						</c:when>
-						<c:when test="${category.cmedium ne ''}">
-							<strong>${category.cmedium}</strong>
-						</c:when>
-						<c:otherwise>
-							<strong>${category.clarge}</strong>
-						</c:otherwise>
-					</c:choose>
+						<strong>'${cri.keyword}' 검색결과</strong>
 				</h2>
-				<!-- ********************** 선택한 카테고리 명 띄우기 E ********************** -->
-				
-				<!-- ####################### 선택한 카테고리의 하위카테고리 목록 표로 띄우기 S ####################### -->
-				<table class="depthlist">
-					<colgroup>
-						<col>
-						<col>
-						<col>
-						<col>
-					</colgroup>
-
-					<tbody>
-						<c:forEach items="${cateList}" var="cate" varStatus="status">
-							<c:if test='${status.count eq 1}'>
-								<tr>
-									<c:choose>
-										<c:when test="${category.cmedium eq ''}">
-											<td><a
-												href="/product/list?clarge=${category.clarge}&cmedium=&csmall=">전체</a></td>
-										</c:when>
-										<c:when test="${category.csmall eq ''}">
-											<td><a
-												href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=">전체</a></td>
-										</c:when>
-									</c:choose>
-							</c:if>
-							<c:choose>
-								<c:when test="${category.csmall eq ''}">
-									<c:if test='${status.index%4 eq 3}'>
-										<tr>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<c:if test='${status.index%4 eq 0}'>
-										<tr>
-									</c:if>
-								</c:otherwise>
-							</c:choose>
-
-							<c:choose>
-								<c:when test="${category.cmedium eq ''}">
-									<td><a
-										href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=">${cate}</a></td>
-								</c:when>
-								<c:otherwise>
-									<td><a
-										href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}">${cate}</a></td>
-								</c:otherwise>
-							</c:choose>
-
-							<c:choose>
-								<c:when test="${category.csmall eq ''}">
-									<c:if test='${status.index%4 eq 2}'>
-										</tr>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<c:if test='${status.index%4 eq 3}'>
-										</tr>
-									</c:if>
-								</c:otherwise>
-							</c:choose>
-
-
-						</c:forEach>
-
-					</tbody>
-				</table>
-				<!-- ********************** 선택한 카테고리의 하위카테고리 목록 표로 띄우기 E ********************** -->
+				<!-- ********************** 검색어 띄우기 E ********************** -->
 				
 				<!-- ####################### 필터 선택 S ####################### -->
 				<div class="filter_wrap goosFilterTabArea mt60">
@@ -535,10 +412,10 @@ function goosSearchItemInit(reloadYn) {
 				<!-- ********************** 필터 선택 E ********************** -->
 				
 				<div class="sorting_wrap" id="totalAndSort">
-					<!-- ####################### 상품 총 개수 띄우기 S ####################### -->
-					<span class="txt_total">총 <strong id="goosListTotCnt">${totalProducts}</strong>개
+					<!-- ####################### 검색결과 상품 총 개수 띄우기 S ####################### -->
+					<span class="txt_total">총 <strong id="goosListTotCnt">${searchTotal}</strong>개
 					</span>
-					<!-- *********************** 상품 총 개수 띄우기 E *********************** -->
+					<!-- *********************** 검색결과 상품 총 개수 띄우기 E *********************** -->
 					
 					<!-- <input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt"
 						value="454"> <input type="hidden" name="reGoosListTotPage"
@@ -550,7 +427,7 @@ function goosSearchItemInit(reloadYn) {
 						<select id="goodsListOrder" class="goodsListOrder"
 							onchange="prodOrder(this.value)">
 							<option hidden="" disabled="disabled" selected="selected"
-								value="${order}">${order}</option>
+								value="${order}">${cri.order}</option>
 							<option value="베스트순">베스트순</option>
 							<option value="신상품순">신상품순</option>
 							<option value="낮은가격순">낮은가격순</option>

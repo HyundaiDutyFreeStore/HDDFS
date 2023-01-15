@@ -25,13 +25,13 @@ public class ProductController {
 	@Autowired
 	private ProductService service;
 
-	//맨처음 리스트를 띄울때 (카테고리 선택해서)
+	// 맨처음 리스트를 띄울때 (카테고리 선택해서)
 	@GetMapping("/list")
 	public String list(Criteria cri, Model model, @RequestParam("clarge") String clarge,
 			@RequestParam("cmedium") String cmedium, @RequestParam("csmall") String csmall) {
 
-		System.out.println("/list controller에서 cri: "+cri);
-		
+		System.out.println("/list controller에서 cri: " + cri);
+
 		// 선택한 카테고리 model에 저장
 		CategoryVO category = new CategoryVO(clarge, cmedium, csmall);
 		model.addAttribute("category", category);
@@ -66,16 +66,16 @@ public class ProductController {
 
 		return "product/ProductList";
 	}
-	
-	//정렬,필터적용으로 상품목록 다시 띄우기
+
+	// 정렬,필터적용으로 상품목록 다시 띄우기
 	@ResponseBody
 	@GetMapping(value = "/filter", produces = "application/json; charset=UTF-8")
-	public String filterList(Criteria cri, Model model, @RequestParam("clarge") String clarge,
-			@RequestParam("cmedium") String cmedium, @RequestParam("csmall") String csmall) {
+	public String filterList(Criteria cri, CategoryVO cate) {
 		System.out.println("filter에 들어옴");
-
-		CategoryVO cate = new CategoryVO(clarge, cmedium, csmall);
-		System.out.println(cate);
+		System.out.println("cate: "+cate);
+		System.out.println("cri: "+cri);
+		//CategoryVO cate = new CategoryVO(clarge, cmedium, csmall);
+		//System.out.println(cate);
 		System.out.println("controller에서 cri값: " + cri);
 
 		JSONObject jsonObj = new JSONObject();
@@ -102,7 +102,7 @@ public class ProductController {
 		return json;
 	}
 
-	//ajax로 페이지이동
+	// ajax로 페이지이동
 	@ResponseBody
 	@GetMapping(value = "/filterPaging", produces = "application/json; charset=UTF-8")
 	public String filterPaging(Criteria cri, int total) {
@@ -114,35 +114,59 @@ public class ProductController {
 		String json = obj.toString();
 		return json;
 	}
-	
-	//상품디테일로 이동
+
+	// 상품디테일로 이동
 	@GetMapping("/Productdetail")
-	public String productdetail(@RequestParam("pcode") String pcode,Model model) {
-		List<String>imglist=new ArrayList<String>();
-		ProductVO product=service.productdetail(pcode);
+	public String productdetail(@RequestParam("pcode") String pcode, Model model) {
+		List<String> imglist = new ArrayList<String>();
+		ProductVO product = service.productdetail(pcode);
 		System.out.println(product.toString());
-		if(product.getImg1()!=null) {
+		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
 		}
-		if(product.getImg2()!=null) {
+		if (product.getImg2() != null) {
 			imglist.add(product.getImg2());
 		}
-		if(product.getImg3()!=null) {
+		if (product.getImg3() != null) {
 			imglist.add(product.getImg3());
 		}
-		if(product.getImg4()!=null) {
+		if (product.getImg4() != null) {
 			imglist.add(product.getImg4());
 		}
-		if(product.getImg5()!=null) {
+		if (product.getImg5() != null) {
 			imglist.add(product.getImg5());
 		}
-		for(int i=0;i<imglist.size();i++) {
+		for (int i = 0; i < imglist.size(); i++) {
 			System.out.println(imglist.get(i));
 		}
 		model.addAttribute("product", product);
 		model.addAttribute("imglist", imglist);
-		
+
 		return "/product/Productdetail";
+	}
+
+	// 상품검색 결과창으로 이동
+	@GetMapping("/search")
+	public String search(Criteria cri, Model model) {
+		
+		//현재페이지, 검색키워드가 들어간 cri를 model에 저장
+		//System.out.println("controller에서 cri: " + cri);
+		model.addAttribute("cri",cri);
+
+		//비어있는 categoryVO만들기, 쿼리에서 필요
+		CategoryVO  cate = new CategoryVO();
+		
+		// 검색결과 상품리스트를 model에 저장
+		List<ProductVO> list = service.getList(cri, cate);
+		model.addAttribute("list", list);
+		
+		// 페이징 처리를 위해 총상품 개수와 pageDTO를 model로 넘김
+		int total = service.getTotal(cri, cate);
+		//System.out.println("검색결과: "+total);
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("searchTotal", total);
+
+		return "/product/SearchResult";
 	}
 
 }

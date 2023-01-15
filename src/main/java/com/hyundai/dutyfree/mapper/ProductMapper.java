@@ -25,5 +25,4 @@ public interface ProductMapper {
 	
 	//상품디테일
 	public ProductVO productdetail(String pcode);
-
 }

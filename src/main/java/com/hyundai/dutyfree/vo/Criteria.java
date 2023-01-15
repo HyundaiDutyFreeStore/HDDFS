@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/* 작성자 : 김가희, 김나형, 김찬중
+/* 작성자 : 김가희
  * 페이징에 필요한 정보를 저장하는 객체
  */
 @Getter
@@ -31,9 +31,9 @@ public class Criteria {
 	//정렬
 	private String order;
 
-	/*
-	 * 검색 키워드 private String keyword;
-	 */
+	//검색 키워드 
+	private String keyword;
+	 
 
 	private String[] typeArr;
 	private String[] priceArr;
@@ -49,6 +49,7 @@ public class Criteria {
 		this.pageNum = 1;
 		this.amount = 12;
 		this.order = "베스트순";
+		this.keyword="";
 	}
 
 	public String[] getTypeArr() {
