@@ -29,9 +29,9 @@ $(document).ready(function(){
 <article id="content">
 <section class="cart_wrap">
 <input type="hidden" id="checkedCartSeq" value=""> <input type="hidden" id="checkedCartSetId" value=""> <input type="hidden" id="buyNow" value=""><input type="hidden" id="buyNowSetGoosId" value=""><input type="hidden" id="chkPspt" value="0"> <input type="hidden" id="chkDpat" value="0"> <input type="hidden" id="buyNowType" value=""> <input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input type="hidden" id="adtAucaYn" value="N"> <ul class="title_tab">
-<li><a href="javascript:void(0);" onclick='goCartTab("CART");' class="on" id="tabCart">장바구니</a></li>
-<li><a href="javascript:void(0);" onclick='goCartTab("PSPT");' class="" id="tabPspt">여권정보</a></li>
-<li><a href="javascript:void(0);" onclick='goCartTab("DPAT");' class="" id="tabDpat">출국정보</a></li>
+<li><a href="/cart/cartlist?mid=jjjj" onclick='javascript:goCartTab("CART");' class="on" id="tabCart">장바구니</a></li>
+<li><a href="" onclick='javascript:goCartTab("PSPT");' class="" id="tabPspt">여권정보</a></li>
+<li><a href="" onclick='javascript:goCartTab("DPAT");' class="" id="tabDpat">출국정보</a></li>
 <li>주문결제</li>
 </ul>
 <div class="cart_contens">
@@ -681,7 +681,7 @@ $.ajax({
 function goCartTab(type) {
     
 	var url = "";
-
+	console.log("carttab");
     if(!psptMnge()){return false;} 
     if(!dpatMnge()){return false;} 
 
@@ -689,23 +689,26 @@ function goCartTab(type) {
     $("#TAB , #CART , .pay_btm").hide();
     
     if(type == "CART"){
-        $(".pay_btm").show();
+    	location.href="/cart/cartlist?mid=jjjj";
+        /* $(".pay_btm").show();
         $("#CART").show();
-        $("#tabCart").addClass("on");
+        $("#tabCart").addClass("on"); */
     }else if(type == "PSPT"){
-        $("#TAB").show();
+    	location.href="/order/PassportInfo";
+        /* $("#TAB").show();
         $("#tabPspt").addClass("on");
-        url = "https://www.hddfs.com/shop/or/order/mbshPsptMnge.do";
+        url = "https://www.hddfs.com/shop/or/order/mbshPsptMnge.do"; */
     }else if(type == "DPAT"){
-        $("#TAB").show();
+    	location.href="/order/DepartureInfo";
+       /*  $("#TAB").show();
         $("#tabDpat").addClass("on");
-        url = "https://www.hddfs.com/shop/or/order/addMbshDpatInfo.do";
+        url = "https://www.hddfs.com/shop/or/order/addMbshDpatInfo.do"; */
     }
     
-    if(type !== "CART"){
+/*     if(type !== "CART"){
         $(".loadProgBar").css("display","block");
         $("#TAB").load(url);
-    }
+    } */
 }
 
 function psptMnge(){
@@ -1196,7 +1199,7 @@ return true;
 <input type="hidden" id="oldMbshEngFstnm" value="">
 <input type="hidden" id="mbshPsptInfo" value="0">
 <input type="hidden" id="oldPsptExpiDt" value="">
-<div class="passport_wrap">
+<!-- <div class="passport_wrap">
 <a href="javascript:void(0);" class="tit_guide has_onoff" id="guidePspt" onclick="guidePspt();">여권정보 등록가이드</a>
 <div class="guide_wrap">
 <div class="guide_cont">
@@ -1304,7 +1307,7 @@ return true;
 • 유효기간이 만료되거나 유효기간이 6개월 미만으로 남은 여권으로 구매하신&nbsp;경우 상품 인도가 불가합니다.
     </ul>
 </div>
-</div>
+</div> -->
 
 <div id="mbshPwdPop"></div>
 <div id="layer_popup" class="pop_quantity" title="SMS 인증"></div>  
