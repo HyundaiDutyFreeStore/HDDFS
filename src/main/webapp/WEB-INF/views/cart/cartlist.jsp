@@ -29,7 +29,7 @@ $(document).ready(function(){
 <article id="content">
 <section class="cart_wrap">
 <input type="hidden" id="checkedCartSeq" value=""> <input type="hidden" id="checkedCartSetId" value=""> <input type="hidden" id="buyNow" value=""><input type="hidden" id="buyNowSetGoosId" value=""><input type="hidden" id="chkPspt" value="0"> <input type="hidden" id="chkDpat" value="0"> <input type="hidden" id="buyNowType" value=""> <input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input type="hidden" id="adtAucaYn" value="N"> <ul class="title_tab">
-<li><a href="/cart/cartlist?mid=jjjj" onclick='javascript:goCartTab("CART");' class="on" id="tabCart">장바구니</a></li>
+<li><a href="/cart/cartlist?mid=${member.mid}" onclick='javascript:goCartTab("CART");' class="on" id="tabCart">장바구니</a></li>
 <li><a href="" onclick='javascript:goCartTab("PSPT");' class="" id="tabPspt">여권정보</a></li>
 <li><a href="" onclick='javascript:goCartTab("DPAT");' class="" id="tabDpat">출국정보</a></li>
 <li>주문결제</li>
@@ -689,7 +689,7 @@ function goCartTab(type) {
     $("#TAB , #CART , .pay_btm").hide();
     
     if(type == "CART"){
-    	location.href="/cart/cartlist?mid=jjjj";
+    	location.href="/cart/cartlist?mid=${member.mid}";
         /* $(".pay_btm").show();
         $("#CART").show();
         $("#tabCart").addClass("on"); */
@@ -1415,7 +1415,7 @@ function fn_qtyAdd(el){
 	cartstock++;
 	$(el).closest(".num_amount.cart_amount").find("input[name='goosQty']").val(cartstock);
 	updateCart(1,pcode);
-	location.href="/cart/cartlist?mid=jjjj";
+	location.href="/cart/cartlist?mid=${member.mid}";
 }
 
 function fn_qtySubtraction(el){
@@ -1425,7 +1425,7 @@ function fn_qtySubtraction(el){
 	cartstock--;
 	$(el).closest(".num_amount.cart_amount").find("input[name='goosQty']").val(cartstock);
 	updateCart(-1,pcode);
-	location.href="/cart/cartlist?mid=jjjj";
+	location.href="/cart/cartlist?mid=${member.mid}";
 }
 
 
@@ -1434,7 +1434,7 @@ function updateCart(cartstock,pcode){
 	console.log("카트 들어감!")
 	const Data = {
 			cartstock :cartstock,
-			mid : "jjjj",
+			mid : "${member.mid}",
 			pcode : pcode
 		}
 
@@ -1455,7 +1455,7 @@ function deleteCart(el){
 	let cartno=parseInt($(el).closest(".item_area").find("input[name='cartno']").val());
 	var Data={
 			cartno :cartno,
-			mid :"jjjj"
+			mid :"${member.mid}"
 	}
 	$.ajax({
 		type :"POST",
