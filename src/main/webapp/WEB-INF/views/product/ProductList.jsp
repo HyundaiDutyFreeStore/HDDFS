@@ -16,10 +16,12 @@ function prodLoad(Purl,page){
 		success: function(data){
 			console.log("ajax성공");
 			order = data.order;
+			ppage = data.ppage;
 			prodCnt = data.total;
 			prodArr = data.products;
 			
 			console.log("정렬"+order);
+			console.log("현재페이지"+ppage);
 			//console.log(prodArr);
 			
 			//상품총개수 띄우기
@@ -157,23 +159,11 @@ function filterChk(){
 //정렬방식 바꿀 때
 function prodOrder(str){
 	console.log("정렬방식: "+str);
-<<<<<<< HEAD
 	var purl = urlParams +'&order='+str+ filterChk();
 	console.log("정렬: "+purl);
 	prodLoad(purl,1);
 }
-=======
-	location.href='/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
-	/* $.ajax({
-		url: "/list",
-		method: "GET",
-		data:"clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}"+"&order="+str,
-		success:function(data){
-			console.log("성공");
-		}
-	}); */
-} 
->>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
+
 //필터설정 후 검색버튼눌렀을 때
 function goosSearchItemFilter(researchYn){
 	//선택된 필터 표시할 html
@@ -307,8 +297,6 @@ function goosSearchItemInit(reloadYn) {
 					<li><a
 						href="/product/list?clarge=전자/리빙&cmedium=&csmall=&order=">전자/리빙</a></li>
 					<li><a href="/product/list?clarge=식품&cmedium=&csmall=&order=">식품</a></li>
-					>>>>>>> branch 'dev' of
-					https://github.com/HyundaiDutyFreeStore/HDDFS.git
 				</ul>
 			</div>
 
@@ -323,20 +311,14 @@ function goosSearchItemInit(reloadYn) {
 				</c:choose>
 				<ul style="display: none;">
 					<c:forEach items="${cateMedList}" var="cMed">
-<<<<<<< HEAD
 							<li><a
 							href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=">${cMed}</a></li>
-=======
 							<li><a
 							href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=&order=">${cMed}</a></li>
->>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
-						</c:forEach>
+					</c:forEach>
 				</ul>
 			</div>
-
-			<c:if test="${category.cmedium ne ''}">
-<<<<<<< HEAD
-					<div>
+			<div>
 					<c:choose>
 						<c:when test="${category.csmall ne ''}">
 							<strong>${category.csmall}</strong>
@@ -352,25 +334,7 @@ function goosSearchItemInit(reloadYn) {
 						</c:forEach>
 					</ul>
 				</div>
-=======
-				<div>
-					<c:choose>
-						<c:when test="${category.csmall ne ''}">
-							<strong>${category.csmall}</strong>
-						</c:when>
-						<c:otherwise>
-							<strong>전체</strong>
-						</c:otherwise>
-					</c:choose>
-					<ul style="display: none;">
-						<c:forEach items="${cateSmallList}" var="cSmall">
-							<li><a
-								href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}&order=">${cSmall}</a></li>
-						</c:forEach>
-					</ul>
-				</div>
->>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
-				</c:if>
+				<%-- </c:if> --%>
 		</section>
 		<!-- ********************** 이동네비게이션 E ********************** -->
 	</article>
@@ -408,8 +372,7 @@ function goosSearchItemInit(reloadYn) {
 						<c:if test='${status.count eq 1}'>
 							<tr>
 								<c:choose>
-<<<<<<< HEAD
-										<c:when test="${category.cmedium eq ''}">
+									<c:when test="${category.cmedium eq ''}">
 										<td><a
 											href="/product/list?clarge=${category.clarge}&cmedium=&csmall=">전체</a></td>
 									</c:when>
@@ -417,17 +380,7 @@ function goosSearchItemInit(reloadYn) {
 										<td><a
 											href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=">전체</a></td>
 									</c:when>
-=======
-									<c:when test="${category.cmedium eq ''}">
-										<td><a
-											href="/product/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
-									</c:when>
-									<c:when test="${category.csmall eq ''}">
-										<td><a
-											href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
-									</c:when>
->>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
-									</c:choose>
+								</c:choose>
 						</c:if>
 						<c:choose>
 							<c:when test="${category.csmall eq ''}">
@@ -443,8 +396,7 @@ function goosSearchItemInit(reloadYn) {
 						</c:choose>
 
 						<c:choose>
-<<<<<<< HEAD
-								<c:when test="${category.cmedium eq ''}">
+							<c:when test="${category.cmedium eq ''}">
 								<td><a
 									href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=">${cate}</a></td>
 							</c:when>
@@ -452,17 +404,7 @@ function goosSearchItemInit(reloadYn) {
 								<td><a
 									href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}">${cate}</a></td>
 							</c:otherwise>
-=======
-							<c:when test="${category.cmedium eq ''}">
-								<td><a
-									href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
-							</c:when>
-							<c:otherwise>
-								<td><a
-									href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
-							</c:otherwise>
->>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
-							</c:choose>
+						</c:choose>
 
 						<c:choose>
 							<c:when test="${category.csmall eq ''}">
@@ -695,16 +637,16 @@ function goosSearchItemInit(reloadYn) {
 			<a class="prev" href="${pageMaker.startPage - 1}">prev</a>
 		</c:if>
 
-
+		<%-- <c:if test="${pageMaker.cri.pageNum eq num }"> --%>
 		<!-- 1~10 버튼 -->
-		<span class="num"> <c:forEach var="num"
+		<span class="num"> 
+			<c:forEach var="num"
 				begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 				<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-					<a href="${num}" class="pageBtn"> ${num} </a>
-					<a
-						href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
-						class="pageBtn">${num}</a>
-				</c:if>
+					<a href="${num}" class="${pageMaker.cri.pageNum eq num ? 'active':''}">
+						${num}
+					</a>
+			</c:if>
 			</c:forEach>
 		</span>
 
@@ -748,8 +690,13 @@ function showProductPage(url,totalCnt,page) {
 			}
        
 			pageHtml += "<span class='num'>";
-			for(var i=data.startPage; i<=data.endPage; i++){
-				pageHtml += "<a href='"+i+"'>"+ i + "</a>";
+			for(var i=data.startPage; i<=data.endPage; i++) {
+				pageHtml += "<a href='"+i+"'";
+				console.log("i: "+i+" pageNum: "+"${pageMaker.cri.pageNum}");
+				if(i==ppage){
+					pageHtml += "class='active'";
+				}
+				pageHtml += ">" + i + "</a>";
 			}
 			pageHtml += "</span>";
 			

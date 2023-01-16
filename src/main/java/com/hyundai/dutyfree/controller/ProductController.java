@@ -82,6 +82,8 @@ public class ProductController {
 
 		// 정렬
 		jsonObj.put("order", cri.getOrder());
+		// 현재 페이지번호
+		jsonObj.put("ppage", cri.getPageNum());
 
 		// 카테고리,정렬,필터에 맞춘 상품개수
 		int total = service.getTotal(cri, cate);
