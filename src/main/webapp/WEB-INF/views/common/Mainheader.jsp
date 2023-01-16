@@ -15,41 +15,16 @@
 				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE"
 				onclick="location.href='/'">
 		</h1>
+		<!-- ########################### 검색창 ###################################### -->
 		<form name="searchHeader" id="searchHeader" method="get"
-			onsubmit="return false;">
+			action="/product/search">
 			<fieldset class="searchfield">
 				<legend>통합검색</legend>
-				<div class="select_search">
-					<button class="tag_search" id="hashSrchCond">해시태그검색</button>
-					<button class="text_search" id="basicSrchCond">일반검색</button>
-					<div class="tooltip">해시태그로 검색하세요 :)</div>
-					<!-- 일반단어로 검색하세요 :) -->
-				</div>
 
 				<div class="mainsearchinput">
-					<input type="search" class="text_search" name="searchTerm"
+					<input type="search" class="text_search" name="keyword"
 						id="basicSearchTerm" maxlength="" value=""
-						placeholder="검색어를 입력해주세요"
-						onkeypress="javascript:if(event.keyCode == 13) { searchHeaderAction();}"
-						onmousedown="dq_setTextbox('1',event);" onfocusin="srchLayer();"
-						onkeydown="dq_setTextbox('1',event);" autocomplete="off" /> <input
-						type="search" class="tag_search" name="searchTerm"
-						id="hashSearchTerm" maxlength="" value=""
-						placeholder="해시태그를 입력해주세요"
-						onkeypress="javascript:if(event.keyCode == 13) { searchHeaderAction();}"
-						onmousedown="dq_setTextbox('1',event);" onfocusin="srchLayer();"
-						onkeydown="dq_setTextbox('1',event);" autocomplete="off" /> <input
-						type="hidden" id="movUrl" name="movUrl" value="" /> <input
-						type="hidden" id="rcntOffYn" name="rcntOffYn" value="" />
-					<!-- 최근검색어 저장 사용 유무 -->
-					<input type="hidden" id="rcntWrdYn" name="rcntWrdYn" value="" />
-					<!-- 최근검색어 존재 유무 여부 -->
-					<input type="hidden" id="autoOffYn" name="autoOffYn" value="" />
-					<!-- 자동완성 사용 여부 -->
-					<input type="hidden" id="searchType" name="searchType" value="" />
-					<!-- 검색 타입 구분 -->
-					<input type="hidden" id="searchOrder" name="order" value="" />
-					<!-- 정렬 구분 -->
+						placeholder="검색어를 입력해주세요" />
 				</div>
 				<button class="btn_search" onclick="searchHeaderAction();">검색</button>
 			</fieldset>
@@ -130,10 +105,10 @@
 			<a href="javascript:" class="search_close">닫기</a>
 		</div>
 
-		<script
-			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script>
+		<!-- <script
+			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script> -->
 		<script type="text/javascript">
-			$(function() {
+		<!--$(function() {
 
 				// 검색결과에 따라 검색창 변환
 				changeSearchArea();
@@ -269,8 +244,8 @@
 					$($this).addClass("on");
 					$($this).parent().find("div").addClass("on");
 				}
-			}
-
+			} -->
+/* 
 			// 검색어 목록 call json
 			function srchLayer() {
 				// 검색어 있는 상태일때 자동완성 실행
@@ -484,8 +459,9 @@
 
 				var html = "";
 
-				/* 최근검색어 삭제요청 */
-				$
+				
+						/* 최근검색어 삭제요청 */
+				/* $
 						.ajax({
 							async : true,
 							url : ctx_curr + "/sr/delSrchWrd.json",
@@ -561,7 +537,7 @@
 								//console.log(jqXHR.status);
 							}
 						});
-			}
+			} 
 
 			// 검색어 체크
 			function checkSearchTerm(searchTerm) {
@@ -574,10 +550,14 @@
 					ke = ke.replace("\'", "");
 
 				return ke;
-			}
+			} 
+			
+			*/
 
-			// form submit
+			 //########################## 검색form제출 ################################
 			function searchHeaderAction() {
+				searchHeader.submit();
+			} 
 				wiseLogAggr("KR_PC_GNB_SearchIcon");
 				//$(".advanced_search").removeClass("adsearch_open");
 
@@ -672,8 +652,7 @@
 				<li class="item_02"><a
 					href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 					</strong></a></li>
-				<li class="item_03"><a rel="nosublink"
-					href="../join/Mypage/"><strong>마이<br>현대
+				<li class="item_03"><a rel="nosublink" href="../join/Mypage/"><strong>마이<br>현대
 					</strong></a></li>
 				<li class="item_04"><a
 					href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터
@@ -1042,21 +1021,21 @@
 				<li data-ctgid="ctg0001" class="open"><strong>스킨케어</strong>
 					<ul class="depth_03" style="display: block;">
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어 전체보기</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=&csmall=">스킨케어 전체보기</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
 					</ul></li>
 
 
