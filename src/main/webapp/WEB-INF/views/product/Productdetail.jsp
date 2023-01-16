@@ -2407,7 +2407,7 @@ function addCart(){
 	console.log("카트 들어감!")
 	const Data = {
 			cartstock :$("#totalamount").text(),
-			mid : "jjjj",
+			mid : "${member.mid}",
 			pcode : "${product.pcode}"
 		}
 
@@ -2429,7 +2429,7 @@ function updateCart(){
 	console.log("카트 들어감!")
 	const Data = {
 			cartstock :$("#totalamount").text(),
-			mid : "jjjj",
+			mid : "${member.mid}",
 			pcode : "${product.pcode}"
 		}
 
@@ -2452,7 +2452,7 @@ function updateCart(){
     	if(productconsist==true){
     		const Data = {
         			cartstock :$("#totalamount").text(),
-        			mid : "jjjj",
+        			mid : "${member.mid}",
         			pcode : "${product.pcode}"
         		}
 
@@ -2468,7 +2468,7 @@ function updateCart(){
         		    			updateCart();
         		    			let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
             					if(param){
-            						location.href="/cart/cartlist?mid=jjjj";
+            						location.href="/cart/cartlist?mid=${member.mid}";
             						/* location.href="/cart/cartlist?mid="+${member.mid};  */
             	    			}		
         		    		}else{
@@ -2480,7 +2480,7 @@ function updateCart(){
         		    		let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
         					if(param){
         						/* location.href="/cart/cartlist"; */
-        						location.href="/cart/cartlist?mid=jjjj";
+        						location.href="/cart/cartlist?mid=${member.mid}";
         	    			}		
         		    	}
         			},
