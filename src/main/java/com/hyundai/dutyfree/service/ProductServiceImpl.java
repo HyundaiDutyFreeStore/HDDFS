@@ -1,11 +1,13 @@
 package com.hyundai.dutyfree.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.ProductMapper;
+import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
@@ -18,13 +20,24 @@ public class ProductServiceImpl implements ProductService{
     private ProductMapper mapper;
 	
 	@Override
-	public List<ProductVO> getList(Criteria cri, String clarge, String cmedium, String csmall, String order) {
-		return mapper.getList(cri,clarge, cmedium, csmall,order);
+	public List<ProductVO> getList(Criteria cri, CategoryVO cate) {
+		System.out.println("service에서 cri: "+cri);
+		System.out.println("service에서 cate: "+cate);
+		
+		HashMap<String,Object> listMap = new HashMap<>();
+		listMap.put("cri", cri);
+		listMap.put("cate",cate);
+		return mapper.getList(listMap);
 	}
 	
 	@Override
-	public int getTotal(String clarge, String cmedium, String csmall) {
-		return mapper.getTotal(clarge, cmedium, csmall);
+	public int getTotal(Criteria cri, CategoryVO cate) {
+		System.out.println("service에서 cri: "+cri);
+		System.out.println("service에서 cate: "+cate);
+		HashMap<String,Object> listMap = new HashMap<>();
+		listMap.put("cri", cri);
+		listMap.put("cate",cate);
+		return mapper.getTotal(listMap);
 	}
 	
 	@Override
@@ -36,23 +49,11 @@ public class ProductServiceImpl implements ProductService{
 	public List<String> getSmallCategory(String cmedium){
 		return mapper.getSmallCategory(cmedium);
 	}
-
-	@Override
-	public int CategoryCnt(String category) {
-		return mapper.CategoryCnt(category);
-	}
-
-	@Override
-	public List<ProductVO> getAjaxList(PageDTO pto) {
-		return mapper.getAjaxList(pto);
-	}
-
+	
 	@Override
 	public ProductVO productdetail(String pcode) {
-		
 		return mapper.productdetail(pcode);
 	}
 
-	
 
 }

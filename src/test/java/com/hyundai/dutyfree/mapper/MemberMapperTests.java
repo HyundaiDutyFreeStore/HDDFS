@@ -38,14 +38,13 @@ public class MemberMapperTests {
 	public void memberJoin() throws Exception {
 		MemberVO member = new MemberVO();
 
-		member.setMid("test2"); // 회원 id
-		member.setMpassword(pwEncoder.encode("test2")); // 회원 비밀번호
-		member.setMname("test2"); // 회원 이름
-		member.setMemail("test2"); // 회원 메일
-		member.setMphone("test2"); // 회원 전화번호
+		member.setMid("test3"); // 회원 id
+		member.setMpassword(pwEncoder.encode("test3")); // 회원 비밀번호
+		member.setMname("test3"); // 회원 이름
+		member.setMemail("test3"); // 회원 메일
+		member.setMphone("test3"); // 회원 전화번호
 		member.setMgender("male"); // 회원 성별
-		java.sql.Date d = java.sql.Date.valueOf("2004-06-22");
-		member.setMbirth(d);
+
 		membermapper.memberJoin(member); // 쿼리 메서드 실행
 	}
 

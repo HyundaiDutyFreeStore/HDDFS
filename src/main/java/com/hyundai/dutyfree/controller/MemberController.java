@@ -53,6 +53,7 @@ public class MemberController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 
@@ -75,41 +76,48 @@ public class MemberController {
 
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
 	public String joinsecPOST() throws Exception {
-		return "redirect:/mbshInformation";
+		return "redirect:/join/mbshInformation";
 	}
 
 	// 회원 정보 입력 페이지 이동
 	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
-	public void joinGET() {
+	public void joinGET(@RequestParam("email_fir") String email_fir, @RequestParam("email_sec") String email_sec,
+			Model model) {
+		String email = email_fir + email_sec;
+		model.addAttribute("email", email);
 		logger.info("회원가입 3 페이지 진입");
 	}
 
 	// 회원가입
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception {
+		logger.info("회원가입 진입");
+
+		System.out.println("제발 출력좀" + member.toString());
 
 		String rawPw = ""; // 인코딩 전 비밀번호
 		String encodePw = ""; // 인코딩 후 비밀번호
 		rawPw = member.getMpassword();// 비밀번호 데이터 얻음
+		System.out.println(rawPw);
 		encodePw = pwEncoder.encode(rawPw); // 비밀번호 인코딩
 		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
-
-		/* 회원가입 쿼리 실행 */
+		// 회원가입 쿼리 실행
 		memberservice.memberJoin(member);
 
-		return "redirect:/Signup";
+		logger.info("회원가입성공");
+		return "redirect:/join/done";
 
 	}
 
 	// 회원가입 최종 페이지 이동
-	@RequestMapping(value = "Signup", method = RequestMethod.GET)
+	@RequestMapping(value = "done", method = RequestMethod.GET)
 	public void joinfianlGET() {
 
 		logger.info("회원가입 최종 페이지 진입");
 
 	}
 
-	@RequestMapping(value = "/Signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/done", method = RequestMethod.POST)
 	public String joinfinalPOST() throws Exception {
 		return "redirect:/";
 	}
@@ -121,7 +129,7 @@ public class MemberController {
 		logger.info("멤버업데이트 페이지 진입");
 
 	}
-	
+
 	/* 이메일 인증 */
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
 	@ResponseBody
@@ -184,7 +192,7 @@ public class MemberController {
 		/* 회원가입 쿼리 실행 */
 		memberservice.updateMember(mvo);
 
-		return "redirect:/member/mypage";
+		return "redirect:/join/Mypage";
 	}
 
 	/* 회원 정보 삭제 */
@@ -209,7 +217,7 @@ public class MemberController {
 
 	}
 
-	// 로그인 페이지 이동
+	// 아이디 찾기 이동
 	@RequestMapping(value = "findID", method = RequestMethod.GET)
 	public void findIDGET() {
 
@@ -239,7 +247,7 @@ public class MemberController {
 	}
 
 	/* 로그인 */
-	@RequestMapping(value = "login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
 
 		HttpSession session = request.getSession();
@@ -257,21 +265,24 @@ public class MemberController {
 			if (true == pwEncoder.matches(rawPw, encodePw)) { // 비밀번호 일치여부 판단
 				mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
 				session.setAttribute("member", mvo); // session에 사용자의 정보 저장
-				return "redirect:/"; // 메인페이지 이동
+				return "redirect:/join/Mypage"; // 메인페이지 이동
 
 			} else {
 
 				rttr.addFlashAttribute("result", 0);
-				return "redirect:/member/login"; // 로그인 페이지로 이동
+				System.out.println("비번틀림");
+				return "redirect:/join/login"; // 로그인 페이지로 이동
 
 			}
 
 		} else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
 
 			rttr.addFlashAttribute("result", 0);
-			return "redirect:/member/login"; // 로그인 페이지로 이동
+			System.out.println("아이디 없음");
+			return "redirect:/join/login"; // 로그인 페이지로 이동
 
 		}
+
 	}
 
 	/* 아이디 찾기 */
@@ -321,19 +332,18 @@ public class MemberController {
 
 	/* 메인페이지 로그아웃 */
 	/* 비동기방식 로그아웃 메서드 */
-	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
-	@ResponseBody
-	public void logoutPOST(HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	public String logoutPOST(HttpServletRequest request) throws Exception {
 
-		logger.info("비동기 로그아웃 메서드 진입");
+		logger.info("로그아웃");
 
 		HttpSession session = request.getSession();
 
 		session.invalidate();
-
+		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
 	public void myPage(HttpServletRequest request, Model model) throws Exception {
 		log.info("마이페이지 접속");
 
@@ -341,14 +351,7 @@ public class MemberController {
 		model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
 		model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
 		model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
-
-	}
-
-	// qna 페이지 이동
-	@RequestMapping(value = "qnaMain", method = RequestMethod.GET)
-	public void qnaMainGET() {
-
-		logger.info("qna 페이지 진입");
+		model.addAttribute("mhpoint", memberservice.myPage(String.valueOf(mvo.getMhpoint())));
 
 	}
 }
