@@ -57,7 +57,7 @@ function prodLoad(Purl,page){
 				let pdiscount = product.pdiscount;
 				let img1 = product.img1;
 				
-				let ppriceDC = Math.round(pprice*(1-(pdiscount/100) )*100) /100;	//세일가격 소수점2째자리까지 반올림
+				let ppriceDC = Math.round(pprice*(1-(pdiscount / 100) )*100) /100;	//세일가격 소수점2째자리까지 반올림
 				let pwon1 = Math.round(ppriceDC * 1267); //환율적용 원화가격
 				let pwon2 = pwon1.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); //원화가격 콤마
 				//console.log("dc: "+pprice*(1-(pdiscount/100)));
