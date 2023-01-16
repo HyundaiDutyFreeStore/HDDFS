@@ -19,7 +19,7 @@ public class OrderController {
 	
 	@GetMapping("/PassportInfo")
 	public void PassportInfo() {
-		
+		System.out.println("Passport");
 	}
 	
 	

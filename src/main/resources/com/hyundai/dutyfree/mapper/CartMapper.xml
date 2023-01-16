@@ -5,19 +5,41 @@
  <mapper namespace="com.hyundai.dutyfree.mapper.CartMapper">
  	<select id="getCartList"
 		resultType="com.hyundai.dutyfree.vo.CartVO">
-		select * from cart
+		select cartno,cartstock,cartregdate,mid,pcode from cart where mid=#{mid}
+		order by cartregdate desc
+	</select>
+	
+	<select id="prodinfo" 	resultType="com.hyundai.dutyfree.vo.ProductVO">
+	
+	select * from product where pcode=#{pcode}
+	
 	</select>
 	
 	<insert id="insertCart">
 		insert into cart values(seq_id.nextval,#{cartstock},to_date(sysdate,'yy/mm/dd'),#{mid},#{pcode})
 	</insert>
 	
-	<select id="">
-		select 
-		from cart c and product p and productimg i
-		where c.pcode=p.pcode and
-		
+	<update id="redproductcnt">
+		update 	product
+		set pstock=#{pstock}
+		where pcode=#{pcode}
+	</update>
+	
+	<select id="Cartitemconsist" resultType="int">
+		select count(*)
+		from cart 
+		where pcode=#{pcode} and mid=#{mid}
 	</select>
+	
+	<update id="UpdateCartstock">
+	update cart set cartstock = cartstock + #{cartstock} 
+	where pcode=#{pcode} and mid=#{mid} 
+	</update>
+	
+	
+	<delete id="deleteCart">
+	delete from cart where cartno=#{cartno} and mid=#{mid}
+	</delete>
  
  
  </mapper>

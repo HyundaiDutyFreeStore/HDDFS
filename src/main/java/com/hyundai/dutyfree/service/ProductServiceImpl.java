@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public ProductVO productdetail(String pcode) {
-		// TODO Auto-generated method stub
+		
 		return mapper.productdetail(pcode);
 	}
 
