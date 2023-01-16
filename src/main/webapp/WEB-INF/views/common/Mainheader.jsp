@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <header id="header">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -635,15 +636,37 @@
 			
 		</script>
 		<!-- 검색 레이어 영역 END-->
+		<script>
+		function gologout() {
+	    	alert('눌림');
+            document.getElementById('form_logout').submit();
+         }
+		</script>
 		<div class="default_menu">
-			<c:if test="${member == null }">
+			<%-- <c:if test="${member == null }">
 				<a class="menu_login_join" id="loginBtn" href="../join/login/">로그인</a>
 				<a id="menu_login_join" class="menu_login_join"
 					href="../join/termsAgree/">회원가입</a>
 			</c:if>
 			<c:if test="${member != null }">
 				<a class="menu_login_join" id="logoutBtn" href="/join/logout.do">로그아웃</a>
-			</c:if>
+			</c:if> --%>
+			
+			<!-- 시큐리티적용 로그인/로그아웃 -->
+			<sec:authorize access="isAnonymous()">
+	                        <a class="menu_login_join" href="/join/login"
+	                           onclick="GA_Event('공통','헤더_메뉴','로그인')"> 로그인 <!-- 로그인 -->
+	                        </a>
+	                        <a class="menu_login_join" id="menu_login_join"
+								href="/join/termsAgree/">회원가입</a>
+	         </sec:authorize>
+			 <sec:authorize access="isAuthenticated()">
+	                <form id="form_logout" action="/join/logout" method="post">
+	                           <input type="hidden" name="${_csrf.parameterName}"
+	                              value="${_csrf.token}" />
+	                 </form>
+	                 <a class="menu_login_join" href="javascript:void(0)" onclick="gologout()"> 로그아웃</a>
+	         </sec:authorize>
 
 			<ul>
 				<li class="item_01"><a

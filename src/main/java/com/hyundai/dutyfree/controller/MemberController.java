@@ -246,44 +246,43 @@ public class MemberController {
 		}
 	}
 
-	/* 로그인 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
-
-		HttpSession session = request.getSession();
-		String rawPw = "";
-		String encodePw = "";
-
-		MemberVO mvo = memberservice.memberLogin(member); // 제출한아이디와 일치하는 아이디 있는지
-
-		if (mvo != null) { // 일치하는 아이디 존재시
-
-			rawPw = member.getMpassword(); // 사용자가 제출한 비밀번호
-			System.out.println(rawPw);
-			encodePw = mvo.getMpassword(); // 데이터베이스에 저장한 인코딩된 비밀번호
-			System.out.println(encodePw);
-			if (true == pwEncoder.matches(rawPw, encodePw)) { // 비밀번호 일치여부 판단
-				mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
-				session.setAttribute("member", mvo); // session에 사용자의 정보 저장
-				return "redirect:/join/Mypage"; // 메인페이지 이동
-
-			} else {
-
-				rttr.addFlashAttribute("result", 0);
-				System.out.println("비번틀림");
-				return "redirect:/join/login"; // 로그인 페이지로 이동
-
-			}
-
-		} else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
-
-			rttr.addFlashAttribute("result", 0);
-			System.out.println("아이디 없음");
-			return "redirect:/join/login"; // 로그인 페이지로 이동
-
-		}
-
-	}
+	/*
+	 * 로그인
+	 * 
+	 * @RequestMapping(value = "/login", method = RequestMethod.POST) public String
+	 * loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes
+	 * rttr) throws Exception {
+	 * 
+	 * HttpSession session = request.getSession(); String rawPw = ""; String
+	 * encodePw = "";
+	 * 
+	 * MemberVO mvo = memberservice.memberLogin(member); // 제출한아이디와 일치하는 아이디 있는지
+	 * 
+	 * if (mvo != null) { // 일치하는 아이디 존재시
+	 * 
+	 * rawPw = member.getMpassword(); // 사용자가 제출한 비밀번호 System.out.println(rawPw);
+	 * encodePw = mvo.getMpassword(); // 데이터베이스에 저장한 인코딩된 비밀번호
+	 * System.out.println(encodePw); if (true == pwEncoder.matches(rawPw, encodePw))
+	 * { // 비밀번호 일치여부 판단 mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
+	 * session.setAttribute("member", mvo); // session에 사용자의 정보 저장 return
+	 * "redirect:/join/Mypage"; // 메인페이지 이동
+	 * 
+	 * } else {
+	 * 
+	 * rttr.addFlashAttribute("result", 0); System.out.println("비번틀림"); return
+	 * "redirect:/join/login"; // 로그인 페이지로 이동
+	 * 
+	 * }
+	 * 
+	 * } else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
+	 * 
+	 * rttr.addFlashAttribute("result", 0); System.out.println("아이디 없음"); return
+	 * "redirect:/join/login"; // 로그인 페이지로 이동
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	/* 아이디 찾기 */
 	@RequestMapping(value = "findID.do", method = RequestMethod.POST)
@@ -332,16 +331,16 @@ public class MemberController {
 
 	/* 메인페이지 로그아웃 */
 	/* 비동기방식 로그아웃 메서드 */
-	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
-	public String logoutPOST(HttpServletRequest request) throws Exception {
-
-		logger.info("로그아웃");
-
-		HttpSession session = request.getSession();
-
-		session.invalidate();
-		return "redirect:/";
-	}
+	/*
+	 * @RequestMapping(value = "logout.do", method = RequestMethod.GET) public
+	 * String logoutPOST(HttpServletRequest request) throws Exception {
+	 * 
+	 * logger.info("로그아웃");
+	 * 
+	 * HttpSession session = request.getSession();
+	 * 
+	 * session.invalidate(); return "redirect:/"; }
+	 */
 
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
 	public void myPage(HttpServletRequest request, Model model) throws Exception {

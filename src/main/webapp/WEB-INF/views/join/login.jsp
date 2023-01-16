@@ -12,7 +12,7 @@
 		<form id="frmIntgLgin" name="frmIntgLgin" method="post">
 			<div class="join_form">
 				<div class="join_row">
-					<input type="text" id="custId" name=mid placeholder="아이디"
+					<input type="text" id="custId" name="mid" placeholder="아이디"
 						maxlength="20" style="ime-mode: inactive;" autocomplete="off">
 				</div>
 				<div class="join_row placeholder_wrap">
