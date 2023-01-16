@@ -24,45 +24,46 @@
 			</choose>
 		</foreach>
 	</sql>
-	
+
 	<!-- 가격필터를 위한 부분 -->
 	<sql id="filter2">
 		<if test="cri.priceE >0">
-			and p.pprice * (1-(p.pdiscount/100)) between #{cri.priceS} and #{cri.priceE}
+			and p.pprice * (1-(p.pdiscount/100)) between #{cri.priceS}
+			and #{cri.priceE}
 		</if>
 		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
-		<foreach item="price" collection="cri.priceArr">
-			<trim prefix="OR">
-			<choose>
-				<when test="price == '1'.toString()">
-					p.pprice * (1-(p.pdiscount/100)) between 0 and 100
-				</when>
-				<when test="price == '2'.toString()">
-					p.pprice * (1-(p.pdiscount/100)) between 100 and 200
-				</when>
-				<when test="price == '3'.toString()">
-					p.pprice * (1-(p.pdiscount/100)) between 200 and 300
-				</when>
-				<when test="price == '4'.toString()">
-					p.pprice * (1-(p.pdiscount/100)) between 300 and 400
-				</when>
-				<when test="price == '5'.toString()">
-					p.pprice * (1-(p.pdiscount/100)) between 400 and 500
-				</when>
-				<when test="price == '6'.toString()">
-					p.pprice * (1-(p.pdiscount/100)) between 500 and 1000
-				</when>
-				<otherwise>
+			<foreach item="price" collection="cri.priceArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="price == '1'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 0 and 100
+						</when>
+						<when test="price == '2'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 100 and 200
+						</when>
+						<when test="price == '3'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 200 and 300
+						</when>
+						<when test="price == '4'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 300 and 400
+						</when>
+						<when test="price == '5'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 400 and 500
+						</when>
+						<when test="price == '6'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 500 and 1000
+						</when>
+						<otherwise>
 					<![CDATA[
 						p.pprice * (1-(p.pdiscount/100)) > 1000
 					]]>
-				</otherwise>
-			</choose>
-			</trim>
-		</foreach>
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
 		</trim>
 	</sql>
-	
+
 	<!-- 목록띄우기 -->
 	<select id="getList"
 		resultType="com.hyundai.dutyfree.vo.ProductVO" parameterType="HashMap">
@@ -71,15 +72,17 @@
 		(select p.*, rownum rn
 		from
 		(
-		select p.pcode, p.pname, p.pbrand, p.pprice,p.pregdate,
+		select p.pcode, p.pname,
+		p.pbrand, p.pprice,p.pregdate,
 		p.pdiscount, p.pstock, p.penable,p.psel,
-		c.clarge, c.cmedium, c.csmall, 
+		c.clarge, c.cmedium, c.csmall,
 		i.img1, i.img2, i.img3, i.img4, i.img5
-		from product p, category c, productimg i
+		from product p, category c, productimg
+		i
 		where p.pcode = c.pcode
 		and p.pcode = i.pcode
 		<if test="cate.clarge !='' ">
-		and c.clarge=#{cate.clarge}
+			and c.clarge=#{cate.clarge}
 		</if>
 		<if test="cate.cmedium !='' ">
 			and cmedium = #{cate.cmedium}
@@ -89,14 +92,14 @@
 		</if>
 		<if test="cri.keyword !='' ">
 			and (
-					p.pname like  '%'||#{cri.keyword}||'%'
-					OR p.pbrand like  '%'||#{cri.keyword}||'%'
-				    )
+			p.pname like '%'||#{cri.keyword}||'%'
+			OR p.pbrand like '%'||#{cri.keyword}||'%'
+			)
 		</if>
-		
+
 		<include refid="filter"></include>
 		<include refid="filter2"></include>
-		
+
 		<if test="cri.order =='베스트순' ">
 			order by p.psel desc
 		</if>
@@ -112,14 +115,14 @@
 		<if test="cri.order =='높은할인순' ">
 			order by p.pdiscount desc
 		</if>
-		
+
 		)p)pp
 		<![CDATA[
 		WHERE pp.rn > (#{cri.pageNum} -1) * #{cri.amount} and pp.rn <= #{cri.pageNum} * #{cri.amount}
     	]]>
-    	
+
 	</select>
-	
+
 	<!-- 조건에 맞는 총 상품개수 -->
 	<select id="getTotal" resultType="int" parameterType="HashMap">
 		select count(p.pcode)
@@ -128,12 +131,12 @@
 		on p.pcode = c.pcode
 		where
 		<if test="cri.keyword !='' ">
-			 (
-				p.pname like  '%'||#{cri.keyword}||'%'
-				OR p.pbrand like  '%'||#{cri.keyword}||'%'
-			  )
+			(
+			p.pname like '%'||#{cri.keyword}||'%'
+			OR p.pbrand like '%'||#{cri.keyword}||'%'
+			)
 		</if>
-		<if test="cate.clarge !='' "> 
+		<if test="cate.clarge !='' ">
 			c.clarge = #{cate.clarge}
 		</if>
 		<if test="cate.cmedium !='' ">
@@ -153,7 +156,7 @@
 		where clarge = #{clarge}
 	</select>
 
-	<!-- 해당 대분류의 중분류 가져오기  -->
+	<!-- 해당 대분류의 중분류 가져오기 -->
 	<select id="getMedCategory" resultType="String">
 		select distinct(cmedium)
 		from category
@@ -166,14 +169,17 @@
 		from category
 		where cmedium = #{cmedium}
 	</select>
-	
+
 	<!-- 상품상세 불러오기 -->
-	<select id="productdetail" resultType="com.hyundai.dutyfree.vo.ProductVO">
-		select p.pcode,pname,pbrand,pprice,pdiscount,pstock,penable,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
+	<select id="productdetail"
+		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select
+		p.pcode,pname,pbrand,pprice,pdiscount,pstock,penable,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
 		from product p, productimg i,category c
-		where p.pcode=i.pcode 
-			  and p.pcode=c.pcode 
-			  and p.pcode=#{pcode}
+		where p.pcode=i.pcode and
+		p.pcode=c.pcode and
+		p.pcode=#{pcode}
 	</select>
+
 
 </mapper>

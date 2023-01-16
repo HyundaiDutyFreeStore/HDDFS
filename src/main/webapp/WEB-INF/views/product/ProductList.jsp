@@ -57,7 +57,7 @@ function prodLoad(Purl,page){
 				let pdiscount = product.pdiscount;
 				let img1 = product.img1;
 				
-				let ppriceDC = Math.round(pprice*(1-(pdiscount/100) )*100) /100;	//세일가격 소수점2째자리까지 반올림
+				let ppriceDC = Math.round(pprice*(1-(pdiscount / 100) )*100) /100;	//세일가격 소수점2째자리까지 반올림
 				let pwon1 = Math.round(ppriceDC * 1267); //환율적용 원화가격
 				let pwon2 = pwon1.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); //원화가격 콤마
 				//console.log("dc: "+pprice*(1-(pdiscount/100)));
@@ -160,10 +160,23 @@ function filterChk(){
 //정렬방식 바꿀 때
 function prodOrder(str){
 	console.log("정렬방식: "+str);
+<<<<<<< HEAD
 	var purl = urlParams +'&order='+str+ filterChk();
 	console.log("정렬: "+purl);
 	prodLoad(purl,1);
 }
+=======
+	location.href='/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&order='+str;
+	/* $.ajax({
+		url: "/list",
+		method: "GET",
+		data:"clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}"+"&order="+str,
+		success:function(data){
+			console.log("성공");
+		}
+	}); */
+} 
+>>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
 
 
 
@@ -279,6 +292,7 @@ function goosSearchItemInit(reloadYn) {
 				<div>
 					<strong>${category.clarge}</strong>
 					<ul style="display: none;">
+						<<<<<<< HEAD
 						<li><a href="/product/list?clarge=스킨케어&cmedium=&csmall=">스킨케어</a></li>
 						<li><a href="/product/list?clarge=메이크업&cmedium=&csmall=">메이크업</a></li>
 						<li><a href="/product/list?clarge=향수/헤어/바디&cmedium=&csmall=">향수/헤어/바디</a></li>
@@ -287,6 +301,24 @@ function goosSearchItemInit(reloadYn) {
 						<li><a href="/product/list?clarge=스포츠/레저&cmedium=&csmall=">스포츠/레저</a></li>
 						<li><a href="/product/list?clarge=전자/리빙&cmedium=&csmall=">전자/리빙</a></li>
 						<li><a href="/product/list?clarge=식품&cmedium=&csmall=">식품</a></li>
+						=======
+						<li><a
+							href="/product/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어</a></li>
+						<li><a
+							href="/product/list?clarge=메이크업&cmedium=&csmall=&order=">메이크업</a></li>
+						<li><a
+							href="/product/list?clarge=향수/헤어/바디&cmedium=&csmall=&order=">향수/헤어/바디</a></li>
+						<li><a
+							href="/product/list?clarge=가방/지갑&cmedium=&csmall=&order=">가방/지갑</a></li>
+						<li><a
+							href="/product/list?clarge=패션/잡화&cmedium=&csmall=&order=">패션/잡화</a></li>
+						<li><a
+							href="/product/list?clarge=스포츠/레저&cmedium=&csmall=&order=">스포츠/레저</a></li>
+						<li><a
+							href="/product/list?clarge=전자/리빙&cmedium=&csmall=&order=">전자/리빙</a></li>
+						<li><a href="/product/list?clarge=식품&cmedium=&csmall=&order=">식품</a></li>
+						>>>>>>> branch 'dev' of
+						https://github.com/HyundaiDutyFreeStore/HDDFS.git
 					</ul>
 				</div>
 
@@ -301,13 +333,19 @@ function goosSearchItemInit(reloadYn) {
 					</c:choose>
 					<ul style="display: none;">
 						<c:forEach items="${cateMedList}" var="cMed">
+<<<<<<< HEAD
 							<li><a
 								href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=">${cMed}</a></li>
+=======
+							<li><a
+								href="/product/list?clarge=${category.clarge}&cmedium=${cMed}&csmall=&order=">${cMed}</a></li>
+>>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
 						</c:forEach>
 					</ul>
 				</div>
 
 				<c:if test="${category.cmedium ne ''}">
+<<<<<<< HEAD
 					<div>
 						<c:choose>
 							<c:when test="${category.csmall ne ''}">
@@ -324,6 +362,24 @@ function goosSearchItemInit(reloadYn) {
 							</c:forEach>
 						</ul>
 					</div>
+=======
+				<div>
+						<c:choose>
+							<c:when test="${category.csmall ne ''}">
+								<strong>${category.csmall}</strong>
+							</c:when>
+							<c:otherwise>
+								<strong>전체</strong>
+							</c:otherwise>
+						</c:choose>
+						<ul style="display: none;">
+							<c:forEach items="${cateSmallList}" var="cSmall">
+								<li><a
+									href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cSmall}&order=">${cSmall}</a></li>
+							</c:forEach>
+						</ul>
+					</div>
+>>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
 				</c:if>
 			</section>
 			<!-- ********************** 이동네비게이션 E ********************** -->
@@ -347,7 +403,7 @@ function goosSearchItemInit(reloadYn) {
 					</c:choose>
 				</h2>
 				<!-- ********************** 선택한 카테고리 명 띄우기 E ********************** -->
-				
+
 				<!-- ####################### 선택한 카테고리의 하위카테고리 목록 표로 띄우기 S ####################### -->
 				<table class="depthlist">
 					<colgroup>
@@ -362,6 +418,7 @@ function goosSearchItemInit(reloadYn) {
 							<c:if test='${status.count eq 1}'>
 								<tr>
 									<c:choose>
+<<<<<<< HEAD
 										<c:when test="${category.cmedium eq ''}">
 											<td><a
 												href="/product/list?clarge=${category.clarge}&cmedium=&csmall=">전체</a></td>
@@ -370,6 +427,16 @@ function goosSearchItemInit(reloadYn) {
 											<td><a
 												href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=">전체</a></td>
 										</c:when>
+=======
+									<c:when test="${category.cmedium eq ''}">
+											<td><a
+												href="/product/list?clarge=${category.clarge}&cmedium=&csmall=&order=">전체</a></td>
+										</c:when>
+										<c:when test="${category.csmall eq ''}">
+											<td><a
+												href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=&order=">전체</a></td>
+										</c:when>
+>>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
 									</c:choose>
 							</c:if>
 							<c:choose>
@@ -386,6 +453,7 @@ function goosSearchItemInit(reloadYn) {
 							</c:choose>
 
 							<c:choose>
+<<<<<<< HEAD
 								<c:when test="${category.cmedium eq ''}">
 									<td><a
 										href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=">${cate}</a></td>
@@ -394,6 +462,16 @@ function goosSearchItemInit(reloadYn) {
 									<td><a
 										href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}">${cate}</a></td>
 								</c:otherwise>
+=======
+							<c:when test="${category.cmedium eq ''}">
+									<td><a
+										href="/product/list?clarge=${category.clarge}&cmedium=${cate}&csmall=&order=">${cate}</a></td>
+								</c:when>
+								<c:otherwise>
+									<td><a
+										href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${cate}&order=">${cate}</a></td>
+								</c:otherwise>
+>>>>>>> branch 'dev' of https://github.com/HyundaiDutyFreeStore/HDDFS.git
 							</c:choose>
 
 							<c:choose>
@@ -415,7 +493,7 @@ function goosSearchItemInit(reloadYn) {
 					</tbody>
 				</table>
 				<!-- ********************** 선택한 카테고리의 하위카테고리 목록 표로 띄우기 E ********************** -->
-				
+
 				<!-- ####################### 필터 선택 S ####################### -->
 				<div class="filter_wrap goosFilterTabArea mt60">
 					<input type="hidden" id="startPrice" value="0"> <input
@@ -533,18 +611,18 @@ function goosSearchItemInit(reloadYn) {
 					</div>
 				</div>
 				<!-- ********************** 필터 선택 E ********************** -->
-				
+
 				<div class="sorting_wrap" id="totalAndSort">
 					<!-- ####################### 상품 총 개수 띄우기 S ####################### -->
 					<span class="txt_total">총 <strong id="goosListTotCnt">${totalProducts}</strong>개
 					</span>
 					<!-- *********************** 상품 총 개수 띄우기 E *********************** -->
-					
+
 					<!-- <input type="hidden" name="reGoosListTotCnt" id="reGoosListTotCnt"
 						value="454"> <input type="hidden" name="reGoosListTotPage"
 						id="reGoosListTotPage" value="12"> <input type="hidden"
 						name="filterResearchYn" id="filterResearchYn" value="N"> -->
-						
+
 					<!-- ####################### 정렬선택 S #######################  -->
 					<div class="sort_r">
 						<select id="goodsListOrder" class="goodsListOrder"
@@ -573,10 +651,8 @@ function goosSearchItemInit(reloadYn) {
 									data-stat="1" data-minqty="1" data-index="1"
 									data-price="46886.0" data-priceus="37.0" data-stoc="46">
 									<label for="10079280002701_1">선택</label>
-								</span>  --> 
-								
-								<!-- 상품상세 이동 링크 -->
-								<a href="/product/Productdetail?pcode=${product.pcode}">
+								</span>  --> <!-- 상품상세 이동 링크 --> <a
+								href="/product/Productdetail?pcode=${product.pcode}">
 									<div class="img_w">
 										<img data-src="${product.img1}" src="${product.img1}"
 											alt="${product.pname}"
@@ -621,34 +697,36 @@ function goosSearchItemInit(reloadYn) {
 				</div>
 			</div>
 		</section>
-	<!--####################### 페이지 번호 처리 S #######################  -->
-	<div class="paging" style="display: block;">
-		<c:if test="${pageMaker.prev}">
-			<!-- 첫페이지로 -->
-			<a class="prev2" href="1"> << </a>
-			<!-- 이전 버튼 -->
-			<a class="prev" href="${pageMaker.startPage - 1}">prev</a>
-		</c:if>
-
-		<!-- 1~10 버튼 -->
-		<span class="num"> 
-		<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-				<a href="${num}" class="pageBtn">
-					${num}
-				</a>
+		<!--####################### 페이지 번호 처리 S #######################  -->
+		<div class="paging" style="display: block;">
+			<c:if test="${pageMaker.prev}">
+				<!-- 첫페이지로 -->
+				<a class="prev2" href="1"> << </a>
+				<!-- 이전 버튼 -->
+				<a class="prev" href="${pageMaker.startPage - 1}">prev</a>
 			</c:if>
-		</c:forEach>
-		</span>  
-	
-		<c:if test="${pageMaker.next}">
-		<!-- 다음 버튼 -->
-		<a href="${pageMaker.endPage +1}" class="next">next</a>
-		<!-- 마지막페이지로 -->
-		<a class="next2" href="${pageMaker.realEnd}">>></a>
-		</c:if>
-	</div>
-	<!--********************** 페이지 번호 처리 E **********************  -->
+
+
+			<!-- 1~10 버튼 -->
+			<span class="num"> <c:forEach var="num"
+					begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+					<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
+						<a href="${num}" class="pageBtn"> ${num} </a>
+						<a
+							href="/product/list?clarge=${category.clarge}&cmedium=${category.cmedium}&csmall=${category.csmall}&pageNum=${num}"
+							class="pageBtn">${num}</a>
+					</c:if>
+				</c:forEach>
+			</span>  
+
+			<c:if test="${pageMaker.next}">
+				<!-- 다음 버튼 -->
+				<a href="${pageMaker.endPage +1}" class="next">next</a>
+				<!-- 마지막페이지로 -->
+				<a class="next2" href="${pageMaker.realEnd}">>></a>
+			</c:if>
+		</div>
+		<!--********************** 페이지 번호 처리 E **********************  -->
 	</article>
 </main>
 
