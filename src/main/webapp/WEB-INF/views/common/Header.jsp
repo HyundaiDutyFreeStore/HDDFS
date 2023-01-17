@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+	
+<sec:authorize access="hasRole('ROLE_MEMBER')">
+                <sec:authentication property="principal.username" var="mid"/>
+</sec:authorize>
 <head>
 <title>현대백화점인터넷면세점</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

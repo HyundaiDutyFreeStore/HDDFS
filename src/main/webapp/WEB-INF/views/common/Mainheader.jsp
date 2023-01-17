@@ -4,6 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	
+<sec:authorize access="hasRole('ROLE_MEMBER')">
+                <sec:authentication property="principal.username" var="mid"/>
+</sec:authorize>
 <header id="header">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -672,12 +676,12 @@ $(function() {
 
 			<ul>
 				<li class="item_01"><a
-					href="/cart/cartlist"><strong>장바<br>구니
+					href="/cart/cartlist?align='늦게담은순'&mid=${mid}"><strong>장바<br>구니
 					</strong><em id="rwingCartCnt" style="display: none"></em></a></li>
 				<li class="item_02"><a
 					href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 					</strong></a></li>
-				<li class="item_03"><a rel="nosublink" href="../join/Mypage/"><strong>마이<br>현대
+				<li class="item_03"><a rel="nosublink" href="/join/Mypage/"><strong>마이<br>현대
 					</strong></a></li>
 				<li class="item_04"><a
 					href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터

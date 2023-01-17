@@ -18,7 +18,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 			login-processing-url="/join/login"
 			username-parameter="mid"
 			password-parameter="mpassword"
-			authentication-failure-url="/join/goLogin"
+			authentication-failure-url="/join/login"
 			authentication-success-handler-ref="customLoginSuccess"/>
 		<security:csrf disabled="true"/>
 		<security:logout
