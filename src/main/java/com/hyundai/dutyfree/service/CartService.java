@@ -19,7 +19,7 @@ public interface CartService {
 
 	public void insertCart(CartVO cart);
 	
-	public List<CartVO> getCartList(String mid);
+	public List<CartVO> getCartList(String mid,String align);
 	
 	public void redproductcnt(String pcode, int pstock);
 	
