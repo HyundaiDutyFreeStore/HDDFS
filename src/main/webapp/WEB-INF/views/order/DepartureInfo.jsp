@@ -1,13 +1,9 @@
 <!-- 출국정보 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ include file="../common/Header.jsp"%>
+<%@ include file="../common/Header.jsp"%>
 <main id="container" class=""> <script type="text/javascript">
-deleteCookie("ADULT_GOOSCD");
-deleteCookie("ADULT_QTY");
-deleteCookie("ADULT_SETID");
-deleteCookie("ADULT_BUYNOW");
-deleteCookie("ADULT_TYPE");
+
 </script>
 
 <form id="selfReplace"
@@ -53,23 +49,11 @@ deleteCookie("ADULT_TYPE");
 						따라 교환권이 각기 다르게 발급될 수 있습니다.
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="cont_left" id="TAB" style="display: block;">
 
 				<form name="form" id="dpatForm" onsubmit="return false;">
-					<input type="hidden" id="mbshDpatInfo" value=""> <input
-						type="hidden" id="oldOrderDpatPlacCd" value=""> <input
-						type="hidden" id="oldOpenNm" value=""> <input
-						type="hidden" id="oldDpatDt" value=""> <input
-						type="hidden" id="oldDpatTmH" value=""> <input
-						type="hidden" id="oldDpatTmM" value=""> <input
-						type="hidden" id="oldDrtaYn" value=""> <input
-						type="hidden" id="oldViaAreaCd" value=""> <input
-						type="hidden" id="oldUgntComuTelNatiCd" value="82"> <input
-						type="hidden" id="oldUgntComuMophNo" value="01083311667">
-					<input type="hidden" id="oldTmpYn" value=""> <input
-						type="hidden" id="todayDate" value="20230313">
 					<div class="passport_wrap">
 						<div class="form_wrap">
 							<div class="form_tit">
@@ -77,9 +61,7 @@ deleteCookie("ADULT_TYPE");
 								<div class="right_btn">
 									<a href="javascript:void(0);" class="btnc_type small btn_pop1"
 										style="cursor: pointer;" onclick="openDpatLimitGuide();">기내반입
-										제한안내</a> <a href="javascript:void(0);"
-										class="btnc_type small btn_pop2" style="cursor: pointer;"
-										onclick="openDpatAirInfoList();">출국정보 불러오기</a>
+										제한안내</a>
 								</div>
 							</div>
 							<ul class="form_lsit">
@@ -100,11 +82,6 @@ deleteCookie("ADULT_TYPE");
 										id="arrvClsCd" name="arrvClsCd" value=""> <span><input
 											type="text" id="openNm" name="openNm" value=""
 											class="engNumber" placeholder="편명"></span> <em class="nbsp"></em>
-										<span><button type="button"
-												class="btnde_type1 mid bg_black btn_pop3" id="addDpat"
-												onclick="openPopSrchOpenNm();">
-												<span class="font_14">편명검색</span>
-											</button></span>
 								</span>
 								</li>
 								<li>
@@ -113,7 +90,7 @@ deleteCookie("ADULT_TYPE");
 										type="text" name="dpatDt" id="dpatDt"
 										class="datepicker hasDatepicker" placeholder="YYYY-MM-DD"
 										onkeyup="isNumber(this);" value="">
-									<button type="button" class="ui-datepicker-trigger">
+										<button type="button" class="ui-datepicker-trigger">
 											<img
 												src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png"
 												alt="..." title="...">
@@ -170,41 +147,7 @@ deleteCookie("ADULT_TYPE");
 										style="display: none;">출국날짜 및 시간을 선택해주세요.</p>
 								</li>
 								<li>
-									<p class="f_ti ico_compulsory">직항/경유</p> <span class="input_de">
-										<span class="chk"> <input type="radio" name="drtaYn"
-											value="Y" id="termType1111" checked=""
-											onclick="changeDrtaYn(this.value);"> <label
-											for="termType1111">직항</label>
-									</span> <span class="chk"> <input type="radio" name="drtaYn"
-											value="N" id="termType1112"
-											onclick="changeDrtaYn(this.value);"> <label
-											for="termType1112">경유</label>
-									</span>
-								</span> <span class="input_de"> <select name="viaAreaCd"
-										id="viaAreaCd" disabled="disabled">
-											<option value="">선택</option>
-											<option value="001">미국(미국내경유포함)</option>
-											<option value="003">캐나다</option>
-											<option value="004">호주</option>
-											<option value="005">인도</option>
-											<option value="006">일본</option>
-											<option value="007">피지</option>
-											<option value="008">뉴질랜드</option>
-											<option value="009">EU국가</option>
-											<option value="012">말레이지아</option>
-											<option value="014">UAE(두바이)</option>
-											<option value="015">마카오</option>
-											<option value="999">그외국가</option>
-									</select>
-								</span>
-								</li>
-							</ul>
-							<div class="form_tit">
-								<p class="ti">긴급연락처</p>
-							</div>
-							<ul class="form_lsit">
-								<li>
-									<p class="f_ti ico_compulsory">휴대폰번호</p> <span class="input_de">
+									<p class="f_ti ico_compulsory">긴급연락처</p> <span class="input_de">
 										<select name="ugntComuTelNatiCd" id="ugntComuTelNatiCd">
 											<option value="">선택</option>
 											<option value="82" selected="selected">한국 (+82)</option>
@@ -423,100 +366,12 @@ deleteCookie("ADULT_TYPE");
 										name="ugntComuMophNo" id="ugntComuMophNo" value="01083311667"
 										placeholder="- 없이 입력" maxlength="11"></span>
 								</li>
-								<li class="li_sub"><span class="input_de"> <span
-										class="chk"><input type="checkbox" name="tmpYn"
-											id="tmpYn" checked=""><label for="tmpYn">나의
-												출국정보에 저장</label></span> <span class="chk"><input type="checkbox"
-											name="smsRcvYn" id="smsRcvYn"><label for="smsRcvYn">SMS(알림톡)
-												수신동의</label></span>
-								</span></li>
 							</ul>
+
 							<div class="btn_area">
 								<a href="javascript:void(0);" class="btnxl_type type2"
 									onclick="sendData();">저장</a>
 							</div>
-						</div>
-						<div class="attention_area">
-							<p class="attention_tit">유의사항</p>
-							• 출국 예정일을 등록하시면 주문/결제 시 출국 정보를 불러올 수 있습니다.<br> • 출국 장소, 출국
-							일시에 따라 주문 가능한 시간이 정해져 있으므로 정확하게 입력 부탁 드립니다.<br> <br> •
-							부산항에서 코비, 니나, 비틀&nbsp;이용하여 출국하시는 고객님께서는 아래 내용 참고하시어 입력
-							부탁&nbsp;드립니다.<br> <br>
-							<table border="1" cellpadding="1" cellspacing="1"
-								style="width: 500px">
-								<tbody>
-									<tr>
-										<td>배편</td>
-										<td>출항시간</td>
-										<td>도착지</td>
-									</tr>
-									<tr>
-										<td>니나610</td>
-										<td>8:00</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>니나618</td>
-										<td>9:00</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>니나620</td>
-										<td>9:10</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>니나624</td>
-										<td>9:45</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>비틀424</td>
-										<td>14:00</td>
-										<td>후쿠오카</td>
-									</tr>
-									<tr>
-										<td>비틀418</td>
-										<td>13:30</td>
-										<td>후쿠오카</td>
-									</tr>
-									<tr>
-										<td>비틀644</td>
-										<td>12:15</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>비틀618</td>
-										<td>9:00</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>비틀213</td>
-										<td>8:30</td>
-										<td>후쿠오카</td>
-									</tr>
-									<tr>
-										<td>코비616</td>
-										<td>8:40</td>
-										<td>히타카츠</td>
-									</tr>
-									<tr>
-										<td>코비806</td>
-										<td>8:40</td>
-										<td>이즈하라</td>
-									</tr>
-									<tr>
-										<td>코비638</td>
-										<td>11:30</td>
-										<td>히타카츠</td>
-									</tr>
-								</tbody>
-							</table>
-							<br> • 부산항에서 AURORA 배편 이용하시는 고객님께서는&nbsp;소문자가 아닌 대문자로 입력
-							부탁드립니다.<br> • 상품 위치에 따라 출국정보가 변경되지 않을 수 있으며<br> &nbsp;
-							출국정보 등록화면에서 변경을 하시더라도 기 주문건에 대한 출국정보는 변경되지 않습니다.<br> &nbsp;
-							변경을 원하실 경우 고객센터 (1811-6688 / 운영시간 09:30~18:30) 로 문의 부탁 드립니다.<br>
-
 						</div>
 					</div>
 				</form>
