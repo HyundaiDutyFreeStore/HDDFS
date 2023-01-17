@@ -1,6 +1,9 @@
 package com.hyundai.dutyfree.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,32 +49,34 @@ public class CartController {
 
 	// 장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
-	public void cartlist(String mid, Model model) {
+	public void cartlist(String mid,String align, Model model) {
 		System.out.println(mid);
-		List<CartVO> cartlist = cartservice.getCartList(mid);
+		System.out.println(align);
+		List<CartVO> cartlist = cartservice.getCartList(mid,align);
 		List<CartVOforJSP> cartjsplist = new ArrayList<CartVOforJSP>();
 		for (CartVO c : cartlist) {
-			ProductVO product = productservice.productdetail(c.getPcode());
-			CartVOforJSP cartjsp = new CartVOforJSP();
-			cartjsp.setPname(product.getPname());
-			cartjsp.setPbrand(product.getPbrand());
-			cartjsp.setPprice(product.getPprice());
-			cartjsp.setPdiscount(product.getPdiscount());
-			cartjsp.setPcode(product.getPcode());
-			cartjsp.setPstock(product.getPstock());
-			cartjsp.setCartno(c.getCartno());
-			System.out.println(product.getImg1());
-			if (product.getImg1() != null) {
-				cartjsp.setImg1(product.getImg1());
-			}
-			cartjsp.setMid(c.getMid());
-			cartjsp.setCartstock(c.getCartstock());
-			cartjsplist.add(cartjsp);
+				ProductVO product = productservice.productdetail(c.getPcode());
+				CartVOforJSP cartjsp = new CartVOforJSP();
+				cartjsp.setPname(product.getPname());
+				cartjsp.setPbrand(product.getPbrand());
+				cartjsp.setPprice(product.getPprice());
+				cartjsp.setPdiscount(product.getPdiscount());
+				cartjsp.setPcode(product.getPcode());
+				cartjsp.setPstock(product.getPstock());
+				cartjsp.setCartno(c.getCartno());
+				System.out.println(product.getImg1());
+				if (product.getImg1() != null) {
+					cartjsp.setImg1(product.getImg1());
+				}
+				cartjsp.setCartstock(c.getCartstock());
+				cartjsplist.add(cartjsp);
 		}
+		
 		for(CartVOforJSP c : cartjsplist) {
 			System.out.println(c.toString());
 		}
 		model.addAttribute("cartlist", cartjsplist);
+		model.addAttribute("align", align);
 	}
 
 	// 장바구니 상품들을 등록

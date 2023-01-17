@@ -1,5 +1,6 @@
 package com.hyundai.dutyfree.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.hyundai.dutyfree.vo.CartVO;
@@ -22,7 +23,9 @@ import com.hyundai.dutyfree.vo.ProductVO;
 public interface CartMapper {
 	
 	//장바구니 목록을 조회
-	public List<CartVO> getCartList(String mid);
+	public List<CartVO> getCartListprice(HashMap<String, String> listMap);
+	
+	public List<CartVO> getCartListregDate(HashMap<String, String> listMap);
 	
 	//장바구니에 물품을 등록
 	public void insertCart(CartVO cart);
