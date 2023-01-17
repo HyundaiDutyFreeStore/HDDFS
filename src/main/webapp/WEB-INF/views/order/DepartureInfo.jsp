@@ -86,15 +86,14 @@
 								</li>
 								<li>
 									<p class="f_ti ico_compulsory">출국일시</p> <span
-									class="input_de datepicker_box" id="dpatDtSpan"> <input
-										type="text" name="dpatDt" id="dpatDt"
-										class="datepicker hasDatepicker" placeholder="YYYY-MM-DD"
-										onkeyup="isNumber(this);" value="">
-										<button type="button" class="ui-datepicker-trigger">
-											<img
-												src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png"
-												alt="..." title="...">
-										</button>
+									class="input_de datepicker_box" id="dpatDtSpan"> 
+									<input type="text" id="oarrdate" name="oarrdate" value="" />
+									<!-- <input
+										type="text" name="oarrdate" id="oarrdate" class="oarrdate"
+										placeholder="YYYY-MM-DD" value=""> <img
+										src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png"
+										alt="..." title="..."> -->
+
 								</span> <span class="input_de hasemail" id="dpatTmSpan"> <span>
 											<select name="dpatTmH" id="dpatTmH" class="required"
 											valmsg="출국시간을 선택해주세요.">
@@ -445,6 +444,27 @@
 <div id="changeSetGoosQtyList"></div>
 <div id="layer_unit_pspt" class="layer_unit pop_o1" title="여권 정보 안내"></div>
 <div id="layer_unit_dpat" class="layer_unit pop_o1" title="출국 정보 안내"></div>
-
-
-<%@ include file="../common/Footer.jsp"%>
+<script type="text/javascript">
+$(function () {
+    $('#oarrdate').daterangepicker({
+        "locale": {
+            "format": "YYYY-MM-DD",
+            "separator": " ~ ",
+            "applyLabel": "확인",
+            "cancelLabel": "취소",
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": ["월", "화", "수", "목", "금", "토", "일"],
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            "firstDay": 1
+        },
+        "startDate": "2020-10-21",
+        "endDate": "2020-10-23",
+        "drops": "down"
+    }, function (start, end, label) {
+        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+    });
+});
+</script> <%@ include file="../common/Footer.jsp"%>
