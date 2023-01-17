@@ -85,6 +85,9 @@
 					<form id="enrollPassport" name="enrollPassport" method="post"
 						action="/order/enrollPassport">
 						<input type="hidden" id="mId" name="mId" value="${member.mid }" >
+						<input type="hidden" id="totalGoosUsdinput" name="totalGoosUsdinput"value=""/>
+						<input type="hidden" id="totalDcUsdinput" name="totalDcUsdinput" value=""/>
+						<input type="hidden" id="cartstockinput" name="cartstockinput" value=""/>
 						<div class="form_wrap">
 							<ul class="form_lsit">
 								<li>
@@ -249,6 +252,7 @@
 				        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
 				        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
 				        ,yearRange: "1930:2023"
+				        ,maxDate: 'today'
 				    });                    
 				    
 				    //초기값을 오늘 날짜로 설정해줘야 합니다.
@@ -275,6 +279,9 @@
 										$(".payTotalSettKrw")
 												.text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
 										
+										$('#totalGoosUsdinput').attr('value',"${cartprice}");
+										$('#totalDcUsdinput').attr('value',"${cartdis}");
+										$('#cartstockinput').attr('value',"${cartstock}");
 									});
 
 					function priceComma(price) {
