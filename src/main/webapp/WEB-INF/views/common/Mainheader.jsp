@@ -105,10 +105,10 @@
 			<a href="javascript:" class="search_close">닫기</a>
 		</div>
 
-		<!-- <script
-			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script> -->
+		<script
+			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script>
 		<script type="text/javascript">
-		<!--$(function() {
+$(function() {
 
 				// 검색결과에 따라 검색창 변환
 				changeSearchArea();
@@ -244,8 +244,8 @@
 					$($this).addClass("on");
 					$($this).parent().find("div").addClass("on");
 				}
-			} -->
-/* 
+			} 
+
 			// 검색어 목록 call json
 			function srchLayer() {
 				// 검색어 있는 상태일때 자동완성 실행
