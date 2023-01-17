@@ -460,6 +460,9 @@ $(document)
 			$(".payTotalSettKrw")
 					.text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
 			
+			$('#totalGoosUsdinput').attr('value',"${cartprice}");
+			$('#totalDcUsdinput').attr('value',"${cardis}");
+			$('#cartstockinput').attr('value',"${cartstock}");
 		});
 
 function priceComma(price) {

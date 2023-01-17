@@ -48,7 +48,7 @@ public class OrderController {
 
 	@GetMapping("/DepartureInfo")
 	public void DepartureInfo() {
-
+			
 	}
 
 	@PostMapping("/PassportInfo")
@@ -62,7 +62,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/enrollPassport")
-	public String enrollPassport(HttpServletRequest request) throws ParseException {
+	public String enrollPassport(HttpServletRequest request,Model model) throws ParseException {
 		System.out.println("enroll");
 		System.out.println(request.getParameter("mName"));
 		System.out.println(request.getParameter("mPsptno"));
@@ -93,6 +93,12 @@ public class OrderController {
         
         service.insertPassport(passport);
         
+        System.out.println(request.getParameter("totalGoosUsdinput"));
+        System.out.println(request.getParameter("totalDcUsdinput"));
+        System.out.println(request.getParameter("cartstockinput"));
+        model.addAttribute("cartprice", request.getParameter("totalGoosUsdinput"));
+        model.addAttribute("cartdis",  request.getParameter("totalDcUsdinput"));
+        model.addAttribute("cartstock", request.getParameter("cartstockinput"));
         return "/order/DepartureInfo";
         
         
