@@ -19,7 +19,7 @@
 		insert into member values(#{mid}, #{mpassword},
 		#{memail}, #{mphone},#{mname},
 		5000,
-		sysdate,'Friend',#{mgender})
+		sysdate,#{mgender},0)
 	</insert>
 	<!-- 아이디 중복검사 -->
 	<select id="idCheck" resultType="int">
