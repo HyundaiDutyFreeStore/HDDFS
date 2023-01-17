@@ -13,6 +13,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	
 	<security:http>
 		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/join/Mypage/**" access="hasRole('ROLE_MEMBER')" />
 		<security:form-login login-page="/join/login"
 			login-processing-url="/join/login"
 			username-parameter="mid"

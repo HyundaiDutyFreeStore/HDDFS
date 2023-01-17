@@ -32,7 +32,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 			response.sendRedirect("/member/admin");
 			return;
 		}else if(roleNames.contains("ROLE_MEMBER")) {
-			response.sendRedirect("/");
+			response.sendRedirect("/join/Mypage");
 			return;
 		}
 		response.sendRedirect("/");

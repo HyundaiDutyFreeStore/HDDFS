@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <header id="header">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -651,26 +652,27 @@
 			<c:if test="${member != null }">
 				<a class="menu_login_join" id="logoutBtn" href="/join/logout.do">로그아웃</a>
 			</c:if> --%>
-			
+
 			<!-- 시큐리티적용 로그인/로그아웃 -->
 			<sec:authorize access="isAnonymous()">
-	                        <a class="menu_login_join" href="/join/login"
-	                           onclick="GA_Event('공통','헤더_메뉴','로그인')"> 로그인 <!-- 로그인 -->
-	                        </a>
-	                        <a class="menu_login_join" id="menu_login_join"
-								href="/join/termsAgree/">회원가입</a>
-	         </sec:authorize>
-			 <sec:authorize access="isAuthenticated()">
-	                <form id="form_logout" action="/join/logout" method="post">
-	                           <input type="hidden" name="${_csrf.parameterName}"
-	                              value="${_csrf.token}" />
-	                 </form>
-	                 <a class="menu_login_join" href="javascript:void(0)" onclick="gologout()"> 로그아웃</a>
-	         </sec:authorize>
+				<a class="menu_login_join" href="/join/login"
+					onclick="GA_Event('공통','헤더_메뉴','로그인')"> 로그인 <!-- 로그인 -->
+				</a>
+				<a class="menu_login_join" id="menu_login_join"
+					href="/join/termsAgree/">회원가입</a>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<form id="form_logout" action="/join/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+				</form>
+				<a class="menu_login_join" href="javascript:void(0)"
+					onclick="gologout()"> 로그아웃</a>
+			</sec:authorize>
 
 			<ul>
 				<li class="item_01"><a
-					href="https://www.hddfs.com/shop/or/order/listCart.do?MG=KR_PC_GNB_Cart"><strong>장바<br>구니
+					href="/cart/cartlist"><strong>장바<br>구니
 					</strong><em id="rwingCartCnt" style="display: none"></em></a></li>
 				<li class="item_02"><a
 					href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회

@@ -1,5 +1,6 @@
 package com.hyundai.dutyfree.controller;
 
+import java.security.Principal;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -343,14 +344,19 @@ public class MemberController {
 	 */
 
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
-	public void myPage(HttpServletRequest request, Model model) throws Exception {
-		log.info("마이페이지 접속");
-
-		MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
-		model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
-		model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
-		model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
-		model.addAttribute("mhpoint", memberservice.myPage(String.valueOf(mvo.getMhpoint())));
+	public void myPage(HttpServletRequest request, Model model,Principal prin) throws Exception {
+		String mid = prin.getName();
+		log.info("마이페이지 접속 mid: "+ mid);
+		MemberVO mvo = memberservice.read(mid);
+		model.addAttribute("member",mvo);
+		/*
+		 * MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
+		 * model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
+		 * model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
+		 * model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+		 * model.addAttribute("mhpoint",
+		 * memberservice.myPage(String.valueOf(mvo.getMhpoint())));
+		 */
 
 	}
 }
