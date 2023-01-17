@@ -1,6 +1,8 @@
 package com.hyundai.dutyfree.vo;
 
-import java.sql.Date;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -23,5 +25,8 @@ public class OrderListVO {
 	private String mid;
 	private Date odate;
 	private int ohpoint;
-	private String ostatusq;
+	private String ostatus;
+	@DateTimeFormat(pattern="yyyy-mm-dd")
+	private Date oarrdate;
+	private String oplnum;
 }
