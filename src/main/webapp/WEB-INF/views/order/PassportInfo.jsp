@@ -77,129 +77,64 @@ deleteCookie("ADULT_TYPE");
     <ul class="form_lsit">
         <li>
             <p class="f_ti">한글성명</p>
-            <span class="input_de"><input type="text" name="ordrrNm" placeholder="성명을 입력해주세요" disabled="disabled" value="${member.mname }"></span>
+            <span class="input_de"><input type="text" name="mName" placeholder="성명을 입력해주세요" disabled="disabled" value="${member.mname }"></span>
                 </li>
         <li>
             <p class="f_ti">성별</p>
-            <span class="input_de"><input type="text" placeholder="${member.mgender }" disabled=""></span>
+            <span class="input_de"><input type="text" name="mGender" placeholder="${member.mgender }" disabled="disabled"></span>
                     </li>
         <li>
             <p class="f_ti">생년월일</p>
-            <span class="input_de">
-           <input type="text" name="psptExpiDt" id="psptExpiDt" class="datepicker input_passport hasDatepicker" onkeyup="isNumber(this);" placeholder="YYYY-MM-DD" value="">
-             <button type="button" class="ui-datepicker-trigger" onclick="javascript:openPassExp();" style="position: absolute; top: 200px; left: 380px; z-index: 82; display: none;"><img src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png" alt="..." title="..."></button>
-            </span>
-                </li>
+            <span class="input_de datepicker_box">
+            <input type="date" id="psptExpiDt" name="mBirth"class="datepicker input_passport hasDatepicker"  data-placeholder="YYYY-MM-dd">
+             </span>
+       		
+       		
+      </li>
         <li>
             <p class="f_ti">국적</p>
-            <span class="input_de"><input type="text" value=""></span>
+            <span class="input_de"> 
+            <input type="hidden" name="mNationality" value=""/>
+            <select id="nationality">
+											<option value="">선택</option>
+											<option value="001">미국(미국내경유포함)</option>
+											<option value="003">캐나다</option>
+											<option value="004">호주</option>
+											<option value="005">인도</option>
+											<option value="006">일본</option>
+											<option value="007">피지</option>
+											<option value="008">뉴질랜드</option>
+											<option value="009">EU국가</option>
+											<option value="012">말레이지아</option>
+											<option value="014">UAE(두바이)</option>
+											<option value="015">마카오</option>
+											<option value="999">그외국가</option>
+							</select>
+						</span>
                 </li>
         <li>
             <p class="f_ti ico_compulsory">Last Name 성</p>
             <span class="input_de">
-                <input type="text" id="mbshEngLstnm" name="mbshEngLstnm" class="input_passport" onkeypress="javascript:noSpaceEvnt(event);" value="" placeholder="영문 성을 공백없이 입력해주세요">
+                <input type="text" id="mbshEngLstnm" name="mLastname" class="input_passport" onkeypress="javascript:noSpaceEvnt(event);" value="" placeholder="영문 성을 공백없이 입력해주세요">
                     </span>
         </li>
         <li>
             <p class="f_ti ico_compulsory"> First Name 이름</p>
             <span class="input_de">
-                <input type="text" id="mbshEngFstnm" name="mbshEngFstnm" class="input_passport" onkeypress="javascript:noSpaceEvnt(event);" value="" placeholder="영문 이름을 공백없이 입력해주세요">
+                <input type="text" id="mbshEngFstnm" name="mFirstname" class="input_passport" onkeypress="javascript:noSpaceEvnt(event);" value="" placeholder="영문 이름을 공백없이 입력해주세요">
                     </span>
         </li>
         <li>
             <p class="f_ti ico_compulsory">여권번호</p>
             <span class="input_de">
-            <input type="text" id="psptNo" name="psptNo" class="input_passport" onkeypress="javascript:noSpaceEvnt(event);" value="" placeholder="여권번호를 입력해주세요">
+            <input type="text" id="psptNo" name="mPsptno" class="input_passport" onkeypress="javascript:noSpaceEvnt(event);" value="" placeholder="여권번호를 입력해주세요">
                 </span>
         </li>
         <li>
             <p class="f_ti ico_compulsory">여권기간만료일</p>
             <span class="input_de datepicker_box">
-                <input type="hidden" id="pridRmn" value="">
-                <input type="text" name="psptExpiDt" id="psptExpiDt" class="datepicker input_passport hasDatepicker" onkeyup="isNumber(this);" placeholder="YYYY-MM-DD" value="">
-                <button type="button" class="ui-datepicker-trigger" onclick="javascript:openPassExp();"><img src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png" alt="..." title="..."></button>
+            <input type="date" id="psptExpiDt" name="mPsptexpidt" class="datepicker input_passport hasDatepicker" data-placeholder="YYYY-MM-dd" data-gtm-form-interact-field-id="0">
              </span>
-             <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: absolute; top: 418px; left: 380px; z-index: 82; display: none;">
-     <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
-     <a class="ui-datepicker-prev ui-corner-all ui-state-disabled" title="Prev">
-     <span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a>
-     <a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next">
-     <span class="ui-icon ui-icon-circle-triangle-e">Next</span>
-     </a>
-     <div class="ui-datepicker-title">
-     <select class="ui-datepicker-year" data-handler="selectYear" data-event="change">
-     <option value="2023" selected="selected">2023</option>
-     <option value="2024">2024</option>
-     <option value="2025">2025</option>
-     <option value="2026">2026</option>
-     <option value="2027">2027</option>
-     <option value="2028">2028</option>
-     <option value="2029">2029</option>
-     <option value="2030">2030</option>
-     <option value="2031">2031</option>
-     <option value="2032">2032</option>
-     <option value="2033">2033</option>
-     <option value="2034">2034</option>
-     <option value="2035">2035</option>
-     <option value="2036">2036</option>
-     <option value="2037">2037</option>
-     <option value="2038">2038</option>
-     <option value="2039">2039</option>
-     <option value="2040">2040</option>
-     <option value="2041">2041</option>
-     <option value="2042">2042</option>
-     <option value="2043">2043</option>
-     <option value="2044">2044</option>
-     <option value="2045">2045</option>
-     <option value="2046">2046</option>
-     <option value="2047">2047</option>
-     <option value="2048">2048</option>
-     <option value="2049">2049</option>
-     <option value="2050">2050</option>
-     <option value="2051">2051</option>
-     <option value="2052">2052</option>
-     <option value="2053">2053</option>
-     </select>
-     <select class="ui-datepicker-month" data-handler="selectMonth" data-event="change">
-     <option value="0" selected="selected">1</option>
-     <option value="1">2</option>
-     <option value="2">3</option>
-     <option value="3">4</option>
-     <option value="4">5</option>
-     <option value="5">6</option>
-     <option value="6">7</option>
-     <option value="7">8</option>
-     <option value="8">9</option>
-     <option value="9">10</option>
-     <option value="10">11</option>
-     <option value="11">12</option>
-     </select>
-     </div>
-     </div>
-     <table class="ui-datepicker-calendar">
-     <thead>
-     <tr>
-     <th scope="col" class="ui-datepicker-week-end">
-     <span title="Sunday"></span>
-     </th>
-     <th scope="col">
-     <span title="Monday"></span>
-     </th>
-     <th scope="col">
-     <span title="Tuesday"></span>
-     </th>
-     <th scope="col">
-     <span title="Wednesday"></span>
-     </th>
-     <th scope="col">
-     <span title="Thursday"></span>
-     </th>
-     <th scope="col"><span title="Friday"></span>
-     </th>
-     <th scope="col" class="ui-datepicker-week-end">
-     <span title="Saturday"></span>
-     </th>
-     </tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">1</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">2</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">3</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">4</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">5</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">6</span></td><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">7</span></td></tr><tr><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">8</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">9</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">10</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">11</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">12</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">13</span></td><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">14</span></td></tr><tr><td class=" ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">15</span></td><td class=" ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">16</span></td><td class=" ui-datepicker-days-cell-over  ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default ui-state-highlight" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">20</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">21</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">22</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">27</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">28</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">29</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">30</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="0" data-year="2023"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">1</span></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">2</span></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">3</span></td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled "><span class="ui-state-default">4</span></td></tr></tbody></table></div>
             <div class="form_txt_comment"></div>
         </li>
         </ul>
@@ -233,6 +168,25 @@ deleteCookie("ADULT_TYPE");
 </div>
 
 <script type="text/javascript">
+$(function(){
+    // 달력 설정
+    $("#birth").datepicker({
+        showOn: "button",
+        buttonImage: SERVER_IMAGE + "/images/KO/common/calendar.png",
+        buttonImageOnly: true,
+        dateFormat: "yy-mm-dd",
+        buttonText: "Select date",
+        changeYear: true,
+        changeMonth: true,
+        showOtherMonths: true,
+        monthNamesShort: [ "1","2","3","4","5","6","7","8","9","10","11","12" ],
+        dayNamesMin: ["일","월","화","수","목","금","토"],
+        yearRange: "1900:+0"
+    });
+});
+</script>
+
+<script type="text/javascript">
 
 function guidePspt(){
 	if($("#guidePspt").hasClass("on")){
@@ -242,13 +196,29 @@ function guidePspt(){
 	}
 }
 
-function openPassExp(){
-	if($('#ui-datepicker-div').css('display')==='none'){
+function openExp(){
+	if($('#ui-Birthpicker-div').css('display')==='block'){
+		$('#ui-Birthpicker-div').css("display","none");
+	}
+	
+	if($("#ui-datepicker-div").css('display')==='none'){
 		$("#ui-datepicker-div").css("display","block");
 	}else{
 		$("#ui-datepicker-div").css("display","none");
 	} 
 	
+}
+
+function openBirthExp(){
+	if($("#ui-datepicker-div").css('display')==='block'){
+		$("#ui-datepicker-div").css("display","none");
+	}
+	
+	if($('#ui-Birthpicker-div').css('display')==='none'){
+		$("#ui-Birthpicker-div").css("display","block");
+	}else{
+		$("#ui-Birthpicker-div").css("display","none");
+	} 
 }
 
 
