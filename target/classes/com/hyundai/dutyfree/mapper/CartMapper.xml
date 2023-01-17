@@ -41,7 +41,7 @@
 	</select>
 	
 	<insert id="insertCart">
-		insert into cart values(seq_id.nextval,#{cartstock},sysdate,#{mid},#{pcode})
+		insert into cart values(seq_cid.nextval,#{cartstock},sysdate,#{mid},#{pcode})
 	</insert>
 	
 	<update id="redproductcnt">
