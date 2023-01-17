@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.service;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -56,9 +57,17 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<CartVO> getCartList(String mid) {
+	public List<CartVO> getCartList(String mid,String align) {
 		// TODO Auto-generated method stub
-		return cartmapper.getCartList(mid);
+		HashMap<String,String> listMap = new HashMap<>();
+		listMap.put("mid", mid);
+		listMap.put("align",align);
+		System.out.println(align);
+		if(align.equals("늦게담은순")||align.equals("먼저담은순")) {
+			return cartmapper.getCartListregDate(listMap);
+		}else {
+			return cartmapper.getCartListprice(listMap);
+		}
 	}
 
 	@Override

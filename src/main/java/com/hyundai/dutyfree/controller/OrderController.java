@@ -11,7 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -39,9 +41,14 @@ public class OrderController {
 
 	}
 
-	@GetMapping("/PassportInfo")
-	public void PassportInfo() {
+	@PostMapping("/PassportInfo")
+	public void PassportInfo(HttpServletRequest request,Model model) {
 		System.out.println("Passport");
+		model.addAttribute("cartprice", request.getParameter("cartprice"));
+		model.addAttribute("cartdisprice", request.getParameter("cartdisprice"));
+		System.out.println(request.getParameter("cartdisprice"));
+		model.addAttribute("cartdis", request.getParameter("cartdis"));
+		model.addAttribute("cartstock", request.getParameter("cartstock"));
 	}
 
 	@RequestMapping(value = "qr", method = RequestMethod.GET)

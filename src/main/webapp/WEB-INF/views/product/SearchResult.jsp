@@ -16,10 +16,12 @@ function prodLoad(Purl,page){
 		success: function(data){
 			console.log("ajax성공");
 			order = data.order;
+			ppage = data.ppage;
 			prodCnt = data.total;
 			prodArr = data.products;
 			
 			console.log("정렬"+order);
+			console.log("현재페이지"+ppage);
 			//console.log(prodArr);
 			
 			//상품총개수 띄우기
@@ -511,7 +513,7 @@ function goosSearchItemInit(reloadYn) {
 		<span class="num"> 
 		<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 			<c:if test="${(pageMaker.startPage+i) <= pageMaker.endPage}">
-				<a href="${num}" class="pageBtn">
+				<a href="${num}" class="${pageMaker.cri.pageNum eq num ? 'active':''}">
 					${num}
 				</a>
 			</c:if>
@@ -559,8 +561,13 @@ function showProductPage(url,totalCnt,page) {
 			}
        
 			pageHtml += "<span class='num'>";
-			for(var i=data.startPage; i<=data.endPage; i++){
-				pageHtml += "<a href='"+i+"'>"+ i + "</a>";
+			for(var i=data.startPage; i<=data.endPage; i++) {
+				pageHtml += "<a href='"+i+"'";
+				console.log("i: "+i+" pageNum: "+"${pageMaker.cri.pageNum}");
+				if(i==ppage){
+					pageHtml += "class='active'";
+				}
+				pageHtml += ">" + i + "</a>";
 			}
 			pageHtml += "</span>";
 			
