@@ -11,7 +11,7 @@
 		<div class="join_wrap ">
 			<form method="post" id="frmMbshInformation" name="frmMbshInformation"
 				action="/join/mbshInformation">
-
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<h2 class="h2_type">회원가입(내국인)</h2>
 				<div class="join_step">
 					<ol>

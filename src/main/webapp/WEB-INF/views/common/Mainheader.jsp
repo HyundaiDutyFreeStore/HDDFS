@@ -9,6 +9,12 @@
                 <sec:authentication property="principal.username" var="mid"/>
 </sec:authorize>
 <header id="header">
+	<!-- 시큐리티 -->
+	<script>
+	 const csrfHeaderName = "${_csrf.headerName}";
+	 const csrfTokenValue = "${_csrf.token}";
+	</script>
+	
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 		crossorigin="anonymous"></script>

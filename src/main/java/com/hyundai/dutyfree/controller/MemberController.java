@@ -64,10 +64,11 @@ public class MemberController {
 		logger.info("회원가입 1 페이지 진입");
 	}
 
-	@RequestMapping(value = "/termsAgree", method = RequestMethod.POST)
-	public String joinfirPOST() throws Exception {
-		return "redirect:/authentication";
-	}
+	/*
+	 * @RequestMapping(value = "/termsAgree", method = RequestMethod.POST) public
+	 * String joinfirPOST() throws Exception { logger.info(""); return
+	 * "redirect:/authentication"; }
+	 */
 
 	// 이메일 인증 페이지 이동
 	@RequestMapping(value = "authentication", method = RequestMethod.GET)
@@ -75,10 +76,11 @@ public class MemberController {
 		logger.info("회원가입 2 페이지 진입");
 	}
 
-	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
-	public String joinsecPOST() throws Exception {
-		return "redirect:/join/mbshInformation";
-	}
+	/*
+	 * @RequestMapping(value = "/authentication", method = RequestMethod.POST)
+	 * public String joinsecPOST() throws Exception { return
+	 * "redirect:/join/mbshInformation"; }
+	 */
 
 	// 회원 정보 입력 페이지 이동
 	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
