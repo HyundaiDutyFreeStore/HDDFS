@@ -3,11 +3,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <main id="container" class=""> <script type="text/javascript">
-	deleteCookie("ADULT_GOOSCD");
-	deleteCookie("ADULT_QTY");
-	deleteCookie("ADULT_SETID");
-	deleteCookie("ADULT_BUYNOW");
-	deleteCookie("ADULT_TYPE");
 </script>
 
 <article id="content">
@@ -314,28 +309,6 @@
 									class="totalRsvg">0.0%</span>
 							</dd>
 						</dl>
-						<input type="hidden" id="totalDcUsd" value="44.400001525878906">
-						<input type="hidden" id="totalDcKrw" value="55092"> <input
-							type="hidden" id="totalSetGoosDcKrw" value=""> <input
-							type="hidden" id="sumFinaPmptDcCupDcAmt" value=""> <input
-							type="hidden" id="totalInetMbshGoosDcKrw" value=""> <input
-							type="hidden" id="totalGoosUsd" value="148"> <input
-							type="hidden" id="totalGoosKrw" value="183638"> <input
-							type="hidden" id="totalRsvgDcKrw" value="0"> <input
-							type="hidden" id="totalHpoinRsvgAmt" value="257"> <input
-							type="hidden" id="hpoinRsvgRate" value=""> <input
-							type="hidden" id="totalSimpRsvgAmt" value="0"> <input
-							type="hidden" id="simpRsvgRate" value=""> <input
-							type="hidden" id="totalExptSettAmtUsd" value="103.5999984741211">
-						<input type="hidden" id="totalExptSettAmtKrw" value="128546">
-						<input type="hidden" id="totalExptSettGoosQty" value="1">
-						<input type="hidden" id="notTotalExptSettAmtUsd" value="0">
-						<input type="hidden" id="notTotalExptSettAmtKrw" value="0">
-						<input type="hidden" id="notTotalExptSettGoosQty" value="0">
-						<input type="hidden" id="oldsumGoosQty" value="1"> <input
-							type="hidden" id="sumGoosQty" value="1"> <input
-							type="hidden" id="totalSettUsd" value="103.5999984741211">
-						<input type="hidden" id="totalSettKrw" value="128546">
 						<dl class="total_pay">
 							<dt>
 								총 <strong class="sumGoosQty">1</strong>개
