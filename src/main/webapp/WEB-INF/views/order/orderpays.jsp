@@ -1338,6 +1338,7 @@
 <iframe id=MPIFRAME name=MPIFRAME style="display: none"></iframe>
 <div style="display: none">
 	<form name=Visa3d target="MPIFRAME" method=post>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="text" name=pan size="19" maxlength="19" value="">
 		<input type="text" name=expiry size="6" maxlength="6" value="4912">
 		<input type="text" name=purchase_amount size="20" maxlength="20"

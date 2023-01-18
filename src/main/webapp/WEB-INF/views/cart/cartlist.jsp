@@ -127,6 +127,7 @@
       </c:when>
        </c:choose>              
  <form id="Orderexec" method="post">
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
  </form>   
 
 <div class="attention_area">

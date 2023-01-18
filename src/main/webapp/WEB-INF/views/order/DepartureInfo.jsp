@@ -8,6 +8,7 @@
 
 <form id="selfReplace"
 	action="https://www.hddfs.com/shop/or/order/listCart.do" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<input id="selfReplaceCartCd" type="hidden" name="cartCd" value="">
 	<input id="selfReplaceScrollMove" type="hidden" name="scrollMove"
 		value="">

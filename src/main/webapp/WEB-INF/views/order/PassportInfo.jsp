@@ -88,6 +88,7 @@
 					</div>
 					<form id="enrollPassport" name="enrollPassport" method="post"
 						action="/order/enrollPassport">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="hidden" id="mId" name="mId" value="${member.mid }" >
 						<input type="hidden" id="totalGoosUsdinput" name="totalGoosUsdinput"value=""/>
 						<input type="hidden" id="totalDcUsdinput" name="totalDcUsdinput" value=""/>
