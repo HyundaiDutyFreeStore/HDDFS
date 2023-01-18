@@ -17,5 +17,13 @@ public class OrderServiceImpl implements OrderService {
 		mapper.insertPassport(passport);
 
 	}
+	
+	@Override
+	public PassportVO PassportConsist(String mid) {
+		// TODO Auto-generated method stub
+		return mapper.PassportConsist(mid);
+	}
+	
+	
 
 }

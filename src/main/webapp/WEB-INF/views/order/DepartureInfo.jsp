@@ -71,8 +71,8 @@
 										onchange="changeOrderDpatPlacCd(this.value)"
 										id="orderDpatPlacCd" valmsg="출국장소를 선택해 주십시오.">
 											<option value="">선택</option>
-											<option value="001">인천공항</option>
-											<option value="002">김포공항</option>
+											<option value="ICN">인천공항</option>
+											<option value="KIM">김포공항</option>
 									</select>
 								</span>
 								</li>
