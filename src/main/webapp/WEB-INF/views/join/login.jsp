@@ -2,7 +2,21 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <script type="text/javascript">
-	
+/* const Presenturl = new URL(window.location.href);
+const urlParams = Presenturl.searchParams;
+console.log("url: "+urlParams);
+if(urlParams =="error=true"){
+	document.getElementById("loginErr").style.display = "block";
+	/* console.log("들어왓다");
+	alert("사용자 ID 또는 비밀번호를 잘못 입력하셨습니다."); 
+} */
+
+/* if("${error eq 'yes'}"){
+	console.log("에러");
+	$("#login_warn").text("로그인 실패");
+	$("#login_warn").css('color','red');
+} */
+console.log("error+ ${error}");
 </script>
 <main id="container" class="container">
 <div class="pop_wrap">
@@ -10,9 +24,10 @@
 
 	<div class="tab_view_box block" id="login01">
 		<form id="frmIntgLgin" name="frmIntgLgin" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="join_form">
 				<div class="join_row">
-					<input type="text" id="custId" name=mid placeholder="아이디"
+					<input type="text" id="custId" name="mid" placeholder="아이디"
 						maxlength="20" style="ime-mode: inactive;" autocomplete="off">
 				</div>
 				<div class="join_row placeholder_wrap">
@@ -21,19 +36,19 @@
 						onkeyup="f_enterLogin()">
 				</div>
 			</div>
-
-			<c:if test="${result == 0 }">
-				<div class="dang_type">
-					<p class="d_txt" id="login_warn" style="color: red">사용자 ID 또는
-						비밀번호를 잘못 입력하셨습니다.</p>
-				</div>
+			<div class="dang_type" id="loginErr">
+			<c:if test="${error eq 'yes'}">
+				<p class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</p>
 			</c:if>
+			</div>	
 
 			<div class="id_save">
 				<span class="checkbox small"> <input type="checkbox"
 					name="saveId" id="umbSaveId" value="Y"> <label
 					for="umbSaveId">아이디 저장</label>
-				</span> <span class="find_idpw"> <a href="#;" id="aFindId">아이디찾기</a>
+				</span> 
+				<span class="find_idpw"> 
+					<a href="#;" id="aFindId">아이디찾기</a>
 				</span>
 			</div>
 			<div class="btn_login">

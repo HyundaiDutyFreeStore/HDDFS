@@ -24,6 +24,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     MemberMapper memberMapper;
+    
+    @Override
+    public MemberVO read(String mid)throws Exception{
+    	return memberMapper.read(mid);
+    }
 
     @Override
     public void memberJoin(MemberVO member) throws Exception {

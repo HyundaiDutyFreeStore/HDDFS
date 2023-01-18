@@ -17,6 +17,8 @@ import com.hyundai.dutyfree.vo.MemberVO;
 public interface MemberService {
 //	회원 리스트를 불러오기 위한 코드(Test)
 //	public List<MemberVO> selectMember() throws Exception;
+	
+	public MemberVO read(String mid)throws Exception;
 
     public MemberVO selectMember(MemberVO member) throws Exception;
 

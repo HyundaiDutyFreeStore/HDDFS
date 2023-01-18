@@ -2,10 +2,40 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<!-- 비밀번호 암호화 -->
 	<bean id="bcryptPasswordEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	<bean id="customLoginSuccess" class="com.hyundai.dutyfree.security.CustomLoginSuccessHandler"/>
+	<bean id="customLoginFailure" class="com.hyundai.dutyfree.security.CustomLoginFailureHandler"/>
+	<bean id="customUserDetailsService" class="com.hyundai.dutyfree.security.CustomUserDetailsService"/>
+	
+	<security:http>
+		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/join/Mypage/**" access="hasRole('ROLE_MEMBER')" />
+		<security:form-login login-page="/join/login"
+			login-processing-url="/join/login"
+			username-parameter="mid"
+			password-parameter="mpassword"
+			authentication-failure-url="/join/login"
+			authentication-success-handler-ref="customLoginSuccess"
+			authentication-failure-handler-ref="customLoginFailure"/>
+		<!-- <security:csrf disabled="true"/> -->
+		<security:logout
+			logout-url="/join/logout" 
+			logout-success-url="/"
+			invalidate-session="true"
+			delete-cookies="JSESSIONID"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	
 
 </beans>

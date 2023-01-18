@@ -1,5 +1,6 @@
 package com.hyundai.dutyfree.controller;
 
+import java.security.Principal;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -37,6 +38,7 @@ import lombok.extern.log4j.Log4j;
  * 수정일                 수정자                          수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.17    김가희                            시큐리티적용
  *        </pre>
  */
 
@@ -63,10 +65,11 @@ public class MemberController {
 		logger.info("회원가입 1 페이지 진입");
 	}
 
-	@RequestMapping(value = "/termsAgree", method = RequestMethod.POST)
-	public String joinfirPOST() throws Exception {
-		return "redirect:/authentication";
-	}
+	/*
+	 * @RequestMapping(value = "/termsAgree", method = RequestMethod.POST) public
+	 * String joinfirPOST() throws Exception { logger.info(""); return
+	 * "redirect:/authentication"; }
+	 */
 
 	// 이메일 인증 페이지 이동
 	@RequestMapping(value = "authentication", method = RequestMethod.GET)
@@ -74,10 +77,11 @@ public class MemberController {
 		logger.info("회원가입 2 페이지 진입");
 	}
 
-	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
-	public String joinsecPOST() throws Exception {
-		return "redirect:/join/mbshInformation";
-	}
+	/*
+	 * @RequestMapping(value = "/authentication", method = RequestMethod.POST)
+	 * public String joinsecPOST() throws Exception { return
+	 * "redirect:/join/mbshInformation"; }
+	 */
 
 	// 회원 정보 입력 페이지 이동
 	@RequestMapping(value = "mbshInformation", method = RequestMethod.GET)
@@ -211,10 +215,15 @@ public class MemberController {
 
 	// 로그인 페이지 이동
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public void loginGET() {
-
-		logger.info("로그인 페이지 진입");
-
+	public void loginGET(HttpServletRequest request, @RequestParam(value = "error", required = false) String error, Model model) {
+		String uri = request.getHeader("Referer");
+		logger.info("Referer: "+uri);
+	    if (uri != null && !uri.contains("/join/login")) {
+	    	System.out.println("로그인 이전페이지~"+uri);
+	        request.getSession().setAttribute("prevPage", uri);
+	    }
+	    model.addAttribute("error",error);
+		logger.info("로그인 페이지 진입 error= "+error);
 	}
 
 	// 아이디 찾기 이동
@@ -229,7 +238,7 @@ public class MemberController {
 	@RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)
 	@ResponseBody
 	public String memberIdChkPOST(String mid) throws Exception {
-		// logger.info("memberIdChk() 진입");
+		logger.info("memberIdChk() 진입");
 
 		int result = memberservice.idCheck(mid);
 
@@ -246,44 +255,43 @@ public class MemberController {
 		}
 	}
 
-	/* 로그인 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception {
-
-		HttpSession session = request.getSession();
-		String rawPw = "";
-		String encodePw = "";
-
-		MemberVO mvo = memberservice.memberLogin(member); // 제출한아이디와 일치하는 아이디 있는지
-
-		if (mvo != null) { // 일치하는 아이디 존재시
-
-			rawPw = member.getMpassword(); // 사용자가 제출한 비밀번호
-			System.out.println(rawPw);
-			encodePw = mvo.getMpassword(); // 데이터베이스에 저장한 인코딩된 비밀번호
-			System.out.println(encodePw);
-			if (true == pwEncoder.matches(rawPw, encodePw)) { // 비밀번호 일치여부 판단
-				mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
-				session.setAttribute("member", mvo); // session에 사용자의 정보 저장
-				return "redirect:/join/Mypage"; // 메인페이지 이동
-
-			} else {
-
-				rttr.addFlashAttribute("result", 0);
-				System.out.println("비번틀림");
-				return "redirect:/join/login"; // 로그인 페이지로 이동
-
-			}
-
-		} else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
-
-			rttr.addFlashAttribute("result", 0);
-			System.out.println("아이디 없음");
-			return "redirect:/join/login"; // 로그인 페이지로 이동
-
-		}
-
-	}
+	/*
+	 * 로그인
+	 * 
+	 * @RequestMapping(value = "/login", method = RequestMethod.POST) public String
+	 * loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes
+	 * rttr) throws Exception {
+	 * 
+	 * HttpSession session = request.getSession(); String rawPw = ""; String
+	 * encodePw = "";
+	 * 
+	 * MemberVO mvo = memberservice.memberLogin(member); // 제출한아이디와 일치하는 아이디 있는지
+	 * 
+	 * if (mvo != null) { // 일치하는 아이디 존재시
+	 * 
+	 * rawPw = member.getMpassword(); // 사용자가 제출한 비밀번호 System.out.println(rawPw);
+	 * encodePw = mvo.getMpassword(); // 데이터베이스에 저장한 인코딩된 비밀번호
+	 * System.out.println(encodePw); if (true == pwEncoder.matches(rawPw, encodePw))
+	 * { // 비밀번호 일치여부 판단 mvo.setMpassword(""); // 인코딩된 비밀번호 정보 지움
+	 * session.setAttribute("member", mvo); // session에 사용자의 정보 저장 return
+	 * "redirect:/join/Mypage"; // 메인페이지 이동
+	 * 
+	 * } else {
+	 * 
+	 * rttr.addFlashAttribute("result", 0); System.out.println("비번틀림"); return
+	 * "redirect:/join/login"; // 로그인 페이지로 이동
+	 * 
+	 * }
+	 * 
+	 * } else { // 일치하는 아이디가 존재하지 않을 시 (로그인 실패)
+	 * 
+	 * rttr.addFlashAttribute("result", 0); System.out.println("아이디 없음"); return
+	 * "redirect:/join/login"; // 로그인 페이지로 이동
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 	/* 아이디 찾기 */
 	@RequestMapping(value = "findID.do", method = RequestMethod.POST)
@@ -332,26 +340,32 @@ public class MemberController {
 
 	/* 메인페이지 로그아웃 */
 	/* 비동기방식 로그아웃 메서드 */
-	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
-	public String logoutPOST(HttpServletRequest request) throws Exception {
-
-		logger.info("로그아웃");
-
-		HttpSession session = request.getSession();
-
-		session.invalidate();
-		return "redirect:/";
-	}
+	/*
+	 * @RequestMapping(value = "logout.do", method = RequestMethod.GET) public
+	 * String logoutPOST(HttpServletRequest request) throws Exception {
+	 * 
+	 * logger.info("로그아웃");
+	 * 
+	 * HttpSession session = request.getSession();
+	 * 
+	 * session.invalidate(); return "redirect:/"; }
+	 */
 
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
-	public void myPage(HttpServletRequest request, Model model) throws Exception {
-		log.info("마이페이지 접속");
-
-		MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
-		model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
-		model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
-		model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
-		model.addAttribute("mhpoint", memberservice.myPage(String.valueOf(mvo.getMhpoint())));
+	public void myPage(HttpServletRequest request, Model model,Principal prin) throws Exception {
+		//시큐리티에서 mid받아오기
+		String mid = prin.getName();
+		log.info("마이페이지 접속 mid: "+ mid);
+		MemberVO mvo = memberservice.read(mid);
+		model.addAttribute("member",mvo);
+		/*
+		 * MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
+		 * model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
+		 * model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
+		 * model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+		 * model.addAttribute("mhpoint",
+		 * memberservice.myPage(String.valueOf(mvo.getMhpoint())));
+		 */
 
 	}
 }

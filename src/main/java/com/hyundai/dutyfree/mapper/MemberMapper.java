@@ -16,6 +16,9 @@ import com.hyundai.dutyfree.vo.MemberVO;
  */
 
 public interface MemberMapper {
+	//시큐리티
+	public MemberVO read(String mid);
+	
 	public MemberVO selectMember(MemberVO member);
 	
 	// 회원가입
