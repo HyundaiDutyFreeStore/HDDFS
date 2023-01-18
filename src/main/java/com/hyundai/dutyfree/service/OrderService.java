@@ -1,7 +1,7 @@
-package com.hyundai.dutyfree.mapper;
+package com.hyundai.dutyfree.service;
 
 import com.hyundai.dutyfree.vo.PassportVO;
 
-public interface OrderMapper {
+public interface OrderService {
 	public void insertPassport(PassportVO passport);
 }

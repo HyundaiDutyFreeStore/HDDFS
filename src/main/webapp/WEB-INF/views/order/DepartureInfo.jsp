@@ -87,14 +87,10 @@
 								<li>
 									<p class="f_ti ico_compulsory">출국일시</p> <span
 									class="input_de datepicker_box" id="dpatDtSpan"> <input
-										type="text" name="dpatDt" id="dpatDt"
-										class="datepicker hasDatepicker" placeholder="YYYY-MM-DD"
-										onkeyup="isNumber(this);" value="">
-										<button type="button" class="ui-datepicker-trigger">
-											<img
-												src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png"
-												alt="..." title="...">
-										</button>
+										type="text" id="oarrdate" name="oarrdate" value=""
+										placeholder="YYYY-MM-DD"
+										src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png" />
+
 								</span> <span class="input_de hasemail" id="dpatTmSpan"> <span>
 											<select name="dpatTmH" id="dpatTmH" class="required"
 											valmsg="출국시간을 선택해주세요.">
@@ -363,7 +359,7 @@
 											<option value="36">헝가리 (+36)</option>
 									</select>
 								</span> <span class="input_de"><input type="number"
-										name="ugntComuMophNo" id="ugntComuMophNo" value="01083311667"
+										name="ugntComuMophNo" id="ugntComuMophNo" placeholder="01012345678"
 										placeholder="- 없이 입력" maxlength="11"></span>
 								</li>
 							</ul>
@@ -408,7 +404,7 @@
 						</dl>
 						<dl class="total_pay">
 							<dt>
-								총 <strong class="sumGoosQty"></strong>개
+								총 <strong class="sumGoosQty">1</strong>개
 							</dt>
 							<dd>
 								<strong class="payTotalSettUsd">$</strong> <span
@@ -445,6 +441,55 @@
 <div id="changeSetGoosQtyList"></div>
 <div id="layer_unit_pspt" class="layer_unit pop_o1" title="여권 정보 안내"></div>
 <div id="layer_unit_dpat" class="layer_unit pop_o1" title="출국 정보 안내"></div>
+<script>
 
+$(document)
+.ready(
+		function() {
+			$(".totalGoosUsd")
+					.text("$"+ priceComma(parseFloat("${cartprice}").toFixed(2)));
+			$(".totalGoosKrw")
+					.text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+			$(".sale.totalDcUsd")
+					.text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
+			$(".sale.totalDcKrw")
+					.text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
+			$(".sumGoosQty").text("${cartstock}");
+			$(".payTotalSettUsd")
+					.text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
+			$(".payTotalSettKrw")
+					.text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+			
+			$('#totalGoosUsdinput').attr('value',"${cartprice}");
+			$('#totalDcUsdinput').attr('value',"${cardis}");
+			$('#cartstockinput').attr('value',"${cartstock}");
+		});
 
-<%@ include file="../common/Footer.jsp"%>
+function priceComma(price) {
+return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+$(function() {
+    //input을 datepicker로 선언
+    $("#oarrdate").datepicker({
+        dateFormat: 'yy-mm-dd' //달력 날짜 형태
+        ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+        ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+        ,changeYear: true //option값 년 선택 가능
+        ,changeMonth: true //option값  월 선택 가능                
+        ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+        ,buttonImage: "https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png" //버튼 이미지 경로
+        ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+        ,buttonText: "선택" //버튼 호버 텍스트              
+        ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
+        ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
+        ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
+        ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
+        ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
+        ,minDate: 'today'
+    });                    
+    
+    //초기값을 오늘 날짜로 설정해줘야 합니다.
+    $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+});
+</script> <%@ include file="../common/Footer.jsp"%>
