@@ -20,8 +20,6 @@ public class ProductVO {
 	private int pdiscount;
 	//재고량
 	private int pstock;
-	//품절여부
-	private boolean penable;
 	//상품등록일
 	@DateTimeFormat(pattern="yyyy-mm-dd")
 	private Date pregdate;

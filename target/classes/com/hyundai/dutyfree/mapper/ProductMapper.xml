@@ -9,7 +9,7 @@
 		<foreach item="type" collection="cri.typeArr">
 			<choose>
 				<when test="type == 'X'.toString()">
-					and p.penable='true'
+					and p.pstock>0
 				</when>
 				<when test="type == 'N'.toString()">
 					<![CDATA[
@@ -74,7 +74,7 @@
 		(
 		select p.pcode, p.pname,
 		p.pbrand, p.pprice,p.pregdate,
-		p.pdiscount, p.pstock, p.penable,p.psel,
+		p.pdiscount, p.pstock,p.psel,
 		c.clarge, c.cmedium, c.csmall,
 		i.img1, i.img2, i.img3, i.img4, i.img5
 		from product p, category c, productimg
@@ -101,7 +101,7 @@
 		<include refid="filter2"></include>
 
 		<if test="cri.order =='베스트순' ">
-			order by p.psel desc
+			order by p.psel desc, p.pname
 		</if>
 		<if test="cri.order =='신상품순' ">
 			order by p.pregdate desc
@@ -174,7 +174,7 @@
 	<select id="productdetail"
 		resultType="com.hyundai.dutyfree.vo.ProductVO">
 		select
-		p.pcode,pname,pbrand,pprice,pdiscount,pstock,penable,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
+		p.pcode,pname,pbrand,pprice,pdiscount,pstock,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
 		from product p, productimg i,category c
 		where p.pcode=i.pcode and
 		p.pcode=c.pcode and
