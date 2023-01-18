@@ -11,7 +11,7 @@
 		<div class="join_wrap ">
 			<form method="post" id="frmMbshInformation" name="frmMbshInformation"
 				action="/join/mbshInformation">
-
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<h2 class="h2_type">회원가입(내국인)</h2>
 				<div class="join_step">
 					<ol>
@@ -31,9 +31,9 @@
 					<div class="join_row with_btn placeholder_wrap" id="divId">
 						<input type="text" id="id" name="mid" maxlength="20" required
 							class="id_input">아이디<span>(4~20자의 영문 대소문자, 숫자만 사용)</span>
-						<span class="id_input_re_1">사용 가능한 아이디입니다.</span> <span
-							class="id_input_re_2">아이디가 이미 존재합니다.</span> <span
-							class="final_id_ck">아이디를 입력해주세요.</span>
+						<span class="id_input_re_1">사용 가능한 아이디입니다.</span> 
+						<span class="id_input_re_2">아이디가 이미 존재합니다.</span> 
+						<span class="final_id_ck">아이디를 입력해주세요.</span>
 					</div>
 
 					<div class="join_row placeholder_wrap" id="divPwd">
@@ -107,9 +107,12 @@
 </main>
 
 <script>
+	//csrf토큰 전송
+	/* $(document).ajaxSend(function (e, xhr, options) {
+    	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+  	}); */
 	//회원가입 버튼(회원가입 기능 작동)
 	function please() {
-		console.log("please");
 		$("#frmMbshInformation").attr("action", "/join/mbshInformation");
 		$("#frmMbshInformation").submit();
 	};

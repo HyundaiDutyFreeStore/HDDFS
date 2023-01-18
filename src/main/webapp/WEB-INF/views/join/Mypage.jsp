@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 
 <script type="text/javascript">
-	
+	console.log("토큰: "+"${_csrf.token}");
 </script>
 <main id="container">
 <div class="container">
@@ -88,7 +88,7 @@
 				<dl>
 					<dt>구매금액</dt>
 					<dd id="setTotBuyAmtNtnl">
-						<strong>$0</strong>
+						<strong>$ ${member.ototal}</strong>
 					</dd>
 				</dl>
 				<dl>

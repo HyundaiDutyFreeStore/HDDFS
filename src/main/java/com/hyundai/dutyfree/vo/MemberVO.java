@@ -3,9 +3,8 @@ package com.hyundai.dutyfree.vo;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * MemberVO
@@ -19,8 +18,7 @@ import lombok.Setter;
  * 2023.01.09    김찬중                         최초 생성
  *        </pre>
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberVO {
@@ -33,12 +31,14 @@ public class MemberVO {
 	private Date mregdate; // 회원가입 날짜
 	private String mgrade; // 회원 등급
 	private String mgender; // 회원 성별
+	private String mrole; //시큐리티를 위한 권한
+	private int ototal; //주문총금액
 
-	@Override
-	public String toString() {
-		return "MemberVO [mid=" + mid + ", mpassword=" + mpassword + ", memail=" + memail + ", mphone=" + mphone
-				+ ", mname=" + mname + ", mhpoint=" + mhpoint + ", mregdate=" + mregdate + ", mgrade=" + mgrade
-				+ ", mgender=" + mgender + "]";
-	}
+	/*
+	 * @Override public String toString() { return "MemberVO [mid=" + mid +
+	 * ", mpassword=" + mpassword + ", memail=" + memail + ", mphone=" + mphone +
+	 * ", mname=" + mname + ", mhpoint=" + mhpoint + ", mregdate=" + mregdate +
+	 * ", mgrade=" + mgrade + ", mgender=" + mgender + "]"; }
+	 */
 
 }

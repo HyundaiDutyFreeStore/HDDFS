@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ㅓㅐ<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <!-- container -->
-<main id="container" class="container"> <script
-	type="text/javascript">
+<main id="container" class="container"> 
+<script type="text/javascript">
 	
 </script>
 
