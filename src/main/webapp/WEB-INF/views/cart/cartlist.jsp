@@ -56,15 +56,13 @@
     </c:when>
     <c:when test="${not empty cartlist}">
 <div class="cart_list">
-        <c:forEach var="cart" items="${cartlist}">
+        <c:forEach var="cart" items="${cartlist}" varStatus="idx">
         		<div class="item_area">
-        		<form id="theOrder" method="post" action="/order/PassportInfo">
+        		<input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
+        		<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
         		<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
         		<input type="hidden" name="cartdisprice" value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}">
         		<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
-        		<input type="hidden" name="cartstock" value="${cart.cartstock }">
-        		</form>
-        		<input type="hidden" name="pcode" value="${cart.pcode }"/>
         		<input type="hidden" name="pstock" value="${cart.pstock }"/>
         		<input type="hidden" name="cartno" value="${cart.cartno }"/>
                     <div class="item_chk">
@@ -118,7 +116,7 @@
                                         
                                         <input value="+" type="button" id="plusGoosQty0" onclick="javascript:fn_qtyAdd(this);">
                                             </div>
-                                <button type="button" class="btnde_type1 large" onclick="Order(this);"><span class="font_14b">바로구매</span></button> 
+                                <button type="button" class="btnde_type1 large" onclick="OrderSingle(this);"><span class="font_14b">바로구매</span></button> 
                             </div>
                         </div>                                     
                     </div>                              
@@ -128,7 +126,8 @@
         </div>
       </c:when>
        </c:choose>              
-    
+ <form id="Orderexec" method="post">
+ </form>   
 
 <div class="attention_area">
 <p class="attention_tit">유의사항</p>
@@ -339,6 +338,8 @@ setOrderPrice();
 </script>
 <script>
 
+var passportconsist;
+
 //장바구니 수량 1 늘이기
 function fn_qtyAdd(el){
 	
@@ -436,9 +437,65 @@ function priceComma(price) {
 	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-function Order(el){
-	$(el).closest(".item_area").find("#theOrder").submit();
+function OrderSingle(el){
+	let passportflag=false;
+	let cartstock=parseInt($(el).closest(".item_area").find("input[name='cartstock']").val());
+	let pcode=$(el).closest(".item_area").find("input[name='pcode']").val();
+	$('#Orderexec').append('<input name="orderitem[0].pcode" type="hidden" value="'+pcode+'">');
+	$('#Orderexec').append('<input name="orderitem[0].oamount" type="hidden" value="'+cartstock+'">');
+	$('#Orderexec').append('<input name="orderitem[0].oid" type="hidden" value="">');
+	console.log("${member.mid}");
+	console.log("${userpassport}");
+	if("${userpassport}"== ""){
+		passportflag=false;
+	}else{
+		passportflag=true;
+	}
+	
+	 if(passportflag==true){
+		$("#Orderexec").attr("action","/order/goDepartureInfo");
+		$("#Orderexec").submit();
+		
+	}else{
+		$("#Orderexec").attr("action","/order/PassportInfo");
+		$("#Orderexec").submit();
+	}
+	 
 }
+
+var orderproductlist=[];
+
+//상품에 대한 정보가 있는 태그를 반복하고 각각 상품에 대한 정보를 map으로 담는다.
+
+	function AllItemOrder(){
+		let itemindex = 0;
+		$(".item_area").each(function(index, item){
+				var cartstock=parseInt($(this).find("input[name='cartstock']").val());
+				var pcode=$(this).find("input[name='pcode']").val();
+				$('#Orderexec').append('<input name="orderitem['+itemindex+'].pcode" type="hidden" value="'+pcode+'">');
+				$('#Orderexec').append('<input name="orderitem['+itemindex+'].oamount" type="hidden" value="'+cartstock+'">');
+				itemindex ++;
+		});
+		
+		/* $('#itemsOrderForm').append('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
+		$('#itemsOrderForm').append('<input type="hidden" name="tocart" value="true" />'); */
+		if("${userpassport}"==null){
+			passportflag=false;
+		}else{
+			passportflag=true;
+		}
+		if(passportflag==true){
+			$("#Orderexec").attr("action","/order/goDepartureInfo");
+			$("#Orderexec").submit();
+			
+		}else{
+			$("#Orderexec").attr("action","/order/PassportInfo");
+			$("#Orderexec").submit();
+		}
+
+	}
+	
+
 </script>
 <div class="cont_right" style="height: 415.333px;">
    <div class="pay_table">
@@ -521,7 +578,7 @@ function Order(el){
                                       <button class="close" onclick="closeMaxDcPrc();">닫기</button>
                                   </div>
                               </div>                            
-                    <a href="javascript:void(0);" class="btnxl_type1" onclick="goOrder();">주문하기</a>
+                    <a href="javascript:void(0);" class="btnxl_type1" onclick="AllItemOrder();">주문하기</a>
               </div>
            </div>
        </div>

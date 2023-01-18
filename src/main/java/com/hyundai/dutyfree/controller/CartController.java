@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyundai.dutyfree.service.CartService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.CartVOforJSP;
+import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
@@ -46,6 +48,9 @@ public class CartController {
 
 	@Autowired
 	private ProductService productservice;
+	
+	@Autowired
+	private OrderService orderservice;
 
 	// 장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
@@ -54,6 +59,7 @@ public class CartController {
 		System.out.println(align);
 		List<CartVO> cartlist = cartservice.getCartList(mid,align);
 		List<CartVOforJSP> cartjsplist = new ArrayList<CartVOforJSP>();
+		PassportVO passport=orderservice.PassportConsist(mid);
 		for (CartVO c : cartlist) {
 				ProductVO product = productservice.productdetail(c.getPcode());
 				CartVOforJSP cartjsp = new CartVOforJSP();
@@ -75,6 +81,12 @@ public class CartController {
 		for(CartVOforJSP c : cartjsplist) {
 			System.out.println(c.toString());
 		}
+		if(passport!=null) {
+			model.addAttribute("userpassport", passport);
+		}else {
+			model.addAttribute("userpassport", null);
+		}
+		
 		model.addAttribute("cartlist", cartjsplist);
 		model.addAttribute("align", align);
 	}

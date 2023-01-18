@@ -1,7 +1,11 @@
 <!-- 여권정보 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.hyundai.dutyfree.vo.OrderItemListVO" %>
+<%@ page import="com.hyundai.dutyfree.vo.OrderItemVO" %>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
+
 <main id="container" class=""> <script type="text/javascript">
 </script>
 
@@ -163,19 +167,6 @@
 										<div class="form_txt_comment"></div>
 								</li>
 							</ul>
-
-
-							<div class="nomem_terms">
-								<ul class="terms_chk">
-									<li class="uniq_sub_option"><span class="chk"> <input
-											type="checkbox" name="" class="ch_term uniqeChk"
-											id="ch_term03" onclick="uniqAgree()"> <label
-											for="ch_term03">[필수] 고유식별정보 수집/이용 동의</label>
-									</span> <a href="javascript:void(0);" class="ck_arrow"
-										onclick="showUnqIdtInfoTermsPop('open')">약관보기</a></li>
-								</ul>
-							</div>
-
 							<div class="btn_area">
 								<a href="javascript:void(0);" class="btnxl_type type2"
 									id="btnInptMbshPwdPop" onclick="savePassPort();">저장</a>
@@ -265,23 +256,37 @@
 					$(document)
 							.ready(
 									function() {
-										$(".totalGoosUsd")
-												.text("$"+ priceComma(parseFloat("${cartprice}").toFixed(2)));
-										$(".totalGoosKrw")
-												.text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
-										$(".sale.totalDcUsd")
-												.text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
-										$(".sale.totalDcKrw")
-												.text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
-										$(".sumGoosQty").text("${cartstock}");
-										$(".payTotalSettUsd")
-												.text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
-										$(".payTotalSettKrw")
-												.text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+										<% 
 										
+										List<OrderItemVO> list = (List<OrderItemVO>)request.getAttribute("orderitemlist");
+
+										for(int i=0;i<list.size();i++){ 
+										%>
+										 var pcode=<%=list.get(i).getPcode() %>;
+										 var oamount=<%=list.get(i).getOamount() %>
+										 var index=<%=i%>;
+										 console.log(<%=list.get(i).getPcode() %>);
+										 
+										$('#enrollPassport').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
+										$('#enrollPassport').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
+										$('#enrollPassport').append('<input name="orderitem['+index+'].oid" type="hidden" value="">');
+										
+										<%
+										}
+										%>
+										$(".totalGoosUsd").text("$"+ priceComma(parseFloat("${cartprice}").toFixed(2)));
+										$(".totalGoosKrw").text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+										$(".sale.totalDcUsd").text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
+										$(".sale.totalDcKrw").text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
+										$(".sumGoosQty").text("${cartstock}");
+										$(".payTotalSettUsd").text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
+										$(".payTotalSettKrw").text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
 										$('#totalGoosUsdinput').attr('value',"${cartprice}");
 										$('#totalDcUsdinput').attr('value',"${cartdis}");
 										$('#cartstockinput').attr('value',"${cartstock}");
+										
+										console.log("${orderitemlist}");
+										console.log("<%= request.getAttribute("orderitemlist") %>");
 									});
 
 					function priceComma(price) {

@@ -150,7 +150,10 @@
 						</li>
 					</ul>
 			</div>
-			
+			<form id="cartBuy" method="" action="" >
+				<input type="hidden" name="orderitem[0].pcode" value="${product.pcode }"/>
+				<input type="hidden" name="orderitem[0].oamount" value=""/>
+			</form>
 			<div class="productdetail_cart">
 						<div class="selectlist"><!-- HDDFS 리뉴얼 프로젝트 [이민우-2021.03.22] - 구매레이어 추가 -->    
 <div class="selectitem" data-id="10073250016301">
@@ -247,6 +250,17 @@
 		e.preventDefault()
 	}
 	
+	function cartBuy(){
+		var totalamount=parseInt($("#totalamount").text(count));
+		$("#cartBuy").find("input[name='orderitem[0].oamount']").val(totalamount);
+		/* if(){
+			$("#cartBuy").attr("action","/order/DepartureInfo");
+		}else{
+			$("#cartBuy").attr("action","/order/PassportInfo");
+		}
+		$("#cartBuy").submit(); */
+	}
+	
 
 </script></div>
 							<div class="totalamount"><div>총 <strong id="totalamount">1</strong> 개</div><dl class="priceInfo">
@@ -271,8 +285,8 @@
 									<button class="close" onclick="closeMaxDcPrc();">닫기</button>
 								</div>
 							</div>
-						<a href="" class="addcart" onclick="cartConsist();">장바구니</a>
-                        <a href="/order/PassportInfo" class="buynow">바로구매</a>
+						<a class="addcart" onclick="cartConsist();">장바구니</a>
+                        <a class="buynow" onclick="cartBuy();">바로구매</a>
                         </c:when>
                         <c:otherwise>
                         <a href="#" onclick="preventClick(event);"class="buynow">품절되었습니다</a>

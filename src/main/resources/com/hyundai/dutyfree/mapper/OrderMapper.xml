@@ -9,5 +9,9 @@
 		#{pgender},#{pbirth},#{expirydate},#{nationality})
 		
 	</insert>
+	
+	<select id="PassportConsist" resultType="com.hyundai.dutyfree.vo.PassportVO">
+	select * from passport where mid=#{mid} 
+	</select>
 </mapper>
   
