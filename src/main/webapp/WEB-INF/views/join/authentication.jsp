@@ -9,10 +9,15 @@
 </script>
 
 <style>
-	.child {
-		position: relative;
-		top: 12px;
-	}
+.child {
+	position: relative;
+	top: 7px;
+}
+
+.checkposition {
+	position: relative;
+	top: 20px;
+}
 </style>
 <main id="container" class="container">
 	<div class="container">
@@ -60,9 +65,8 @@
 								</select>
 							</div>
 							<div class="join_col join_btn ">
-								<button type="button" class=" btn_basic2 small mail_check_button child"
-									id="btnSend">인증번호
-									발송</button>
+								<button type="button" class=" btn_basic2 small mail_check_button"
+									id="btnSend">인증번호 발송</button>
 							</div>
 						</div>
 					</div>
@@ -71,6 +75,7 @@
 						<div class="join_col w06 child" id="mail_check_input_box_false">
 							<input class="mail_check_input" type="number" placeholder="인증번호" maxlength="30">
 						</div>
+						<span id="email_issue" class="checkposition"></span>
 					</div>
 					<div id="mail_check_input_box_warn" style="margin-top: 13px; margin-left: 10px;"></div>
 
@@ -93,21 +98,30 @@
 	var code = ""; //이메일전송 인증번호 저장위한 코드
 	/* 인증번호 이메일 전송 */
 	$(".mail_check_button").click(function () {
+		if ($('#email_fir').val() == "") {
+			alert("이메일을 입력해주세요.");
+			event.preventDefault();
+			return;
+		} else {
+			const email_issue = $('#email_issue');
+			email_issue.html("&nbsp;&nbsp;&nbsp;인증번호가 발급되었습니다.");
+			email_issue.css("color", "green");
+			const email = $('#email_fir').val() + $('#email_sec').val(); // 이메일 주소값 얻어오기!
+			console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
+			var cehckBox = $(".mail_check_input"); // 인증번호 입력란
+			var boxWrap = $(".mail_check_input_box"); // 인증번호 입력란 박스
 
-		const email = $('#email_fir').val() + $('#email_sec').val(); // 이메일 주소값 얻어오기!
-		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
-		var cehckBox = $(".mail_check_input"); // 인증번호 입력란
-		var boxWrap = $(".mail_check_input_box"); // 인증번호 입력란 박스
-
-		$.ajax({
-			type: "GET",
-			url: "/join/mailCheck?email=" + email,
-			success: function (data) {
-				cehckBox.attr("disabled", false);
-				boxWrap.attr("id", "mail_check_input_box_true");
-				code = data;
-			}
-		});
+			$.ajax({
+				type: "GET",
+				url: "/join/mailCheck?email=" + email,
+				success: function (data) {
+					cehckBox.attr("disabled", false);
+					boxWrap.attr("id", "mail_check_input_box_true");
+					code = data;
+				}
+			});
+		}
+		
 
 	});
 	/* 인증번호 비교 */
@@ -116,13 +130,23 @@
 		var inputCode = $(".mail_check_input").val(); // 입력코드    
 		var checkResult = $("#mail_check_input_box_warn"); // 비교 결과     
 
-		if (inputCode == code) { // 일치할 경우
-			checkResult.html("인증번호가 일치합니다.");
-			checkResult.attr("class", "correct");
-		} else { // 일치하지 않을 경우
-			checkResult.html("인증번호를 다시 확인해주세요.");
+		if (inputCode == '') {	//입력안했을경우
+			checkResult.html("인증번호를 입력해 주세요");
+			checkResult.css("color", "red");
 			checkResult.attr("class", "incorrect");
+		} else {
+			if (inputCode == code) { // 일치할 경우
+				checkResult.html("인증번호가 일치합니다.");
+				checkResult.css("color", "blue");
+				checkResult.attr("class", "correct");
+			} else { // 일치하지 않을 경우
+				checkResult.html("인증번호를 다시 확인해주세요.");
+				checkResult.css("color", "red");
+				checkResult.attr("class", "incorrect");
+			}
+
 		}
+		
 
 	});
 

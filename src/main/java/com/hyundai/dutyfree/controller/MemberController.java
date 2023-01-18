@@ -38,6 +38,7 @@ import lombok.extern.log4j.Log4j;
  * 수정일                 수정자                          수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.17    김가희                            시큐리티적용
  *        </pre>
  */
 
@@ -214,10 +215,15 @@ public class MemberController {
 
 	// 로그인 페이지 이동
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public void loginGET() {
-
-		logger.info("로그인 페이지 진입");
-
+	public void loginGET(HttpServletRequest request, @RequestParam(value = "error", required = false) String error, Model model) {
+		String uri = request.getHeader("Referer");
+		logger.info("Referer: "+uri);
+	    if (uri != null && !uri.contains("/join/login")) {
+	    	System.out.println("로그인 이전페이지~"+uri);
+	        request.getSession().setAttribute("prevPage", uri);
+	    }
+	    model.addAttribute("error",error);
+		logger.info("로그인 페이지 진입 error= "+error);
 	}
 
 	// 아이디 찾기 이동
@@ -232,7 +238,7 @@ public class MemberController {
 	@RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)
 	@ResponseBody
 	public String memberIdChkPOST(String mid) throws Exception {
-		// logger.info("memberIdChk() 진입");
+		logger.info("memberIdChk() 진입");
 
 		int result = memberservice.idCheck(mid);
 
@@ -347,6 +353,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
 	public void myPage(HttpServletRequest request, Model model,Principal prin) throws Exception {
+		//시큐리티에서 mid받아오기
 		String mid = prin.getName();
 		log.info("마이페이지 접속 mid: "+ mid);
 		MemberVO mvo = memberservice.read(mid);

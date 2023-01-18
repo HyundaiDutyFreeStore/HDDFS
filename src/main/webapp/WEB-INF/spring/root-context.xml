@@ -11,8 +11,8 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> <property 
 		name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property> 
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@edudb_high?TNS_ADMIN=C:/dev/OracleWallet/Wallet_edudb"></property> 
-		<property name="username" value="admin"></property> <property name="password" 
-		value="xxxxxxAt21cc"></property> </bean>
+		<property name="username" value="admin"></property> 
+		<property name="password" value="xxxxxxAt21cc"></property> </bean>
 	<!-- <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> <property 
 		name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property> 
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521/xepdb1"></property> 

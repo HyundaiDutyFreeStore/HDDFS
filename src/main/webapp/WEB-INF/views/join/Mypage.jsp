@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 
 <script type="text/javascript">
-	
+	console.log("토큰: "+"${_csrf.token}");
 </script>
 <main id="container">
 <div class="container">

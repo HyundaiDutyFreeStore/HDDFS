@@ -37,7 +37,7 @@
 	<div class="container">
 		<section>
 			<div class="join_wrap ">
-				<form id="frmTermsAgree" name="frmTermsAgree" method="post">
+			<!-- 	<form id="frmTermsAgree" name="frmTermsAgree" method="post"> -->
 					<h2 class="h2_type">회원가입(내국인)</h2>
 					<div class="join_step">
 						<ol>
@@ -728,7 +728,7 @@
 						<button type="button" class="btn_basic1" onclick="javascript:history.back(-1);">이전</button>
 						<a class="btn_basic2" id="btnNext" onclick="checkrequired()" href="/join/authentication/">다음</a>
 					</div>
-				</form>
+				<!-- </form> -->
 			</div>
 		</section>
 	</div>
