@@ -26,6 +26,9 @@ public interface MemberService {
 
     // 아이디 중복 검사
     public int idCheck(String mid) throws Exception;
+    
+    // 메일 중복 검사
+    public int mailCheck(String mail) throws Exception;
 
     // 로그인
     public MemberVO memberLogin(MemberVO member) throws Exception;
@@ -39,5 +42,7 @@ public interface MemberService {
     public void deleteMember(String mid) throws Exception;
     
     public void updateMember(MemberVO member) throws Exception;
+
+	
 
 }

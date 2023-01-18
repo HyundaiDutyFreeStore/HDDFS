@@ -27,6 +27,15 @@
 		where mid = #{mid}
 
 	</select>
+	
+	<!-- 메일 중복검사 -->
+	<select id="mailChk" resultType="int">
+
+		select count(*) from member
+		where memail = #{mail}
+
+	</select>
+	
 	<select id="memberLogin"
 		resultType="com.hyundai.dutyfree.vo.MemberVO">
 		select * from member where mid=#{mid}

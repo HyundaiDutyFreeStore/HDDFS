@@ -233,6 +233,25 @@ public class MemberController {
 		logger.info("아이디 찾기 페이지 진입");
 
 	}
+	
+	// 아이디 중복 검사
+		@RequestMapping(value = "/mailChk")
+		@ResponseBody
+		public String mailChk(String mail) throws Exception {
+			logger.info("mailChk() 진입");
+
+			int result = memberservice.mailCheck(mail);
+
+			logger.info("결과값 = " + result);
+
+			if (result != 0) {
+				return "fail"; // 중복 메일이 존재
+
+			} else {
+				return "success"; // 중복 메일 x
+
+			}
+		}
 
 	// 아이디 중복 검사
 	@RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)

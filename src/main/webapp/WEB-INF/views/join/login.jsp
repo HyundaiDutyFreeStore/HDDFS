@@ -11,6 +11,11 @@
 	left: 25%;
 }
 
+.d_txt {
+	width: 540px;
+	left: 25%;
+}
+
 .chdiv {
 	position: relative;
 	top: 21px;
@@ -54,11 +59,16 @@
 							placeholder="비밀번호" onkeypress="javascript:noSpaceEvnt(event);"
 							maxlength="100" autocomplete="off">
 					</div>
+					<c:if test="${error eq 'yes'}">
+					<span class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</span>
+					</c:if>
+					
+					
 				</div>
 				<div class="dang_type" id="loginErr">
-				<c:if test="${error eq 'yes'}">
+				<%-- <c:if test="${error eq 'yes'}">
 					<p class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</p>
-				</c:if>
+				</c:if> --%>
 				</div>	
 				<!-- <div class="id_save">
 					<span class="checkbox small"> <input type="checkbox"
