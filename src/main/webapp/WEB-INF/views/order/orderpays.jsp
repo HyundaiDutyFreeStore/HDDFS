@@ -1782,11 +1782,11 @@
 		%>
 		
 		var wontotalSettKrw =(parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267).toFixed(0);
-		$("#orderexec").append('<input name="wontotalSettKrw" value="'+wontotalSettKrw +'">');
-		$("#orderexec").append('<input name="olvoarrdate" value="${orderlist.oarrdate}">');
-		$("#orderexec").append('<input name="olvoplnum"  value="${orderlist.oplnum}">');
-		$("#orderexec").append('<input name="olvoelnum"  value="${orderlist.oelnum}">');
-		$("#orderexec").append('<input name="olvoplace"  value="${orderlist.oplace}">');
+		$("#orderexec").append('<input type="hidden" name="wontotalSettKrw" value="'+wontotalSettKrw +'">');
+		$("#orderexec").append('<input type="hidden" name="olvoarrdate" value="${orderlist.oarrdate}">');
+		$("#orderexec").append('<input type="hidden" name="olvoplnum"  value="${orderlist.oplnum}">');
+		$("#orderexec").append('<input type="hidden" name="olvoelnum"  value="${orderlist.oelnum}">');
+		$("#orderexec").append('<input type="hidden" name="olvoplace"  value="${orderlist.oplace}">');
 		
 	});
 

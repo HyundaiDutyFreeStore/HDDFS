@@ -365,9 +365,10 @@
 											<option value="358">핀란드 (+358)</option>
 											<option value="36">헝가리 (+36)</option>
 									</select>
-								</span> <span class="input_de"><input type="number"
+								</span> <span class="input_de"><input type="text"
 										name="ugntComuMophNo" id="ugntComuMophNo"
-										placeholder="01012345678" placeholder="- 없이 입력" maxlength="11"></span>
+										placeholder="01012345678" placeholder="- 없이 입력" maxlength="11"
+										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"></span>
 								</li>
 							</ul>
 
