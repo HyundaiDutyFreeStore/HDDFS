@@ -135,6 +135,7 @@ public class ProductController {
 		ProductVO product = service.productdetail(pcode);
 		PassportVO passport=orderservice.PassportConsist(prin.getName());
 		System.out.println(product.toString());
+		System.out.println(product.toString());
 		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
 		}
