@@ -9,7 +9,20 @@
 			<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/productdetail.css">
 <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/product.css">
 <script src="https://cdn.hddfs.com/front/js/KO/product.js"></script>
-
+<script>
+function loginChk() {
+	if ("${mid}" === '') {
+		console.log("아이디는공백");
+		return false;
+	} else if ("${mid}" === 'null') {
+		console.log("아이디는null");
+		return false;
+	} else {
+		console.log("로그인아이디: ${mid}");
+		return true;
+	}
+}
+</script>
 <article id="content" class="productdetail">
 	<section class="pd_area">
 		<div class="pd_visual">
@@ -839,50 +852,58 @@ function updateCart(){
 
     
  function cartConsist(){
-    	var productconsist=productamount();
-    	if(productconsist==true){
-    		const Data = {
-        			cartstock :$("#totalamount").text(),
-        			mid : "${mid}",
-        			pcode : "${product.pcode}"
-        		}
+	 if (loginChk() == false) {
+			alert("로그인이 필요한 서비스입니다. 로그인해주세요");
+			console.log("로그인하세요");
+			location.href = "/join/login";
+			return false; 
+		} else {
+			var productconsist=productamount();
+	    	if(productconsist==true){
+	    		const Data = {
+	        			cartstock :$("#totalamount").text(),
+	        			mid : "${mid}",
+	        			pcode : "${product.pcode}"
+	        		}
 
-        		$.ajax({
-        			type :"POST",
-        		    data : Data,
-        		    url : "/cart/isselect",
-        		    success : function(data){
-        		    	console.log(data);
-        		    	if(data === 'yes'){
-        		    		let param=confirm("장바구니에 동일한 상품이 존재합니다. 추가로 담으시겠습니까?");
-        		    		if(param===true){
-        		    			updateCart();
-        		    			let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
-            					if(param){
-            						location.href="/cart/cartlist?mid=${mid}&align=늦게담은순";
-            						/* location.href="/cart/cartlist?mid="+${mid};  */
-            	    			}		
-        		    		}else{
-        		    			return false;
-        		    		}
-        		    		
-        		    	}else{
-        		    		addCart();
-        		    		let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
-        					if(param){
-        						/* location.href="/cart/cartlist"; */
-        						location.href="/cart/cartlist?mid=${mid}&align=늦게담은순";
-        	    			}		
-        		    	}
-        			},
-        			error : function(){
-        				console.log("실패");
-            		}
-        		});
-    	}else{
-    		alert("재고량이 부족합니다");
-    		return false;
-    	}
+	        		$.ajax({
+	        			type :"POST",
+	        		    data : Data,
+	        		    url : "/cart/isselect",
+	        		    success : function(data){
+	        		    	console.log(data);
+	        		    	if(data === 'yes'){
+	        		    		let param=confirm("장바구니에 동일한 상품이 존재합니다. 추가로 담으시겠습니까?");
+	        		    		if(param===true){
+	        		    			updateCart();
+	        		    			let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
+	            					if(param){
+	            						location.href="/cart/cartlist?mid=${mid}&align=늦게담은순";
+	            						/* location.href="/cart/cartlist?mid="+${mid};  */
+	            	    			}		
+	        		    		}else{
+	        		    			return false;
+	        		    		}
+	        		    		
+	        		    	}else{
+	        		    		addCart();
+	        		    		let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
+	        					if(param){
+	        						/* location.href="/cart/cartlist"; */
+	        						location.href="/cart/cartlist?mid=${mid}&align=늦게담은순";
+	        	    			}		
+	        		    	}
+	        			},
+	        			error : function(){
+	        				console.log("실패");
+	            		}
+	        		});
+	    	}else{
+	    		alert("재고량이 부족합니다");
+	    		return false;
+	    	}
+		}
+    	
     	
     }
 

@@ -726,7 +726,7 @@
 					</div>
 					<div class="basic_btn_box mgtml">
 						<button type="button" class="btn_basic1" onclick="javascript:history.back(-1);">이전</button>
-						<a class="btn_basic2" id="btnNext" onclick="checkrequired()" href="/join/authentication/">다음</a>
+						<a class="btn_basic2" id="btnNext" onclick="checkrequired()" href="/member/authentication/">다음</a>
 					</div>
 				<!-- </form> -->
 			</div>

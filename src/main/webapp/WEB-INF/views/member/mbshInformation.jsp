@@ -33,7 +33,7 @@
 	<div class="container">
 		<section>
 			<div class="join_wrap ">
-				<form id="frmMbshInformation" name="frmMbshInformation" method="post" action="/join/mbshInformation"
+				<form id="frmMbshInformation" name="frmMbshInformation" method="post" action="/member/mbshInformation"
 					onsubmit="return joinCheck();">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<h2 class="h2_type">회원가입(내국인)</h2>
@@ -184,7 +184,7 @@
 							if (idCheck && pwCheck && nameCheck &&
 								genderCheck) {
 								$("#join_form").attr("action",
-									"/join/frmMbshInformation");
+									"/member/mbshInformation");
 								$("#memail").attr("diabled",
 								"false");
 								$("#join_form").submit();
@@ -219,7 +219,7 @@
 				} // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
 				$.ajax({
 					type: "post",
-					url: "/join/memberIdChk",
+					url: "/member/memberIdChk",
 					data: data,
 					success: function (result) { // console.log("성공 여부" + result);
 						if (result != 'fail') {
