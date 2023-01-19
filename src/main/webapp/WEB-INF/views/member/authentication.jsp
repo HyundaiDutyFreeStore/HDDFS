@@ -107,7 +107,7 @@ $("#email_fir").blur(function () {
 		 var btnSend = document.getElementById('btnSend');
 		$.ajax({
 			type: "GET",
-			url: "/join/mailChk?mail=" + email,
+			url: "/member/mailChk?mail=" + email,
 			success: function (result) {
 				if (result != 'fail') {
 					console.log("메일중복아님");
@@ -141,7 +141,7 @@ $("#email_fir").blur(function () {
 
 			$.ajax({
 				type: "GET",
-				url: "/join/mailCheck?email=" + email,
+				url: "/member/mailCheck?email=" + email,
 				success: function (data) {
 					cehckBox.attr("disabled", false);
 					boxWrap.attr("id", "mail_check_input_box_true");
@@ -193,7 +193,7 @@ $("#email_fir").blur(function () {
 
 			/* 최종 유효성 검사 */
 			if (mailCheck) {
-				$("#frmLocalAuthentication").attr("action","/join/mbshInformation");
+				$("#frmLocalAuthentication").attr("action","/member/mbshInformation");
 				$("#frmLocalAuthentication").submit();
 			} else {
 				alert("이메일 인증을 확인해주세요.")

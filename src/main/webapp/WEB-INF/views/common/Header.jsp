@@ -236,7 +236,7 @@
         //통합멤버쉽 가입팝업
         function fnUmbJoinPop(joinType, ptnrChlCd, ptcoAlliPaonInf2) {
             var $form = $('<form></form>');
-            $form.attr('action', gUmbMbshUrl + '/cu/join/start.nhd');
+            $form.attr('action', gUmbMbshUrl + '/cu/member/start.nhd');
             $form.attr('method', 'post');
             $form.attr('target', 'umbJoinPop');
             $form.append('<input type="hidden" value="02" name="prtnrReqGb">');
@@ -1466,14 +1466,14 @@
 				<div class="default_menu">
 					<!-- 시큐리티적용 로그인/로그아웃 -->
 					<sec:authorize access="isAnonymous()">
-						<a class="menu_login_join" href="/join/login"
+						<a class="menu_login_join" href="/member/login"
 							onclick="GA_Event('공통','헤더_메뉴','로그인')"> 로그인 <!-- 로그인 -->
 						</a>
 						<a class="menu_login_join" id="menu_login_join"
-							href="/join/termsAgree/">회원가입</a>
+							href="/member/termsAgree/">회원가입</a>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
-						<form id="form_logout" action="/join/logout" method="post">
+						<form id="form_logout" action="/member/logout" method="post">
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
 						</form>
@@ -1487,7 +1487,7 @@
 						<!-- <li class="item_02"><a
 							href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 							</strong></a></li> -->
-						<li class="item_03"><a rel="nosublink" href="/join/Mypage"><strong>마이<br>현대
+						<li class="item_03"><a rel="nosublink" href="/member/Mypage"><strong>마이<br>현대
 							</strong></a></li>
 						<li class="item_04"><a
 							href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터

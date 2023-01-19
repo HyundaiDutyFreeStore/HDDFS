@@ -23,11 +23,11 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 
-		String errorMessage = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
+		//String errorMessage = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
 		//String error = yes;
-		log.info("로그인실패: "+errorMessage);
-		errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); /* 한글 인코딩 깨진 문제 방지 */
-	    setDefaultFailureUrl("/join/login?error=yes");
+		log.info("로그인실패");
+		//errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); /* 한글 인코딩 깨진 문제 방지 */
+	    setDefaultFailureUrl("/member/login?error=yes");
 	    super.onAuthenticationFailure(request,response,exception);
 	}
 }

@@ -97,7 +97,7 @@
 
 		<div class="chdiv">
 			<p>
-				<a href="/join/termsAgree" class="join">회원가입</a>
+				<a href="/member/termsAgree" class="join">회원가입</a>
 			</p>
 		</div>
 
@@ -107,12 +107,12 @@
 <script>
 	$("#btnLgin1").click(function() {
 		/* 로그인 메서드 서버 요청 */
-		$("#frmIntgLgin").attr("action", "/join/login");
+		$("#frmIntgLgin").attr("action", "/member/login");
 		$("#frmIntgLgin").submit();
 	});
 	function f_enterLogin() {
 		if (window.event.keyCode == 13) {
-			$("#frmIntgLgin").attr("action", "/join/login");
+			$("#frmIntgLgin").attr("action", "/member/login");
 			$("#frmIntgLgin").submit();
 		}
 	}
