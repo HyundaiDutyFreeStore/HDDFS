@@ -63,6 +63,7 @@ public class CartController {
 		for (CartVO c : cartlist) {
 				ProductVO product = productservice.productdetail(c.getPcode());
 				CartVOforJSP cartjsp = new CartVOforJSP();
+				
 				cartjsp.setPname(product.getPname());
 				cartjsp.setPbrand(product.getPbrand());
 				cartjsp.setPprice(product.getPprice());
@@ -75,6 +76,11 @@ public class CartController {
 					cartjsp.setImg1(product.getImg1());
 				}
 				cartjsp.setCartstock(c.getCartstock());
+				if(product.getPstock()==0) {
+					cartjsp.setCartprodcon(false);
+				}else {
+					cartjsp.setCartprodcon(true);
+				}
 				cartjsplist.add(cartjsp);
 		}
 		
@@ -103,8 +109,6 @@ public class CartController {
 		cart.setPcode(request.getParameter("pcode"));
 
 		cartservice.insertCart(cart);
-		
-		cartservice.redproductcnt(request.getParameter("pcode"), Integer.parseInt(request.getParameter("cartstock")));
 
 		return "success";
 
