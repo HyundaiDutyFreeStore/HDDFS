@@ -60,7 +60,7 @@ public class OrderController {
 
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
-	public void orderexec(HttpServletRequest request, OrderItemListVO orderitemlists,Model model, Principal prin)
+	public String orderexec(HttpServletRequest request, OrderItemListVO orderitemlists,Model model, Principal prin)
 			throws Exception {
 		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
@@ -98,7 +98,46 @@ public class OrderController {
 		model.addAttribute("wontotalSettKrw", request.getParameter("wontotalSettKrw"));
 		System.out.println(ordertotalstock);
 		model.addAttribute("member", member);
+		model.addAttribute("oid", oid);
 		model.addAttribute("orderitemlist", orderitemlist);
+		
+		//주문 QR코드 전송 
+		String root = request.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
+		String savePath = root + "\\qrCodes\\"; // 파일 경로
+		System.out.println(savePath);
+		// 파일 경로가 없으면 생성하기
+		File file = new File(savePath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		// 링크로 할 URL주소
+		String url = oid;
+
+		// 링크 생성값
+		String codeurl = new String(url.getBytes("UTF-8"), "ISO-8859-1");
+
+		// QRCode 색상값
+		int qrcodeColor = 0xFF2e4e96;
+		// QRCode 배경색상값
+		int backgroundColor = 0xFFFFFFFF;
+
+		// QRCode 생성
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		BitMatrix bitMatrix = qrCodeWriter.encode(codeurl, BarcodeFormat.QR_CODE, 200, 200); // 200,200은 width, height
+
+		MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(qrcodeColor, backgroundColor);
+		BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix, matrixToImageConfig);
+
+		String fileName = oid;
+
+		// 파일 경로, 파일 이름 , 파일 확장자에 맡는 파일 생성
+		File temp = new File(savePath + fileName + ".png");
+
+		// ImageIO를 사용하여 파일쓰기
+		ImageIO.write(bufferedImage, "png", temp);
+		
+		return "/order/orderdone";
 	}
 
 	// 출국정보를 등록하고 지불페이지로 이동
