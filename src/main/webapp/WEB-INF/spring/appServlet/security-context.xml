@@ -14,17 +14,17 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	
 	<security:http>
 		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_MEMBER')" />
-		<security:intercept-url pattern="/join/Mypage/**" access="hasRole('ROLE_MEMBER')" />
-		<security:form-login login-page="/join/login"
-			login-processing-url="/join/login"
+		<security:intercept-url pattern="/member/Mypage/**" access="hasRole('ROLE_MEMBER')" />
+		<security:form-login login-page="/member/login"
+			login-processing-url="/member/login"
 			username-parameter="mid"
 			password-parameter="mpassword"
-			authentication-failure-url="/join/login"
+			authentication-failure-url="/member/login"
 			authentication-success-handler-ref="customLoginSuccess"
 			authentication-failure-handler-ref="customLoginFailure"/>
 		<!-- <security:csrf disabled="true"/> -->
 		<security:logout
-			logout-url="/join/logout" 
+			logout-url="/member/logout" 
 			logout-success-url="/"
 			invalidate-session="true"
 			delete-cookies="JSESSIONID"/>

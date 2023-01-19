@@ -44,7 +44,7 @@ import lombok.extern.log4j.Log4j;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping(value = "/join")
+@RequestMapping(value = "/member")
 @Log4j
 public class MemberController {
 
@@ -109,7 +109,7 @@ public class MemberController {
 		memberservice.memberJoin(member);
 
 		logger.info("회원가입성공");
-		return "redirect:/join/done";
+		return "redirect:/member/done";
 
 	}
 
@@ -196,7 +196,7 @@ public class MemberController {
 		/* 회원가입 쿼리 실행 */
 		memberservice.updateMember(mvo);
 
-		return "redirect:/join/Mypage";
+		return "redirect:/member/Mypage";
 	}
 
 	/* 회원 정보 삭제 */
@@ -218,7 +218,7 @@ public class MemberController {
 	public void loginGET(HttpServletRequest request, @RequestParam(value = "error", required = false) String error, Model model) {
 		String uri = request.getHeader("Referer");
 		logger.info("Referer: "+uri);
-	    if (uri != null && !uri.contains("/join/login")) {
+	    if (uri != null && !uri.contains("/member/login")) {
 	    	System.out.println("로그인 이전페이지~"+uri);
 	        request.getSession().setAttribute("prevPage", uri);
 	    }
