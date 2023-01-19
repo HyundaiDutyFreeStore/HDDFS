@@ -1,5 +1,6 @@
 package com.hyundai.dutyfree.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
+import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PageDTO;
+import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 @Controller
@@ -24,6 +29,12 @@ import com.hyundai.dutyfree.vo.ProductVO;
 public class ProductController {
 	@Autowired
 	private ProductService service;
+	
+	@Autowired
+	private OrderService orderservice;
+	
+	@Autowired
+	private MemberService memberservice;
 
 	// 맨처음 리스트를 띄울때 (카테고리 선택해서)
 	@GetMapping("/list")
@@ -119,9 +130,10 @@ public class ProductController {
 
 	// 상품디테일로 이동
 	@GetMapping("/Productdetail")
-	public String productdetail(@RequestParam("pcode") String pcode, Model model) {
+	public String productdetail(@RequestParam("pcode") String pcode, Model model,Principal prin) throws Exception {
 		List<String> imglist = new ArrayList<String>();
 		ProductVO product = service.productdetail(pcode);
+		PassportVO passport=orderservice.PassportConsist(prin.getName());
 		System.out.println(product.toString());
 		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
@@ -141,9 +153,14 @@ public class ProductController {
 		for (int i = 0; i < imglist.size(); i++) {
 			System.out.println(imglist.get(i));
 		}
+		if(passport==null) {
+			model.addAttribute("userpassport", null);
+		}else {
+			model.addAttribute("userpassport", passport);
+		}
+		
 		model.addAttribute("product", product);
 		model.addAttribute("imglist", imglist);
-
 		return "/product/Productdetail";
 	}
 

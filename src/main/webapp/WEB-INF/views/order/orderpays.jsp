@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.hyundai.dutyfree.vo.OrderItemListVO" %>
+<%@ page import="com.hyundai.dutyfree.vo.OrderItemVO" %>
 	<%@ include file="../common/Header.jsp"%>
 <main id="container" class="container">
 <form method="post" name="orderForm" id="orderForm">
@@ -908,11 +911,11 @@
 				<div class="payment_sheet scroll-sticky">
 					<div class="title">
 						<h4>최종결제금액</h4>
-						<em>총 1개</em>
+						<em>총  ${cartstock} 개</em>
 					</div>
 					<ul class="total_bill">
-						<li><strong>총 주문금액합계</strong> <span> <em>$1</em>
-								<p>1,267원</p>
+						<li><strong>총 주문금액합계</strong> <span> <em class="total_bill_dollar_text">$1</em>
+								<p class="total_bill_won_text">1,267원</p>
 						</span></li>
 						<li class="discount_list"><strong>
 								<button type="button" class="btn">총할인금액</button>
@@ -1338,7 +1341,6 @@
 <iframe id=MPIFRAME name=MPIFRAME style="display: none"></iframe>
 <div style="display: none">
 	<form name=Visa3d target="MPIFRAME" method=post>
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="text" name=pan size="19" maxlength="19" value="">
 		<input type="text" name=expiry size="6" maxlength="6" value="4912">
 		<input type="text" name=purchase_amount size="20" maxlength="20"
@@ -1554,7 +1556,9 @@
 			type="hidden" name="detail" value="" />
 	</form>
 </div>
-
+<form id="orderexec" method="post" action="/order/postorderpays">
+	<input type="hidden" name="total_bill_sum" />
+</form>
 
 <div style="display: none">
 	<form name="paycoForm" id="paycoForm" method="post" action="">
@@ -1617,7 +1621,6 @@
 				}
 				setTimeout(function() {
 					paymentSettInfo();
-					getChagDcAmt();
 				}, 100);
 				var hpayBox = $(this).next(".hpay_box");
 				$(".hpay_box").removeClass("active");
@@ -1687,7 +1690,6 @@
 												slideChange : function() {
 													setTimeout(
 															function() {
-																getChagDcAmt();
 
 																if (checkSettGrpDoma()[0] == "001") {
 																	getIstmMonsList(
@@ -1704,7 +1706,6 @@
 							});
 		}
 
-		getChagDcAmt('befSett');
 
 		setTimeout(function() {
 			toggleCashRcpt();
@@ -1719,7 +1720,6 @@
 		if ($(this).is(":checked")) {
 			$(".card_discount li").removeClass("checked");
 			$(this).next().parent("li").addClass("checked");
-			getChagDcAmt();
 		}
 	});
 
@@ -1753,11 +1753,48 @@
 			maxHeight : 340,
 			modal : true
 		});
+		$('.total_bill_dollar_text').text('$'+priceComma(parseFloat("${cartprice}").toFixed(2)));
+		$('.total_bill_won_text').text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+		$('.totalDcUsd').text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
+		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
+		$('.totalSettUsd').text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
+		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+		
+		<% 
+		
+		List<OrderItemVO> list = (List<OrderItemVO>)request.getAttribute("orderitemlist");
+
+		for(int i=0;i<list.size();i++){ 
+		%>
+		 var pcode=<%=list.get(i).getPcode() %>;
+		 var oamount=<%=list.get(i).getOamount() %>
+		 var index=<%=i%>;
+		 console.log(<%=list.get(i).getPcode() %>);
+		 
+		$('#orderexec').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
+		$('#orderexec').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
+		$('#orderexec').append('<input name="orderitem['+index+'].oid" type="hidden" value="">');
+		
+		<%
+		}
+		%>
+		
+		var wontotalSettKrw =(parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0);
+		$("#orderexec").append('<input name="wontotalSettKrw" type="hidden" value="'+wontotalSettKrw +'">');
+		$("#orderexec").append('<input name="olv.oarrdate" type="hidden" value="${orderlist.oarrdate}">');
+		$("#orderexec").append('<input name="olv.oplnum" type="hidden" value="${orderlist.oplnum}">');
+		$("#orderexec").append('<input name="olv.oplace" type="hidden" value="${orderlist.oplace}">');
+		
 	});
 
 	function moveToMain() {
 		location.href = ctx_shop + '/dm/main.do';
 	}
+	
+	function priceComma(price) {
+		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	}
+	
 </script>
 
 <%@ include file="../common/Footer.jsp"%>
