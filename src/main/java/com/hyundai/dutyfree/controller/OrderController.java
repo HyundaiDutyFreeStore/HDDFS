@@ -70,18 +70,21 @@ public class OrderController {
 		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmm");
 		String oid="OR"+simpleDateFormat.format(nowdate);
 		
-		for (OrderItemVO order : orderitemlist) {
-			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
-			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
-			ordertotalstock += order.getOamount();
-		}
-		
+
 		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
 
 		orderservice.Insertorderitemlist(oid, prin.getName(),odate, 0, "결제완료", olv.getOarrdate(), olv.getOplnum(), olv.getElnum(), olv.getOplace());
+		
+		/*
+		 * for (OrderItemVO order : orderitemlist) { ProductVO product =
+		 * productservice.productdetail(order.getPcode());
+		 * System.out.println(product.getPprice());
+		 * System.out.println(product.getPdiscount());
+		 * orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
+		 * ordertotalstock += order.getOamount(); }
+		 */
+		
 		
 		System.out.println("총 결제금액:"+request.getParameter("wontotalSettKrw"));
 		

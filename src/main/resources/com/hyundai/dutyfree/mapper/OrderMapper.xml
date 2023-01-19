@@ -15,7 +15,7 @@
 	</select>
 	
 	<insert id="Insertorderitem">
-	insert into orderitem values(#{pcode},#{oamont},#{oid})
+	insert into orderitem values(#{pcode},#{oamount},#{oid})
 	</insert>
 	
 	<insert id="Insertorderitemlist">

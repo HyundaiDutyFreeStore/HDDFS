@@ -991,7 +991,7 @@
 						</div>
 					</div>
 					<div class="confirm">
-						<a href="javascript:void(0);" class="btn" onclick="goSett();">결제하기</a>
+						<a href="javascript:void(0);" class="btn" onclick="orderexec();">결제하기</a>
 						<div class="chk">
 							<input type="checkbox" id="chkAgree"> <label
 								for="chkAgree"> <span>주문내역 확인 동의</span>
@@ -1557,7 +1557,7 @@
 	</form>
 </div>
 <form id="orderexec" method="post" action="/order/postorderpays">
-	<input type="hidden" name="total_bill_sum" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 
 <div style="display: none">
@@ -1779,7 +1779,7 @@
 		}
 		%>
 		
-		var wontotalSettKrw =(parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0);
+		var wontotalSettKrw =(parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267).toFixed(0);
 		$("#orderexec").append('<input name="wontotalSettKrw" type="hidden" value="'+wontotalSettKrw +'">');
 		$("#orderexec").append('<input name="olv.oarrdate" type="hidden" value="${orderlist.oarrdate}">');
 		$("#orderexec").append('<input name="olv.oplnum" type="hidden" value="${orderlist.oplnum}">');
@@ -1793,6 +1793,11 @@
 	
 	function priceComma(price) {
 		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	}
+	
+	function orderexec(){
+		$('#orderexec').submit();
+		
 	}
 	
 </script>
