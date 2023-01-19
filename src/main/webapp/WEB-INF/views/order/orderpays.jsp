@@ -1760,6 +1760,8 @@
 		$('.totalSettUsd').text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
 		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
 		
+		
+		
 		<% 
 		
 		List<OrderItemVO> list = (List<OrderItemVO>)request.getAttribute("orderitemlist");
@@ -1780,10 +1782,11 @@
 		%>
 		
 		var wontotalSettKrw =(parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267).toFixed(0);
-		$("#orderexec").append('<input name="wontotalSettKrw" type="hidden" value="'+wontotalSettKrw +'">');
-		$("#orderexec").append('<input name="olv.oarrdate" type="hidden" value="${orderlist.oarrdate}">');
-		$("#orderexec").append('<input name="olv.oplnum" type="hidden" value="${orderlist.oplnum}">');
-		$("#orderexec").append('<input name="olv.oplace" type="hidden" value="${orderlist.oplace}">');
+		$("#orderexec").append('<input name="wontotalSettKrw" value="'+wontotalSettKrw +'">');
+		$("#orderexec").append('<input name="olvoarrdate" value="${orderlist.oarrdate}">');
+		$("#orderexec").append('<input name="olvoplnum"  value="${orderlist.oplnum}">');
+		$("#orderexec").append('<input name="olvoelnum"  value="${orderlist.oelnum}">');
+		$("#orderexec").append('<input name="olvoplace"  value="${orderlist.oplace}">');
 		
 	});
 
