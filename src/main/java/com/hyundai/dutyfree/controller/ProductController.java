@@ -133,7 +133,15 @@ public class ProductController {
 	public String productdetail(@RequestParam("pcode") String pcode, Model model,Principal prin) throws Exception {
 		List<String> imglist = new ArrayList<String>();
 		ProductVO product = service.productdetail(pcode);
-		PassportVO passport=orderservice.PassportConsist(prin.getName());
+		if(prin != null) {
+			PassportVO passport=orderservice.PassportConsist(prin.getName());
+			if(passport==null) {
+				model.addAttribute("userpassport", null);
+			}else {
+				model.addAttribute("userpassport", passport);
+			}
+		}
+		
 		System.out.println(product.toString());
 		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
@@ -153,11 +161,7 @@ public class ProductController {
 		for (int i = 0; i < imglist.size(); i++) {
 			System.out.println(imglist.get(i));
 		}
-		if(passport==null) {
-			model.addAttribute("userpassport", null);
-		}else {
-			model.addAttribute("userpassport", passport);
-		}
+		
 		
 		model.addAttribute("product", product);
 		model.addAttribute("imglist", imglist);
