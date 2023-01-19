@@ -23,5 +23,9 @@ public class OrderListVO {
 	private String mid;
 	private Date odate;
 	private int ohpoint;
-	private String ostatusq;
+	private String ostatus;
+	private String oarrdate;
+	private String oplnum;
+	private String oelnum;
+	private String oplace;
 }

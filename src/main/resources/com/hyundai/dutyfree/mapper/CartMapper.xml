@@ -3,21 +3,68 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.hyundai.dutyfree.mapper.CartMapper">
- 	<select id="getCartList"
-		resultType="com.hyundai.dutyfree.vo.CartVO">
-		select * from cart
+ 	<select id="getCartListprice"
+		resultType="com.hyundai.dutyfree.vo.CartVO" parameterType="HashMap">
+		select c.cartno,c.cartstock,c.cartregdate,c.mid,c.pcode
+		from cart c, product p
+		where c.pcode=p.pcode
+		and mid=#{mid}
+		<if test="align =='높은금액순'">
+		order by p.pprice desc
+		</if>
+		<if test="align =='낮은금액순'">
+		order by p.pprice
+		</if>
+		<if test="align =='브랜드순(ABC)'">
+		order by p.pbrand
+		</if>
+	</select>
+	
+	<select id="getCartListregDate"
+		resultType="com.hyundai.dutyfree.vo.CartVO" parameterType="HashMap">
+		select cartno , cartstock, cartregdate, mid, pcode 
+		from cart
+		where mid=#{mid}
+		<if test="align =='늦게담은순'">
+		order by cartregdate desc
+		</if>
+		<if test="align =='먼저담은순'">
+		order by cartregdate
+		</if>
+	</select>
+	
+	
+	<select id="prodinfo" 	resultType="com.hyundai.dutyfree.vo.ProductVO">
+	
+	select * from product where pcode=#{pcode}
+	
 	</select>
 	
 	<insert id="insertCart">
-		insert into cart values(seq_id.nextval,#{cartstock},to_date(sysdate,'yy/mm/dd'),#{mid},#{pcode})
+		insert into cart values(seq_cid.nextval,#{cartstock},sysdate,#{mid},#{pcode})
 	</insert>
 	
-	<select id="">
-		select 
-		from cart c and product p and productimg i
-		where c.pcode=p.pcode and
-		
+	<update id="redproductcnt">
+		update 	product
+		set pstock=#{pstock}
+		where pcode=#{pcode}
+	</update>
+	
+	<select id="Cartitemconsist" resultType="int">
+		select count(*)
+		from cart 
+		where pcode=#{pcode} and mid=#{mid}
 	</select>
+	
+	<update id="UpdateCartstock">
+	update cart set cartstock = cartstock + #{cartstock} 
+	where pcode=#{pcode} and mid=#{mid} 
+	</update>
+	
+	
+	<delete id="deleteCart">
+	delete from cart where cartno=#{cartno} and mid=#{mid}
+	</delete>
  
  
  </mapper>

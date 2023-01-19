@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.dutyfree.mapper.OrderMapper">
+	<insert id="insertPassport" >
+		insert into Passport values
+		(#{mid},#{passportno},#{surname},#{givenname},
+		#{pgender},#{pbirth},#{expirydate},#{nationality})
+		
+	</insert>
+	
+	<select id="PassportConsist" resultType="com.hyundai.dutyfree.vo.PassportVO">
+	select * from passport where mid=#{mid} 
+	</select>
+	
+	<insert id="Insertorderitem">
+	insert into orderitem values(#{pcode},#{oamount},#{oid})
+	</insert>
+	
+	<insert id="Insertorderitemlist">
+	insert into orderlist values(#{oid},#{mid},#{odate},#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
+	</insert>
+</mapper>
+  

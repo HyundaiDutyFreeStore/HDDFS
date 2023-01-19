@@ -2,7 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+	
+<sec:authorize access="hasRole('ROLE_MEMBER')">
+                <sec:authentication property="principal.username" var="mid"/>
+</sec:authorize>
 <header id="header">
+	<!-- 시큐리티 -->
+	<script>
+	 const csrfHeaderName = "${_csrf.headerName}";
+	 const csrfTokenValue = "${_csrf.token}";
+	</script>
+	
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 		crossorigin="anonymous"></script>
@@ -15,41 +27,16 @@
 				alt="HYUNDAI DEPARTMENT SHOP - DUTY FREE"
 				onclick="location.href='/'">
 		</h1>
+		<!-- ########################### 검색창 ###################################### -->
 		<form name="searchHeader" id="searchHeader" method="get"
-			onsubmit="return false;">
+			action="/product/search">
 			<fieldset class="searchfield">
 				<legend>통합검색</legend>
-				<div class="select_search">
-					<button class="tag_search" id="hashSrchCond">해시태그검색</button>
-					<button class="text_search" id="basicSrchCond">일반검색</button>
-					<div class="tooltip">해시태그로 검색하세요 :)</div>
-					<!-- 일반단어로 검색하세요 :) -->
-				</div>
 
 				<div class="mainsearchinput">
-					<input type="search" class="text_search" name="searchTerm"
+					<input type="search" class="text_search" name="keyword"
 						id="basicSearchTerm" maxlength="" value=""
-						placeholder="검색어를 입력해주세요"
-						onkeypress="javascript:if(event.keyCode == 13) { searchHeaderAction();}"
-						onmousedown="dq_setTextbox('1',event);" onfocusin="srchLayer();"
-						onkeydown="dq_setTextbox('1',event);" autocomplete="off" /> <input
-						type="search" class="tag_search" name="searchTerm"
-						id="hashSearchTerm" maxlength="" value=""
-						placeholder="해시태그를 입력해주세요"
-						onkeypress="javascript:if(event.keyCode == 13) { searchHeaderAction();}"
-						onmousedown="dq_setTextbox('1',event);" onfocusin="srchLayer();"
-						onkeydown="dq_setTextbox('1',event);" autocomplete="off" /> <input
-						type="hidden" id="movUrl" name="movUrl" value="" /> <input
-						type="hidden" id="rcntOffYn" name="rcntOffYn" value="" />
-					<!-- 최근검색어 저장 사용 유무 -->
-					<input type="hidden" id="rcntWrdYn" name="rcntWrdYn" value="" />
-					<!-- 최근검색어 존재 유무 여부 -->
-					<input type="hidden" id="autoOffYn" name="autoOffYn" value="" />
-					<!-- 자동완성 사용 여부 -->
-					<input type="hidden" id="searchType" name="searchType" value="" />
-					<!-- 검색 타입 구분 -->
-					<input type="hidden" id="searchOrder" name="order" value="" />
-					<!-- 정렬 구분 -->
+						placeholder="검색어를 입력해주세요" />
 				</div>
 				<button class="btn_search" onclick="searchHeaderAction();">검색</button>
 			</fieldset>
@@ -133,7 +120,7 @@
 		<script
 			src="https://cdn.hddfs.com/front/js/KO/diquest/dqAutoComplete.js"></script>
 		<script type="text/javascript">
-			$(function() {
+$(function() {
 
 				// 검색결과에 따라 검색창 변환
 				changeSearchArea();
@@ -269,7 +256,7 @@
 					$($this).addClass("on");
 					$($this).parent().find("div").addClass("on");
 				}
-			}
+			} 
 
 			// 검색어 목록 call json
 			function srchLayer() {
@@ -484,8 +471,9 @@
 
 				var html = "";
 
-				/* 최근검색어 삭제요청 */
-				$
+				
+						/* 최근검색어 삭제요청 */
+				/* $
 						.ajax({
 							async : true,
 							url : ctx_curr + "/sr/delSrchWrd.json",
@@ -561,7 +549,7 @@
 								//console.log(jqXHR.status);
 							}
 						});
-			}
+			} 
 
 			// 검색어 체크
 			function checkSearchTerm(searchTerm) {
@@ -574,10 +562,14 @@
 					ke = ke.replace("\'", "");
 
 				return ke;
-			}
+			} 
+			
+			*/
 
-			// form submit
+			 //########################## 검색form제출 ################################
 			function searchHeaderAction() {
+				searchHeader.submit();
+			} 
 				wiseLogAggr("KR_PC_GNB_SearchIcon");
 				//$(".advanced_search").removeClass("adsearch_open");
 
@@ -655,25 +647,47 @@
 			
 		</script>
 		<!-- 검색 레이어 영역 END-->
+		<script>
+		function gologout() {
+	    	alert('눌림');
+            document.getElementById('form_logout').submit();
+         }
+		</script>
 		<div class="default_menu">
-			<c:if test="${member == null }">
+			<%-- <c:if test="${member == null }">
 				<a class="menu_login_join" id="loginBtn" href="../join/login/">로그인</a>
 				<a id="menu_login_join" class="menu_login_join"
 					href="../join/termsAgree/">회원가입</a>
 			</c:if>
 			<c:if test="${member != null }">
 				<a class="menu_login_join" id="logoutBtn" href="/join/logout.do">로그아웃</a>
-			</c:if>
+			</c:if> --%>
+
+			<!-- 시큐리티적용 로그인/로그아웃 -->
+			<sec:authorize access="isAnonymous()">
+				<a class="menu_login_join" href="/join/login"
+					onclick="GA_Event('공통','헤더_메뉴','로그인')"> 로그인 <!-- 로그인 -->
+				</a>
+				<a class="menu_login_join" id="menu_login_join"
+					href="/join/termsAgree/">회원가입</a>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<form id="form_logout" action="/join/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+				</form>
+				<a class="menu_login_join" href="javascript:void(0)"
+					onclick="gologout()"> 로그아웃</a>
+			</sec:authorize>
 
 			<ul>
 				<li class="item_01"><a
-					href="https://www.hddfs.com/shop/or/order/listCart.do?MG=KR_PC_GNB_Cart"><strong>장바<br>구니
+					href="/cart/cartlist?align='늦게담은순'&mid=${mid}"><strong>장바<br>구니
 					</strong><em id="rwingCartCnt" style="display: none"></em></a></li>
 				<li class="item_02"><a
 					href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
 					</strong></a></li>
-				<li class="item_03"><a rel="nosublink"
-					href="../join/Mypage/"><strong>마이<br>현대
+				<li class="item_03"><a rel="nosublink" href="/join/Mypage/"><strong>마이<br>현대
 					</strong></a></li>
 				<li class="item_04"><a
 					href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터
@@ -1042,21 +1056,21 @@
 				<li data-ctgid="ctg0001" class="open"><strong>스킨케어</strong>
 					<ul class="depth_03" style="display: block;">
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=&csmall=&order=">스킨케어 전체보기</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=&csmall=">스킨케어 전체보기</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=기초케어&csmall=">기초케어</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=선케어&csmall=">선케어</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=클렌징&csmall=">클렌징</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=마스크팩&csmall=">마스크팩</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=유아동&csmall=">유아동</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=남성용&csmall=">남성용</a></li>
 						<li><a rel="nosublink"
-							href="/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
+							href="/product/list?clarge=스킨케어&cmedium=미용기기/도구&csmall=">미용기기/도구</a></li>
 					</ul></li>
 
 

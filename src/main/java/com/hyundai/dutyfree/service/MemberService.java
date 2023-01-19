@@ -17,6 +17,8 @@ import com.hyundai.dutyfree.vo.MemberVO;
 public interface MemberService {
 //	회원 리스트를 불러오기 위한 코드(Test)
 //	public List<MemberVO> selectMember() throws Exception;
+	
+	public MemberVO read(String mid)throws Exception;
 
     public MemberVO selectMember(MemberVO member) throws Exception;
 
@@ -24,6 +26,9 @@ public interface MemberService {
 
     // 아이디 중복 검사
     public int idCheck(String mid) throws Exception;
+    
+    // 메일 중복 검사
+    public int mailCheck(String mail) throws Exception;
 
     // 로그인
     public MemberVO memberLogin(MemberVO member) throws Exception;
@@ -37,5 +42,7 @@ public interface MemberService {
     public void deleteMember(String mid) throws Exception;
     
     public void updateMember(MemberVO member) throws Exception;
+
+	
 
 }

@@ -4,86 +4,149 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.dutyfree.mapper.ProductMapper">
 
+	<!-- 쇼핑정보 필터를 위한 부분 -->
+	<sql id="filter">
+		<foreach item="type" collection="cri.typeArr">
+			<choose>
+				<when test="type == 'X'.toString()">
+					and p.pstock>0
+				</when>
+				<when test="type == 'N'.toString()">
+					<![CDATA[
+					and p.pregdate >= to_date('2022/09/01','YYYY/MM/DD')
+					]]>
+				</when>
+				<when test="type == 'S'.toString()">
+					<![CDATA[
+					and p.pdiscount>20
+					]]>
+				</when>
+			</choose>
+		</foreach>
+	</sql>
+
+	<!-- 가격필터를 위한 부분 -->
+	<sql id="filter2">
+		<if test="cri.priceE >0">
+			and p.pprice * (1-(p.pdiscount/100)) between #{cri.priceS}
+			and #{cri.priceE}
+		</if>
+		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+			<foreach item="price" collection="cri.priceArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="price == '1'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 0 and 100
+						</when>
+						<when test="price == '2'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 100 and 200
+						</when>
+						<when test="price == '3'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 200 and 300
+						</when>
+						<when test="price == '4'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 300 and 400
+						</when>
+						<when test="price == '5'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 400 and 500
+						</when>
+						<when test="price == '6'.toString()">
+							p.pprice * (1-(p.pdiscount/100)) between 500 and 1000
+						</when>
+						<otherwise>
+					<![CDATA[
+						p.pprice * (1-(p.pdiscount/100)) > 1000
+					]]>
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<!-- 목록띄우기 -->
 	<select id="getList"
-		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		resultType="com.hyundai.dutyfree.vo.ProductVO" parameterType="HashMap">
 		select pp.*
 		from
 		(select p.*, rownum rn
 		from
 		(
-		select p.pcode, p.pname, p.pbrand, p.pprice,p.pregdate,
-		p.pdiscount, p.pstock, p.penable,p.psel,
-		c.clarge, c.cmedium, c.csmall, 
+		select p.pcode, p.pname,
+		p.pbrand, p.pprice,p.pregdate,
+		p.pdiscount, p.pstock,p.psel,
+		c.clarge, c.cmedium, c.csmall,
 		i.img1, i.img2, i.img3, i.img4, i.img5
-		from product p, category c, productimg i
+		from product p, category c, productimg
+		i
 		where p.pcode = c.pcode
 		and p.pcode = i.pcode
-		and c.clarge=#{clarge}
-		<if test="cmedium !='' ">
-			and cmedium = #{cmedium}
+		<if test="cate.clarge !='' ">
+			and c.clarge=#{cate.clarge}
 		</if>
-		<if test="csmall !='' ">
-			and csmall =#{csmall}
+		<if test="cate.cmedium !='' ">
+			and cmedium = #{cate.cmedium}
 		</if>
-		<if test="porder =='베스트순' ">
-			order by p.psel desc
+		<if test="cate.csmall !='' ">
+			and csmall =#{cate.csmall}
 		</if>
-		<if test="porder =='신상품순' ">
+		<if test="cri.keyword !='' ">
+			and (
+			p.pname like '%'||#{cri.keyword}||'%'
+			OR p.pbrand like '%'||#{cri.keyword}||'%'
+			)
+		</if>
+
+		<include refid="filter"></include>
+		<include refid="filter2"></include>
+
+		<if test="cri.order =='베스트순' ">
+			order by p.psel desc, p.pname
+		</if>
+		<if test="cri.order =='신상품순' ">
 			order by p.pregdate desc
 		</if>
-		<if test="porder =='낮은가격순' ">
+		<if test="cri.order =='낮은가격순' ">
 			order by p.pprice asc
 		</if>
-		<if test="porder =='높은가격순' ">
+		<if test="cri.order =='높은가격순' ">
 			order by p.pprice desc
 		</if>
-		<if test="porder =='높은할인순' ">
+		<if test="cri.order =='높은할인순' ">
 			order by p.pdiscount desc
 		</if>
-		
+
 		)p)pp
 		<![CDATA[
-		WHERE pp.rn > (#{param1.pageNum} -1) * #{param1.amount} and pp.rn <= #{param1.pageNum} * #{param1.amount}
+		WHERE pp.rn > (#{cri.pageNum} -1) * #{cri.amount} and pp.rn <= #{cri.pageNum} * #{cri.amount}
     	]]>
-    	
+
 	</select>
 
-	<!-- <select  id="getAjaxList" resultType="com.hyundai.dutyfree.vo.ProductVO">
-		select p.*
-		from
-		(
-			select p.pcode, p.pname, p.pbrand, p.pprice,
-				   p.pdiscount, p.pstock, p.penable,
-				   c.clarge, c.cmedium, c.csmall, i.img1,
-				   i.img2, i.img3, i.img4, i.img5,
-				   rownum rn
-			from product p, category c, productimg i
-			where p.pcode = c.pcode
-			and p.pcode = i.pcode
-			and c.clarge='스킨케어'
-		<if test="cmedium !='' ">
-			and cmedium = #{cmedium}
-		</if>
-		<if test="csmall !='' ">
-			and csmall =#{csmall}
-		</if>
-		)p
-		where p.rn between #{startRowNum} and #{endRowNum}
-	</select> -->
-	
-	<!-- productList페이징을 위한 category별 product 총개수 -->
-	<select id="getTotal" resultType="int">
+	<!-- 조건에 맞는 총 상품개수 -->
+	<select id="getTotal" resultType="int" parameterType="HashMap">
 		select count(p.pcode)
 		from product p
 		join category c
 		on p.pcode = c.pcode
-		where c.clarge = #{clarge}
-		<if test="cmedium !='' ">
-			and c.cmedium = #{cmedium}
+		where
+		<if test="cri.keyword !='' ">
+			(
+			p.pname like '%'||#{cri.keyword}||'%'
+			OR p.pbrand like '%'||#{cri.keyword}||'%'
+			)
 		</if>
-		<if test="csmall !='' ">
-			and c.csmall =#{csmall}
+		<if test="cate.clarge !='' ">
+			c.clarge = #{cate.clarge}
 		</if>
+		<if test="cate.cmedium !='' ">
+			and c.cmedium = #{cate.cmedium}
+		</if>
+		<if test="cate.csmall !='' ">
+			and c.csmall =#{cate.csmall}
+		</if>
+		<include refid="filter"></include>
+		<include refid="filter2"></include>
 	</select>
 
 	<select id="CategoryCnt" resultType="int">
@@ -93,24 +156,29 @@
 		where clarge = #{clarge}
 	</select>
 
+	<!-- 해당 대분류의 중분류 가져오기 -->
 	<select id="getMedCategory" resultType="String">
 		select distinct(cmedium)
 		from category
 		where clarge = #{clarge}
 	</select>
 
+	<!-- 해당 중분류의 소분류 가져오기 -->
 	<select id="getSmallCategory" resultType="String">
 		select distinct(csmall)
 		from category
 		where cmedium = #{cmedium}
 	</select>
 
-	<select id="productdetail" resultType="com.hyundai.dutyfree.vo.ProductVO">
-	select p.pcode,pname,pbrand,pprice,pdiscount,pstock,penable,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
-	from product p, productimg i,category c
-	where p.pcode=i.pcode and
-	p.pcode=c.pcode and
-	p.pcode=#{pcode}
+	<!-- 상품상세 불러오기 -->
+	<select id="productdetail"
+		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select
+		p.pcode,pname,pbrand,pprice,pdiscount,pstock,pregdate,psel,clarge,cmedium,csmall,img1,img2,img3,img4,img5
+		from product p, productimg i,category c
+		where p.pcode=i.pcode and
+		p.pcode=c.pcode and
+		p.pcode=#{pcode}
 	</select>
 
 

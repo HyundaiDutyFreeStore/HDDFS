@@ -1,12 +1,29 @@
 package com.hyundai.dutyfree.service;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.CartMapper;
 import com.hyundai.dutyfree.vo.CartVO;
+import com.hyundai.dutyfree.vo.ProductVO;
 
+
+/**
+ * CartServiceImpl
+ * 
+ * @author 박진수
+ * @since 01.13
+ * 
+ *        <pre>
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.11    박진수                        최초 생성
+ * 2023.01.13    박진수                        서비스 구현
+ *        </pre>
+ */
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -18,14 +35,51 @@ public class CartServiceImpl implements CartService {
 	
 	@Override
 	public void insertCart(CartVO cart) {
+		System.out.println(cart.getCartregdate());
 		cartmapper.insertCart(cart);
 		
 	}
 
+
+
 	@Override
-	public List<CartVO> getCartList() {
+	public void redproductcnt(String pcode, int pstock) {
+		ProductVO product=cartmapper.prodinfo(pcode);
+		product.setPstock(product.getPstock()-pstock);
+		cartmapper.redproductcnt(product);
+		
+	}
+
+	@Override
+	public int Cartitemconsist(CartVO cart) {
+
+		return cartmapper.Cartitemconsist(cart);
+	}
+
+	@Override
+	public List<CartVO> getCartList(String mid,String align) {
 		// TODO Auto-generated method stub
-		return cartmapper.getCartList();
+		HashMap<String,String> listMap = new HashMap<>();
+		listMap.put("mid", mid);
+		listMap.put("align",align);
+		System.out.println(align);
+		if(align.equals("늦게담은순")||align.equals("먼저담은순")) {
+			return cartmapper.getCartListregDate(listMap);
+		}else {
+			return cartmapper.getCartListprice(listMap);
+		}
+	}
+
+	@Override
+	public void UpdateCartstock(CartVO cart) {
+		// TODO Auto-generated method stub
+		cartmapper.UpdateCartstock(cart);
+	}
+
+	@Override
+	public void deleteCart(CartVO cart) {
+		cartmapper.deleteCart(cart);
+		
 	}
 
 }
