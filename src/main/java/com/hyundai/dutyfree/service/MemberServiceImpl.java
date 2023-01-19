@@ -72,4 +72,9 @@ public class MemberServiceImpl implements MemberService {
     public void updateMember(MemberVO member) throws Exception {
         memberMapper.updateMember(member);
     }
+
+	@Override
+	public int mailCheck(String mail) throws Exception {
+		return memberMapper.mailChk(mail);
+	}
 }
