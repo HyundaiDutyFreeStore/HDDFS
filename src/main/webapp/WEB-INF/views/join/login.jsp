@@ -44,7 +44,13 @@
 </style>
 <main id="container" class="container">
 <div class="pop_wrap">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<h1 class="h1_type" style="text-align: center; font-size: 50px;">로그인</h1>
+	<br>
 	<div class="pop_content">
 		<!-- S : H.Point통합회원 -->
 		<div class="tab_view_box block" id="login01">
