@@ -60,48 +60,46 @@ public class OrderController {
 
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
-	public String orderexec(HttpServletRequest request, OrderItemListVO orderitemlists,Model model, Principal prin)
+	public String orderexec(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
 			throws Exception {
 		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
 		int ordertotalstock = 0;
-		java.util.Date nowdate= new java.util.Date();
-		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
-		String oid="OR"+simpleDateFormat.format(nowdate);
-		
+		java.util.Date nowdate = new java.util.Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String oid = "OR" + simpleDateFormat.format(nowdate);
 
 		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.sql.Date odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
+		java.sql.Date odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
 
-		
-		  System.out.println("Oarrdate:"+request.getParameter("olvoarrdate"));
-		  System.out.println("Oplnum:"+request.getParameter("olvoplnum"));
-		  System.out.println("Elnum:"+request.getParameter("olvoelnum"));
-		  System.out.println("Oplace:"+request.getParameter("olvoplace"));
-		 
-        System.out.println("oid:"+oid);
-		orderservice.Insertorderitemlist(oid, prin.getName(),odate, 0, "결제완료", request.getParameter("olvoarrdate"), request.getParameter("olvoplnum"), request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
-		
-		
-		  for (OrderItemVO order : orderitemlist) { ProductVO product =
-		  productservice.productdetail(order.getPcode());
-		  System.out.println(product.getPprice());
-		  System.out.println(product.getPdiscount());
-		  orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
-		  ordertotalstock += order.getOamount(); }
-		 
-		
-		
-		System.out.println("총 결제금액:"+request.getParameter("wontotalSettKrw"));
-		
+		System.out.println("Oarrdate:" + request.getParameter("olvoarrdate"));
+		System.out.println("Oplnum:" + request.getParameter("olvoplnum"));
+		System.out.println("Elnum:" + request.getParameter("olvoelnum"));
+		System.out.println("Oplace:" + request.getParameter("olvoplace"));
+
+		System.out.println("oid:" + oid);
+		orderservice.Insertorderitemlist(oid, prin.getName(), odate, 0, "결제완료", request.getParameter("olvoarrdate"),
+				request.getParameter("olvoplnum"), request.getParameter("olvoelnum"),
+				request.getParameter("olvoplace"));
+
+		for (OrderItemVO order : orderitemlist) {
+			ProductVO product = productservice.productdetail(order.getPcode());
+			System.out.println(product.getPprice());
+			System.out.println(product.getPdiscount());
+			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
+			ordertotalstock += order.getOamount();
+		}
+
+		System.out.println("총 결제금액:" + request.getParameter("wontotalSettKrw"));
+
 		model.addAttribute("wontotalSettKrw", request.getParameter("wontotalSettKrw"));
 		System.out.println(ordertotalstock);
 		model.addAttribute("member", member);
 		model.addAttribute("oid", oid);
 		model.addAttribute("orderitemlist", orderitemlist);
-		
-		//주문 QR코드 전송 
+
+		// 주문 QR코드 전송
 		String root = request.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
 		String savePath = root + "\\qrCodes\\"; // 파일 경로
 		System.out.println(savePath);
@@ -136,7 +134,7 @@ public class OrderController {
 
 		// ImageIO를 사용하여 파일쓰기
 		ImageIO.write(bufferedImage, "png", temp);
-		
+
 		return "/order/orderdone";
 	}
 
