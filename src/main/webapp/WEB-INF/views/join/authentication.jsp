@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
 
+		
 </script>
 
 <style>
@@ -42,7 +43,6 @@
 								<input type="text" id="email_fir" name="email_fir" value="" placeholder="이메일"
 									maxlength="30">
 							</div>
-
 							<div class="join_col w14 select">
 								<select name="email_sec" class="sel_type" id="email_sec" style="display: none;">
 									<option value="@naver.com">@naver.com</option>
@@ -66,9 +66,10 @@
 							</div>
 							<div class="join_col join_btn ">
 								<button type="button" class=" btn_basic2 small mail_check_button"
-									id="btnSend">인증번호 발송</button>
+									id="btnSend" disabled>인증번호 발송</button>
 							</div>
 						</div>
+						<span class="mail_input_re"></span>
 					</div>
 
 					<div class="join_row blocks type2 join_time">
@@ -95,6 +96,33 @@
 	</div>
 </main>
 <script>
+$("#email_fir").blur(function () {
+	if ($('#email_fir').val() == "") {
+		alert("이메일을 입력해주세요.");
+		event.preventDefault();
+		return;
+	} else {
+		const email = $('#email_fir').val() + $('#email_sec').val(); // 이메일 주소값 얻어오기!
+		console.log('완성된 이메일 : ' + email);
+		 var btnSend = document.getElementById('btnSend');
+		$.ajax({
+			type: "GET",
+			url: "/join/mailChk?mail=" + email,
+			success: function (result) {
+				if (result != 'fail') {
+					console.log("메일중복아님");
+					$('.mail_input_re').text("");
+					btnSend.disabled = false;
+				} else {	//메일중복
+					$('.mail_input_re').text("중복된 메일 입니다.");
+					$('.mail_input_re').css('color', 'red');
+					//$(".btnSend").attr("disabled", false);
+					btnSend.disabled = true;
+				}
+			}
+		});
+	}
+}); 
 	var code = ""; //이메일전송 인증번호 저장위한 코드
 	/* 인증번호 이메일 전송 */
 	$(".mail_check_button").click(function () {

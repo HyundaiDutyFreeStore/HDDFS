@@ -26,6 +26,9 @@ public interface MemberMapper {
 
 	// 아이디 중복 검사
 	public int idCheck(String mid);
+	
+	// 메일 중복 검사
+	public int mailChk(String mail);
 
 	// 로그인
 	public MemberVO memberLogin(MemberVO member);
@@ -41,4 +44,6 @@ public interface MemberMapper {
     
     // 회원정보수정
     public void updateMember(MemberVO member);
+
+    
 }

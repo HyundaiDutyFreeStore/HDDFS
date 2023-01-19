@@ -1484,9 +1484,9 @@
 						<li class="item_01"><a
 							href="/cart/cartlist?align='늦게담은순'&mid=${mid}"><strong>장바<br>구니
 							</strong><em id="rwingCartCnt" style="display: none"></em></a></li>
-						<li class="item_02"><a
+						<!-- <li class="item_02"><a
 							href="https://www.hddfs.com/shop/mm/myOrder/listOrder.do"><strong>주문<br>조회
-							</strong></a></li>
+							</strong></a></li> -->
 						<li class="item_03"><a rel="nosublink" href="/join/Mypage"><strong>마이<br>현대
 							</strong></a></li>
 						<li class="item_04"><a
