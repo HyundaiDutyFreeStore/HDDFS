@@ -26,6 +26,6 @@ public class OrderListVO {
 	private String ostatus;
 	private String oarrdate;
 	private String oplnum;
-	private String elnum;
+	private String oelnum;
 	private String oplace;
 }

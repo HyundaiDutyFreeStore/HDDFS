@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void Insertorderitemlist(String oid, String mid, Date odate, int ohpoint, String ostatus, String oarrdate,
-			String oplnum, String elnum, String oplace) {
+			String oplnum, String oelnum, String oplace) {
 		
 		OrderListVO olv=new OrderListVO();
 		olv.setOid(oid);
@@ -50,8 +50,9 @@ public class OrderServiceImpl implements OrderService {
 		olv.setOstatus(ostatus);
 		olv.setOarrdate(oarrdate);
 		olv.setOplnum(oplnum);
-		olv.setElnum(elnum);
+		olv.setOelnum(oelnum);
 		olv.setOplace(oplace);
+		mapper.Insertorderitemlist(olv);
 		// TODO Auto-generated method stub
 		
 	}

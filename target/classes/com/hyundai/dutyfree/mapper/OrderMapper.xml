@@ -19,7 +19,7 @@
 	</insert>
 	
 	<insert id="Insertorderitemlist">
-	insert into orderitemlist values(#{oid},#{mid},#{odate},#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH:24:MI:SS'),#{oplnum},#{elnum},#{oplace})
+	insert into orderlist values(#{oid},#{mid},#{odate},#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
 	</insert>
 </mapper>
   

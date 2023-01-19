@@ -60,30 +60,37 @@ public class OrderController {
 
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
-	public void orderexec(HttpServletRequest request, OrderItemListVO orderitemlists, OrderListVO olv,Model model, Principal prin)
+	public void orderexec(HttpServletRequest request, OrderItemListVO orderitemlists,Model model, Principal prin)
 			throws Exception {
 		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
 		int ordertotalstock = 0;
 		java.util.Date nowdate= new java.util.Date();
-		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid="OR"+simpleDateFormat.format(nowdate);
 		
 
 		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
 
-		orderservice.Insertorderitemlist(oid, prin.getName(),odate, 0, "결제완료", olv.getOarrdate(), olv.getOplnum(), olv.getElnum(), olv.getOplace());
 		
-		/*
-		 * for (OrderItemVO order : orderitemlist) { ProductVO product =
-		 * productservice.productdetail(order.getPcode());
-		 * System.out.println(product.getPprice());
-		 * System.out.println(product.getPdiscount());
-		 * orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
-		 * ordertotalstock += order.getOamount(); }
-		 */
+		  System.out.println("Oarrdate:"+request.getParameter("olvoarrdate"));
+		  System.out.println("Oplnum:"+request.getParameter("olvoplnum"));
+		  System.out.println("Elnum:"+request.getParameter("olvoelnum"));
+		  System.out.println("Oplace:"+request.getParameter("olvoplace"));
+		 
+        System.out.println("oid:"+oid);
+		orderservice.Insertorderitemlist(oid, prin.getName(),odate, 0, "결제완료", request.getParameter("olvoarrdate"), request.getParameter("olvoplnum"), request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
+		
+		
+		  for (OrderItemVO order : orderitemlist) { ProductVO product =
+		  productservice.productdetail(order.getPcode());
+		  System.out.println(product.getPprice());
+		  System.out.println(product.getPdiscount());
+		  orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
+		  ordertotalstock += order.getOamount(); }
+		 
 		
 		
 		System.out.println("총 결제금액:"+request.getParameter("wontotalSettKrw"));
@@ -129,7 +136,7 @@ public class OrderController {
 		String[] dpatTmMarr = dpatTmM.split("분");
 		String date = oarrdate + " " + dpatTmHarr[0] + ":" + dpatTmMarr[0];
 		olv.setOarrdate(date);
-		olv.setElnum(ugntComuMophNo);
+		olv.setOelnum(ugntComuMophNo);
 		olv.setOplace(orderDpatPlacCd);
 
 		System.out.println(cartprice);
