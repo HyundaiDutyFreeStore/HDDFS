@@ -11,14 +11,15 @@
 	left: 25%;
 }
 
-.d_txt {
-	width: 540px;
+.chdiv {
+	position: relative;
+	top: 21px;
 	left: 25%;
 }
 
 .chdiv {
 	position: relative;
-	top: 21px;
+	top: 14px;
 	left: 25%;
 }
 
@@ -31,12 +32,14 @@
 }
 
 .btnlog {
-	width: 540px;
+	position: relative;
+	top: 7px; width : 540px;
 	height: 60px;
 	font-size: 16px;
 	color: #ffffff !important;
 	border: 1px solid #1b1e23;
-	background-color: #1b1e23
+	background-color: #1b1e23;
+	width: 540px
 }
 </style>
 <main id="container" class="container">
@@ -47,7 +50,8 @@
 		<div class="tab_view_box block" id="login01">
 			<form id="frmIntgLgin" name="frmIntgLgin" method="post"
 				autocomplete="off">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
 				<div class="join_form">
 					<div class="join_row input">
 						<input type="text" id="custId" name="mid" placeholder="아이디"
@@ -60,16 +64,17 @@
 							maxlength="100" autocomplete="off">
 					</div>
 					<c:if test="${error eq 'yes'}">
-					<span class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</span>
+						<span class="chdiv" id="login_warn" style="color: red">아이디와
+							비밀번호를 다시 한번 확인해주세요</span>
 					</c:if>
-					
-					
+
+
 				</div>
 				<div class="dang_type" id="loginErr">
-				<%-- <c:if test="${error eq 'yes'}">
+					<%-- <c:if test="${error eq 'yes'}">
 					<p class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</p>
 				</c:if> --%>
-				</div>	
+				</div>
 				<!-- <div class="id_save">
 					<span class="checkbox small"> <input type="checkbox"
 						name="saveId" id="umbSaveId" value="Y"> <label
