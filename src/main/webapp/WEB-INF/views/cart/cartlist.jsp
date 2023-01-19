@@ -349,7 +349,7 @@ function fn_qtyAdd(el){
 	cartstock++;
 	$(el).closest(".num_amount.cart_amount").find("input[name='goosQty']").val(cartstock);
 	updateCart(1,pcode);
-	location.href="/cart/cartlist?mid=${member.mid}&align=${align}";
+	location.href="/cart/cartlist?mid=${mid}&align=${align}";
 }
 
 //장바구니 수량 1 줄이기
@@ -360,7 +360,7 @@ function fn_qtySubtraction(el){
 	cartstock--;
 	$(el).closest(".num_amount.cart_amount").find("input[name='goosQty']").val(cartstock);
 	updateCart(-1,pcode);
-	location.href="/cart/cartlist?mid=${member.mid}&align=${align}";
+	location.href="/cart/cartlist?mid=${mid}&align=${align}";
 }
 
 //장바구니 수량 변경
@@ -369,7 +369,7 @@ function updateCart(cartstock,pcode){
 	console.log("카트 들어감!")
 	const Data = {
 			cartstock :cartstock,
-			mid : "${member.mid}",
+			mid : "${mid}",
 			pcode : pcode
 		}
 

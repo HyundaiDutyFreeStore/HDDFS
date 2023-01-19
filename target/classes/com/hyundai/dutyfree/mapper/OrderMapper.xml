@@ -13,5 +13,13 @@
 	<select id="PassportConsist" resultType="com.hyundai.dutyfree.vo.PassportVO">
 	select * from passport where mid=#{mid} 
 	</select>
+	
+	<insert id="Insertorderitem">
+	insert into orderitem values(#{pcode},#{oamount},#{oid})
+	</insert>
+	
+	<insert id="Insertorderitemlist">
+	insert into orderitemlist values(#{oid},#{mid},#{odate},#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH:24:MI:SS'),#{oplnum},#{elnum},#{oplace})
+	</insert>
 </mapper>
   

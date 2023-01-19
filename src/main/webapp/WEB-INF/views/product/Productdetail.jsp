@@ -163,9 +163,10 @@ function loginChk() {
 						</li>
 					</ul>
 			</div>
-			<form id="cartBuy" method="" action="" >
+			<form id="cartBuy" method="post" action="" >
 				<input type="hidden" name="orderitem[0].pcode" value="${product.pcode }"/>
 				<input type="hidden" name="orderitem[0].oamount" value=""/>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			<div class="productdetail_cart">
 						<div class="selectlist"><!-- HDDFS 리뉴얼 프로젝트 [이민우-2021.03.22] - 구매레이어 추가 -->    
@@ -264,14 +265,14 @@ function loginChk() {
 	}
 	
 	function cartBuy(){
-		var totalamount=parseInt($("#totalamount").text(count));
+		var totalamount=parseInt($("#totalamount").text());
 		$("#cartBuy").find("input[name='orderitem[0].oamount']").val(totalamount);
-		/* if(){
-			$("#cartBuy").attr("action","/order/DepartureInfo");
-		}else{
+		if("${userpassport}"== ""){
 			$("#cartBuy").attr("action","/order/PassportInfo");
+		}else{
+			$("#cartBuy").attr("action","/order/DepartureInfo");
 		}
-		$("#cartBuy").submit(); */
+		$("#cartBuy").submit();
 	}
 	
 

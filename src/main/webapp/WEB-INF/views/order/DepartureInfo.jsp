@@ -2,16 +2,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/Header.jsp"%>
+<%@ page import="com.hyundai.dutyfree.vo.OrderItemListVO"%>
+<%@ page import="com.hyundai.dutyfree.vo.OrderItemVO"%>
+<%@ page import="java.util.*"%>
 <main id="container" class=""> <script type="text/javascript">
 
 </script>
 
 <form id="selfReplace"
 	action="https://www.hddfs.com/shop/or/order/listCart.do" method="post">
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	<input id="selfReplaceCartCd" type="hidden" name="cartCd" value="">
-	<input id="selfReplaceScrollMove" type="hidden" name="scrollMove"
-		value="">
+	<input type="hidden" name="${_csrf.parameterName}"
+		value="${_csrf.token}" /> <input id="selfReplaceCartCd" type="hidden"
+		name="cartCd" value=""> <input id="selfReplaceScrollMove"
+		type="hidden" name="scrollMove" value="">
 </form>
 
 <article id="content">
@@ -54,7 +57,9 @@
 			</div>
 			<div class="cont_left" id="TAB" style="display: block;">
 
-				<form name="form" id="dpatForm" onsubmit="return false;">
+				<form name="form" id="sendDepartInfo" method="post">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
 					<div class="passport_wrap">
 						<div class="form_wrap">
 							<div class="form_tit">
@@ -82,7 +87,7 @@
 									class="input_de hasbtn"> <input type="hidden"
 										id="arrvClsCd" name="arrvClsCd" value=""> <span><input
 											type="text" id="openNm" name="openNm" value=""
-											class="engNumber" placeholder="편명"></span> <em class="nbsp"></em>
+											placeholder="편명"></span> <em class="nbsp"></em>
 								</span>
 								</li>
 								<li>
@@ -144,8 +149,9 @@
 										style="display: none;">출국날짜 및 시간을 선택해주세요.</p>
 								</li>
 								<li>
-									<p class="f_ti ico_compulsory">긴급연락처</p> <span class="input_de">
-										<select name="ugntComuTelNatiCd" id="ugntComuTelNatiCd">
+									<p class="">긴급연락처</p>
+									<span class="input_de"> <select name="ugntComuTelNatiCd"
+										id="ugntComuTelNatiCd">
 											<option value="">선택</option>
 											<option value="82" selected="selected">한국 (+82)</option>
 											<option value="86">중국 (+86)</option>
@@ -360,14 +366,14 @@
 											<option value="36">헝가리 (+36)</option>
 									</select>
 								</span> <span class="input_de"><input type="number"
-										name="ugntComuMophNo" id="ugntComuMophNo" placeholder="01012345678"
-										placeholder="- 없이 입력" maxlength="11"></span>
+										name="ugntComuMophNo" id="ugntComuMophNo"
+										placeholder="01012345678" placeholder="- 없이 입력" maxlength="11"></span>
 								</li>
 							</ul>
 
 							<div class="btn_area">
 								<a href="javascript:void(0);" class="btnxl_type type2"
-									onclick="sendData();">저장</a>
+									onclick="sendDepartInfo();">저장</a>
 							</div>
 						</div>
 					</div>
@@ -469,6 +475,31 @@ $(document)
 function priceComma(price) {
 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+function sendDepartInfo(){
+	<%List<OrderItemVO> list = (List<OrderItemVO>) request.getAttribute("orderitemlist");
+
+			for (int i = 0; i < list.size(); i++) {%>
+	 var pcode=<%=list.get(i).getPcode()%>;
+	 var oamount=<%=list.get(i).getOamount()%>
+	 var index=<%=i%>;
+	 console.log(<%=list.get(i).getPcode()%>);
+	 
+	$('#sendDepartInfo').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
+	$('#sendDepartInfo').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
+	$('#sendDepartInfo').append('<input name="orderitem['+index+'].oid" type="hidden" value="">');
+	
+	<%}%>
+	
+	if($("#ugntComuMophNo").val()==""){
+		$("#ugntComuMophNo").val("${member.mphone}");
+	}
+	$('#sendDepartInfo').attr('action','/order/orderpays');
+	$('#sendDepartInfo').submit();
+}
+
+
+
 
 $(function() {
     //input을 datepicker로 선언
