@@ -9,13 +9,13 @@
 		from cart c, product p
 		where c.pcode=p.pcode
 		and mid=#{mid}
-		<if test="align =='높은금액순'">
-		order by p.pprice desc
+		<if test="align =='hprice'">
+		order by (p.pprice*(1-(p.pdiscount/100))*1267*c.cartstock) desc
 		</if>
-		<if test="align =='낮은금액순'">
-		order by p.pprice
+		<if test="align =='lprice'">
+		order by (p.pprice*(1-(p.pdiscount/100))*1267*c.cartstock)
 		</if>
-		<if test="align =='브랜드순(ABC)'">
+		<if test="align =='brand'">
 		order by p.pbrand
 		</if>
 	</select>
@@ -25,10 +25,10 @@
 		select cartno , cartstock, cartregdate, mid, pcode 
 		from cart
 		where mid=#{mid}
-		<if test="align =='늦게담은순'">
+		<if test="align =='lput'">
 		order by cartregdate desc
 		</if>
-		<if test="align =='먼저담은순'">
+		<if test="align =='fput'">
 		order by cartregdate
 		</if>
 	</select>

@@ -9,8 +9,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,12 +20,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -31,6 +37,7 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.hyundai.dutyfree.service.CartService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
@@ -57,6 +64,12 @@ public class OrderController {
 
 	@Autowired
 	private MemberService memberservice;
+	
+	@Autowired
+	private CartService cartservice;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
@@ -69,10 +82,10 @@ public class OrderController {
 		java.util.Date nowdate = new java.util.Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid = "OR" + simpleDateFormat.format(nowdate);
-
+		
 		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		java.sql.Date odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
-
+		
 		System.out.println("Oarrdate:" + request.getParameter("olvoarrdate"));
 		System.out.println("Oplnum:" + request.getParameter("olvoplnum"));
 		System.out.println("Elnum:" + request.getParameter("olvoelnum"));
@@ -88,6 +101,7 @@ public class OrderController {
 			System.out.println(product.getPprice());
 			System.out.println(product.getPdiscount());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
+			cartservice.redproductcnt(order.getPcode(),order.getOamount());
 			ordertotalstock += order.getOamount();
 		}
 
@@ -134,8 +148,27 @@ public class OrderController {
 
 		// ImageIO를 사용하여 파일쓰기
 		ImageIO.write(bufferedImage, "png", temp);
+			/* 이메일 보내기 */
+			String setFrom = "hdite1284@naver.com";
+			String toMail = member.getMemail();
+			String title = "주문 QR 이메일 입니다.";
+			String content = "주문해주셔서 감사합니다." + "<br><br>" + "QR코드는  <img src='"+bufferedImage + "'/> 입니다." + "<br>";
 
-		return "/order/orderdone";
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+				helper.setFrom(setFrom);
+				helper.setTo(toMail);
+				helper.setSubject(title);
+				helper.setText(content, true);
+				mailSender.send(message);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+	return"/order/orderdone";
+
 	}
 
 	// 출국정보를 등록하고 지불페이지로 이동
@@ -159,7 +192,7 @@ public class OrderController {
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-
+		
 		String orderDpatPlacCd = request.getParameter("orderDpatPlacCd");
 		String oplnum = request.getParameter("openNm");
 		String oarrdate = request.getParameter("oarrdate");
@@ -285,7 +318,7 @@ public class OrderController {
 		return "/order/DepartureInfo";
 	}
 
-	// 여권번호를 등록
+	// 여권번호 등록 페이지로 이동
 	@PostMapping("/PassportInfo")
 	public void PassportInfo(OrderItemListVO orderitemlists, Model model, HttpServletRequest request, Principal prin)
 			throws Exception {

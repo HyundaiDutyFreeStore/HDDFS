@@ -143,6 +143,7 @@ public class ProductController {
 		}
 		
 		System.out.println(product.toString());
+		System.out.println(product.toString());
 		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
 		}

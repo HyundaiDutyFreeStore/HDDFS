@@ -270,7 +270,7 @@ function loginChk() {
 		if("${userpassport}"== ""){
 			$("#cartBuy").attr("action","/order/PassportInfo");
 		}else{
-			$("#cartBuy").attr("action","/order/DepartureInfo");
+			$("#cartBuy").attr("action","/order/goDepartureInfo");
 		}
 		$("#cartBuy").submit();
 	}

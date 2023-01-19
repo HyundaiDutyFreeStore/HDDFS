@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
 		listMap.put("mid", mid);
 		listMap.put("align",align);
 		System.out.println(align);
-		if(align.equals("늦게담은순")||align.equals("먼저담은순")) {
+		if(align.equals("lput")||align.equals("fput")) {
 			return cartmapper.getCartListregDate(listMap);
 		}else {
 			return cartmapper.getCartListprice(listMap);

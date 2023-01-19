@@ -37,11 +37,11 @@
 <div class="sort_r">
     <input type="hidden" id="lgcpBuyMbshGrpDtlCd" value="001">
     <select name="cartCd" onchange="listalign(this);" id="cartCd">
-<option value="001" <c:if test="${align eq '늦게담은순' }"> selected="selected" </c:if>>늦게담은순</option>
-<option value="002" <c:if test="${align eq '먼저담은순' }"> selected="selected" </c:if>>먼저담은순</option>
-<option value="003" <c:if test="${align eq '높은금액순' }"> selected="selected" </c:if>>높은금액순</option>
-<option value="004" <c:if test="${align eq '낮은금액순' }"> selected="selected" </c:if>>낮은금액순</option>
-<option value="005" <c:if test="${align eq '브랜드순(ABC)' }"> selected="selected" </c:if>>브랜드순(ABC)</option>
+<option value="001" <c:if test="${align eq 'lput' }"> selected="selected" </c:if>>늦게담은순</option>
+<option value="002" <c:if test="${align eq 'fput' }"> selected="selected" </c:if>>먼저담은순</option>
+<option value="003" <c:if test="${align eq 'hprice' }"> selected="selected" </c:if>>높은금액순</option>
+<option value="004" <c:if test="${align eq 'lprice' }"> selected="selected" </c:if>>낮은금액순</option>
+<option value="005" <c:if test="${align eq 'brand' }"> selected="selected" </c:if>>브랜드순(ABC)</option>
 </select>
 </div>
 </div>
@@ -57,19 +57,10 @@
     <c:when test="${not empty cartlist}">
 <div class="cart_list">
         <c:forEach var="cart" items="${cartlist}" varStatus="idx">
-        		<div class="item_area">
-        		<input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
-        		<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
-        		<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
-        		<input type="hidden" name="cartdisprice" value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}">
-        		<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
-        		<input type="hidden" name="pstock" value="${cart.pstock }"/>
-        		<input type="hidden" name="cartno" value="${cart.cartno }"/>
-                    <div class="item_chk">
-                        <span class="chk nolabel">
-                           <!--  <input type="checkbox" name="cartSeq" id="cart_ch0" value="439727524" class="cartSeqs" data-onlngooscd="10073250016301" data-idx="0">
-                             <label for="cart_ch0">선택</label> -->
-                        </span>
+        <c:choose>
+        <c:when test="${cart.cartprodcon==true }">
+        		<div class="item_area">	
+                    <div class="item_chk"> 
                         <div class="btn_area">
                             <button class="btn_onoff btn_pin" onclick="mergeCnrRetn('439727524','10073250016301',this)">핀</button>
                                     <input type="hidden" id="btn_pin0" value="N">
@@ -78,10 +69,26 @@
                                 </div>
                     </div>
                     <div class="item_cont type_de">
-                        <div class="item_info_wrap">
+                        <div class="item_info_wrap" id="item_info">
+                        <input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
+        				<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
+        				<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
+        				<input type="hidden" name="cartdisprice" value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}">
+        				<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
+        				<input type="hidden" name="pstock" value="${cart.pstock }"/>
+        				<input type="hidden" name="cartno" value="${cart.cartno }"/>
+                        <c:choose>
+                        <c:when test="${mid eq null }">
                                 <a href="
                                     /product/Productdetail?pcode=${ cart.pcode}
                                 ">
+                                </c:when>
+                         <c:otherwise>
+                         <a href="
+                                    /product/Productdetail?mid=$[mid}&pcode=${ cart.pcode}
+                                ">
+                         </c:otherwise>
+                        </c:choose>
                                 <div class="item_img">
                                    <img src=<c:out value="${cart.img1 }"/> alt="키엘 클리어리 코렉티브 다크 스팟 솔루션 115ML" onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img252.jpg';"> 
                                         </div>
@@ -122,6 +129,63 @@
                     </div>                              
                 </div>
             <hr class="hr_part">
+            </c:when>
+            <c:otherwise>
+            <div class="item_area">
+            			<input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
+        				<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
+        				<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
+        				<input type="hidden" name="cartdisprice" value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}">
+        				<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
+        				<input type="hidden" name="pstock" value="${cart.pstock }"/>
+        				<input type="hidden" name="cartno" value="${cart.cartno }"/>
+                    <div class="item_chk">
+                        <div class="btn_area">
+                            <button class="btn_del" onclick="javascript:deleteCart(this);">삭제</button>
+                                </div>
+                    </div>
+                    <div class="item_cont type_de">
+                        <div class="item_info_wrap soldout" id="item_soldout">
+                        <c:choose>
+                        <c:when test="${mid  eq null}">
+							 <a href="/product/Productdetail?pcode=${ cart.pcode}"> 
+                        </c:when>
+                        <c:otherwise>
+                         <a href="/product/Productdetail?mid=${mid }&pcode=${ cart.pcode}">
+                        </c:otherwise>
+                         </c:choose>                         
+                            <div class="item_img">
+                                 <img src=<c:out value="${cart.img1 }"/> alt="키엘 클리어리 코렉티브 다크 스팟 솔루션 115ML" onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img252.jpg';"> 
+                                    </div>
+                            <div class="por_icons">
+                                <span class="pr_sale">세일</span><!-- #156. 선주호. 상품 3시간전, 5시간전 아이콘 삭제 및 조건검색항목 삭제
+	
+	 -->
+    </div>
+                            <div class="item_title">
+                                <strong>${cart.pbrand }</strong>
+                                <span>${cart.pname }</span>
+                            </div>
+                            <del>$<fmt:formatNumber value="${cart.pprice*cart.cartstock}"
+													pattern="#,##0.##"/></del>
+                                            <p class="pay">
+                                                <strong>$<fmt:formatNumber
+													value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}"
+													pattern="#,##0.##" /></strong>
+                                                <span><fmt:formatNumber
+													value="${cart.pprice*(1-(cart.pdiscount/100))*1267*cart.cartstock}"
+													pattern="#,#00" />원</span>
+                                            </p>                                                
+                                        </a>
+                            <div class="item_sel">
+                                </div>                                  
+                        </div>
+                        <div class="item_buy_wrap">
+                        </div>                                  
+                    </div>                          
+                </div>
+            </c:otherwise>
+            </c:choose>
         </c:forEach> 
         </div>
       </c:when>
@@ -322,15 +386,15 @@ setOrderPrice();
 	    // Value값 가져오기
 	    var val = $("#cartCd :selected").val();
 	    if(val=='001'){
-	    	location.href="/cart/cartlist?mid=${mid}&align=늦게담은순";
+	    	location.href="/cart/cartlist?mid=${mid}&align=lput";
 	    }else if(val =='002'){
-	    	location.href="/cart/cartlist?mid=${mid}&align=먼저담은순";
+	    	location.href="/cart/cartlist?mid=${mid}&align=fput";
 	    }else if(val == '003'){
-	    	location.href="/cart/cartlist?mid=${mid}&align=높은금액순";
+	    	location.href="/cart/cartlist?mid=${mid}&align=hprice";
 	    }else if(val=='004'){
-	    	location.href="/cart/cartlist?mid=${mid}&align=낮은금액순";
+	    	location.href="/cart/cartlist?mid=${mid}&align=lprice";
 	    }else{
-	    	location.href="/cart/cartlist?mid=${mid}&align=브랜드순(ABC)";
+	    	location.href="/cart/cartlist?mid=${mid}&align=brand";
 	    }
 
 	  });
@@ -415,11 +479,15 @@ function setOrderPrice(){
 	let cartdispricetotal = 0;
 	let cartdistotal = 0;
 	let cartcounttotal=0;
-	$(".item_area").each(function(index,item){
+	$('#item_info').each(function(index,item){
 		const cartprice=parseFloat($(this).find("input[name='cartprice']").val());
 		const cartdisprice=parseFloat($(this).find("input[name='cartdisprice']").val());
 		const cartdis=parseFloat($(this).find("input[name='cartdis']").val());
-		const cartcount=parseInt($(this).find("input[name='goosQty']").val());
+		const cartcount=parseInt($(this).closest('.item_cont.type_de').find('.item_buy_wrap').find("input[name='goosQty']").val());
+		console.log(cartprice);
+		console.log(cartdisprice);
+		console.log(cartdis);
+		console.log(cartcount);
 		cartpricetotal+=cartprice;
 		cartdispricetotal+=cartdisprice;
 		cartdistotal+=cartdis;
@@ -440,8 +508,8 @@ function priceComma(price) {
 
 function OrderSingle(el){
 	let passportflag=false;
-	let cartstock=parseInt($(el).closest(".item_area").find("input[name='cartstock']").val());
-	let pcode=$(el).closest(".item_area").find("input[name='pcode']").val();
+	let cartstock=parseInt($(el).closest(".item_cont.type_de").find("#item_info").find("input[name='cartstock']").val());
+	let pcode=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='pcode']").val();
 	$('#Orderexec').append('<input name="orderitem[0].pcode" type="hidden" value="'+pcode+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oamount" type="hidden" value="'+cartstock+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oid" type="hidden" value="">');
@@ -470,7 +538,7 @@ var orderproductlist=[];
 
 	function AllItemOrder(){
 		let itemindex = 0;
-		$(".item_area").each(function(index, item){
+		$("#item_info").each(function(index, item){
 				var cartstock=parseInt($(this).find("input[name='cartstock']").val());
 				var pcode=$(this).find("input[name='pcode']").val();
 				$('#Orderexec').append('<input name="orderitem['+itemindex+'].pcode" type="hidden" value="'+pcode+'">');

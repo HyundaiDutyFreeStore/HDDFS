@@ -15,4 +15,5 @@ public class CartVOforJSP {
 	private String mid;
 	private int cartno;
 	private int cartstock;
+	private boolean cartprodcon;
 }
