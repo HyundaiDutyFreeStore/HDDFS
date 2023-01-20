@@ -51,7 +51,7 @@
 	</beans:bean>
 	<beans:bean id="naverRedirectUrl" class="java.lang.String">
 		<beans:constructor-arg
-			value="http://localhost/auth/naver/callback" />
+			value="http://localhost:8080/auth/naver/callback" />
 	</beans:bean>
 
 	<beans:bean id="naverSns" class="com.hyundai.dutyfree.auth.SnsValue">

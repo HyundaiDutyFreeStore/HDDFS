@@ -66,7 +66,7 @@
 					</div>
 					<div class="join_row placeholder_wrap input" style="top: 7px;">
 						<input type="password" id="custPwd" name="mpassword"
-							placeholder="비밀번호" onkeypress="javascript:noSpaceEvnt(event);"
+							placeholder="비밀번호" onkeyup="f_enterLogin();"
 							maxlength="100" autocomplete="off">
 					</div>
 					<c:if test="${error eq 'yes'}">

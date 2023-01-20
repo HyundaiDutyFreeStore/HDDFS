@@ -2,24 +2,20 @@ package com.hyundai.dutyfree.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -27,12 +23,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -65,10 +57,10 @@ public class OrderController {
 
 	@Autowired
 	private MemberService memberservice;
-	
+
 	@Autowired
 	private CartService cartservice;
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -83,47 +75,47 @@ public class OrderController {
 		java.util.Date nowdate = new java.util.Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid = "OR" + simpleDateFormat.format(nowdate);
-		
+
 		/*
 		 * simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); java.sql.Date
 		 * odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
 		 */
-		
+
 		System.out.println("Oarrdate:" + request.getParameter("olvoarrdate"));
 		System.out.println("Oplnum:" + request.getParameter("olvoplnum"));
 		System.out.println("Elnum:" + request.getParameter("olvoelnum"));
 		System.out.println("Oplace:" + request.getParameter("olvoplace"));
 
 		System.out.println("oid:" + oid);
-		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료", request.getParameter("olvoarrdate"),
-				request.getParameter("olvoplnum"), request.getParameter("olvoelnum"),
-				request.getParameter("olvoplace"));
-		
+		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료",
+				request.getParameter("olvoarrdate"), request.getParameter("olvoplnum"),
+				request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
+
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			System.out.println(product.getPprice());
 			System.out.println(product.getPdiscount());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
-			cartservice.redproductcnt(order.getPcode(),order.getOamount());
-			CartVO cart=new CartVO();
+			cartservice.redproductcnt(order.getPcode(), order.getOamount());
+			CartVO cart = new CartVO();
 			cart.setPcode(order.getPcode());
 			cart.setMid(prin.getName());
-			
-			//주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제
-			if(cartservice.Cartitemconsist(cart)==1) {
+
+			// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제
+			if (cartservice.Cartitemconsist(cart) == 1) {
 				cartservice.deleteCart(cart);
 			}
-			
+
 			ordertotalstock += order.getOamount();
 		}
-		
+
 		member.setMid(prin.getName());
 		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
 		member.setMtotal(Integer.parseInt(request.getParameter("wontotalSettKrw")));
-		
-		//주문자의 포인트 및 총주문금액을 업데이트
+
+		// 주문자의 포인트 및 총주문금액을 업데이트
 		memberservice.updateMhpoint(member);
-		
+
 		System.out.println("총 결제금액:" + request.getParameter("wontotalSettKrw"));
 
 		model.addAttribute("wontotalSettKrw", request.getParameter("wontotalSettKrw"));
@@ -131,7 +123,7 @@ public class OrderController {
 		model.addAttribute("member", member);
 		model.addAttribute("oid", oid);
 		model.addAttribute("orderitemlist", orderitemlist);
-		
+
 		// 주문 QR코드 전송
 		String root = request.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
 		String savePath = root + "\\qrCodes\\"; // 파일 경로
@@ -167,26 +159,28 @@ public class OrderController {
 
 		// ImageIO를 사용하여 파일쓰기
 		ImageIO.write(bufferedImage, "png", temp);
-			/* 이메일 보내기 */
-			String setFrom = "hdite1284@naver.com";
-			String toMail = member.getMemail();
-			String title = "주문 QR 이메일 입니다.";
-			String content = "주문해주셔서 감사합니다." + "<br><br>" + "QR코드는  <img src='"+bufferedImage + "'/> 입니다." + "<br>";
+		/* 이메일 보내기 */
+		String setFrom = "hdite1284@naver.com";
+		String toMail = member.getMemail();
+		String title = "주문 QR 이메일 입니다.";
+		String content = "주문해주셔서 감사합니다." + "<br><br>" + "QR코드는  첨부파일 확인" + "<br>";
 
-			try {
-				MimeMessage message = mailSender.createMimeMessage();
-				MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-				helper.setFrom(setFrom);
-				helper.setTo(toMail);
-				helper.setSubject(title);
-				helper.setText(content, true);
-				mailSender.send(message);
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			FileSystemResource qr = new FileSystemResource(temp);
+			helper.addAttachment(fileName + ".png", qr);
+			mailSender.send(message);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-	return"/order/orderdone";
+		return "/order/orderdone";
 
 	}
 
@@ -211,7 +205,7 @@ public class OrderController {
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		
+
 		String orderDpatPlacCd = request.getParameter("orderDpatPlacCd");
 		String oplnum = request.getParameter("openNm");
 		String oarrdate = request.getParameter("oarrdate");
@@ -240,7 +234,7 @@ public class OrderController {
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("orderlist", olv);
 		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
-		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
 
 		return "/order/orderpays";
 	}
@@ -307,7 +301,7 @@ public class OrderController {
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
-		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
 	}
 
 	// 출국정보 입력페이지로 이동한다.
@@ -339,7 +333,7 @@ public class OrderController {
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
-		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
 		return "/order/DepartureInfo";
 	}
 
@@ -370,7 +364,7 @@ public class OrderController {
 		System.out.println(cartdisprice);
 		System.out.println(cartdis);
 		System.out.println(cartstock);
-		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -431,7 +425,7 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
-		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
 
 		passport.setMid(request.getParameter("mId"));
 		passport.setPassportno(request.getParameter("mPsptno"));
@@ -466,51 +460,6 @@ public class OrderController {
 		 * model.addAttribute("cartstock", request.getParameter("cartstockinput"));
 		 */
 		return "/order/DepartureInfo";
-
-	}
-
-	@RequestMapping(value = "qr", method = RequestMethod.GET)
-	public void makeqr() {
-		logger.info("qr페이지 진입");
-	}
-
-	@RequestMapping(value = "/qr", method = RequestMethod.POST)
-	public void makeqr(HttpServletRequest request, HttpSession session) throws WriterException, IOException {
-
-		String root = request.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
-		String savePath = root + "\\qrCodes\\"; // 파일 경로
-		System.out.println(savePath);
-		// 파일 경로가 없으면 생성하기
-		File file = new File(savePath);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-
-		// 링크로 할 URL주소
-		String url = "나중에 order id 넣을곳";
-
-		// 링크 생성값
-		String codeurl = new String(url.getBytes("UTF-8"), "ISO-8859-1");
-
-		// QRCode 색상값
-		int qrcodeColor = 0xFF2e4e96;
-		// QRCode 배경색상값
-		int backgroundColor = 0xFFFFFFFF;
-
-		// QRCode 생성
-		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = qrCodeWriter.encode(codeurl, BarcodeFormat.QR_CODE, 200, 200); // 200,200은 width, height
-
-		MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(qrcodeColor, backgroundColor);
-		BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix, matrixToImageConfig);
-
-		String fileName = "test";
-
-		// 파일 경로, 파일 이름 , 파일 확장자에 맡는 파일 생성
-		File temp = new File(savePath + fileName + ".png");
-
-		// ImageIO를 사용하여 파일쓰기
-		ImageIO.write(bufferedImage, "png", temp);
 
 	}
 
