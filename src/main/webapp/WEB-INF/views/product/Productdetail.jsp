@@ -822,7 +822,7 @@ let count = parseInt($(".counts").val());
 	}else{
 		$("#plusGoosQty0").removeAttr("disabled"); 
 	}
-}); */
+}); v*/
 function productamount(){
 	
 	if("${product.pstock}"-parseInt($("#totalamount").text())<0){
