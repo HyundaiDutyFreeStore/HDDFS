@@ -63,7 +63,7 @@
 	
 	
 	<delete id="deleteCart">
-	delete from cart where cartno=#{cartno} and mid=#{mid}
+	delete from cart where pcode=#{pcode} and mid=#{mid}
 	</delete>
  
  

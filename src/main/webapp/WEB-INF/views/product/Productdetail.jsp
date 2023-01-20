@@ -194,15 +194,17 @@ function loginChk() {
 	<input type="hidden" id="totalWonSum" value="183,638">
 	<input type="hidden" id="priceUnit" value="원">
 <script>
-
-    
+let count = parseInt($(".counts").val());
+	$('.minus').attr("disabled",true);
   //수량버튼 내렸을때! 무조건 1개 이상이여야겠지?
 	function fn_qtySubtraction(el) {
-		let count = parseInt($(".counts").val());
+		count = parseInt($(".counts").val());
 		if(count-1<1){
-			alert("해당 상품의 최소 주문 수량은 1개 입니다.");
+			$(el).attr("disabled",true);
 			return false;
 		}else{
+			$(el).closest(".num_amount").find(".plus").attr("disabled",false);
+			$(el).attr("disabled",false);
 			count--;
 			$(".counts").val(count);
 				
@@ -224,12 +226,18 @@ function loginChk() {
 			$(".totalamount").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
 			$(".totalamount").find(".priceInfo").children().eq(0).val(chDorprice.toFixed(2));
 			$(".totalamount").find(".priceInfo").children().eq(1).val(chWonprice.toFixed(0));
+			if(count==1){
+				$(el).attr("disabled",true);
+			}else{
+				$(el).attr("disabled",false);
+			}
 		}
 		
 	}
   
 	//수량버튼 올렸을때
 	function fn_qtyAdd(el) {
+		$(el).closest('.num_amount').find('.minus').attr("disabled",false);
 		let count = parseInt($(".counts").val());
 		count++;
 		$(".counts").val(count);
@@ -253,6 +261,12 @@ function loginChk() {
 		$(".totalamount").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
 		$(".totalamount").find(".priceInfo").children().eq(0).val(chDorprice.toFixed(2));
 		$(".totalamount").find(".priceInfo").children().eq(1).val(chWonprice.toFixed(0));
+		
+		if("${product.pstock}"-count<=0){
+			$(el).attr("disabled",true);
+		}else{
+			$(el).attr("disabled",false);
+		}
 		
 	}
 	
@@ -797,6 +811,18 @@ function loginChk() {
 	 location.href="/order/PassportInfo?mid=${mid}&pcode=${product.pcode}$pprice=${product.pprice}"; 
 }   */  
     
+    
+/* $("#item_info").each(function(index,item){
+	let pstock = parseInt($(this).find("input[name='pstock']").val());
+	let cartstock=parseInt($(this).find("input[name='goosQty']").val());
+	console.log(pstock);
+	if(pstock-cartstock<0){
+		console.log("작다.")
+		$("#plusGoosQty0").attr("disabled",true);
+	}else{
+		$("#plusGoosQty0").removeAttr("disabled"); 
+	}
+}); */
 function productamount(){
 	
 	if("${product.pstock}"-parseInt($("#totalamount").text())<0){
@@ -903,8 +929,8 @@ function updateCart(){
 	    		alert("재고량이 부족합니다");
 	    		return false;
 	    	}
-		}
     	
+		}
     	
     }
 
@@ -912,80 +938,7 @@ function updateCart(){
 
     
    	
-   	var cateNm = cateLNm = cateMNm = cateSNm = cateDNm = "";
-    var cat = catL = catM = catS = catD = "";
-    var goos_status = "";
-    var name = code = amt = prc = salePrc = img = brand = brandNm = "";
-              	
-    if("1" != '1' || "Y" == 'N'){	// 상품 상태 코드(1:판매중, 2:재고없음, 3:MD중단, 9:영구중단), 상품 판매 여부
-    	goos_status = 'SS';
-    }else{
-        goos_status = '';	
-    }
-              	
-    if("00" == '02'){
-        cat = "00070201";
-        catL = "0007";
-        catM = "000702";
-        catS = "00070201";
-        catD = "00070201";
-        cateNm = "";
-        cateLNm = "패션/잡화";
-        cateMNm = "여성의류";
-        cateSNm = "상의";
-        cateDNm = "";
-    }else{
-        cat = "00070201";
-        catL = "0007";
-        catM = "000702";
-        catS = "00070201";
-        catD = "";
-        cateNm = "상의";
-        cateLNm = "패션/잡화";
-        cateMNm = "여성의류";
-        cateSNm = "상의";
-        cateDNm = "";
-     }
-              	
-     name = "여성 푸퍼 다운 점퍼 036";
-     code = "56381120799001";
-     amt = "322532";
-     prc = "460761";
-     salePrc = "322532";
-     img = "https://cdn.hddfs.com/files/";
-     brand = "638101";
-     brandNm = "라코스테(의류)";
-           	
-              	groobee( "VG",{
-              			goods :[
-              			{
-              			name: name,
-              			code: code,
-              			amt: amt,	
-              			prc: prc,
-              			salePrc: salePrc,
-              			status: goos_status,
-              			img: img,
-              			cat: cat,
-              			cateNm: cateNm,
-              			catL: catL,
-              			cateLNm: cateLNm,
-              			catM: catM,
-              			cateMNm: cateMNm,
-              			catS: catS,
-              			cateSNm: cateSNm,
-              			catD: catD,
-              			cateDNm: cateDNm,
-              			brand: brand,
-              			brandNm: brandNm
-              			}
-              		]
-           	   });
-   </script>
-
-</main>
-	    <!-- // container -->
-	    <script type="text/javascript">
+  
 	function sellerInfo(){
 	    $("#seller_information").dialog("open");
 	}

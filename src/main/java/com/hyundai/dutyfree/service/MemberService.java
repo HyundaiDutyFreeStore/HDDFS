@@ -41,7 +41,7 @@ public interface MemberService {
     
     public void deleteMember(String mid) throws Exception;
     
-    public void updateMember(MemberVO member) throws Exception;
+    public void updateMhpoint(MemberVO member) throws Exception;
 
 	
 

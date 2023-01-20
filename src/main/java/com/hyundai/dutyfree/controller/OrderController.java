@@ -41,6 +41,7 @@ import com.hyundai.dutyfree.service.CartService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
+import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
@@ -83,8 +84,10 @@ public class OrderController {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid = "OR" + simpleDateFormat.format(nowdate);
 		
-		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		java.sql.Date odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
+		/*
+		 * simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); java.sql.Date
+		 * odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
+		 */
 		
 		System.out.println("Oarrdate:" + request.getParameter("olvoarrdate"));
 		System.out.println("Oplnum:" + request.getParameter("olvoplnum"));
@@ -92,19 +95,35 @@ public class OrderController {
 		System.out.println("Oplace:" + request.getParameter("olvoplace"));
 
 		System.out.println("oid:" + oid);
-		orderservice.Insertorderitemlist(oid, prin.getName(), odate, 0, "결제완료", request.getParameter("olvoarrdate"),
+		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료", request.getParameter("olvoarrdate"),
 				request.getParameter("olvoplnum"), request.getParameter("olvoelnum"),
 				request.getParameter("olvoplace"));
-
+		
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			System.out.println(product.getPprice());
 			System.out.println(product.getPdiscount());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
 			cartservice.redproductcnt(order.getPcode(),order.getOamount());
+			CartVO cart=new CartVO();
+			cart.setPcode(order.getPcode());
+			cart.setMid(prin.getName());
+			
+			//주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제
+			if(cartservice.Cartitemconsist(cart)==1) {
+				cartservice.deleteCart(cart);
+			}
+			
 			ordertotalstock += order.getOamount();
 		}
-
+		
+		member.setMid(prin.getName());
+		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
+		member.setMtotal(Integer.parseInt(request.getParameter("wontotalSettKrw")));
+		
+		//주문자의 포인트 및 총주문금액을 업데이트
+		memberservice.updateMhpoint(member);
+		
 		System.out.println("총 결제금액:" + request.getParameter("wontotalSettKrw"));
 
 		model.addAttribute("wontotalSettKrw", request.getParameter("wontotalSettKrw"));
@@ -112,7 +131,7 @@ public class OrderController {
 		model.addAttribute("member", member);
 		model.addAttribute("oid", oid);
 		model.addAttribute("orderitemlist", orderitemlist);
-
+		
 		// 주문 QR코드 전송
 		String root = request.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
 		String savePath = root + "\\qrCodes\\"; // 파일 경로
@@ -220,6 +239,8 @@ public class OrderController {
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("orderlist", olv);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
+		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 
 		return "/order/orderpays";
 	}
@@ -285,6 +306,8 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
+		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 	}
 
 	// 출국정보 입력페이지로 이동한다.
@@ -315,6 +338,8 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
+		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 		return "/order/DepartureInfo";
 	}
 
@@ -326,6 +351,7 @@ public class OrderController {
 		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
+		System.out.println(request.getParameter("mhdiscount"));
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
@@ -344,12 +370,14 @@ public class OrderController {
 		System.out.println(cartdisprice);
 		System.out.println(cartdis);
 		System.out.println(cartstock);
+		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 
 	}
 
@@ -403,6 +431,7 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 
 		passport.setMid(request.getParameter("mId"));
 		passport.setPassportno(request.getParameter("mPsptno"));
