@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,12 @@ public class OrderServiceImpl implements OrderService {
 		mapper.updateTotalandMhpoint(member);
 		
 		
+	}
+
+	@Override
+	public List<OrderItemVO> getOrderitemlist(String mid) {
+		
+		return mapper.getOrderitemlist(mid);
 	}
 	
 	

@@ -463,7 +463,7 @@ $(document)
 					.text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
 			$(".sale.totalDcKrw")
 					.text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
-			$(".sumGoosQty").text("${cartstock}");
+			$(".sumGoosQty").text("${cartcounttotal}");
 			$(".payTotalSettUsd")
 					.text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
 			$(".payTotalSettKrw")
@@ -472,7 +472,7 @@ $(document)
 			$('#totalGoosUsdinput').attr('value',"${cartprice}");
 			$('#totalDcUsdinput').attr('value',"${cardis}");
 			$('#cartstockinput').attr('value',"${cartstock}");
-			$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+			$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")/100).toFixed(0))+"원");
 			$('.totalRsvg').text("${mhdiscount}"+"%");
 		});
 

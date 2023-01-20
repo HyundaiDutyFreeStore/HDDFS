@@ -98,11 +98,11 @@ public class CartController {
 		MemberVO member=memberservice.read(prin.getName());
 		double mhdiscount;
 		if(member.getMtotal()>20000) {
-			mhdiscount=0.05;
+			mhdiscount=3;
 		}else if(member.getMtotal()>10000) {
-			mhdiscount=0.03;
+			mhdiscount=2;
 		}else {
-			mhdiscount=0.01;
+			mhdiscount=1;
 		}
 		model.addAttribute("mhdiscount", mhdiscount);
 		model.addAttribute("cartlist", cartjsplist);

@@ -69,8 +69,11 @@ public class MemberServiceImpl implements MemberService {
     }
     //회원정보 수정
     @Override
-    public void updateMember(MemberVO member) throws Exception {
-        memberMapper.updateMember(member);
+    public void updateMhpoint(MemberVO member) throws Exception {
+    	MemberVO mem=memberMapper.read(member.getMid());
+    	member.setMhpoint(mem.getMhpoint()+member.getMhpoint());
+    	member.setMtotal(mem.getMtotal()+member.getMtotal());
+        memberMapper.updateMhpoint(member);
     }
 
 	@Override

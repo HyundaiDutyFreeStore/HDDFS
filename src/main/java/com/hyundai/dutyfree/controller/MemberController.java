@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemVO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -52,6 +55,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberservice;
+	
+	@Autowired
+	private OrderService orderservice;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -193,8 +199,9 @@ public class MemberController {
 		mvo.setMemail(member.getMemail());
 		mvo.setMphone(member.getMphone());
 
-		/* 회원가입 쿼리 실행 */
-		memberservice.updateMember(mvo);
+		/*
+		 * 회원가입 쿼리 실행 memberservice.updateMember(mvo);
+		 */
 
 		return "redirect:/member/Mypage";
 	}
@@ -215,15 +222,16 @@ public class MemberController {
 
 	// 로그인 페이지 이동
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public void loginGET(HttpServletRequest request, @RequestParam(value = "error", required = false) String error, Model model) {
+	public void loginGET(HttpServletRequest request, @RequestParam(value = "error", required = false) String error,
+			Model model) {
 		String uri = request.getHeader("Referer");
-		logger.info("Referer: "+uri);
-	    if (uri != null && !uri.contains("/member/login")) {
-	    	System.out.println("로그인 이전페이지~"+uri);
-	        request.getSession().setAttribute("prevPage", uri);
-	    }
-	    model.addAttribute("error",error);
-		logger.info("로그인 페이지 진입 error= "+error);
+		logger.info("Referer: " + uri);
+		if (uri != null && !uri.contains("/member/login")) {
+			System.out.println("로그인 이전페이지~" + uri);
+			request.getSession().setAttribute("prevPage", uri);
+		}
+		model.addAttribute("error", error);
+		logger.info("로그인 페이지 진입 error= " + error);
 	}
 
 	// 아이디 찾기 이동
@@ -233,25 +241,25 @@ public class MemberController {
 		logger.info("아이디 찾기 페이지 진입");
 
 	}
-	
+
 	// 아이디 중복 검사
-		@RequestMapping(value = "/mailChk")
-		@ResponseBody
-		public String mailChk(String mail) throws Exception {
-			logger.info("mailChk() 진입");
+	@RequestMapping(value = "/mailChk")
+	@ResponseBody
+	public String mailChk(String mail) throws Exception {
+		logger.info("mailChk() 진입");
 
-			int result = memberservice.mailCheck(mail);
+		int result = memberservice.mailCheck(mail);
 
-			logger.info("결과값 = " + result);
+		logger.info("결과값 = " + result);
 
-			if (result != 0) {
-				return "fail"; // 중복 메일이 존재
+		if (result != 0) {
+			return "fail"; // 중복 메일이 존재
 
-			} else {
-				return "success"; // 중복 메일 x
+		} else {
+			return "success"; // 중복 메일 x
 
-			}
 		}
+	}
 
 	// 아이디 중복 검사
 	@RequestMapping(value = "/memberIdChk", method = RequestMethod.POST)
@@ -371,12 +379,14 @@ public class MemberController {
 	 */
 
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
-	public void myPage(HttpServletRequest request, Model model,Principal prin) throws Exception {
-		//시큐리티에서 mid받아오기
+	public void myPage(HttpServletRequest request, Model model, Principal prin) throws Exception {
+		// 시큐리티에서 mid받아오기
 		String mid = prin.getName();
-		log.info("마이페이지 접속 mid: "+ mid);
+		log.info("마이페이지 접속 mid: " + mid);
 		MemberVO mvo = memberservice.read(mid);
-		model.addAttribute("member",mvo);
+		model.addAttribute("member", mvo);
+		List<OrderItemVO> orderitemlist=orderservice.getOrderitemlist(prin.getName());
+		
 		/*
 		 * MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
 		 * model.addAttribute("mid", memberservice.myPage(mvo.getMid()));

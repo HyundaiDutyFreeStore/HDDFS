@@ -108,13 +108,21 @@ public class OrderController {
 			CartVO cart=new CartVO();
 			cart.setPcode(order.getPcode());
 			cart.setMid(prin.getName());
-			cartservice.deleteCart(cart);
+			
+			//주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제
+			if(cartservice.Cartitemconsist(cart)==1) {
+				cartservice.deleteCart(cart);
+			}
+			
 			ordertotalstock += order.getOamount();
 		}
 		
-		//주문자의 포인트 및 총주문금액을 업데이트
-		orderservice.updateTotalandMhpoint(prin.getName(),0,Integer.parseInt(request.getParameter("wontotalSettKrw")));
+		member.setMid(prin.getName());
+		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
+		member.setMtotal(Integer.parseInt(request.getParameter("wontotalSettKrw")));
 		
+		//주문자의 포인트 및 총주문금액을 업데이트
+		memberservice.updateMhpoint(member);
 		
 		System.out.println("총 결제금액:" + request.getParameter("wontotalSettKrw"));
 
@@ -231,6 +239,7 @@ public class OrderController {
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("orderlist", olv);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 
 		return "/order/orderpays";
@@ -297,6 +306,7 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 	}
 
@@ -328,6 +338,7 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 		return "/order/DepartureInfo";
 	}
@@ -366,6 +377,7 @@ public class OrderController {
 		model.addAttribute("cartdis", cartdis);
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
+		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 
 	}
 

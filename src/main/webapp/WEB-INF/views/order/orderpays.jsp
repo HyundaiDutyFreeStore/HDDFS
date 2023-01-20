@@ -911,7 +911,7 @@
 				<div class="payment_sheet scroll-sticky">
 					<div class="title">
 						<h4>최종결제금액</h4>
-						<em>총  ${cartstock} 개</em>
+						<em>총  ${cartcounttotal} 개</em>
 					</div>
 					<ul class="total_bill">
 						<li><strong>총 주문금액합계</strong> <span> <em class="total_bill_dollar_text">$1</em>

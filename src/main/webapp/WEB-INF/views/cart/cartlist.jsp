@@ -69,7 +69,7 @@
                                 </div>
                     </div>
                     <div class="item_cont type_de">
-                        <div class="item_info_wrap" id="item_info">
+                        <div class="item_info_wrap info" id="item_info">
                         <input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
         				<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
         				<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
@@ -364,7 +364,7 @@ $(".loadProgBar").css("display","none");
 $("#item_info").each(function(index,item){
 	let pstock = parseInt($(this).find("input[name='pstock']").val());
 	console.log(pstock);
-	let cartstock=parseInt($(this).closest('.item_area'));
+	let cartstock=parseInt($(this).closest('.item_cont.type_de').find('input[name="goosQty"]').val());
 	console.log(cartstock)
 	console.log(pstock);
 	if(pstock-cartstock<=0){
@@ -489,19 +489,19 @@ function setOrderPrice(){
 	let cartdispricetotal = 0;
 	let cartdistotal = 0;
 	let cartcounttotal=0;
-	$('#item_info').each(function(index,item){
-		const cartprice=parseFloat($(this).find("input[name='cartprice']").val());
-		const cartdisprice=parseFloat($(this).find("input[name='cartdisprice']").val());
-		const cartdis=parseFloat($(this).find("input[name='cartdis']").val());
-		const cartcount=parseInt($(this).closest('.item_cont.type_de').find('.item_buy_wrap').find('.item_buy').find('.num_amount.cart_amount').find("input[name='goosQty']").val());
+	$(".item_info_wrap.info").each(function(index,item){
+		let cartprice=parseFloat($(this).find("input[name='cartprice']").val());
+		let cartdisprice=parseFloat($(this).find("input[name='cartdisprice']").val());
+		let cartdis=parseFloat($(this).find("input[name='cartdis']").val());
+		let cartcount=parseInt($(this).closest('.item_cont.type_de').find('.item_buy_wrap').find('.item_buy').find('.num_amount.cart_amount').find("input[name='goosQty']").val());
 		console.log(cartprice);
 		console.log(cartdisprice);
 		console.log(cartdis);
-		console.log(cartcount);
+		console.log("cartcount:"+cartcount);
 		cartpricetotal+=cartprice;
 		cartdispricetotal+=cartdisprice;
 		cartdistotal+=cartdis;
-		cartcounttotal+=cartcount;
+		cartcounttotal+=1;
 	});
 	$(".totalGoosUsd").text("$"+priceComma(cartpricetotal.toFixed(2)));
 	$(".totalGoosKrw").text(priceComma((cartpricetotal*1267).toFixed(0))+"원");
@@ -511,7 +511,7 @@ function setOrderPrice(){
 	$(".payTotalSettUsd").text("$"+priceComma((cartpricetotal-cartdistotal).toFixed(2)));
 	$(".payTotalSettKrw").text(priceComma(((cartpricetotal*1267)-(cartdistotal*1267)).toFixed(0))+"원");
 	$(".totalRsvg").text("${mhdiscount}"+"%");
-	$(".totalRsvgDcKrw").text(priceComma((((cartpricetotal*1267)-(cartdistotal*1267))*"${mhdiscount}").toFixed(0))+"원");
+	$(".totalRsvgDcKrw").text(priceComma((((cartpricetotal*1267)-(cartdistotal*1267))*("${mhdiscount}"/100)).toFixed(0))+"원");
 }
 
 function priceComma(price) {
@@ -521,10 +521,12 @@ function priceComma(price) {
 function OrderSingle(el){
 	let passportflag=false;
 	let cartstock=parseInt($(el).closest(".item_cont.type_de").find("#item_info").find("input[name='cartstock']").val());
+	let cartcounttotal=parseInt($(".sumGoosQty").text());
 	let pcode=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='pcode']").val();
 	let mhdiscount=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='mhdiscount']").val();
 	$('#Orderexec').append('<input name="orderitem[0].pcode" type="hidden" value="'+pcode+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oamount" type="hidden" value="'+cartstock+'">');
+	$('#Orderexec').append('<input name="cartcounttotal" type="hidden" value="'+cartcounttotal+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oid" type="hidden" value="">');
 	$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="'+mhdiscount+'">');
 	console.log("${mid}");
@@ -552,6 +554,7 @@ var orderproductlist=[];
 
 	function AllItemOrder(){
 		let itemindex = 0;
+		let cartcounttotal=parseInt($(".sumGoosQty").text());
 		$("#item_info").each(function(index, item){
 				var cartstock=parseInt($(this).find("input[name='cartstock']").val());
 				var pcode=$(this).find("input[name='pcode']").val();
@@ -559,6 +562,7 @@ var orderproductlist=[];
 				$('#Orderexec').append('<input name="orderitem['+itemindex+'].oamount" type="hidden" value="'+cartstock+'">');
 				itemindex ++;
 		});
+		$('#Orderexec').append('<input name="cartcounttotal" type="hidden" value="'+cartcounttotal+'">');
 		$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="${mhdiscount}">');
 		/* $('#itemsOrderForm').append('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
 		$('#itemsOrderForm').append('<input type="hidden" name="tocart" value="true" />'); */

@@ -29,5 +29,13 @@
 	<update id="updateTotalandMhpoint">
 	update member set mhpoint=#{mhpoint},mtotal=#{mtotal} where mid=#{mid}
 	</update>
+	
+	<select id="getOrderitemlist" resultType="com.hyundai.dutyfree.vo.OrderItemVO">
+	select o.oid, o.pcode from member m join
+	(select ol.oid, ol.mid, oi.pcode from orderitem oi join orderlist ol on oi.oid=ol.oid) o
+	on m.mid = o.mid
+	where m.mid =#{mid}
+	</select>
+	
 </mapper>
   
