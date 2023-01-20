@@ -1,24 +1,18 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +22,9 @@ import com.hyundai.dutyfree.auth.SNSLogin;
 import com.hyundai.dutyfree.auth.SnsValue;
 import com.hyundai.dutyfree.security.CustomUserDetailsService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -54,6 +50,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberservice;
+	
+	@Autowired
+	private OrderService orderservice;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -63,9 +62,6 @@ public class MemberController {
 
 	@Autowired
 	private SnsValue naverSns;
-	
-	@Autowired
-	private CustomUserDetailsService userDetailsService;
 
 	// 약관 동의 페이지 진입 (회원가입1)
 	@RequestMapping(value = "termsAgree", method = RequestMethod.GET)
@@ -213,6 +209,7 @@ public class MemberController {
 		log.info("마이페이지 접속 mid: " + mid);
 		MemberVO mvo = memberservice.read(mid);
 		model.addAttribute("member", mvo);
+		List<OrderItemVO> orderitemlist=orderservice.getOrderitemlist(prin.getName());
 	}
 	
 	//-----------------------아직 안쓰는 로직들 (회원수정,삭제)------------------------

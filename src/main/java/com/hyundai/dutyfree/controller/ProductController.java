@@ -19,7 +19,6 @@ import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
-import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
@@ -133,14 +132,6 @@ public class ProductController {
 	public String productdetail(@RequestParam("pcode") String pcode, Model model,Principal prin) throws Exception {
 		List<String> imglist = new ArrayList<String>();
 		ProductVO product = service.productdetail(pcode);
-		if(prin != null) {
-			PassportVO passport=orderservice.PassportConsist(prin.getName());
-			if(passport==null) {
-				model.addAttribute("userpassport", null);
-			}else {
-				model.addAttribute("userpassport", passport);
-			}
-		}
 		
 		System.out.println(product.toString());
 		System.out.println(product.toString());
@@ -162,7 +153,14 @@ public class ProductController {
 		for (int i = 0; i < imglist.size(); i++) {
 			System.out.println(imglist.get(i));
 		}
-		
+		if(prin != null) {
+			PassportVO passport=orderservice.PassportConsist(prin.getName());
+	         if(passport==null) {
+	            model.addAttribute("userpassport", null);
+	         }else {
+	            model.addAttribute("userpassport", passport);
+	         }
+	      }
 		
 		model.addAttribute("product", product);
 		model.addAttribute("imglist", imglist);

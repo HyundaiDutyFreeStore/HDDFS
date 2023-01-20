@@ -43,7 +43,7 @@ public interface MemberMapper {
     public void deleteMember(String mid);
     
     // 회원정보수정
-    public void updateMember(MemberVO member);
+    public void updateMhpoint(MemberVO member);
 
     
 }

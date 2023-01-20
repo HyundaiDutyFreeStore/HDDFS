@@ -1,11 +1,13 @@
 package com.hyundai.dutyfree.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.OrderMapper;
+import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
@@ -39,22 +41,39 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void Insertorderitemlist(String oid, String mid, Date odate, int ohpoint, String ostatus, String oarrdate,
+	public void Insertorderlist(String oid, String mid, int ohpoint, String ostatus, String oarrdate,
 			String oplnum, String oelnum, String oplace) {
 		
+		System.out.println("oarrdate:"+oarrdate);
 		OrderListVO olv=new OrderListVO();
 		olv.setOid(oid);
 		olv.setMid(mid);
-		olv.setOdate(odate);
 		olv.setOhpoint(ohpoint);
 		olv.setOstatus(ostatus);
 		olv.setOarrdate(oarrdate);
 		olv.setOplnum(oplnum);
 		olv.setOelnum(oelnum);
 		olv.setOplace(oplace);
-		mapper.Insertorderitemlist(olv);
+		mapper.Insertorderlist(olv);
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void updateTotalandMhpoint(String mid, int mhpoint,int mtotal) {
+		MemberVO member=new MemberVO();
+		member.setMid(mid);
+		member.setMhpoint(mhpoint);
+		member.setMtotal(mtotal);
+		mapper.updateTotalandMhpoint(member);
+		
+		
+	}
+
+	@Override
+	public List<OrderItemVO> getOrderitemlist(String mid) {
+		
+		return mapper.getOrderitemlist(mid);
 	}
 	
 	

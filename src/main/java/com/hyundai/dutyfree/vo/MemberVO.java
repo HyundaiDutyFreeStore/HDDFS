@@ -29,10 +29,9 @@ public class MemberVO {
 	private String mname; // 회원 이름
 	private int mhpoint; // mpoint
 	private Date mregdate; // 회원가입 날짜
-	private String mgrade; // 회원 등급
 	private String mgender; // 회원 성별
 	private String mrole; //시큐리티를 위한 권한
-	private int ototal; //주문총금액
+	private int mtotal; //주문총금액
 
 	/*
 	 * @Override public String toString() { return "MemberVO [mid=" + mid +
