@@ -12,5 +12,7 @@ public interface OrderService {
 	
 	public void Inserorderitem(String pcode, int oamount,String oid);
 	
-	public void Insertorderitemlist(String oid,String mid, Date odate,int ohpoint,String ostatus,String oarrdate,String oplnum,String oelnum, String oplace );
+	public void Insertorderlist(String oid,String mid,int ohpoint,String ostatus,String oarrdate,String oplnum,String oelnum, String oplace );
+	
+	public void updateTotalandMhpoint(String mid,int mhpoint,int mtotal);
 }

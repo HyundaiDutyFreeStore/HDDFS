@@ -1,5 +1,6 @@
 package com.hyundai.dutyfree.mapper;
 
+import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
@@ -12,5 +13,7 @@ public interface OrderMapper {
 	
 	public void Insertorderitem(OrderItemVO orderitem);
 	
-	public void Insertorderitemlist(OrderListVO orderitemlist);
+	public void Insertorderlist(OrderListVO orderitemlist);
+	
+	public void updateTotalandMhpoint(MemberVO member);
 }

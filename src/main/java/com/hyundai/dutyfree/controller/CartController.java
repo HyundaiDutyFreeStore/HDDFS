@@ -1,9 +1,7 @@
 package com.hyundai.dutyfree.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyundai.dutyfree.service.CartService;
+import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.CartVOforJSP;
+import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
@@ -51,10 +51,13 @@ public class CartController {
 	
 	@Autowired
 	private OrderService orderservice;
+	
+	@Autowired
+	private MemberService memberservice;
 
 	// 장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
-	public void cartlist(String mid,String align, Model model) {
+	public void cartlist(String mid,String align, Model model,Principal prin) throws Exception {
 		System.out.println(mid);
 		System.out.println(align);
 		List<CartVO> cartlist = cartservice.getCartList(mid,align);
@@ -92,7 +95,16 @@ public class CartController {
 		}else {
 			model.addAttribute("userpassport", null);
 		}
-		
+		MemberVO member=memberservice.read(prin.getName());
+		double mhdiscount;
+		if(member.getMtotal()>20000) {
+			mhdiscount=0.05;
+		}else if(member.getMtotal()>10000) {
+			mhdiscount=0.03;
+		}else {
+			mhdiscount=0.01;
+		}
+		model.addAttribute("mhdiscount", mhdiscount);
 		model.addAttribute("cartlist", cartjsplist);
 		model.addAttribute("align", align);
 	}
@@ -158,7 +170,7 @@ public class CartController {
 	@ResponseBody
 	public String deleteCart(HttpServletRequest request,CartVO cart) {
 		cart.setMid(request.getParameter("mid"));
-		cart.setCartno(Integer.parseInt(request.getParameter("cartno")));
+		cart.setPcode(request.getParameter("pcode"));
 		cartservice.deleteCart(cart);
 		return "success";
 	}

@@ -90,6 +90,7 @@
 						action="/order/enrollPassport">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="hidden" id="mId" name="mId" value="${mid}" >
+						<input type="hidden" id="mhdiscount" name="mhdiscount" value="${mhdiscount }"/>
 						<input type="hidden" id="totalGoosUsdinput" name="totalGoosUsdinput"value=""/>
 						<input type="hidden" id="totalDcUsdinput" name="totalDcUsdinput" value=""/>
 						<input type="hidden" id="cartstockinput" name="cartstockinput" value=""/>
@@ -285,6 +286,8 @@
 										$('#totalGoosUsdinput').attr('value',"${cartprice}");
 										$('#totalDcUsdinput').attr('value',"${cartdis}");
 										$('#cartstockinput').attr('value',"${cartstock}");
+										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+										$('.totalRsvg').text("${mhdiscount}"+"%");
 										
 										console.log("${orderitemlist}");
 										console.log("<%= request.getAttribute("orderitemlist") %>");

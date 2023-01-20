@@ -296,6 +296,29 @@
 
 <!-- S: 2022-05-25 이지웰 메인팝업 추가 -->
 <style>
+#header .mainsearchinput2 {
+    width: 410px
+}
+
+/* 2021-06-11 : 사이즈 추가 */
+#header .mainsearchinput2 input {
+    background: #f2f4f7;
+    width: 100%;
+    height: 52px;
+    line-height: 52px;
+    border: 0;
+    box-sizing: border-box;
+    padding: 0 95px 0 20px;
+    border-radius: 50px;
+    transition: all .3s;
+    font-size: 16px;
+}
+
+/* 2021-06-11 : 폰트 사이즈 추가 */
+#header .mainsearchinput2 input[type="search"]::placeholder {
+    font-size: 17px;
+    color: #abb2be !important;
+}
 .main_popup2 {
 	display: none
 }
@@ -806,7 +829,7 @@
 					<fieldset class="searchfield">
 						<legend>통합검색</legend>
 
-						<div class="mainsearchinput">
+						<div class="mainsearchinput2">
 							<input type="search" class="text_search" name="keyword"
 								id="basicSearchTerm" maxlength="" value=""
 								placeholder="검색어를 입력해주세요" />

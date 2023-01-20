@@ -18,8 +18,16 @@
 	insert into orderitem values(#{pcode},#{oamount},#{oid})
 	</insert>
 	
-	<insert id="Insertorderitemlist">
-	insert into orderlist values(#{oid},#{mid},#{odate},#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
+	<insert id="Insertorderlist">
+	insert into orderlist values(#{oid},#{mid},to_date(sysdate,'YYYY-MM-DD HH24:MI'),#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
 	</insert>
+	
+	<select id="getorderlist">
+	select * from orderlist where oid=#{oid};
+	</select>
+	
+	<update id="updateTotalandMhpoint">
+	update member set mhpoint=#{mhpoint},mtotal=#{mtotal} where mid=#{mid}
+	</update>
 </mapper>
   

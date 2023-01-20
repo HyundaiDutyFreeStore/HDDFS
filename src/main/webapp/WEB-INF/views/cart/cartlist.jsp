@@ -62,9 +62,9 @@
         		<div class="item_area">	
                     <div class="item_chk"> 
                         <div class="btn_area">
-                            <button class="btn_onoff btn_pin" onclick="mergeCnrRetn('439727524','10073250016301',this)">핀</button>
+                            <!-- <button class="btn_onoff btn_pin" onclick="mergeCnrRetn('439727524','10073250016301',this)">핀</button>
                                     <input type="hidden" id="btn_pin0" value="N">
-                                        <button class="btn_onoff btn_like" onclick="registCnrGoos('10073250016301', '0' ,this);">좋아요</button>
+                                        <button class="btn_onoff btn_like" onclick="registCnrGoos('10073250016301', '0' ,this);">좋아요</button> -->
                                     <button class="btn_onoff btn_del" onclick="javascript:deleteCart(this);">삭제</button>
                                 </div>
                     </div>
@@ -77,6 +77,7 @@
         				<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
         				<input type="hidden" name="pstock" value="${cart.pstock }"/>
         				<input type="hidden" name="cartno" value="${cart.cartno }"/>
+        				<input type="hidden" name="mhdiscount" value="${mhdiscount }" />
                         <c:choose>
                         <c:when test="${mid eq null }">
                                 <a href="
@@ -132,20 +133,20 @@
             </c:when>
             <c:otherwise>
             <div class="item_area">
-            			<input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
-        				<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
-        				<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
-        				<input type="hidden" name="cartdisprice" value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}">
-        				<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
-        				<input type="hidden" name="pstock" value="${cart.pstock }"/>
-        				<input type="hidden" name="cartno" value="${cart.cartno }"/>
                     <div class="item_chk">
                         <div class="btn_area">
                             <button class="btn_del" onclick="javascript:deleteCart(this);">삭제</button>
                                 </div>
                     </div>
                     <div class="item_cont type_de">
-                        <div class="item_info_wrap soldout" id="item_soldout">
+                        <div class="item_info_wrap soldout">
+                        <input type="hidden" id="pcode" name="pcode" value="${cart.pcode }"/>
+        				<input type="hidden" id="cartstock"name="cartstock" value="${cart.cartstock }">
+        				<input type="hidden" name="cartprice" value="${cart.pprice*cart.cartstock}">
+        				<input type="hidden" name="cartdisprice" value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}">
+        				<input type="hidden" name="cartdis" value="${cart.pprice*(cart.pdiscount/100)*cart.cartstock}">
+        				<input type="hidden" name="pstock" value="${cart.pstock }"/>
+        				<input type="hidden" name="cartno" value="${cart.cartno }"/>
                         <c:choose>
                         <c:when test="${mid  eq null}">
 							 <a href="/product/Productdetail?pcode=${ cart.pcode}"> 
@@ -192,6 +193,7 @@
        </c:choose>              
  <form id="Orderexec" method="post">
  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+ <input type="hidden" name="totalRsvgDcKrw" value=""/>
  </form>   
 
 <div class="attention_area">
@@ -359,11 +361,13 @@ $(document).ready(function(){
 $(".loadProgBar").css("display","none");
 
 
-$(".item_area").each(function(index,item){
+$("#item_info").each(function(index,item){
 	let pstock = parseInt($(this).find("input[name='pstock']").val());
-	let cartstock=parseInt($(this).find("input[name='goosQty']").val());
 	console.log(pstock);
-	if(pstock-cartstock<0){
+	let cartstock=parseInt($(this).closest('.item_area'));
+	console.log(cartstock)
+	console.log(pstock);
+	if(pstock-cartstock<=0){
 		console.log("작다.")
 		$("#plusGoosQty0").attr("disabled",true);
 	}else{
@@ -372,7 +376,7 @@ $(".item_area").each(function(index,item){
 	
 	if(cartstock==1){
 		console.log("1이다");
-		$(this).find("input[id='minGoosQty0']").attr("disabled",true);
+		$(this).closest('.item_area').find("input[id='minGoosQty0']").attr("disabled",true);
 	}else{
 		$("#minGoosQty0").removeAttr("disabled"); 
 	}
@@ -453,9 +457,15 @@ function updateCart(cartstock,pcode){
 //장바구니 상품 삭제
 function deleteCart(el){
 	console.log("삭제");
-	let cartno=parseInt($(el).closest(".item_area").find("input[name='cartno']").val());
+	let pcode;
+	if($(el).closest('.item_area').find(".item_cont.type_de").find('#item_info').is('.soldout')==true){
+		pcode=parseInt($(el).closest('.item_area').find(".item_cont.type_de").find('.item_info_wrap.soldout').find("input[name='pcode']").val());
+	}else{
+		pcode=parseInt($(el).closest('.item_area').find(".item_cont.type_de").find('.item_info_wrap').find("input[name='pcode']").val());
+	}
+	console.log(pcode);
 	var Data={
-			cartno :cartno,
+			pcode :pcode,
 			mid :"${mid}"
 	}
 	$.ajax({
@@ -483,7 +493,7 @@ function setOrderPrice(){
 		const cartprice=parseFloat($(this).find("input[name='cartprice']").val());
 		const cartdisprice=parseFloat($(this).find("input[name='cartdisprice']").val());
 		const cartdis=parseFloat($(this).find("input[name='cartdis']").val());
-		const cartcount=parseInt($(this).closest('.item_cont.type_de').find('.item_buy_wrap').find("input[name='goosQty']").val());
+		const cartcount=parseInt($(this).closest('.item_cont.type_de').find('.item_buy_wrap').find('.item_buy').find('.num_amount.cart_amount').find("input[name='goosQty']").val());
 		console.log(cartprice);
 		console.log(cartdisprice);
 		console.log(cartdis);
@@ -500,6 +510,8 @@ function setOrderPrice(){
 	$(".sumGoosQty").text(cartcounttotal);
 	$(".payTotalSettUsd").text("$"+priceComma((cartpricetotal-cartdistotal).toFixed(2)));
 	$(".payTotalSettKrw").text(priceComma(((cartpricetotal*1267)-(cartdistotal*1267)).toFixed(0))+"원");
+	$(".totalRsvg").text("${mhdiscount}"+"%");
+	$(".totalRsvgDcKrw").text(priceComma((((cartpricetotal*1267)-(cartdistotal*1267))*"${mhdiscount}").toFixed(0))+"원");
 }
 
 function priceComma(price) {
@@ -510,9 +522,11 @@ function OrderSingle(el){
 	let passportflag=false;
 	let cartstock=parseInt($(el).closest(".item_cont.type_de").find("#item_info").find("input[name='cartstock']").val());
 	let pcode=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='pcode']").val();
+	let mhdiscount=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='mhdiscount']").val();
 	$('#Orderexec').append('<input name="orderitem[0].pcode" type="hidden" value="'+pcode+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oamount" type="hidden" value="'+cartstock+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oid" type="hidden" value="">');
+	$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="'+mhdiscount+'">');
 	console.log("${mid}");
 	console.log("${userpassport}");
 	if("${userpassport}"== ""){
@@ -545,10 +559,10 @@ var orderproductlist=[];
 				$('#Orderexec').append('<input name="orderitem['+itemindex+'].oamount" type="hidden" value="'+cartstock+'">');
 				itemindex ++;
 		});
-		
+		$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="${mhdiscount}">');
 		/* $('#itemsOrderForm').append('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
 		$('#itemsOrderForm').append('<input type="hidden" name="tocart" value="true" />'); */
-		if("${userpassport}"==null){
+		if("${userpassport}"==""){
 			passportflag=false;
 		}else{
 			passportflag=true;

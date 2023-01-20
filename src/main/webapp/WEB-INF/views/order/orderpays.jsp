@@ -1759,6 +1759,8 @@
 		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
 		$('.totalSettUsd').text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
 		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+		$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+		$('.totalRsvg').text("${mhdiscount}"+"%");
 		
 		
 		
@@ -1781,12 +1783,14 @@
 		}
 		%>
 		
-		var wontotalSettKrw =(parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267).toFixed(0);
+		var wontotalSettKrw =((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0);
+		var mhpoint =(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0);
 		$("#orderexec").append('<input type="hidden" name="wontotalSettKrw" value="'+wontotalSettKrw +'">');
 		$("#orderexec").append('<input type="hidden" name="olvoarrdate" value="${orderlist.oarrdate}">');
 		$("#orderexec").append('<input type="hidden" name="olvoplnum"  value="${orderlist.oplnum}">');
 		$("#orderexec").append('<input type="hidden" name="olvoelnum"  value="${orderlist.oelnum}">');
 		$("#orderexec").append('<input type="hidden" name="olvoplace"  value="${orderlist.oplace}">');
+		$("#orderexec").append('<input type="hidden" name="mhpoint"  value="'+mhpoint +'">');
 		
 	});
 
@@ -1799,6 +1803,7 @@
 	}
 	
 	function orderexec(){
+		
 		$('#orderexec').submit();
 		
 	}

@@ -88,7 +88,7 @@
 				<dl>
 					<dt>구매금액</dt>
 					<dd id="setTotBuyAmtNtnl">
-						<strong>$ ${member.ototal}</strong>
+						<strong>$ ${member.mtotal}</strong>
 					</dd>
 				</dl>
 				<dl>

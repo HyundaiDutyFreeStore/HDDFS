@@ -60,6 +60,7 @@
 				<form name="form" id="sendDepartInfo" method="post">
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
+					<input type="hidden" id="mhdiscount" name="mhdiscount" value="${mhdiscount }"/>
 					<div class="passport_wrap">
 						<div class="form_wrap">
 							<div class="form_tit">
@@ -471,6 +472,8 @@ $(document)
 			$('#totalGoosUsdinput').attr('value',"${cartprice}");
 			$('#totalDcUsdinput').attr('value',"${cardis}");
 			$('#cartstockinput').attr('value',"${cartstock}");
+			$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+			$('.totalRsvg').text("${mhdiscount}"+"%");
 		});
 
 function priceComma(price) {
