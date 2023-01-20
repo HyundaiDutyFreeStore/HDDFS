@@ -19,7 +19,6 @@ import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
-import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
