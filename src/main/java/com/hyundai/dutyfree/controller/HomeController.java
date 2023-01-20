@@ -45,7 +45,6 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
 		String formattedDate = dateFormat.format(date);
-		System.out.println("메인페이지 진입");
 		model.addAttribute("serverTime", formattedDate);
 		// 환율 API 적용 -> 공공데이터포털 openAPI
 		String result = "";
@@ -72,7 +71,8 @@ public class HomeController {
 			double EUR = Math.round(KRW / Float.valueOf(eurstr.replace(",", "")) * 100) / 100.0;
 			double CNY = Math.round(KRW / arr.get(6).getAsJsonObject().get("deal_bas_r").getAsFloat() * 100) / 100.0;
 			double JPY = Math.round(KRW / arr.get(12).getAsJsonObject().get("deal_bas_r").getAsFloat() * 10000) / 100.0;
-			//System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " + KRW + ", EUR : " + EUR);
+			// System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " + KRW + ",
+			// EUR : " + EUR);
 			String[] country = { "KRW", "EUR", "CNY", "JPY" };
 			double[] money = { KRW, EUR, CNY, JPY };
 
