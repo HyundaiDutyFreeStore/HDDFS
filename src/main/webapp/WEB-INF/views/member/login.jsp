@@ -92,10 +92,15 @@
 					<button type="button" class="btnlog" id="btnLgin1">로그인</button>
 				</div>
 			</form>
-
+			<p>
+			
 		</div>
 
 		<div class="chdiv">
+			<br><br>
+			<p>
+			<a href = "${naver_url}"><img src="/resources/images/naverlogin.png" alt="Naver" width="200px"/></a>
+			</p>
 			<p>
 				<a href="/member/termsAgree" class="join">회원가입</a>
 			</p>

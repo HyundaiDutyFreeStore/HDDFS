@@ -882,7 +882,7 @@ function updateCart(){
 	 if (loginChk() == false) {
 			alert("로그인이 필요한 서비스입니다. 로그인해주세요");
 			console.log("로그인하세요");
-			location.href = "/join/login";
+			location.href = "/member/login";
 			return false; 
 		} else {
 			var productconsist=productamount();
