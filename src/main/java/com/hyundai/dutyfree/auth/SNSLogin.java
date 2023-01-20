@@ -1,12 +1,8 @@
 package com.hyundai.dutyfree.auth;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
@@ -39,7 +35,6 @@ public class SNSLogin {
 	}
 
 	private MemberVO parseJson(String body) throws Exception {
-		System.out.println("=========================\n"+body+"\n=================");
 		MemberVO member = new MemberVO();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.readTree(body);
