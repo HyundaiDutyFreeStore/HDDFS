@@ -17,7 +17,6 @@ import com.hyundai.dutyfree.vo.PedestrianVO;
  *        </pre>
  */
 public interface PedestrianService {
-	public List<String[]> readCSV(String filename);
 
-	public List<PedestrianVO> readCsvToBean(String filename);
+	public List<PedestrianVO> readCsv(String filename);
 }
