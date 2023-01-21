@@ -25,8 +25,7 @@ public class PedestrianServiceImpl implements PedestrianService {
 			// 구분자 : csv 구분자가 ',' 이므로 ,로 지정. 챕들 다른 표식일 경우 다른 것으로 지정도 가능
 			// 예외구문 : "는 예외 구분
 			// 삭제할 열 : 윗줄은 보통 설명문구일 경우가 많으므로 삭제하고 출력하고 싶은 경우 줄삭제가 가능하다
-			CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filename), "UTF-8"), ',', '"',
-					1);
+			CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filename), "UTF-8"), ',', '"',0);
 			data = reader.readAll();
 
 			reader.close();

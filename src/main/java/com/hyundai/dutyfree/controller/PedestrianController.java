@@ -23,11 +23,12 @@ import lombok.extern.log4j.Log4j;
  */
 @AllArgsConstructor
 @Controller
+@RequestMapping("/common")
 @Log4j
 public class PedestrianController {
 	@Autowired
 	PedestrianService pedestrianservice = null;
-	private static final Logger logger = LoggerFactory.getLogger(PedestrianController.class);
+	private static final Logger log = LoggerFactory.getLogger(PedestrianController.class);
 
 	@RequestMapping(value = "/confusion", method = RequestMethod.GET)
 	public String pedestraincount(HttpServletRequest request) {
@@ -38,14 +39,16 @@ public class PedestrianController {
 		// 파일 경로 던져주면, 데이터가 VO에 담긴 vo들이 저장된 리스트를 리턴받겠다.
 		List<PedestrianVO> data = pedestrianservice.readCsvToBean(path);
 		Iterator<PedestrianVO> it = data.iterator();
+		int inside = 0;
+		int outside = 0;
 		while (it.hasNext()) {
 			PedestrianVO vo = (PedestrianVO) it.next();
-			System.out.println("input : " + vo.getInside());
-			System.out.println("output : " + vo.getOutside());
-			System.out.println("total : " + (vo.getInside() - vo.getOutside()));
+			inside = vo.getInside();
+			outside = vo.getOutside();
 		}
+		log.info("inside :" + inside + ", outside : " + outside);
 
-		return "/confusion";
+		return "/common/confusion";
 	}
 
 }
