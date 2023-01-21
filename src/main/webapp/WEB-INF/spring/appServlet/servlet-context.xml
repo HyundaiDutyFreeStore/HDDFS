@@ -41,7 +41,8 @@
 		<beans:bean id="loginIntreceptor" class="com.hyundai.dutyfree.interceptor.LoginInterceptor"></beans:bean> 
 		</interceptor> </interceptors> -->
 
-	<!-- oauth2 login -->
+	<!-- 소셜로그인 oauth2 설정 -->
+	<!-- 네이버 로그인 -->
 	<beans:bean id="naverClientID" class="java.lang.String">
 		<beans:constructor-arg value="9GBc2PKq3ivb5rxF5Pqh" />
 	</beans:bean>
@@ -59,6 +60,26 @@
 		<beans:constructor-arg ref="naverClientID" />
 		<beans:constructor-arg ref="naverClientSecret" />
 		<beans:constructor-arg ref="naverRedirectUrl" />
+	</beans:bean>
+	
+	<!-- 카카오 로그인 -->
+	<beans:bean id="kakaoClientID" class="java.lang.String">
+		<beans:constructor-arg value="4166b68e47aa316263372a0b8acd6022" />
+	</beans:bean>
+	<beans:bean id="kakaoClientSecret" class="java.lang.String">
+		<beans:constructor-arg
+			value="JVI13NTSpRKxytWI6JZb3IdW6Lx8GAiz" />
+	</beans:bean>
+	<beans:bean id="kakaoRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg
+			value="http://localhost:8080/auth/kakao/callback" />
+	</beans:bean>
+	
+	<beans:bean id="kakaoSns" class="com.hyundai.dutyfree.auth.SnsValue">
+		<beans:constructor-arg value="kakao" />
+		<beans:constructor-arg ref="kakaoClientID" />
+		<beans:constructor-arg ref="kakaoClientSecret" />
+		<beans:constructor-arg ref="kakaoRedirectUrl" />
 	</beans:bean>
 
 
