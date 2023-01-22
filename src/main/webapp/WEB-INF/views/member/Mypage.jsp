@@ -21,23 +21,20 @@
 	</article>
 	<article class="top_fullbg">
 		<h2 class="page_tit">주문 내역</h2>
-		<div class="myhd_firinfo">
+		<div class="myhd_firinfo" style="height: 150px;">
 			<div class="myinfo">
 				<p class="name">
 					<strong> ${member.mname}</strong> <em>님</em>
 				</p>
 				<a nohref class="passregist"
 					onclick="goUrl('/mm/myInfo/inptMbshPwd.do?type=pspt');">여권정보 등록</a>
-				<div class="mylv">
-					<span class="lv_on_up001"></span> <span class="lv_off_up002"></span>
-				</div>
 			</div>
 			<div class="mypresent">
 				<dl>
 					<a href="https://www.hddfs.com/shop/mm/myBnf/listSvmt.do">
 						<dt>적립금</dt>
 						<dd id="svmtAmt">
-							<strong>${member.mhpoint}</strong>원
+							<strong><fmt:formatNumber value="${member.mhpoint}" pattern="#,##0.##" /></strong>원
 						</dd>
 					</a>
 				</dl>
@@ -45,36 +42,13 @@
 					<a href="https://www.hddfs.com/shop/mm/myBnf/listCup.do">
 						<dt>쿠폰</dt>
 						<dd>
-							<strong>3</strong>장
-						</dd>
-					</a>
-				</dl>
-				<dl>
-					<a href="https://www.hddfs.com/shop/mm/myBnf/listGfca.do">
-						<dt>예치금</dt>
-						<dd id="mainCdpst">
-							<strong>0</strong>원
-						</dd>
-					</a>
-				</dl>
-				<dl>
-					<a
-						href="https://www.hddfs.com/shop/mm/myBnf/listGfca.do?gfcaClsType=GFCA">
-						<dt>상품권 전환금</dt>
-						<dd>
-							<strong>0</strong>원
+							<strong>0</strong>장
 						</dd>
 					</a>
 				</dl>
 				<dl>
 					<dd id="hpointAmt">
 						<strong>0</strong>P
-					</dd>
-				</dl>
-				<dl>
-					<dt>H.Point Plus 포인트</dt>
-					<dd>
-						<a nohref id="btnHeaderUmbSwitcJoin2">통합회원 전환</a>
 					</dd>
 				</dl>
 				<dl>
@@ -90,14 +64,6 @@
 					<dd id="setTotBuyAmtNtnl">
 						<strong>$ ${member.mtotal}</strong>
 					</dd>
-				</dl>
-				<dl>
-					<a href="https://www.hddfs.com/shop/om/consmCont/mbshLvlInfo.do">
-						<dt>승급잔여금액</dt>
-						<dd id="setRestPrice">
-							<strong>$0</strong>
-						</dd>
-					</a>
 				</dl>
 				<dl>&nbsp;
 				</dl>
@@ -360,19 +326,16 @@
 		<section class="myhd_content">
 			<div class="tab-style">
 				<ul class="tab_1depth">
-					<li class="ui-tabs-active" id="onlnOrder"
-						onclick="fn_changeOnlnOfln('onln');"><a>온라인 주문내역</a></li>
-					<li id="oflnOrder" onclick="fn_changeOnlnOfln('ofln');"><a>오프라인
-							주문내역</a></li>
+					<li style="color:#5c6677; width: 1070px;" onclick="preventDefault();" class="ui-tabs-active">온라인 주문내역</li>
 				</ul>
 			</div>
 			<div class="tab-action">
 				<ul class="tab_2depth tab_center">
-					<li class="ui-tab ui-tabs-active" id="tabCtgDpatType" value="dpat">
-						<a onclick="fn_search('dpat');" href="#date_departure">출국일 기준</a>
+					<li class="ui-tab ui-tabs-active" id="tabCtgDpatType" >
+						<a href="javascript:void(0);" onclick="fn_search('oarrdate');">출국일 기준</a>
 					</li>
-					<li class="ui-tab" id="tabCtgOrderType" value="order"><a
-						onclick="fn_search('order');" href="#date_order">주문일 기준</a></li>
+					<li class="ui-tab" id="tabCtgOrderType">
+					<a href="javascript:void(0);" onclick="fn_search('odate');">주문일 기준</a></li>
 				</ul>
 
 				<form id="mainForm" name="mainForm" method="get">
@@ -594,40 +557,114 @@
 						}
 					</script>
 					<input type="hidden" name="monVal" id="monVal" value="" />
-					<div class="period">
-						<div class="period_cover">
-							<ul class="textbox monthbox">
-								<li><a nohref onclick="fnDateSetting(this,'1');"
-									id="dtSrchFirstTab">1개월</a></li>
-								<li><a nohref onclick="fnDateSetting(this,'3');">3개월</a></li>
-								<li><a nohref onclick="fnDateSetting(this,'6');">6개월</a></li>
-								<li><a nohref onclick="fnDateSetting(this,12);">12개월</a></li>
-							</ul>
-							<div class="datebox">
-								<span class="datepicker_box"> <input type="text"
-									id="stDt" name="stDt" onkeyup="isNumber(this);"
-									class="datepicker" value="" maxlength="10"
-									placeholder="0000-00-00">
-								</span> <span class="from">~</span> <span class="datepicker_box">
-									<input type="text" id="endDt" name="endDt"
-									onkeyup="isNumber(this);" class="datepicker" value=""
-									maxlength="10" placeholder="0000-00-00">
-								</span>
-							</div>
-							<button type="button" class="btnde_type1 mid dcheck_btn"
-								onclick="fnValidation();">조회</button>
-						</div>
-					</div>
-
-
-
-
+					<c:if test="${align eq 'oarrdate' }">
 					<div id="my_order">
 						<div class="cart_list" id="onln_list">
 							<div id="dpatDiv">
 								<div id="date_departure">
 									<div class="sorting_wrap myhd"">
-										<span class="txt_total">총 <strong>0</strong>개
+										<span class="txt_total">총 <strong>${orderlistsize }</strong>개
+										</span>
+									</div>
+									<div class="list_table01">
+										<table>
+											<colgroup>
+												<col width="108px">
+												<col width="100%">
+												<col width="140px">
+												<col width="298px">
+												<col width="55px">
+												<col width="156px">
+												<col width="106px">
+											</colgroup>
+											<tbody id="onlnDpatList_cart">
+												<tr>
+													<th>출국일자</th>
+													<th>주문일자/<br>주문번호
+													</th>
+													<th>교환권</th>
+													<th>상품명</th>
+													<th>수량</th>
+													<th>총결제금액</th>
+													<th>주문상태</th>
+												</tr>
+												<c:forEach var="orderlist" items="${orderlists }">
+												<tr>
+													<td rowspan="${orderlist.orderitemlist.size()}">
+													<fmt:parseDate value="${orderlist.oarrdate }" var="oarrdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
+													<fmt:formatDate value="${oarrdate }" pattern="yyyy-MM-dd"/>
+													</td>
+													<td rowspan="${orderlist.orderitemlist.size()}">
+													${orderlist.odate }
+													<p>${orderlist.oid }</p>
+													</td>
+													<td rowspan="${orderlist.orderitemlist.size()}"></td>
+													<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
+													<c:if test="${status.first }">
+													<td rowspan="1">
+													<div class="product_info">
+			                                            <span class="on_img">
+			                                            	<img src="/product/Productdetail?pcode=${orderitem.pcode}" alt="0.2 테라피 에어 마스크 달팽이" onerror="this.onerror=null; this.src='${orderitem.product.img1 }';">
+			                                            </span>
+			                                            <dl>
+			                                                <dt>${orderitem.product.pbrand }</dt>
+			                                                <dd>${orderitem.product.pname }</dd>
+			                                                <dd>
+			                                                	</dd>
+			                                            </dl>
+			                                        </div>
+			                                         </td>
+			                                         <td>
+			                                         ${orderitem.oamount }
+			                                         </td>
+			                                        </c:if>
+			                                        </c:forEach>
+			                                        <td rowspan="${orderlist.orderitemlist.size()}">
+			                                        <p class="dollar">$ <fmt:formatNumber value="${orderlist.ordertotalprice-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
+			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*1267}" pattern="#,##0" />원</span></p>
+			                                        </td>
+			                                        <td rowspan="${orderlist.orderitemlist.size()}">
+			                                    	${orderlist.ostatus }</td>
+												</tr>
+												<c:if test="${orderlist.orderitemlist.size()> 1}">
+												<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
+												<c:if test="${!status.first }">
+												<td rowspan="1">
+													<div class="product_info">
+			                                            <span class="on_img">
+			                                            	<img src="/product/Productdetail?pcode=${orderitem.pcode}" alt="0.2 테라피 에어 마스크 달팽이" onerror="this.onerror=null; this.src='${orderitem.product.img1 }';">
+			                                            </span>
+			                                            <dl>
+			                                                <dt>${orderitem.product.pbrand }</dt>
+			                                                <dd>${orderitem.product.pname }</dd>
+			                                                <dd>
+			                                                	</dd>
+			                                            </dl>
+			                                        </div>
+			                                         </td>
+			                                         <td>
+			                                         ${orderitem.oamount }
+			                                         </td>
+												</c:if>
+												</c:forEach>
+												</c:if>
+												</c:forEach>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</c:if>
+					<c:if test="${align eq 'odate' }">
+					<div id="my_order">
+						<div class="cart_list" id="onln_list">
+							<div id="dpatDiv">
+								<div id="date_departure">
+									<div class="sorting_wrap myhd"">
+										<span class="txt_total">총 <strong>${orderlistsize }</strong>개
 										</span>
 										<div class="sort_r">
 											<select name="billStat" id="billStat1">
@@ -658,61 +695,7 @@
 											</colgroup>
 											<tbody id="onlnDpatList_cart">
 												<tr>
-													<th>출국일자</th>
-													<th>주문일자/<br>주문번호
-													</th>
-													<th>교환권</th>
-													<th>상품명</th>
-													<th>수량</th>
-													<th>결제금액</th>
-													<th>주문상태</th>
-												</tr>
-												<tr>
-													<td colspan="8">
-														<p class="emptydata">구매상품이 없습니다.</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<div id="orderDiv">
-								<div id="date_departure">
-									<div class="sorting_wrap myhd">
-										<span class="txt_total">총 <strong>0</strong>개
-										</span>
-										<div class="sort_r">
-											<select name="orderStat" id="orderStat1">
-												<option value="">전체</option>
-												<option value="010">입금대기</option>
-												<option value="020">주문완료</option>
-												<option value="030^040">상품준비중</option>
-												<option value="050">인도대기</option>
-												<option value="065">인도완료</option>
-												<option value="060">미인도</option>
-												<option value="080">취소신청</option>
-												<option value="070">반품신청</option>
-												<option value="100">취소완료</option>
-												<option value="090">반품완료</option>
-											</select>
-										</div>
-									</div>
-									<div class="list_table01">
-										<table>
-											<colgroup>
-												<col width="180px">
-												<col width="108px">
-												<col width="123px">
-												<col width="298px">
-												<col width="100px">
-												<col width="156px">
-												<col width="106px">
-											</colgroup>
-											<tbody id="onlnOrderList_cart">
-												<tr>
-													<th>주문일자/<br>주문번호
-													</th>
+													<th>주문일자/<br>주문번호</th>
 													<th>출국일자</th>
 													<th>교환권</th>
 													<th>상품명</th>
@@ -720,11 +703,68 @@
 													<th>총결제금액</th>
 													<th>주문상태</th>
 												</tr>
+												<c:forEach var="orderlist" items="${orderlists }">
 												<tr>
-													<td colspan="7">
-														<p class="emptydata">구매상품이 없습니다.</p>
+												<td rowspan="${orderlist.orderitemlist.size()}">
+													${orderlist.odate }
+													<p>${orderlist.oid }</p>
 													</td>
+													<td rowspan="${orderlist.orderitemlist.size()}">
+													<fmt:parseDate value="${orderlist.oarrdate }" var="oarrdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
+													<fmt:formatDate value="${oarrdate }" pattern="yyyy-MM-dd"/>
+													</td>
+													<td rowspan="${orderlist.orderitemlist.size()}"></td>
+													<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
+													<c:if test="${status.first }">
+													<td rowspan="1">
+													<div class="product_info">
+			                                            <span class="on_img">
+			                                            	<img src="/product/Productdetail?pcode=${orderitem.pcode}" alt="0.2 테라피 에어 마스크 달팽이" onerror="this.onerror=null; this.src='${orderitem.product.img1 }';">
+			                                            </span>
+			                                            <dl>
+			                                                <dt>${orderitem.product.pbrand }</dt>
+			                                                <dd>${orderitem.product.pname }</dd>
+			                                                <dd>
+			                                                	</dd>
+			                                            </dl>
+			                                        </div>
+			                                         </td>
+			                                         <td>
+			                                         ${orderitem.oamount }
+			                                         </td>
+			                                        </c:if>
+			                                        </c:forEach>
+			                                        <td rowspan="${orderlist.orderitemlist.size()}">
+			                                        <p class="dollar">$<fmt:formatNumber value="${orderlist.ordertotalprice-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
+			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*1267}" pattern="#,##0" />원</span></p>
+			                                        </td>
+			                                        <td rowspan="${orderlist.orderitemlist.size()}">
+			                                    	${orderlist.ostatus }</td>
 												</tr>
+												<c:if test="${orderlist.orderitemlist.size()> 1}">
+												<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
+												<c:if test="${!status.first }">
+												<td rowspan="1">
+													<div class="product_info">
+			                                            <span class="on_img">
+			                                            	<img src="/product/Productdetail?pcode=${orderitem.pcode}" alt="0.2 테라피 에어 마스크 달팽이" onerror="this.onerror=null; this.src='${orderitem.product.img1 }';">
+			                                            </span>
+			                                            <dl>
+			                                                <dt>${orderitem.product.pbrand }</dt>
+			                                                <dd>${orderitem.product.pname }</dd>
+			                                                <dd>
+			                                                	</dd>
+			                                            </dl>
+			                                        </div>
+			                                         </td>
+			                                         <td>
+			                                         ${orderitem.oamount }
+			                                         </td>
+												</c:if>
+												</c:forEach>
+												</c:if>
+												</c:forEach>
+												
 											</tbody>
 										</table>
 									</div>
@@ -732,6 +772,7 @@
 							</div>
 						</div>
 					</div>
+					</c:if>
 				</form>
 			</div>
 			<div class="attention_area">
@@ -758,6 +799,14 @@
 </main>
 <!-- // container -->
 <script type="text/javascript">
+
+	if("${align}"=='oarrdate'){
+		$("#tabCtgDpatType").attr("class","ui-state-default ui-tabs-active");
+		$("#tabCtgOrderType").attr("class","ui-state-default");
+	}else{
+		 $("#tabCtgDpatType").attr("class","ui-state-default");
+		 $("#tabCtgOrderType").attr("class","ui-state-default ui-tabs-active");
+	}
 	function sellerInfo() {
 		$("#seller_information").dialog("open");
 	}
@@ -774,5 +823,26 @@
 	function moveToMain() {
 		location.href = ctx_shop + '/dm/main.do';
 	}
+	
+	/* $(".dollar").text("$"+ priceComma(((parseFloat("${orderprice}") - parseFloat("${orderdis}"))).toFixed(2)));
+	$(".k_won").text(priceComma(((parseFloat("${orderprice}") * 1267) - (parseFloat("${orderdis}") * 1267)).toFixed(0))+ "원"); */
+	
+	function priceComma(price) {
+		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	}
+	
+	function fn_search(type){
+	    
+		if(type=='oarrdate'){
+			location.href="/member/Mypage?align=oarrdate";
+			
+		}else{
+			location.href="/member/Mypage?align=odate";
+		}
+	    
+	}
+	
+
+
 </script>
 <%@ include file="../common/Footer.jsp"%>

@@ -28,12 +28,9 @@
 		<input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input
 			type="hidden" id="adtAucaYn" value="N">
 		<ul class="title_tab">
-			<li><a href="javascript:void(0);"
-				onclick="goCartTab(&quot;CART&quot;);" class="" id="tabCart">장바구니</a></li>
-			<li><a href="javascript:void(0);"
-				onclick="goCartTab(&quot;PSPT&quot;);" class="" id="tabPspt">여권정보</a></li>
-			<li><a href="javascript:void(0);"
-				onclick="goCartTab(&quot;DPAT&quot;);" class="on" id="tabDpat">출국정보</a></li>
+			<li style="color: black">장바구니</li>
+			<li style="color: black">여권정보</li>
+			<li class="on" id="tabDpat">출국정보</li>
 			<li>주문결제</li>
 		</ul>
 		<div class="cart_contens">
@@ -487,7 +484,6 @@ function sendDepartInfo(){
 	 var pcode=<%=list.get(i).getPcode()%>;
 	 var oamount=<%=list.get(i).getOamount()%>
 	 var index=<%=i%>;
-	 console.log(<%=list.get(i).getPcode()%>);
 	 
 	$('#sendDepartInfo').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
 	$('#sendDepartInfo').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');

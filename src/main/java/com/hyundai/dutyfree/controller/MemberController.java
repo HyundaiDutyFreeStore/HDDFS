@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,8 +26,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
+import com.hyundai.dutyfree.service.ProductService;
+import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
+import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -58,6 +64,9 @@ public class MemberController {
 	
 	@Autowired
 	private OrderService orderservice;
+	
+	@Autowired
+	private ProductService productservice;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -379,22 +388,51 @@ public class MemberController {
 	 */
 
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
-	public void myPage(HttpServletRequest request, Model model, Principal prin) throws Exception {
+	public void myPage(HttpServletRequest request, Model model,String align, Principal prin) throws Exception {
 		// 시큐리티에서 mid받아오기
 		String mid = prin.getName();
 		log.info("마이페이지 접속 mid: " + mid);
 		MemberVO mvo = memberservice.read(mid);
 		model.addAttribute("member", mvo);
-		List<OrderItemVO> orderitemlist=orderservice.getOrderitemlist(prin.getName());
+		if(align==null) {
+			align="odate";
+		}else {
+			align=request.getParameter("align");
+		}
 		
-		/*
-		 * MemberVO mvo = (MemberVO) request.getSession().getAttribute("member");
-		 * model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
-		 * model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
-		 * model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
-		 * model.addAttribute("mhpoint",
-		 * memberservice.myPage(String.valueOf(mvo.getMhpoint())));
-		 */
-
-	}
+		List<OrderListVO> orderlists=orderservice.getorderlistBymid(prin.getName(),align);
+	
+		if(orderlists!=null) {
+			
+			
+			
+			for(OrderListVO orderlist: orderlists) {
+				float orderprice = 0;
+				float cartdisprice = 0;
+				float orderdis = 0;
+				int cartstock = 0;
+				List<OrderItemVO> orderitemlist=orderservice.getOrderitemlist(orderlist.getOid());
+				for(OrderItemVO orderitem:orderitemlist) {
+					ProductVO product=productservice.productdetail(orderitem.getPcode());
+					orderitem.setProduct(product);
+					orderlist.setOrderitemlist(orderitemlist);
+					orderprice += (product.getPprice() * orderitem.getOamount());
+					cartdisprice += (orderprice * (1 - ((float) product.getPdiscount() / 100))) * orderitem.getOamount();
+					orderdis += product.getPprice() * ((float) product.getPdiscount() / 100) * orderitem.getOamount();
+				}
+			  
+				orderlist.setOrdertotalprice(orderprice);
+				orderlist.setOrdertotaldisprice(orderdis);
+			}
+				model.addAttribute("orderlistsize", orderlists.size());
+			}
+		  model.addAttribute("align", align);
+		  model.addAttribute("orderlists", orderlists);
+		  model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
+		  model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
+		  model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+		  model.addAttribute("mhpoint",
+		  memberservice.myPage(String.valueOf(mvo.getMhpoint())));
+		 
+}
 }

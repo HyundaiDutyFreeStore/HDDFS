@@ -19,5 +19,6 @@ public class OrderItemVO {
 	private String pcode;
 	private int oamount;
 	private String oid;
+	private ProductVO product;
 
 }

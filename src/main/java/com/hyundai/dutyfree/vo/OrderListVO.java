@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -28,4 +29,7 @@ public class OrderListVO {
 	private String oplnum;
 	private String oelnum;
 	private String oplace;
+	private List<OrderItemVO> orderitemlist;
+	private float ordertotalprice;
+	private float ordertotaldisprice;
 }

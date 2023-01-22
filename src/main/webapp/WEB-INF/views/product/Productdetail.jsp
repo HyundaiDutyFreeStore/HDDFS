@@ -142,7 +142,7 @@ function loginChk() {
 						
 							<div class="box">
 								
-									 일반적립금 30%
+									 일반적립금  <fmt:formatNumber type="number" maxFractionDigits="0"  value="${mhdiscount }" /> %
 								</div>
 						</li>
 					<li>
@@ -166,6 +166,7 @@ function loginChk() {
 			<form id="cartBuy" method="post" action="" >
 				<input type="hidden" name="orderitem[0].pcode" value="${product.pcode }"/>
 				<input type="hidden" name="orderitem[0].oamount" value=""/>
+				<input type="hidden" name="mhdiscount" value="${mhdiscount }"/>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			<div class="productdetail_cart">
@@ -196,7 +197,7 @@ function loginChk() {
 <script>
 let count = parseInt($(".counts").val());
 	$('.minus').attr("disabled",true);
-  //수량버튼 내렸을때! 무조건 1개 이상이여야겠지?
+	
 	function fn_qtySubtraction(el) {
 		count = parseInt($(".counts").val());
 		if(count-1<1){
@@ -213,7 +214,6 @@ let count = parseInt($(".counts").val());
 	      		
 			var chDorprice = count*dorprice;
 			var chWonprice = "${product.pprice*1267}"*count;
-			console.log(chDorprice.toFixed(2));
 				
 			$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
 			$(el).closest(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
@@ -313,8 +313,8 @@ let count = parseInt($(".counts").val());
 									<button class="close" onclick="closeMaxDcPrc();">닫기</button>
 								</div>
 							</div>
-						<a class="addcart" onclick="cartConsist();">장바구니</a>
-                        <a class="buynow" onclick="cartBuy();">바로구매</a>
+						<a href="javascript:void(0);" class="addcart" onclick="cartConsist();">장바구니</a>
+                        <a href="javascript:void(0);"class="buynow" onclick="cartBuy();">바로구매</a>
                         </c:when>
                         <c:otherwise>
                         <a href="#" onclick="preventClick(event);"class="buynow">품절되었습니다</a>
@@ -804,25 +804,6 @@ let count = parseInt($(".counts").val());
 <script src="https://cdn.hddfs.com/front/js/KO/productdetail.js"></script>
 <script type="text/javascript">
 
-/* function buyCart(){
-	alert("넘어간다");
-	location.href="/order/orderpays";
-	return;
-	 location.href="/order/PassportInfo?mid=${mid}&pcode=${product.pcode}$pprice=${product.pprice}"; 
-}   */  
-    
-    
-/* $("#item_info").each(function(index,item){
-	let pstock = parseInt($(this).find("input[name='pstock']").val());
-	let cartstock=parseInt($(this).find("input[name='goosQty']").val());
-	console.log(pstock);
-	if(pstock-cartstock<0){
-		console.log("작다.")
-		$("#plusGoosQty0").attr("disabled",true);
-	}else{
-		$("#plusGoosQty0").removeAttr("disabled"); 
-	}
-}); v*/
 function productamount(){
 	
 	if("${product.pstock}"-parseInt($("#totalamount").text())<0){
@@ -835,7 +816,6 @@ function productamount(){
   
 function addCart(){
 	
-	console.log("카트 들어감!")
 	const Data = {
 			cartstock :$("#totalamount").text(),
 			mid : "${mid}",
@@ -847,17 +827,14 @@ function addCart(){
 		    data : Data,
 		    url : "/cart/insertCart",
 		    success : function(data){
-				console.log('담기 성공!')	
 			},
 			error : function(){
-				console.log("실패");
     		}
 		});
 }
 
 function updateCart(){
 	
-	console.log("카트 들어감!")
 	const Data = {
 			cartstock :$("#totalamount").text(),
 			mid : "${mid}",
@@ -869,10 +846,8 @@ function updateCart(){
 		    data : Data,
 		    url : "/cart/updateCart",
 		    success : function(data){
-				console.log('담기 성공!')	
 			},
 			error : function(){
-				console.log("실패");
     		}
 		});
 }
@@ -881,7 +856,6 @@ function updateCart(){
  function cartConsist(){
 	 if (loginChk() == false) {
 			alert("로그인이 필요한 서비스입니다. 로그인해주세요");
-			console.log("로그인하세요");
 			location.href = "/join/login";
 			return false; 
 		} else {
@@ -898,7 +872,6 @@ function updateCart(){
 	        		    data : Data,
 	        		    url : "/cart/isselect",
 	        		    success : function(data){
-	        		    	console.log(data);
 	        		    	if(data === 'yes'){
 	        		    		let param=confirm("장바구니에 동일한 상품이 존재합니다. 추가로 담으시겠습니까?");
 	        		    		if(param===true){
@@ -906,7 +879,6 @@ function updateCart(){
 	        		    			let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
 	            					if(param){
 	            						location.href="/cart/cartlist?mid=${mid}&align=lput";
-	            						/* location.href="/cart/cartlist?mid="+${mid};  */
 	            	    			}		
 	        		    		}else{
 	        		    			return false;
@@ -916,13 +888,11 @@ function updateCart(){
 	        		    		addCart();
 	        		    		let param=confirm("선택하신 상품을 장바구니에 담았습니다. 장바구니로 이동하시겠습니까?");
 	        					if(param){
-	        						/* location.href="/cart/cartlist"; */
 	        						location.href="/cart/cartlist?mid=${mid}&align=lput";
 	        	    			}		
 	        		    	}
 	        			},
 	        			error : function(){
-	        				console.log("실패");
 	            		}
 	        		});
 	    	}else{

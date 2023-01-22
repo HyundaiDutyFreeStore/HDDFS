@@ -3,6 +3,7 @@ package com.hyundai.dutyfree.service;
 import java.util.List;
 
 import com.hyundai.dutyfree.vo.OrderItemVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
 
 public interface OrderService {
@@ -16,5 +17,9 @@ public interface OrderService {
 	
 	public void updateTotalandMhpoint(String mid,int mhpoint,int mtotal);
 	
-	public List<OrderItemVO> getOrderitemlist(String mid);
+	public List<OrderItemVO>  getOrderitemlist(String oid);
+	
+	public OrderListVO getorderlist(String oid);
+	
+	public List<OrderListVO> getorderlistBymid(String mid,String align);
 }

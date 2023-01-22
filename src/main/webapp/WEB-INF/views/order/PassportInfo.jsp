@@ -20,12 +20,9 @@
 		<input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input
 			type="hidden" id="adtAucaYn" value="N">
 		<ul class="title_tab">
-			<li><a href="javascript:void(0);" onclick="goCartTab('CART');"
-				class="" id="tabCart">장바구니</a></li>
-			<li><a href="javascript:void(0);" onclick="goCartTab('PSPT');"
-				class="on" id="tabPspt">여권정보</a></li>
-			<li><a href="javascript:void(0);" onclick="goCartTab('DPAT');"
-				class="" id="tabDpat">출국정보</a></li>
+			<li style="color: black">장바구니</li>
+			<li class="on" id="tabDpat">여권정보</li>
+			<li>출국정보</li>
 			<li>주문결제</li>
 		</ul>
 		<div class="cart_contens">
@@ -201,7 +198,6 @@
 				function savePassPort(){
 					 $("#mName").attr("disabled", false);
 					 $("#mGender").attr("disabled",false); 
-					 console.log($("#mName").is(":disabled"));
 					$("#enrollPassport").submit();
 				}
 				
@@ -268,7 +264,6 @@
 										 var pcode=<%=list.get(i).getPcode() %>;
 										 var oamount=<%=list.get(i).getOamount() %>
 										 var index=<%=i%>;
-										 console.log(<%=list.get(i).getPcode() %>);
 										 
 										$('#enrollPassport').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
 										$('#enrollPassport').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
@@ -289,9 +284,6 @@
 										$('#cartstockinput').attr('value',"${cartstock}");
 										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
 										$('.totalRsvg').text("${mhdiscount}"+"%");
-										
-										console.log("${orderitemlist}");
-										console.log("<%= request.getAttribute("orderitemlist") %>");
 									});
 
 					function priceComma(price) {
