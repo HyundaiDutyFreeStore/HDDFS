@@ -62,7 +62,7 @@
 				<dl>
 					<dt>구매금액</dt>
 					<dd id="setTotBuyAmtNtnl">
-						<strong>$ ${member.mtotal}</strong>
+						<strong>$ <fmt:formatNumber value="${member.mtotal}" pattern="#,##0.##" /></strong>
 					</dd>
 				</dl>
 				<dl>&nbsp;

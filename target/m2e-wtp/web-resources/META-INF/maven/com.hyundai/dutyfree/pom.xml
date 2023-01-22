@@ -247,6 +247,19 @@
 			<artifactId>json</artifactId>
 			<version>20210307</version>
 		</dependency>
+		
+		<!-- 소셜 로그인(네이버) -->        
+        <dependency>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-apis</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+        <!-- naver 로그인 --> 
+        <dependency>
+             <groupId>com.github.scribejava</groupId>
+             <artifactId>scribejava-core</artifactId>
+             <version>5.6.0</version>
+        </dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
@@ -289,11 +302,11 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
 		<dependency>
-    		<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-taglibs</artifactId>
-    		<version>5.0.6.RELEASE</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>5.0.6.RELEASE</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
 		<!-- 구글바코드 오픈소스 -->
 		<dependency>
@@ -306,6 +319,13 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>3.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
 		</dependency>
 
 	</dependencies>
