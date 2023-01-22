@@ -68,7 +68,6 @@ public class OrderController {
 	@PostMapping("/postorderpays")
 	public String orderexec(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
 			throws Exception {
-		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
 		int ordertotalstock = 0;
@@ -76,25 +75,11 @@ public class OrderController {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid = "OR" + simpleDateFormat.format(nowdate);
 
-		/*
-		 * simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm"); java.sql.Date
-		 * odate = java.sql.Date.valueOf(simpleDateFormat.format(nowdate));
-		 */
-
-		System.out.println("Oarrdate:" + request.getParameter("olvoarrdate"));
-		System.out.println("Oplnum:" + request.getParameter("olvoplnum"));
-		System.out.println("Elnum:" + request.getParameter("olvoelnum"));
-		System.out.println("Oplace:" + request.getParameter("olvoplace"));
-
-		System.out.println("oid:" + oid);
-		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료",
-				request.getParameter("olvoarrdate"), request.getParameter("olvoplnum"),
-				request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
-
+		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료", request.getParameter("olvoarrdate"),
+				request.getParameter("olvoplnum"), request.getParameter("olvoelnum"),
+				request.getParameter("olvoplace"));
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
 			cartservice.redproductcnt(order.getPcode(), order.getOamount());
 			CartVO cart = new CartVO();
@@ -111,14 +96,13 @@ public class OrderController {
 
 		member.setMid(prin.getName());
 		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
-		member.setMtotal(Integer.parseInt(request.getParameter("wontotalSettKrw")));
 
-		// 주문자의 포인트 및 총주문금액을 업데이트
+		member.setMtotal(Double.parseDouble(request.getParameter("total_bill_dollar_text")));
+		
+		//주문자의 포인트 및 총주문금액을 업데이트
 		memberservice.updateMhpoint(member);
 
-		System.out.println("총 결제금액:" + request.getParameter("wontotalSettKrw"));
-
-		model.addAttribute("wontotalSettKrw", request.getParameter("wontotalSettKrw"));
+		model.addAttribute("total_bill_dollar_text", request.getParameter("total_bill_dollar_text"));
 		System.out.println(ordertotalstock);
 		model.addAttribute("member", member);
 		model.addAttribute("oid", oid);
@@ -188,7 +172,7 @@ public class OrderController {
 	@PostMapping("/orderpays")
 	public String postorderpay(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
 			throws Exception {
-		System.out.println(orderitemlists.toString());
+		
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
 		float cartprice = 0;
@@ -197,10 +181,7 @@ public class OrderController {
 		int cartstock = 0;
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
 			cartprice += (product.getPprice() * order.getOamount());
-			System.out.println(1 - ((float) product.getPdiscount() / 100));
 			cartdisprice += (cartprice * (1 - ((float) product.getPdiscount() / 100))) * order.getOamount();
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
@@ -212,20 +193,19 @@ public class OrderController {
 		String dpatTmH = request.getParameter("dpatTmH");
 		String dpatTmM = request.getParameter("dpatTmM");
 		String ugntComuMophNo = request.getParameter("ugntComuMophNo");
+		
 		OrderListVO olv = new OrderListVO();
 		olv.setMid(prin.getName());
 		olv.setOplnum(oplnum);
+		
 		String[] dpatTmHarr = dpatTmH.split("시");
 		String[] dpatTmMarr = dpatTmM.split("분");
 		String date = oarrdate + " " + dpatTmHarr[0] + ":" + dpatTmMarr[0];
+		
 		olv.setOarrdate(date);
 		olv.setOelnum(ugntComuMophNo);
 		olv.setOplace(orderDpatPlacCd);
-
-		System.out.println(cartprice);
-		System.out.println(cartdisprice);
-		System.out.println(cartdis);
-		System.out.println(cartstock);
+		
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -239,61 +219,25 @@ public class OrderController {
 		return "/order/orderpays";
 	}
 
-	/*
-	 * //출국정보를 등록하고 지불페이지로 이동
-	 * 
-	 * @GetMapping("/orderpays") public String getorderpay(HttpServletRequest
-	 * request, OrderItemListVO orderitemlists, Model model,Principal prin)throws
-	 * Exception { System.out.println(orderitemlists.toString()); List<OrderItemVO>
-	 * orderitemlist=orderitemlists.getOrderitem(); MemberVO
-	 * member=memberservice.read(prin.getName()); float cartprice = 0; float
-	 * cartdisprice=0; float cartdis=0; int cartstock=0; for(OrderItemVO order :
-	 * orderitemlist) { ProductVO
-	 * product=productservice.productdetail(order.getPcode());
-	 * System.out.println(product.getPprice());
-	 * System.out.println(product.getPdiscount());
-	 * cartprice+=(product.getPprice()*order.getOamount());
-	 * System.out.println(1-((float)product.getPdiscount()/100));
-	 * cartdisprice+=(cartprice*(1-((float)product.getPdiscount()/100)))*order.
-	 * getOamount();
-	 * cartdis+=product.getPprice()*((float)product.getPdiscount()/100)*order.
-	 * getOamount(); cartstock+=order.getOamount(); } System.out.println(cartprice);
-	 * System.out.println(cartdisprice); System.out.println(cartdis);
-	 * System.out.println(cartstock); model.addAttribute("member", member);
-	 * model.addAttribute("cartprice", cartprice);
-	 * model.addAttribute("cartdisprice", cartdisprice);
-	 * model.addAttribute("cartdis",cartdis);
-	 * model.addAttribute("cartstock",cartstock);
-	 * model.addAttribute("orderitemlist",orderitemlist);
-	 * 
-	 * return "/order/orderpays"; }
-	 */
-
 	// 출국정보를 가져온다.
 	@GetMapping("/DepartureInfo")
 	public void DepartureInfo(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
 			throws Exception {
-		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
+		
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
 			cartprice += (product.getPprice() * order.getOamount());
-			System.out.println(1 - ((float) product.getPdiscount() / 100));
 			cartdisprice += (cartprice * (1 - ((float) product.getPdiscount() / 100))) * order.getOamount();
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		System.out.println(cartprice);
-		System.out.println(cartdisprice);
-		System.out.println(cartdis);
-		System.out.println(cartstock);
+		
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -307,26 +251,20 @@ public class OrderController {
 	// 출국정보 입력페이지로 이동한다.
 	@PostMapping("/goDepartureInfo")
 	public String goDepartureInfo(HttpServletRequest request, OrderItemListVO orderitemlists, Model model) {
-		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
+		
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
 			cartprice += (product.getPprice() * order.getOamount());
-			System.out.println(1 - ((float) product.getPdiscount() / 100));
 			cartdisprice += (cartprice * (1 - ((float) product.getPdiscount() / 100))) * order.getOamount();
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		System.out.println(cartprice);
-		System.out.println(cartdisprice);
-		System.out.println(cartdis);
-		System.out.println(cartstock);
+		
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
 		model.addAttribute("cartdis", cartdis);
@@ -341,30 +279,22 @@ public class OrderController {
 	@PostMapping("/PassportInfo")
 	public void PassportInfo(OrderItemListVO orderitemlists, Model model, HttpServletRequest request, Principal prin)
 			throws Exception {
-		System.out.println("Passport");
-		System.out.println(orderitemlists.toString());
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
-		System.out.println(request.getParameter("mhdiscount"));
+		
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
+		
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
 			cartprice += (product.getPprice() * order.getOamount());
-			System.out.println(1 - ((float) product.getPdiscount() / 100));
 			cartdisprice += (cartprice * (1 - ((float) product.getPdiscount() / 100))) * order.getOamount();
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		System.out.println(cartprice);
-		System.out.println(cartdisprice);
-		System.out.println(cartdis);
-		System.out.println(cartstock);
-		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -384,10 +314,8 @@ public class OrderController {
 		PassportVO passport = orderservice.PassportConsist(mid);
 
 		if (passport == null) {
-			System.out.println("no");
 			return "no";
 		} else {
-			System.out.println("yes");
 			return "yes";
 		}
 
@@ -397,29 +325,22 @@ public class OrderController {
 	@PostMapping("/enrollPassport")
 	public String enrollPassport(HttpServletRequest request, OrderItemListVO orderitemlists, Model model)
 			throws ParseException {
-		System.out.println("enroll");
 		PassportVO passport = new PassportVO();
-		System.out.println(orderitemlists.toString());
 
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
+		
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
-			System.out.println(product.getPprice());
-			System.out.println(product.getPdiscount());
 			cartprice += (product.getPprice() * order.getOamount());
-			System.out.println(1 - ((float) product.getPdiscount() / 100));
 			cartdisprice += (cartprice * (1 - ((float) product.getPdiscount() / 100))) * order.getOamount();
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		System.out.println(cartprice);
-		System.out.println(cartdisprice);
-		System.out.println(cartdis);
-		System.out.println(cartstock);
+
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
 		model.addAttribute("cartdis", cartdis);
@@ -447,31 +368,11 @@ public class OrderController {
 
 		passport.setExpirydate(DatemPsptexdit);
 
-		System.out.println(passport.toString());
-
 		orderservice.insertPassport(passport);
-
-		/*
-		 * System.out.println(request.getParameter("totalGoosUsdinput"));
-		 * System.out.println(request.getParameter("totalDcUsdinput"));
-		 * System.out.println(request.getParameter("cartstockinput"));
-		 * model.addAttribute("cartprice", request.getParameter("totalGoosUsdinput"));
-		 * model.addAttribute("cartdis", request.getParameter("totalDcUsdinput"));
-		 * model.addAttribute("cartstock", request.getParameter("cartstockinput"));
-		 */
+		
 		return "/order/DepartureInfo";
 
 	}
 
-	public void order() {
-		/*
-		 * Date date=new Date(); SimpleDateFormat simpleDateFormat = new
-		 * SimpleDateFormat("yyyyMMddHHmmss");
-		 * 
-		 * //원하는 데이터 포맷 지정 String strNowDate = simpleDateFormat.format(date);
-		 * 
-		 * String oid="OR"+strNowDate;
-		 */
 
-	}
 }

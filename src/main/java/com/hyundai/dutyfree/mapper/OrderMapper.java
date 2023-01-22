@@ -1,5 +1,6 @@
 package com.hyundai.dutyfree.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.hyundai.dutyfree.vo.MemberVO;
@@ -16,7 +17,11 @@ public interface OrderMapper {
 	
 	public void Insertorderlist(OrderListVO orderitemlist);
 	
+	public OrderListVO getorderlist(String oid);
+	
 	public void updateTotalandMhpoint(MemberVO member);
 	
-	public List<OrderItemVO> getOrderitemlist(String mid);
+	public List<OrderItemVO> getOrderitemlist(String oid);
+	
+	public List<OrderListVO> getorderlistBymid(HashMap<String, String> listmap);
 }

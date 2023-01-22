@@ -19,6 +19,7 @@ import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
+import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
@@ -127,14 +128,30 @@ public class ProductController {
 		return json;
 	}
 
-	// 상품디테일로 이동
+	// 상품상세페이지로 이동
 	@GetMapping("/Productdetail")
 	public String productdetail(@RequestParam("pcode") String pcode, Model model,Principal prin) throws Exception {
 		List<String> imglist = new ArrayList<String>();
+		
+		//상품에 대한 상세 정보를 조회
 		ProductVO product = service.productdetail(pcode);
 		
-		System.out.println(product.toString());
-		System.out.println(product.toString());
+		//회원 정보를 조회
+		MemberVO member=memberservice.read(prin.getName());
+		
+		
+		double mhdiscount;
+		
+		//회원이 구매한 금액에 따라 할인율 적용
+		if(member.getMtotal()>20000) {
+			mhdiscount=3;
+		}else if(member.getMtotal()>10000) {
+			mhdiscount=2;
+		}else {
+			mhdiscount=1;
+		}
+		
+		//상품의 이미지 개수에 따라 이미지를 담음
 		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
 		}
@@ -150,9 +167,8 @@ public class ProductController {
 		if (product.getImg5() != null) {
 			imglist.add(product.getImg5());
 		}
-		for (int i = 0; i < imglist.size(); i++) {
-			System.out.println(imglist.get(i));
-		}
+		
+		//회원이 여권번호를 등록했울 경우 바로 구매시 출국정보로 이동하게 하게 함
 		if(prin != null) {
 			PassportVO passport=orderservice.PassportConsist(prin.getName());
 	         if(passport==null) {
@@ -162,8 +178,10 @@ public class ProductController {
 	         }
 	      }
 		
+		model.addAttribute("mhdiscount", mhdiscount);
 		model.addAttribute("product", product);
 		model.addAttribute("imglist", imglist);
+		
 		return "/product/Productdetail";
 	}
 

@@ -12,9 +12,9 @@
 <article id="content">
 <section class="cart_wrap">
 <input type="hidden" id="checkedCartSeq" value=""> <input type="hidden" id="checkedCartSetId" value=""> <input type="hidden" id="buyNow" value=""><input type="hidden" id="buyNowSetGoosId" value=""><input type="hidden" id="chkPspt" value="0"> <input type="hidden" id="chkDpat" value="0"> <input type="hidden" id="buyNowType" value=""> <input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input type="hidden" id="adtAucaYn" value="N"> <ul class="title_tab">
-<li><a href="/cart/cartlist?mid=${mid}" onclick='javascript:goCartTab("CART");' class="on" id="tabCart">장바구니</a></li>
-<li><a href="" onclick='javascript:goCartTab("PSPT");' class="" id="tabPspt">여권정보</a></li>
-<li><a href="" onclick='javascript:goCartTab("DPAT");' class="" id="tabDpat">출국정보</a></li>
+<li class="on" id="tabDpat">장바구니</li>
+<li>여권정보</li>
+<li>출국정보</li>
 <li>주문결제</li>
 </ul>
 <div class="cart_contens">
@@ -216,7 +216,6 @@
 function goCartTab(type) {
     
 	var url = "";
-	console.log("carttab");
     if(!psptMnge()){return false;} 
     if(!dpatMnge()){return false;} 
 
@@ -363,24 +362,18 @@ $(".loadProgBar").css("display","none");
 
 $("#item_info").each(function(index,item){
 	let pstock = parseInt($(this).find("input[name='pstock']").val());
-	console.log(pstock);
 	let cartstock=parseInt($(this).closest('.item_cont.type_de').find('input[name="goosQty"]').val());
-	console.log(cartstock)
-	console.log(pstock);
 	if(pstock-cartstock<=0){
-		console.log("작다.")
 		$("#plusGoosQty0").attr("disabled",true);
 	}else{
 		$("#plusGoosQty0").removeAttr("disabled"); 
 	}
 	
 	if(cartstock==1){
-		console.log("1이다");
 		$(this).closest('.item_area').find("input[id='minGoosQty0']").attr("disabled",true);
 	}else{
 		$("#minGoosQty0").removeAttr("disabled"); 
 	}
-	console.log('네에');
 });
 
 
@@ -433,8 +426,7 @@ function fn_qtySubtraction(el){
 
 //장바구니 수량 변경
 function updateCart(cartstock,pcode){
-	
-	console.log("카트 들어감!")
+
 	const Data = {
 			cartstock :cartstock,
 			mid : "${mid}",
@@ -446,24 +438,20 @@ function updateCart(cartstock,pcode){
 		    data : Data,
 		    url : "/cart/updateCart",
 		    success : function(data){
-				console.log('담기 성공!')	
 			},
 			error : function(){
-				console.log("실패");
     		}
 		});
 }
 
 //장바구니 상품 삭제
 function deleteCart(el){
-	console.log("삭제");
 	let pcode;
 	if($(el).closest('.item_area').find(".item_cont.type_de").find('#item_info').is('.soldout')==true){
 		pcode=parseInt($(el).closest('.item_area').find(".item_cont.type_de").find('.item_info_wrap.soldout').find("input[name='pcode']").val());
 	}else{
 		pcode=parseInt($(el).closest('.item_area').find(".item_cont.type_de").find('.item_info_wrap').find("input[name='pcode']").val());
 	}
-	console.log(pcode);
 	var Data={
 			pcode :pcode,
 			mid :"${mid}"
@@ -473,11 +461,9 @@ function deleteCart(el){
 	    data : Data,
 	    url : "/cart/deleteCart",
 	    success : function(data){
-			console.log('담기 성공!')	
 			location.reload();
 		},
 		error : function(){
-			console.log("실패");
 		}
 	});
 }
@@ -494,10 +480,6 @@ function setOrderPrice(){
 		let cartdisprice=parseFloat($(this).find("input[name='cartdisprice']").val());
 		let cartdis=parseFloat($(this).find("input[name='cartdis']").val());
 		let cartcount=parseInt($(this).closest('.item_cont.type_de').find('.item_buy_wrap').find('.item_buy').find('.num_amount.cart_amount').find("input[name='goosQty']").val());
-		console.log(cartprice);
-		console.log(cartdisprice);
-		console.log(cartdis);
-		console.log("cartcount:"+cartcount);
 		cartpricetotal+=cartprice;
 		cartdispricetotal+=cartdisprice;
 		cartdistotal+=cartdis;
@@ -529,8 +511,6 @@ function OrderSingle(el){
 	$('#Orderexec').append('<input name="cartcounttotal" type="hidden" value="'+cartcounttotal+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oid" type="hidden" value="">');
 	$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="'+mhdiscount+'">');
-	console.log("${mid}");
-	console.log("${userpassport}");
 	if("${userpassport}"== ""){
 		passportflag=false;
 	}else{
@@ -555,7 +535,7 @@ var orderproductlist=[];
 	function AllItemOrder(){
 		let itemindex = 0;
 		let cartcounttotal=parseInt($(".sumGoosQty").text());
-		$("#item_info").each(function(index, item){
+		$(".item_info_wrap.info").each(function(index, item){
 				var cartstock=parseInt($(this).find("input[name='cartstock']").val());
 				var pcode=$(this).find("input[name='pcode']").val();
 				$('#Orderexec').append('<input name="orderitem['+itemindex+'].pcode" type="hidden" value="'+pcode+'">');
@@ -564,8 +544,6 @@ var orderproductlist=[];
 		});
 		$('#Orderexec').append('<input name="cartcounttotal" type="hidden" value="'+cartcounttotal+'">');
 		$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="${mhdiscount}">');
-		/* $('#itemsOrderForm').append('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
-		$('#itemsOrderForm').append('<input type="hidden" name="tocart" value="true" />'); */
 		if("${userpassport}"==""){
 			passportflag=false;
 		}else{

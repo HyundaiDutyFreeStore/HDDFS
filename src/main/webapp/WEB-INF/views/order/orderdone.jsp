@@ -38,9 +38,12 @@
 				</div>
 
 				<div class="basic_btn_box mgtml">
-					<button type="button" class="btn_basic2 big" id="btnLogin" onclick="location.href='./login'">
-						로그인</button>
+					<button type="button" class="btn_basic2 big" id="btnLogin" onclick="location.href='/'">
+						홈화면</button>
+					<button type="button" class="btn_basic2 big" id="btnLogin" onclick="location.href='/member/Mypage?mid=${mid}'">
+				주문내역</button>
 				</div>
+				
 		</div>
 	</section>
 </div>
