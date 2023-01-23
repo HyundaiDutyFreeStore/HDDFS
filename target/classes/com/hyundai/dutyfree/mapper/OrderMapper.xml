@@ -19,11 +19,22 @@
 	</insert>
 	
 	<insert id="Insertorderlist">
-	insert into orderlist values(#{oid},#{mid},to_date(sysdate,'YYYY-MM-DD HH24:MI'),#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
+	insert into orderlist values(#{oid},#{mid},sysdate,#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
 	</insert>
 	
-	<select id="getorderlist">
-	select * from orderlist where oid=#{oid};
+	<select id="getorderlist" resultType="com.hyundai.dutyfree.vo.OrderListVO">
+	select * from orderlist where oid=#{oid}
+	</select>
+	
+	<select id="getorderlistBymid" resultType="com.hyundai.dutyfree.vo.OrderListVO" parameterType="HashMap">
+	select * from orderlist where mid=#{mid}
+	<if test="align =='oarrdate'">
+		order by oarrdate desc
+	</if>
+	<if test="align =='odate'">
+		order by odate desc
+	</if>
+	
 	</select>
 	
 	<update id="updateTotalandMhpoint">
@@ -31,11 +42,9 @@
 	</update>
 	
 	<select id="getOrderitemlist" resultType="com.hyundai.dutyfree.vo.OrderItemVO">
-	select o.oid, o.pcode from member m join
-	(select ol.oid, ol.mid, oi.pcode from orderitem oi join orderlist ol on oi.oid=ol.oid) o
-	on m.mid = o.mid
-	where m.mid =#{mid}
+	select * from orderitem where oid=#{oid}
 	</select>
+	
 	
 </mapper>
   

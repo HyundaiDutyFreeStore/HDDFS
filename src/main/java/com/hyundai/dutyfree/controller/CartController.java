@@ -58,8 +58,7 @@ public class CartController {
 	// 장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
 	public void cartlist(String mid,String align, Model model,Principal prin) throws Exception {
-		System.out.println(mid);
-		System.out.println(align);
+
 		List<CartVO> cartlist = cartservice.getCartList(mid,align);
 		List<CartVOforJSP> cartjsplist = new ArrayList<CartVOforJSP>();
 		PassportVO passport=orderservice.PassportConsist(mid);
@@ -74,7 +73,7 @@ public class CartController {
 				cartjsp.setPcode(product.getPcode());
 				cartjsp.setPstock(product.getPstock());
 				cartjsp.setCartno(c.getCartno());
-				System.out.println(product.getImg1());
+				
 				if (product.getImg1() != null) {
 					cartjsp.setImg1(product.getImg1());
 				}
@@ -86,10 +85,7 @@ public class CartController {
 				}
 				cartjsplist.add(cartjsp);
 		}
-		
-		for(CartVOforJSP c : cartjsplist) {
-			System.out.println(c.toString());
-		}
+
 		if(passport!=null) {
 			model.addAttribute("userpassport", passport);
 		}else {
@@ -114,8 +110,6 @@ public class CartController {
 	@ResponseBody
 	public String insertCart(HttpServletRequest request, CartVO cart) throws Exception {
 
-		log.info("장바구니 담기 진입!");
-
 		cart.setCartstock(Integer.parseInt(request.getParameter("cartstock")));
 		cart.setMid(request.getParameter("mid"));
 		cart.setPcode(request.getParameter("pcode"));
@@ -126,12 +120,10 @@ public class CartController {
 
 	}
 	
-		// 장바구니 상품들을 업데이트
-		@PostMapping("/updateCart")
-		@ResponseBody
-		public String updateCart(HttpServletRequest request, CartVO cart) throws Exception {
-
-			log.info("장바구니 담기 진입!");
+	// 장바구니 상품들을 업데이트
+	@PostMapping("/updateCart")
+	@ResponseBody
+	public String updateCart(HttpServletRequest request, CartVO cart) throws Exception {
 
 			cart.setCartstock(Integer.parseInt(request.getParameter("cartstock")));
 			cart.setMid(request.getParameter("mid"));
@@ -143,15 +135,13 @@ public class CartController {
 
 			return "success";
 
-		}
+	}
 
 
 	// 장바구니에 상품이 들어있는지 확인
 	@PostMapping("/isselect")
 	@ResponseBody
 	public String isselect(HttpServletRequest request, CartVO cart) throws Exception {
-
-		System.out.println("cartcontroller 진입");
 
 		cart.setMid(request.getParameter("mid"));
 		cart.setPcode(request.getParameter("pcode"));
@@ -166,6 +156,8 @@ public class CartController {
 
 	}
 	
+	
+	//장바구니 물품 삭제
 	@PostMapping("/deleteCart")
 	@ResponseBody
 	public String deleteCart(HttpServletRequest request,CartVO cart) {

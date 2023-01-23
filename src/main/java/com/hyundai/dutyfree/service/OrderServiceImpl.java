@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.service;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +72,24 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderItemVO> getOrderitemlist(String mid) {
+	public List<OrderItemVO> getOrderitemlist(String oid) {
+
+		return mapper.getOrderitemlist(oid);
+	}
+
+	@Override
+	public OrderListVO getorderlist(String oid) {
 		
-		return mapper.getOrderitemlist(mid);
+		return mapper.getorderlist(oid);
+	}
+
+	@Override
+	public List<OrderListVO> getorderlistBymid(String mid,String align) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> listMap = new HashMap<>();
+		listMap.put("mid", mid);
+		listMap.put("align",align);
+		return mapper.getorderlistBymid(listMap);
 	}
 	
 	

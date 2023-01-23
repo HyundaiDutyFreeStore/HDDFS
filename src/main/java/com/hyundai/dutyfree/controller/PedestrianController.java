@@ -16,36 +16,45 @@ import com.hyundai.dutyfree.service.PedestrianService;
 import com.hyundai.dutyfree.vo.PedestrianVO;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
 
 /**
  * Handles requests for the application home page.
  */
 @AllArgsConstructor
 @Controller
-@Log4j
+@RequestMapping("/common")
 public class PedestrianController {
 	@Autowired
 	PedestrianService pedestrianservice = null;
-	private static final Logger logger = LoggerFactory.getLogger(PedestrianController.class);
+	private static final Logger log = LoggerFactory.getLogger(PedestrianController.class);
 
 	@RequestMapping(value = "/confusion", method = RequestMethod.GET)
 	public String pedestraincount(HttpServletRequest request) {
 
-		// 파일이 위치한 실제 경로 찾기
+		// 파일이 위치한 실제 경로
 		String path = request.getSession().getServletContext().getRealPath("resources");
-		path += "\\log.csv";
-		// 파일 경로 던져주면, 데이터가 VO에 담긴 vo들이 저장된 리스트를 리턴받겠다.
-		List<PedestrianVO> data = pedestrianservice.readCsvToBean(path);
+		String path_in = path + "\\loginside.csv";
+		String path_out = path + "\\logoutside.csv";
+		// 파일 경로에서 VO 저장된 리스트를 리턴
+		List<PedestrianVO> data = pedestrianservice.readCsv(path_in);
 		Iterator<PedestrianVO> it = data.iterator();
+		int inside = 0;
+		int outside = 0;
 		while (it.hasNext()) {
-			PedestrianVO vo = (PedestrianVO) it.next();
-			System.out.println("input : " + vo.getInside());
-			System.out.println("output : " + vo.getOutside());
-			System.out.println("total : " + (vo.getInside() - vo.getOutside()));
+			it.next();
+			System.out.println(inside++);
 		}
+		data = pedestrianservice.readCsv(path_out);
+		it = data.iterator();
+		while (it.hasNext()) {
+			it.next();
+			System.out.println(outside++);
+		}
+		int count = inside - outside;
+		count = Math.max(count, 0);
+		log.info("inside :" + inside + ", outside : " + outside + ", count : " + count);
 
-		return "/confusion";
+		return "/common/confusion";
 	}
 
 }

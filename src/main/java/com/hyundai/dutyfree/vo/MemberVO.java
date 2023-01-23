@@ -31,7 +31,7 @@ public class MemberVO {
 	private Date mregdate; // 회원가입 날짜
 	private String mgender; // 회원 성별
 	private String mrole; //시큐리티를 위한 권한
-	private int mtotal; //주문총금액
+	private double mtotal; //주문총금액
 
 	/*
 	 * @Override public String toString() { return "MemberVO [mid=" + mid +

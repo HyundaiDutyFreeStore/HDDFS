@@ -25,7 +25,7 @@
 	<article id="content">
 		<section class="orderpayment_wrap">
 			<ul class="title_tab">
-				<li><a href="/order">장바구니</a></li>
+				<li>장바구니</li>
 				<li>여권정보</li>
 				<li>출국정보</li>
 				<li><strong class="on" id="tabOrder">주문결제</strong></li>
@@ -1584,7 +1584,6 @@
 <script>
 	$(function() {
 
-		console.log("common.ui bind start")
 
 		$('.ui-widget-overlay').on('click', function() {
 			$('#dialog').dialog('close');
@@ -1759,7 +1758,7 @@
 		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
 		$('.totalSettUsd').text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
 		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
-		$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+		$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*(parseFloat("${mhdiscount}")/100)).toFixed(0))+"원");
 		$('.totalRsvg').text("${mhdiscount}"+"%");
 		
 		
@@ -1773,7 +1772,6 @@
 		 var pcode=<%=list.get(i).getPcode() %>;
 		 var oamount=<%=list.get(i).getOamount() %>
 		 var index=<%=i%>;
-		 console.log(<%=list.get(i).getPcode() %>);
 		 
 		$('#orderexec').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
 		$('#orderexec').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
@@ -1783,9 +1781,9 @@
 		}
 		%>
 		
-		var wontotalSettKrw =((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0);
-		var mhpoint =(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0);
-		$("#orderexec").append('<input type="hidden" name="wontotalSettKrw" value="'+wontotalSettKrw +'">');
+		var total_bill_dollar_text=((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2);
+		var mhpoint =(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
+		$("#orderexec").append('<input type="hidden" name="total_bill_dollar_text" value="'+total_bill_dollar_text +'">');
 		$("#orderexec").append('<input type="hidden" name="olvoarrdate" value="${orderlist.oarrdate}">');
 		$("#orderexec").append('<input type="hidden" name="olvoplnum"  value="${orderlist.oplnum}">');
 		$("#orderexec").append('<input type="hidden" name="olvoelnum"  value="${orderlist.oelnum}">');

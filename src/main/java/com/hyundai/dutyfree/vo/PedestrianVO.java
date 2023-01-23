@@ -20,6 +20,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedestrianVO {
-	private int inside; // 매장 들어온 사람의 수
-	private int outside; // 매장 나간 사람의 수
+	private int count; // counting 된 사람의 수
+
 }
