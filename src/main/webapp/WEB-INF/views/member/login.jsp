@@ -111,9 +111,9 @@
 		<div class="chdiv">
 			<br><br>
 			<p>
-			<a href = "${naver_url}"><img src="/resources/images/naverlogin.png" alt="Naver" width="200px"/></a>
+			<a href = "${naver_url}"><img src="/resources/images/naverlogin.png" alt="Naver" width="270px;" height="53px;"/></a>
 			&nbsp; &nbsp;
-			<a href = "${kakao_url}"><img src="/resources/images/kakaoLogin.png" alt="kakao" width="200px" height="60px"/></a>
+			<a href = "${kakao_url}"><img src="/resources/images/kakaoLogin.png" alt="kakao" width="270px;" height="53px;"/></a>
 			</p>
 			<br>
 			<%-- <p>

@@ -57,8 +57,8 @@ public class CartController {
 
 	// 장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
-	public void cartlist(String mid,String align, Model model,Principal prin) throws Exception {
-
+	public void cartlist(String align, Model model,Principal prin) throws Exception {
+		String mid = prin.getName();
 		List<CartVO> cartlist = cartservice.getCartList(mid,align);
 		List<CartVOforJSP> cartjsplist = new ArrayList<CartVOforJSP>();
 		PassportVO passport=orderservice.PassportConsist(mid);
@@ -108,10 +108,11 @@ public class CartController {
 	// 장바구니 상품들을 등록
 	@PostMapping("/insertCart")
 	@ResponseBody
-	public String insertCart(HttpServletRequest request, CartVO cart) throws Exception {
+	public String insertCart(HttpServletRequest request, CartVO cart,Principal prin) throws Exception {
 
 		cart.setCartstock(Integer.parseInt(request.getParameter("cartstock")));
-		cart.setMid(request.getParameter("mid"));
+		//cart.setMid(request.getParameter("mid"));
+		cart.setMid(prin.getName());
 		cart.setPcode(request.getParameter("pcode"));
 
 		cartservice.insertCart(cart);
@@ -123,10 +124,11 @@ public class CartController {
 	// 장바구니 상품들을 업데이트
 	@PostMapping("/updateCart")
 	@ResponseBody
-	public String updateCart(HttpServletRequest request, CartVO cart) throws Exception {
+	public String updateCart(HttpServletRequest request, CartVO cart,Principal prin) throws Exception {
 
 			cart.setCartstock(Integer.parseInt(request.getParameter("cartstock")));
-			cart.setMid(request.getParameter("mid"));
+			//cart.setMid(request.getParameter("mid"));
+			cart.setMid(prin.getName());
 			cart.setPcode(request.getParameter("pcode"));
 			
 			cartservice.UpdateCartstock(cart);
@@ -141,9 +143,10 @@ public class CartController {
 	// 장바구니에 상품이 들어있는지 확인
 	@PostMapping("/isselect")
 	@ResponseBody
-	public String isselect(HttpServletRequest request, CartVO cart) throws Exception {
+	public String isselect(HttpServletRequest request, CartVO cart,Principal prin) throws Exception {
 
-		cart.setMid(request.getParameter("mid"));
+		//cart.setMid(request.getParameter("mid"));
+		cart.setMid(prin.getName());
 		cart.setPcode(request.getParameter("pcode"));
 
 		int finditem = cartservice.Cartitemconsist(cart);
@@ -160,8 +163,9 @@ public class CartController {
 	//장바구니 물품 삭제
 	@PostMapping("/deleteCart")
 	@ResponseBody
-	public String deleteCart(HttpServletRequest request,CartVO cart) {
-		cart.setMid(request.getParameter("mid"));
+	public String deleteCart(HttpServletRequest request,CartVO cart,Principal prin) {
+		//cart.setMid(request.getParameter("mid"));
+		cart.setMid(prin.getName());
 		cart.setPcode(request.getParameter("pcode"));
 		cartservice.deleteCart(cart);
 		return "success";
