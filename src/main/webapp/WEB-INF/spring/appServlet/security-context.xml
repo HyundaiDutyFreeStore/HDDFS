@@ -5,6 +5,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+<!--
+ *
+ * security-context.xml 
+ * 
+ * @author 김찬중, 김가희
+ * @since 01.09
+ *
+ *       
+ *  수정일                 수정자                            수정내용
+ * 
+ * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.17    김가희                            시큐리티적용
+ * 
+ -->
 	<!-- 비밀번호 암호화 -->
 	<bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>

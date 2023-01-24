@@ -19,7 +19,18 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
 import lombok.extern.log4j.Log4j;
-
+/**
+ * CustomLoginSuccessHandler
+ * 
+ * @author 김가희
+ * @since 01.17
+ * 
+ *        
+ * 수정일                 수정자                         수정내용
+ * ----------  ---------------    ---------------------------
+ * 2023.01.17    김가희                        최초 생성
+ *        
+ */
 @Log4j
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	private final RequestCache requestCache = new HttpSessionRequestCache();

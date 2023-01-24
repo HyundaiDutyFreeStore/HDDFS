@@ -1,5 +1,16 @@
 package com.hyundai.dutyfree.auth;
-
+/**
+ * SnsUrls
+ * 
+ * @author 김가희
+ * @since 01.19
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.19   김가희                         최초 생성
+ * 2023.01.20   김가희                         카카오 추가       
+ */
 public interface SnsUrls {
 	//네이버 로그인 링크
 	static final String NAVER_ACCESS_TOKEN = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code";

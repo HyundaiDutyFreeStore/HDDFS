@@ -1,7 +1,18 @@
 package com.hyundai.dutyfree.auth;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
-
+/**
+ * NaverAPI20
+ * 
+ * @author 김가희
+ * @since 01.19
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.19   김가희                         최초 생성
+ *        
+ */
 public class NaverAPI20 extends DefaultApi20 implements SnsUrls {
 	private NaverAPI20() {
 	}

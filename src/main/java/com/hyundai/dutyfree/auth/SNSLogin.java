@@ -18,7 +18,19 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import com.hyundai.dutyfree.vo.MemberVO;
-
+/**
+ * SNSLogin
+ * 
+ * @author 김가희
+ * @since 01.19
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.19   김가희                         최초 생성
+ * 2023.01.20   김가희                         카카오 추가
+ *        
+ */
 public class SNSLogin {
 	private OAuth20Service oauthService;
 	private SnsValue sns;
