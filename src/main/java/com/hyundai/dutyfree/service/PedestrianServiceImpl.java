@@ -11,6 +11,19 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 
+/**
+ * PedestrianServiceImpl
+ *
+ * @author 김찬중
+ * @since 01.21
+ *
+ *        <pre>
+ * 수정일                 수정자                         수정내용
+ * ----------  ---------------    ---------------------------
+ * 2023.01.21	 김찬중			최초 생성
+ *        </pre>
+ */
+
 @Service
 public class PedestrianServiceImpl implements PedestrianService {
 

@@ -1,31 +1,18 @@
 package com.hyundai.dutyfree.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,9 +23,7 @@ import com.hyundai.dutyfree.auth.SnsValue;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
-import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
-import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.ProductVO;
@@ -55,11 +40,11 @@ import lombok.extern.log4j.Log4j;
  * 수정일                 수정자                          수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.11	  김찬중			       회원가입 완료
  * 2023.01.17    김가희                            시큐리티적용
  * 2023.01.19    김가희                            소셜로그인(네이버)추가
  * 2023.01.20    김가희                            소셜로그인(카카오)추가
- * 2023.01.21    박진수                            마이페이지
- *        </pre>
+ * 2023.01.22         박진수			  마이페이지 주문목록 보여지게 설정	
  */
 
 @Controller

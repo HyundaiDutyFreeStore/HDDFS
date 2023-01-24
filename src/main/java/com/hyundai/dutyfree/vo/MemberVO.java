@@ -2,9 +2,7 @@ package com.hyundai.dutyfree.vo;
 
 import java.sql.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * MemberVO
@@ -20,8 +18,6 @@ import lombok.NoArgsConstructor;
  *        </pre>
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class MemberVO {
 	private String mid; // 회원 id
 	private String mpassword; // 회원 pw
@@ -33,5 +29,4 @@ public class MemberVO {
 	private String mgender; // 회원 성별
 	private String mrole; //시큐리티를 위한 권한
 	private double mtotal; //주문총금액
-
 }

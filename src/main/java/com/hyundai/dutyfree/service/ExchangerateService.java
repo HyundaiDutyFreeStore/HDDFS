@@ -17,5 +17,7 @@ import com.hyundai.dutyfree.vo.ExchangerateVO;
 public interface ExchangerateService {
     
     public void updateExchangerate(ExchangerateVO Exchangerate) throws Exception;
+    
+    public double getExchangerate(String mcountry);
 
 }

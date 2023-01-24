@@ -21,8 +21,18 @@ import com.hyundai.dutyfree.vo.PedestrianVO;
 import lombok.AllArgsConstructor;
 
 /**
- * Handles requests for the application home page.
+ * PedestrianController
+ *
+ * @author 김찬중
+ * @since 01.20
+ *
+ *        <pre>
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.20	  김찬중			       최초생성
+ *        </pre>
  */
+
 @AllArgsConstructor
 @Controller
 @RequestMapping("/common")
@@ -45,13 +55,13 @@ public class PedestrianController {
 		int outside = 0;
 		while (it.hasNext()) {
 			it.next();
-			System.out.println(inside++);
+			inside++;
 		}
 		data = pedestrianservice.readCsv(path_out);
 		it = data.iterator();
 		while (it.hasNext()) {
 			it.next();
-			System.out.println(outside++);
+			outside++;
 		}
 		int count = inside - outside;
 		count = Math.max(count, 0);

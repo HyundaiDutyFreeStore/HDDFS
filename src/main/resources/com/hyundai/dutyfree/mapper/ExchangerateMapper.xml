@@ -11,5 +11,10 @@
 		mmoney = #{mmoney}
 		where mcountry = #{mcountry}
 	</update>
-
+	
+	
+	<select id="getExchangerate" resultType="double">
+	select mmoney from exchangerate where mcountry=#{mcountry}
+	</select>
+	
 </mapper>

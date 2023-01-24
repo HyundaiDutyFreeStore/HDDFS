@@ -4,10 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
 
+/**
+ * OrderMapper
+ * 
+ * @author 박진수
+ * @since 01.13
+ * 
+ *        <pre>
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.13    박진수                        최초 생성
+ *        </pre>
+ */
 public interface OrderMapper {
 	public void insertPassport(PassportVO passport);
 	
@@ -24,4 +37,6 @@ public interface OrderMapper {
 	public List<OrderItemVO> getOrderitemlist(String oid);
 	
 	public List<OrderListVO> getorderlistBymid(HashMap<String, String> listmap);
+	
+	public void deleteorder(String oid);
 }

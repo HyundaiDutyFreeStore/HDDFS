@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +26,19 @@ import com.hyundai.dutyfree.vo.ExchangerateVO;
 import lombok.AllArgsConstructor;
 
 /**
- * Handles requests for the application home page.
+ * MemberController
+ *
+ * @author 김찬중
+ * @since 01.19
+ *
+ *        <pre>
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.19	  김찬중			       최초생성
+ * 2023.01.20	  김찬중			       환률 API 적용
+ *        </pre>
  */
+
 @Controller
 @AllArgsConstructor
 public class HomeController {
@@ -39,7 +52,7 @@ public class HomeController {
 	private ExchangerateService erservice;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model,HttpSession session) {
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -71,8 +84,7 @@ public class HomeController {
 			double EUR = Math.round(KRW / Float.valueOf(eurstr.replace(",", "")) * 100) / 100.0;
 			double CNY = Math.round(KRW / arr.get(6).getAsJsonObject().get("deal_bas_r").getAsFloat() * 100) / 100.0;
 			double JPY = Math.round(KRW / arr.get(12).getAsJsonObject().get("deal_bas_r").getAsFloat() * 10000) / 100.0;
-			// System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " + KRW + ",
-			// EUR : " + EUR);
+			//System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " + KRW + ", EUR : " + EUR);
 			String[] country = { "KRW", "EUR", "CNY", "JPY" };
 			double[] money = { KRW, EUR, CNY, JPY };
 
@@ -83,10 +95,13 @@ public class HomeController {
 				erservice.updateExchangerate(evo);
 			}
 
+			
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println(erservice.getExchangerate("KRW"));
+		session.setAttribute("KRW_WON", erservice.getExchangerate("KRW"));
 		return "Index";
 	}
 

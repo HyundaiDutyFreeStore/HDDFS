@@ -19,7 +19,7 @@
 	</insert>
 	
 	<insert id="Insertorderlist">
-	insert into orderlist values(#{oid},#{mid},sysdate,#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
+	insert into orderlist values(#{oid},#{mid},sysdate,#{ohpoint},#{ostatus},to_date(#{odeptdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
 	</insert>
 	
 	<select id="getorderlist" resultType="com.hyundai.dutyfree.vo.OrderListVO">
@@ -28,8 +28,8 @@
 	
 	<select id="getorderlistBymid" resultType="com.hyundai.dutyfree.vo.OrderListVO" parameterType="HashMap">
 	select * from orderlist where mid=#{mid}
-	<if test="align =='oarrdate'">
-		order by oarrdate desc
+	<if test="align =='odeptdate'">
+		order by odeptdate desc
 	</if>
 	<if test="align =='odate'">
 		order by odate desc
@@ -45,6 +45,8 @@
 	select * from orderitem where oid=#{oid}
 	</select>
 	
-	
+	<delete id="deleteorder">
+	delete from orderlist where oid=#{oid}
+	</delete>
 </mapper>
   

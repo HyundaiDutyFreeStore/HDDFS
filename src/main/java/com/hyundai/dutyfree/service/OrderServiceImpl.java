@@ -9,10 +9,23 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.OrderMapper;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
 
+/**
+ * OrderServiceImpl
+ * 
+ * @author 박진수
+ * @since 01.16
+ * 
+ *        <pre>
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.16    박진수                        최초 생성
+ *        </pre>
+ */
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -42,16 +55,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void Insertorderlist(String oid, String mid, int ohpoint, String ostatus, String oarrdate,
+	public void Insertorderlist(String oid, String mid, int ohpoint, String ostatus, String odeptdate,
 			String oplnum, String oelnum, String oplace) {
 		
-		System.out.println("oarrdate:"+oarrdate);
+		System.out.println("odeptdate:"+odeptdate);
 		OrderListVO olv=new OrderListVO();
 		olv.setOid(oid);
 		olv.setMid(mid);
 		olv.setOhpoint(ohpoint);
 		olv.setOstatus(ostatus);
-		olv.setOarrdate(oarrdate);
+		olv.setOdeptdate(odeptdate);
 		olv.setOplnum(oplnum);
 		olv.setOelnum(oelnum);
 		olv.setOplace(oplace);
@@ -73,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<OrderItemVO> getOrderitemlist(String oid) {
-
+	
 		return mapper.getOrderitemlist(oid);
 	}
 
@@ -92,7 +105,10 @@ public class OrderServiceImpl implements OrderService {
 		return mapper.getorderlistBymid(listMap);
 	}
 	
-	
+	@Override
+	public void deleteorder(String oid) {
+		mapper.deleteorder(oid);
+	}
 	
 	
 
