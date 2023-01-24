@@ -88,7 +88,10 @@ public class PayController {
     public String confirmPayment(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount,
             Model model,HttpServletRequest requests,Principal prin) throws Exception {
-
+    	
+    	
+    	System.out.println(paymentKey);
+    	
         HttpHeaders headers = new HttpHeaders();
        
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
