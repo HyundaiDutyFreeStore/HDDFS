@@ -29,4 +29,10 @@ public class ExchangerateServiceImpl implements ExchangerateService {
 		erMapper.updateExchangerate(Exchangerate);
 	}
 
+	@Override
+	public double getExchangerate(String mcountry) {
+		
+		return erMapper.getExchangerate(mcountry);
+	}
+
 }
