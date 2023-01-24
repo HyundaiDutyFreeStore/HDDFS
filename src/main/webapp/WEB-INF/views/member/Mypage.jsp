@@ -332,7 +332,7 @@
 			<div class="tab-action">
 				<ul class="tab_2depth tab_center">
 					<li class="ui-tab ui-tabs-active" id="tabCtgDpatType" >
-						<a href="javascript:void(0);" onclick="fn_search('oarrdate');">출국일 기준</a>
+						<a href="javascript:void(0);" onclick="fn_search('odeptdate');">출국일 기준</a>
 					</li>
 					<li class="ui-tab" id="tabCtgOrderType">
 					<a href="javascript:void(0);" onclick="fn_search('odate');">주문일 기준</a></li>
@@ -557,7 +557,7 @@
 						}
 					</script>
 					<input type="hidden" name="monVal" id="monVal" value="" />
-					<c:if test="${align eq 'oarrdate' }">
+					<c:if test="${align eq 'odeptdate' }">
 					<div id="my_order">
 						<div class="cart_list" id="onln_list">
 							<div id="dpatDiv">
@@ -591,8 +591,8 @@
 												<c:forEach var="orderlist" items="${orderlists }">
 												<tr>
 													<td rowspan="${orderlist.orderitemlist.size()}">
-													<fmt:parseDate value="${orderlist.oarrdate }" var="oarrdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
-													<fmt:formatDate value="${oarrdate }" pattern="yyyy-MM-dd"/>
+													<fmt:parseDate value="${orderlist.odeptdate }" var="odeptdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
+													<fmt:formatDate value="${odeptdate }" pattern="yyyy-MM-dd"/>
 													</td>
 													<td rowspan="${orderlist.orderitemlist.size()}">
 													${orderlist.odate }
@@ -710,8 +710,8 @@
 													<p>${orderlist.oid }</p>
 													</td>
 													<td rowspan="${orderlist.orderitemlist.size()}">
-													<fmt:parseDate value="${orderlist.oarrdate }" var="oarrdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
-													<fmt:formatDate value="${oarrdate }" pattern="yyyy-MM-dd"/>
+													<fmt:parseDate value="${orderlist.odeptdate }" var="odeptdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
+													<fmt:formatDate value="${odeptdate }" pattern="yyyy-MM-dd"/>
 													</td>
 													<td rowspan="${orderlist.orderitemlist.size()}"></td>
 													<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
@@ -800,7 +800,7 @@
 <!-- // container -->
 <script type="text/javascript">
 
-	if("${align}"=='oarrdate'){
+	if("${align}"=='odeptdate'){
 		$("#tabCtgDpatType").attr("class","ui-state-default ui-tabs-active");
 		$("#tabCtgOrderType").attr("class","ui-state-default");
 	}else{
@@ -833,8 +833,8 @@
 	
 	function fn_search(type){
 	    
-		if(type=='oarrdate'){
-			location.href="/member/Mypage?align=oarrdate";
+		if(type=='odeptdate'){
+			location.href="/member/Mypage?align=odeptdate";
 			
 		}else{
 			location.href="/member/Mypage?align=odate";

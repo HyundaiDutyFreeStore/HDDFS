@@ -1568,6 +1568,112 @@
 			type="hidden" name="sellerOrderReferenceKey" value="" /> \
 	</form>
 </div>
+<div id="settInfoLayerPopupmodal" tabindex="-1" role="dialog" style="position: absolute; height: auto; width: 412px; top: 351.5px; left: 1000px; display: none;" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front event_type ui-draggable ui-resizable" aria-describedby="settInfoLayerPopup" aria-labelledby="ui-id-11">
+<div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle">
+<span id="ui-id-11" class="ui-dialog-title">&nbsp;</span>
+<button type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Close">
+<span class="ui-button-icon ui-icon ui-icon-closethick"></span>
+<span class="ui-button-icon-space"> </span>Close</button></div>
+<div id="settInfoLayerPopup" class="bankbook_pop ui-dialog-content ui-widget-content" style="width: auto; min-height: 150px; max-height: 720px; height: auto;"">
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+    
+    
+    $(".bankbook_caution .terms_toggle").off("click").on("click", function() {
+        if($(this).parent(".bankbook_caution").hasClass("open")){
+            $(this).parent(".bankbook_caution").removeClass("open")
+        }else{
+            $(this).parent(".bankbook_caution").addClass("open")
+        }
+    });
+    
+    
+   	$("a.btnde_type1").off("click").on("click", function() {
+   		
+   		
+        var type = $(this).data("type");
+        
+        if(type == "proc") {
+            if("001" == "103") {
+                if(!$("#orderConsmInfo103").is(":checked")) {
+                    alert('무통장 입금 유의사항을 확인해주세요.'); 
+                    $("#orderConsmInfo103").focus();
+                    return false;
+                }
+            }
+            
+            $("#settInfoLayerPopup").dialog("close");
+            
+            
+                doSett();
+            
+        } else if(type == "dpatproh") {
+            $(".jeju_pop").dialog("close");
+        } else {
+        	$("#settInfoLayerPopup").dialog("close");
+        }
+    });
+    
+    
+    $(".cont_tg").off("click").on("click", function() {
+        $(this).toggleClass("is_active");
+        $(this).next(".cont_tg_box").slideToggle();
+    });
+});
+
+</script>
+
+<div class="layer_popup">
+    <div class="popupcont_wrap">
+        <p class="lartitle">고객님의 정보를<br> 다시 한번 확인해주세요.</p>
+        <div class="info_table3">
+            <table>
+                <colgroup>
+                    <col style="width:102px">
+                    <col style="width:auto">
+                </colgroup>
+                <tbody>
+                    <tr>
+                       <th>여권번호</th>
+                       <td>${passport.passportno }</td>
+                   </tr>
+                   <tr>
+                       <th>출국장소</th>
+                       <c:choose>
+                       <c:when test="${ orderlist.oplace eq 'KIM'}">
+                       <td>김포공항</td>
+                       </c:when>
+                       <c:when test="${ orderlist.oplace eq 'ICN'}">
+                       <td>인천공항</td>
+                       </c:when>
+                       </c:choose>
+                   </tr>
+                   <tr>
+                       <th>출국예정일</th>
+                       <td>${orderlist.odeptdate }</td>
+                   </tr>
+                   <tr>
+                       <th>편명</th>
+                       <td>${orderlist.oplnum }</td>
+                   </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="lartitle">결제를 진행하시겠습니까?</p>
+        <ul class="btn_group">
+            <li>
+                <a href="javascript:void(0);" id="payment-cancel" class="btnde_type1 mid data-type=" close"="">취소</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" id="payment-button"class="btnde_type1 mid bg_black" data-type="proc">확인</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
+
 <div style="display: none">
 	<form name="hpayForm" id="hpayForm" method="post" action="">
 		<input type="hidden" id="hpayPaymentId" name="hpayPaymentId" value="" />
@@ -1581,14 +1687,12 @@
 			type="hidden" id="poinUseYn" name="poinUseYn" value="" />
 	</form>
 </div>
+
 <script>
 	$(function() {
-
-
 		$('.ui-widget-overlay').on('click', function() {
 			$('#dialog').dialog('close');
 		})
-
 		$(".accordion_box").hide()
 		$(".open .accordion_box").show();
 		$(".accordion .title .btn").on("click", function() {
@@ -1600,7 +1704,6 @@
 				$(this).parent().siblings().slideDown(200)
 			}
 		});
-
 		$(".discount_list .details").hide()
 		$(".discount_list .btn").on("click", function() {
 			if ($(".discount_list").hasClass("open")) {
@@ -1611,7 +1714,6 @@
 				$(".discount_list .details").slideDown(200)
 			}
 		});
-
 		// S: 2022-05-11 H.Point Pay 카드, 계좌 선택 추가
 		$(function() {
 			$(".payway_area_hpay .hpay_choose").on("click", function() {
@@ -1627,23 +1729,17 @@
 			});
 		});
 		// E: 2022-05-11 H.Point Pay 카드, 계좌 선택 추가
-
 		if (isLogin) {
-
 			if ($("#fregInfoTit").length > 0) {
-
 				$("#fregInfoTit").addClass("open");
 				$(".gift_list").show();
 			}
-
 			$(".cont_item").hide();
 			$(".tab_square > li:first").addClass("ui-tabs-active").show();
 			$(".tab_square > li:first").parent().addClass("ui-tabs-active");
-
 			var strArray = $(".tab_square > li:first > a").prop('id')
 					.split('_');
 			var strId = '#' + strArray[1] + '_' + strArray[2];
-
 			if ("#rcnt_0" === strId) {
 				$("#payway_tab_01").show();
 			} else {
@@ -1651,31 +1747,24 @@
 			}
 			$("#settInfoTit").addClass("open");
 			$(".payment_method").show();
-
 		} else {
-
 			$(".cont_item").hide();
 			$(".tab_square > li:first").addClass("ui-tabs-active").show();
 			$(".tab_square > li:first").parent().addClass("ui-tabs-active");
-
 			var strArray = $(".tab_square > li:first > a").prop('id')
 					.split('_');
 			var strId = '#' + strArray[1] + '_' + strArray[2];
 			$(strId).show();
-
 		}
-
 		if ($("#sbagUseYn").length > 0) {
 			$("#sbagUseYn > a:first").click();
 		}
-
 		if (isLogin) {
 			$(".payway-swiper")
 					.each(
 							function(index, element) {
 								var $this = $(this);
 								$this.addClass("instance-swipwe-" + index);
-
 								var ProductModuleSwiper = new Swiper(
 										".instance-swipwe-" + index,
 										{
@@ -1689,7 +1778,6 @@
 												slideChange : function() {
 													setTimeout(
 															function() {
-
 																if (checkSettGrpDoma()[0] == "001") {
 																	getIstmMonsList(
 																			'',
@@ -1704,28 +1792,19 @@
 										});
 							});
 		}
-
-
 		setTimeout(function() {
-			toggleCashRcpt();
-			paymentSettInfo();
 		}, 100);
-
 		$(".loadProgBar").css("display", "none");
-
 	})
-
 	$(document).on("click", ".card_discount .chk input", function() {
 		if ($(this).is(":checked")) {
 			$(".card_discount li").removeClass("checked");
 			$(this).next().parent("li").addClass("checked");
 		}
 	});
-
 	$(document).on("click", ".easypayment .item", function() {
 		$(this).addClass("active").siblings().removeClass("active");
 	});
-
 	$(document)
 			.on(
 					"click",
@@ -1739,7 +1818,11 @@
 					});
 </script> </main>
 <!-- // container -->
+<script src="https://js.tosspayments.com/v1"></script>
+
 <script type="text/javascript">
+	
+
 	function sellerInfo() {
 		$("#seller_information").dialog("open");
 	}
@@ -1762,36 +1845,7 @@
 		$('.totalRsvg').text("${mhdiscount}"+"%");
 		
 		
-		
-		<% 
-		
-		List<OrderItemVO> list = (List<OrderItemVO>)request.getAttribute("orderitemlist");
-
-		for(int i=0;i<list.size();i++){ 
-		%>
-		 var pcode=<%=list.get(i).getPcode() %>;
-		 var oamount=<%=list.get(i).getOamount() %>
-		 var index=<%=i%>;
-		 
-		$('#orderexec').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
-		$('#orderexec').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
-		$('#orderexec').append('<input name="orderitem['+index+'].oid" type="hidden" value="">');
-		
-		<%
-		}
-		%>
-		
-		var total_bill_dollar_text=((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2);
-		var mhpoint =(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
-		$("#orderexec").append('<input type="hidden" name="total_bill_dollar_text" value="'+total_bill_dollar_text +'">');
-		$("#orderexec").append('<input type="hidden" name="olvoarrdate" value="${orderlist.oarrdate}">');
-		$("#orderexec").append('<input type="hidden" name="olvoplnum"  value="${orderlist.oplnum}">');
-		$("#orderexec").append('<input type="hidden" name="olvoelnum"  value="${orderlist.oelnum}">');
-		$("#orderexec").append('<input type="hidden" name="olvoplace"  value="${orderlist.oplace}">');
-		$("#orderexec").append('<input type="hidden" name="mhpoint"  value="'+mhpoint +'">');
-		
 	});
-
 	function moveToMain() {
 		location.href = ctx_shop + '/dm/main.do';
 	}
@@ -1799,13 +1853,86 @@
 	function priceComma(price) {
 		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
+
+	
+	
+	
+	let oid="";
+	
+	var pay_cancel=document.getElementById("payment-cancel");
+	var pay_button = document.getElementById("payment-button");
+	
+	pay_cancel.addEventListener("click", function () { 
+		
+		const Data={
+				oid: oid
+		};
+		$.ajax({
+			method:"post",
+			data : Data,
+			url : "/order/deleteorder",
+			success : function(data){
+			if(data=='yes'){
+				$('#settInfoLayerPopupmodal').hide();
+			}
+
+			},
+			error : function(){
+	    	}
+		});
+	});
+	
+	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
 	
 	function orderexec(){
+		$('#settInfoLayerPopupmodal').show();
 		
-		$('#orderexec').submit();
+		var mhpoint =(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
+		var total_bill_dollar_text=((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2);
 		
-	}
+		
+		const Data={
+				
+				orderitemlists: "${orderitemlist}",
+				olvodeptdate : "${orderlist.odeptdate}",
+				olvoplnum : "${orderlist.oplnum}",
+				olvoplace : "${orderlist.oplace}",
+				olvoelnum:"${orderlist.oelnum}",
+				mid:"${mid}",
+				total_bill_dollar_text:total_bill_dollar_text,
+				mhpoint : mhpoint
+		};
+		var total_bill_dollar_text=((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0);
+		
+		$.ajax({
+			method:"post",
+			data : Data,
+			url : "/order/postorderpays",
+			success : function(data){
+			oid=data;
+			console.log(oid);
+			$("#settInfoLayerPopupmodal").show();
+			},
+			error : function(){
+	    	}
+		});
+	  
+		pay_button.addEventListener("click", function () {
+
+        var paymentData = {
+            amount: total_bill_dollar_text,
+            orderId : oid,
+            orderName: "${orderName}",
+            customerName: "${mid}",
+            successUrl: window.location.origin+"/pay/"+oid+ "/success",
+            failUrl: window.location.origin+"/pay/" +oid+ "/fail",
+        };
+
+
+        tossPayments.requestPayment('카드', paymentData);
+    	});
+}
 	
 </script>
 
-<%@ include file="../common/Footer.jsp"%>
+<%@ include file="../common/Footer.jsp" %>

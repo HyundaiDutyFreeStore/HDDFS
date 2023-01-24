@@ -6,11 +6,21 @@ import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import net.sf.*;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +32,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -43,6 +58,22 @@ import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
 
+
+/**
+ *OrderController
+ * 
+ * @author 박진수
+ * @since 01.16
+ * 
+ *        <pre>
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.16    박진수                        최초 생성
+ * 2023.01.17    박진수                        여권정보페이지 로드 및 여권정보 등록
+ * 2023.01.18    박진수                        출국정보 페이지 로드 및 출국정보 등록
+ * 2023.01.19    박진수                        지불페이지 로드 및 결제 구현
+ *        </pre>
+ */
 @Controller
 @RequestMapping("/order")
 @Log4j
@@ -66,18 +97,44 @@ public class OrderController {
 
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
-	public String orderexec(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
-			throws Exception {
-		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
+	@ResponseBody
+	public String orderexec(HttpServletRequest request, Model model, Principal prin) throws Exception {
+
+		List<OrderItemVO> orderitemlist = new ArrayList<OrderItemVO>();
+		System.out.println(request.getParameter("orderitemlists"));
+		String[] split1 = request.getParameter("orderitemlists").split("OrderItemVO");
+		for (int i = 0; i < split1.length; i++) {
+			if (split1[i].equals("[")) {
+				continue;
+			}
+			OrderItemVO orderitem = new OrderItemVO();
+			String[] split2 = split1[i].split(",");
+			for (int j = 0; j < split2.length; j++) {
+				System.out.println("j" + j + split2[j]);
+			}
+			String pcode = split2[0].substring(7);
+			String oamount = split2[1].substring(9);
+			orderitem.setPcode(pcode);
+			orderitem.setOamount(Integer.parseInt(oamount));
+			System.out.println(split2[0].substring(7));
+			System.out.println(split2[1].substring(9));
+			orderitemlist.add(orderitem);
+		}
+
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		MemberVO member = memberservice.read(prin.getName());
 		int ordertotalstock = 0;
 		java.util.Date nowdate = new java.util.Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid = "OR" + simpleDateFormat.format(nowdate);
-
-		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료", request.getParameter("olvoarrdate"),
-				request.getParameter("olvoplnum"), request.getParameter("olvoelnum"),
-				request.getParameter("olvoplace"));
+		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료",
+				request.getParameter("olvodeptdate"), request.getParameter("olvoplnum"),
+				request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
@@ -86,7 +143,7 @@ public class OrderController {
 			cart.setPcode(order.getPcode());
 			cart.setMid(prin.getName());
 
-			// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제
+			// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제 if
 			if (cartservice.Cartitemconsist(cart) == 1) {
 				cartservice.deleteCart(cart);
 			}
@@ -98,8 +155,8 @@ public class OrderController {
 		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
 
 		member.setMtotal(Double.parseDouble(request.getParameter("total_bill_dollar_text")));
-		
-		//주문자의 포인트 및 총주문금액을 업데이트
+
+		// 주문자의 포인트 및 총주문금액을 업데이트
 		memberservice.updateMhpoint(member);
 
 		model.addAttribute("total_bill_dollar_text", request.getParameter("total_bill_dollar_text"));
@@ -108,63 +165,7 @@ public class OrderController {
 		model.addAttribute("oid", oid);
 		model.addAttribute("orderitemlist", orderitemlist);
 
-		// 주문 QR코드 전송
-		String root = request.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
-		String savePath = root + "\\qrCodes\\"; // 파일 경로
-		System.out.println(savePath);
-		// 파일 경로가 없으면 생성하기
-		File file = new File(savePath);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-
-		// 링크로 할 URL주소
-		String url = oid;
-
-		// 링크 생성값
-		String codeurl = new String(url.getBytes("UTF-8"), "ISO-8859-1");
-
-		// QRCode 색상값
-		int qrcodeColor = 0xFF2e4e96;
-		// QRCode 배경색상값
-		int backgroundColor = 0xFFFFFFFF;
-
-		// QRCode 생성
-		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = qrCodeWriter.encode(codeurl, BarcodeFormat.QR_CODE, 200, 200); // 200,200은 width, height
-
-		MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig(qrcodeColor, backgroundColor);
-		BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix, matrixToImageConfig);
-
-		String fileName = oid;
-
-		// 파일 경로, 파일 이름 , 파일 확장자에 맡는 파일 생성
-		File temp = new File(savePath + fileName + ".png");
-
-		// ImageIO를 사용하여 파일쓰기
-		ImageIO.write(bufferedImage, "png", temp);
-		/* 이메일 보내기 */
-		String setFrom = "hdite1284@naver.com";
-		String toMail = member.getMemail();
-		String title = "주문 QR 이메일 입니다.";
-		String content = "주문해주셔서 감사합니다." + "<br><br>" + "QR코드는  첨부파일 확인" + "<br>";
-
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			helper.setFrom(setFrom);
-			helper.setTo(toMail);
-			helper.setSubject(title);
-			helper.setText(content, true);
-			FileSystemResource qr = new FileSystemResource(temp);
-			helper.addAttachment(fileName + ".png", qr);
-			mailSender.send(message);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return "/order/orderdone";
+		return oid;
 
 	}
 
@@ -172,40 +173,49 @@ public class OrderController {
 	@PostMapping("/orderpays")
 	public String postorderpay(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
 			throws Exception {
-		
+
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
+		String orderName = "";
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
+			if (cartprice == 0) {
+				orderName += product.getPname();
+			}
 			cartprice += (product.getPprice() * order.getOamount());
 			cartdisprice += (cartprice * (1 - ((float) product.getPdiscount() / 100))) * order.getOamount();
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
 
+		// 토스페이에 상품 이름을 담기 위해 필요
+		if (orderitemlist.size() > 1) {
+			orderName += " 외" + (orderitemlist.size() - 1) + "개";
+		}
+
 		String orderDpatPlacCd = request.getParameter("orderDpatPlacCd");
 		String oplnum = request.getParameter("openNm");
-		String oarrdate = request.getParameter("oarrdate");
+		String odeptdate = request.getParameter("odeptdate");
 		String dpatTmH = request.getParameter("dpatTmH");
 		String dpatTmM = request.getParameter("dpatTmM");
 		String ugntComuMophNo = request.getParameter("ugntComuMophNo");
-		
+
 		OrderListVO olv = new OrderListVO();
 		olv.setMid(prin.getName());
 		olv.setOplnum(oplnum);
-		
+
 		String[] dpatTmHarr = dpatTmH.split("시");
 		String[] dpatTmMarr = dpatTmM.split("분");
-		String date = oarrdate + " " + dpatTmHarr[0] + ":" + dpatTmMarr[0];
-		
-		olv.setOarrdate(date);
+		String date = odeptdate + " " + dpatTmHarr[0] + ":" + dpatTmMarr[0];
+
+		olv.setOdeptdate(date);
 		olv.setOelnum(ugntComuMophNo);
 		olv.setOplace(orderDpatPlacCd);
-		
+
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -215,7 +225,8 @@ public class OrderController {
 		model.addAttribute("orderlist", olv);
 		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
-
+		model.addAttribute("passport", orderservice.PassportConsist(prin.getName()));
+		model.addAttribute("orderName", orderName);
 		return "/order/orderpays";
 	}
 
@@ -229,7 +240,7 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-		
+
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -237,7 +248,7 @@ public class OrderController {
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		
+
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -256,7 +267,7 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-		
+
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -264,7 +275,7 @@ public class OrderController {
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		
+
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
 		model.addAttribute("cartdis", cartdis);
@@ -281,12 +292,12 @@ public class OrderController {
 			throws Exception {
 		List<OrderItemVO> orderitemlist = orderitemlists.getOrderitem();
 		MemberVO member = memberservice.read(prin.getName());
-		
+
 		float cartprice = 0;
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-		
+
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -294,7 +305,7 @@ public class OrderController {
 			cartdis += product.getPprice() * ((float) product.getPdiscount() / 100) * order.getOamount();
 			cartstock += order.getOamount();
 		}
-		model.addAttribute("mhdiscount",request.getParameter("mhdiscount"));
+		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);
@@ -332,7 +343,7 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-		
+
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -354,10 +365,10 @@ public class OrderController {
 		passport.setGivenname(request.getParameter("mFirstname"));
 		passport.setPgender(request.getParameter("mGender"));
 
-		// 포맷터
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-		// 문자열 -> Date
+
 		Date DatemBirth = Date.valueOf(request.getParameter("mBirth"));
 
 		passport.setPbirth(DatemBirth);
@@ -369,10 +380,17 @@ public class OrderController {
 		passport.setExpirydate(DatemPsptexdit);
 
 		orderservice.insertPassport(passport);
-		
+
 		return "/order/DepartureInfo";
 
 	}
-
+	
+	@RequestMapping("/deleteorder")
+	@ResponseBody
+	public String deleteorder(String oid) {
+		
+		orderservice.deleteorder(oid);
+		return "yes";
+	}
 
 }
