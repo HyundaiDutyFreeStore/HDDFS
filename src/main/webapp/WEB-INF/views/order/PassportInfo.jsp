@@ -273,16 +273,16 @@
 										}
 										%>
 										$(".totalGoosUsd").text("$"+ priceComma(parseFloat("${cartprice}").toFixed(2)));
-										$(".totalGoosKrw").text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+										$(".totalGoosKrw").text(priceComma((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
 										$(".sale.totalDcUsd").text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
-										$(".sale.totalDcKrw").text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
+										$(".sale.totalDcKrw").text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
 										$(".sumGoosQty").text("${cartcounttotal}");
 										$(".payTotalSettUsd").text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
-										$(".payTotalSettKrw").text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+										$(".payTotalSettKrw").text(priceComma(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0))+ "원");
 										$('#totalGoosUsdinput').attr('value',"${cartprice}");
 										$('#totalDcUsdinput').attr('value',"${cartdis}");
 										$('#cartstockinput').attr('value',"${cartstock}");
-										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
 										$('.totalRsvg').text("${mhdiscount}"+"%");
 									});
 

@@ -354,7 +354,7 @@ public class MemberController {
 	 * 
 	 * }
 	 * 
-	 * 아이디 찾기
+	 *  아이디 찾기
 	 * 
 	 * @RequestMapping(value = "findID.do", method = RequestMethod.POST) public
 	 * String findIDPOST(HttpServletRequest request, MemberVO member,

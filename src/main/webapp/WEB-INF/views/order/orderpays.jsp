@@ -1836,12 +1836,12 @@ $(document).ready(function(){
 			modal : true
 		});
 		$('.total_bill_dollar_text').text('$'+priceComma(parseFloat("${cartprice}").toFixed(2)));
-		$('.total_bill_won_text').text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+		$('.total_bill_won_text').text(priceComma((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
 		$('.totalDcUsd').text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
-		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
+		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
 		$('.totalSettUsd').text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
-		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
-		$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*(parseFloat("${mhdiscount}")/100)).toFixed(0))+"원");
+		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0))+ "원");
+		$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*(parseFloat("${mhdiscount}")/100)).toFixed(0))+"원");
 		$('.totalRsvg').text("${mhdiscount}"+"%");
 		
 		
@@ -1887,7 +1887,7 @@ $(document).ready(function(){
 	function orderexec(){
 		$('#settInfoLayerPopupmodal').show();
 		
-		var mhpoint =(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
+		var mhpoint =(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
 		var total_bill_dollar_text=((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2);
 		
 		
@@ -1902,7 +1902,7 @@ $(document).ready(function(){
 				total_bill_dollar_text:total_bill_dollar_text,
 				mhpoint : mhpoint
 		};
-		var total_bill_dollar_text=((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0);
+		var total_bill_dollar_text=((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0);
 		
 		$.ajax({
 			method:"post",
