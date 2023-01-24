@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,10 +86,14 @@ public class PedestrianController {
 		List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime(odeptdate);
 		//List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime("20230120");
 		JSONObject jsonObj = new JSONObject();
+		JSONArray jarr = new JSONArray();
 		// 시간대별 인원
 		for (int i = 0; i < 24; i++) {
-			jsonObj.put(String.valueOf(i), getCustomerPerTime.get(i).getCount());
+			JSONObject obj = new JSONObject(getCustomerPerTime.get(i));
+			jarr.put(obj);
+			//jsonObj.put(String.valueOf(i), getCustomerPerTime.get(i).getCount());
 		}
+		jsonObj.put("customers", jarr);
 		String json = jsonObj.toString();
 		System.out.println(json);
 		return json;
