@@ -3,8 +3,8 @@ package com.hyundai.dutyfree.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.hyundai.dutyfree.vo.CustomerVO;
 import com.hyundai.dutyfree.vo.MemberVO;
-import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
@@ -39,4 +39,6 @@ public interface OrderMapper {
 	public List<OrderListVO> getorderlistBymid(HashMap<String, String> listmap);
 	
 	public void deleteorder(String oid);
+	
+	public List<CustomerVO> getCustomerPerTime(String odeptdate);
 }
