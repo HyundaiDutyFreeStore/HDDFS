@@ -82,10 +82,10 @@
 										href="javascript:requestAnswer('인도장안내')"><span class="img"><img
 												src="/resources/images/gps.png"
 												alt=""></span><span class="txt">인도장 안내</span></a></li>
-									<li title="인도장 혼잡도 확인"><a
-										href="javascript:conf('인천공항')"><span class="img"><img
+									<li title="시간당 고객수 확인"><a
+										href="javascript:requestAnswer('시간당 고객수 확인')"><span class="img"><img
 												src="/resources/images/gps.png"
-												alt=""></span><span class="txt">인도장 혼잡도 확인</span></a></li>
+												alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
 								</ul>
 							</div>
 						</div>
@@ -188,6 +188,10 @@
 				console.log("인도장안내에대한답변");
 				faqAnswer="문의하실 인도장을 선택하세요";
 			}
+			if(menu=='시간당 고객수 확인'){
+				console.log("시간당 고객수 확인에대한답변");
+				faqAnswer="문의하실 인도장을 선택하세요";
+			}
 			var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
                 <div class="bubble has-moving in" style="max-height: 2468px;">
                 <div class="inner">`
@@ -211,6 +215,24 @@
                          <span>김포공항</span> 
                      </button>`;
                 }
+                if(menu=='시간당 고객수 확인'){
+               	 template += ` <button type="button" class="btn-link is-node"
+                        onclick="customCnt('인천공항 1터미널 동쪽')">
+                        <span>인천공항 1터미널 동쪽</span> 
+                    </button>`;
+               	 template += ` <button type="button" class="btn-link is-node"
+                        onclick="customCnt('인천공항 1터미널 서쪽')">
+                        <span>인천공항 1터미널 서쪽</span> 
+                    </button>`;
+               	 template += ` <button type="button" class="btn-link is-node"
+                        onclick="customCnt('인천공항 2터미널')">
+                        <span>인천공항 2터미널</span> 
+                    </button>`;
+               	 template += ` <button type="button" class="btn-link is-node"
+                        onclick="customCnt('김포공항')">
+                        <span>김포공항</span> 
+                    </button>`;
+               }
                 template+=`</div></div>`;
             document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
             scrollDown();
@@ -219,7 +241,7 @@
 		//인도장위치 띄우기
 		 function platform(ter) {
 			console.log(ter);
-			clickMenu(ter);
+			clickMenu(ter+" 인도장 위치확인");
 			var terImg;
 			var terTxt;
 			var terConf;
@@ -295,6 +317,81 @@
 			
 			scrollDown();
 		}
+		
+		 function customCnt(ter,date) {
+			 console.log("날짜구하기");
+			 var today = new Date();
+				var tomorrow = new Date();
+				var datomorrow = new Date();
+				
+				var now = today.getDate();	//계산을 위한 오늘날짜
+				
+				tomorrow.setDate(now+1);
+				datomorrow.setDate(now+2);
+				
+				today = today.toISOString().substring(0,10).replace(/-/g,'');
+				tomorrow = tomorrow.toISOString().substring(0,10).replace(/-/g,'');
+				datomorrow = datomorrow.toISOString().substring(0,10).replace(/-/g,'');
+				
+				console.log("today : "+	today);
+				console.log("tomorrow : "+ tomorrow);
+				console.log("datomorrow : "+datomorrow);
+				var txt = ter+" 인도장 : 날짜를 선택하세요";
+				var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+	                <div class="bubble has-moving in" style="max-height: 2468px;">
+	                <div class="inner">`
+	                + txt
+	                +`</div>`;
+				template += ` <button type="button" class="btn-link is-node"
+                    onclick="customCnt2('`+ter+`','`+today+`')">
+                    <span>`+today+`</span> 
+                </button>`;
+                template += ` <button type="button" class="btn-link is-node"
+                    onclick="customCnt2('`+ter+`','`+tomorrow+`')">
+                    <span>`+tomorrow+`</span> 
+                </button>`;
+                template += ` <button type="button" class="btn-link is-node"
+                    onclick="customCnt2('`+ter+`','`+datomorrow+`')">
+                    <span>`+datomorrow+`</span> 
+                </button>`;
+				document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+		        scrollDown();
+		 }
+		
+		//인도장의 시간당 고객수 띄우기
+		 function customCnt2(ter,date) {
+			 console.log(date+" - "+ter+" 시간당 고객수 띄우기");
+			 clickMenu(ter+"인도장 시간대 별  고객수");
+			 
+			 $.ajax({
+					type : 'GET',
+					url : "/common/conffut",
+					data : {odeptdate : date},
+					success: function(data){
+						console.log("ajax성공");
+						console.log(data);
+						for(let i=0; i<24;i++){
+							var tmp = data.i;
+							console.log(i+"시: "+tmp);
+						}
+					}
+				});
+			 
+			 var txt = ter+" 인도장<br>"+ date +"<br> 탑승시간대 별 고객수 입니다.<hr>";
+			/*  var answer = "00시~01시 : 00명 <br>01시~02시 : 00명<br>02시~03시 : 00명<br>03시~04시 : 00명<br>04시~05시 : 00명"
+			 		   + "<br>05시~06시 : 00명<br>06시~07시 : 00명<br>07시~08시 : 00명<br>08시~09시 : 00명<br>09시~10시 : 00명"
+			 		   + "<br>10시~11시 : 00명<br>11시~12시 : 00명<br>12시~13시 : 00명<br>13시~14시 : 00명<br>14시~15시 : 00명"
+			 		   + "<br>15시~16시 : 00명<br>16시~17시 : 00명<br>17시~18시 : 00명<br>18시~19시 : 00명<br>19시~20시 : 00명"
+			 		   + "<br>19시~20시 : 00명<br>20시~21시 : 00명<br>21시~22시 : 00명<br>22시~23시 : 00명<br>23시~24시 : 00명"; */
+			 var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+	                <div class="bubble has-moving in" style="max-height: 2468px;">
+	                <div class="inner">`
+	                + txt
+	                +`</div>`;
+	         document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+			 scrollDown();
+		 }
+		
 		// 페이지 맨 하단으로 이동
 	    function scrollDown() {
 	        setTimeout(function () {

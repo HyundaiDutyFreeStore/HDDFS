@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,16 +97,17 @@ public class ProductController {
 	// 정렬,필터적용으로 상품목록 다시 띄우기
 	@ResponseBody
 	@GetMapping(value = "/filter", produces = "application/json; charset=UTF-8")
-	public String filterList(Criteria cri, CategoryVO cate) {
+	public String filterList(Criteria cri, CategoryVO cate, HttpSession session) {
 		System.out.println("filter에 들어옴");
 		System.out.println("cate: "+cate);
 		System.out.println("cri: "+cri);
 		//CategoryVO cate = new CategoryVO(clarge, cmedium, csmall);
 		//System.out.println(cate);
 		System.out.println("controller에서 cri값: " + cri);
-
+		System.out.println("controller에서 session: "+ session.getAttribute("KRW_WON"));
 		JSONObject jsonObj = new JSONObject();
-
+		//환율
+		jsonObj.put("rate", session.getAttribute("KRW_WON"));
 		// 정렬
 		jsonObj.put("order", cri.getOrder());
 		// 현재 페이지번호
