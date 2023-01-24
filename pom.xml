@@ -336,6 +336,13 @@
 			<artifactId>opencsv</artifactId>
 			<version>2.3</version>
 		</dependency>
+		
+		<!-- 채팅을 위해 추가 -->
+		<dependency>
+    		<groupId>org.springframework</groupId>
+    		<artifactId>spring-websocket</artifactId>
+    		<version>5.0.7.RELEASE</version>
+		</dependency>
 
 	</dependencies>
 	<build>
