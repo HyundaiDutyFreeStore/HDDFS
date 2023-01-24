@@ -741,9 +741,11 @@
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                    	${orderlist.ostatus }</td>
 												</tr>
+												
 												<c:if test="${orderlist.orderitemlist.size()> 1}">
 												<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
 												<c:if test="${!status.first }">
+												<tr>
 												<td rowspan="1">
 													<div class="product_info">
 			                                            <span class="on_img">
@@ -760,6 +762,7 @@
 			                                         <td>
 			                                         ${orderitem.oamount }
 			                                         </td>
+			                                         </tr>
 												</c:if>
 												</c:forEach>
 												</c:if>
