@@ -336,7 +336,7 @@
 				console.log("today : "+	today);
 				console.log("tomorrow : "+ tomorrow);
 				console.log("datomorrow : "+datomorrow);
-				var txt = ter+" 인도장 : 날짜를 선택하세요";
+				var txt = ter+" 인도장<br> 조회할 날짜를 선택하세요";
 				var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
 	                <div class="bubble has-moving in" style="max-height: 2468px;">
 	                <div class="inner">`
@@ -369,27 +369,30 @@
 					data : {odeptdate : date},
 					success: function(data){
 						console.log("ajax성공");
-						console.log(data);
+						console.log(data.customers);
+						arr = data.customers;
+						
+						 var txt = ter+" 인도장<br>"+ date +"<br> 탑승시간대 별 고객수 입니다.<hr>";
+						 var answer ="";
 						for(let i=0; i<24;i++){
-							var tmp = data.i;
-							console.log(i+"시: "+tmp);
+							var customer = arr.at(i);
+							var hours = customer.hours;
+							var count = customer.count;
+							console.log(hours+" : "+count);
+							answer += hours+"시 : "+count+" 명<br>";
+							/* let tmp = data.i;
+							console.log(i+"시: "+tmp); */
 						}
+						 var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+				                <div class="bubble has-moving in" style="max-height: 2468px;">
+				                <div class="inner">`
+				                + txt
+				                + answer
+				                +`</div>`;
+				         document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+						 scrollDown();
 					}
 				});
-			 
-			 var txt = ter+" 인도장<br>"+ date +"<br> 탑승시간대 별 고객수 입니다.<hr>";
-			/*  var answer = "00시~01시 : 00명 <br>01시~02시 : 00명<br>02시~03시 : 00명<br>03시~04시 : 00명<br>04시~05시 : 00명"
-			 		   + "<br>05시~06시 : 00명<br>06시~07시 : 00명<br>07시~08시 : 00명<br>08시~09시 : 00명<br>09시~10시 : 00명"
-			 		   + "<br>10시~11시 : 00명<br>11시~12시 : 00명<br>12시~13시 : 00명<br>13시~14시 : 00명<br>14시~15시 : 00명"
-			 		   + "<br>15시~16시 : 00명<br>16시~17시 : 00명<br>17시~18시 : 00명<br>18시~19시 : 00명<br>19시~20시 : 00명"
-			 		   + "<br>19시~20시 : 00명<br>20시~21시 : 00명<br>21시~22시 : 00명<br>22시~23시 : 00명<br>23시~24시 : 00명"; */
-			 var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
-	                <div class="bubble has-moving in" style="max-height: 2468px;">
-	                <div class="inner">`
-	                + txt
-	                +`</div>`;
-	         document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
-			 scrollDown();
 		 }
 		
 		// 페이지 맨 하단으로 이동
