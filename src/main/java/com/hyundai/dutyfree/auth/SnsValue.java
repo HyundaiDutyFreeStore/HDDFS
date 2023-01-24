@@ -6,7 +6,18 @@ import com.github.scribejava.core.builder.api.DefaultApi20;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
+/**
+ * SnsValue
+ * 
+ * @author 김가희
+ * @since 01.19
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.19   김가희                         최초 생성
+ * 2023.01.20   김가희                         카카오 추가       
+ */
 @Data
 public class SnsValue implements SnsUrls {
 	private String service;

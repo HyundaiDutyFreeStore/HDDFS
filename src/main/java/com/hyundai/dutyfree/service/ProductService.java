@@ -6,7 +6,18 @@ import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
-
+/**
+ * ProductService
+ * 
+ * @author 김가희
+ * @since 01.11
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.11    김가희                        최초 생성
+ *        
+ */
 public interface ProductService {
 	
 	//상품목록 불러오기

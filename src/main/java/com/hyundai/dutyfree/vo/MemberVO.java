@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
  * 2023.01.09    김찬중                         최초 생성
+ * 2023.01.17    김가희                         시큐리티 추가
  *        </pre>
  */
 @Data
@@ -32,12 +33,5 @@ public class MemberVO {
 	private String mgender; // 회원 성별
 	private String mrole; //시큐리티를 위한 권한
 	private double mtotal; //주문총금액
-
-	/*
-	 * @Override public String toString() { return "MemberVO [mid=" + mid +
-	 * ", mpassword=" + mpassword + ", memail=" + memail + ", mphone=" + mphone +
-	 * ", mname=" + mname + ", mhpoint=" + mhpoint + ", mregdate=" + mregdate +
-	 * ", mgrade=" + mgrade + ", mgender=" + mgender + "]"; }
-	 */
 
 }

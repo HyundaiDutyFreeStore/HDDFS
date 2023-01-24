@@ -23,7 +23,21 @@ import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
-
+/**
+ * ProductController
+ * 
+ * @author 김가희
+ * @since 01.11
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.11    김가희                        최초 생성
+ * 2023.01.12    김가희                        페이징 처리
+ * 2023.01.14    김가희                        상품필터링
+ * 2023.01.15    김가희                        상품검색
+ *        
+ */
 @Controller
 @RequestMapping("/product")
 public class ProductController {

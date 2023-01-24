@@ -48,7 +48,7 @@ import lombok.extern.log4j.Log4j;
 /**
  * MemberController
  *
- * @author 김찬중
+ * @author 김찬중, 김가희, 박진수
  * @since 01.09
  *
  *        <pre>
@@ -58,6 +58,7 @@ import lombok.extern.log4j.Log4j;
  * 2023.01.17    김가희                            시큐리티적용
  * 2023.01.19    김가희                            소셜로그인(네이버)추가
  * 2023.01.20    김가희                            소셜로그인(카카오)추가
+ * 2023.01.21    박진수                            마이페이지
  *        </pre>
  */
 

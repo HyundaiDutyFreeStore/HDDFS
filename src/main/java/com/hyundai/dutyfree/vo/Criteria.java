@@ -3,9 +3,17 @@ package com.hyundai.dutyfree.vo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-/* 작성자 : 김가희
- * 페이징에 필요한 정보를 저장하는 객체
+/**
+ * Criteria
+ * 
+ * @author 김가희
+ * @since 01.12
+ * 
+ *        <pre>
+ * 수정일                 수정자                         수정내용
+ * ----------  ---------------    ---------------------------
+ * 2023.01.12    김가희                         최초 생성
+ *        </pre>
  */
 @Getter
 @Setter

@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!--  
+ * ProductList.jsp
+ * 
+ * @author 김가희
+ * @since 01.15
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.15    김가희                        최초 생성
+ *        
+-->
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <!-- 정렬방식 선택시 이동 -->
 <script>

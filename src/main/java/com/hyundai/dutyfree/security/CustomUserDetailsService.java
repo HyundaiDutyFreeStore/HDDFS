@@ -14,7 +14,18 @@ import com.hyundai.dutyfree.security.domain.CustomUser;
 import com.hyundai.dutyfree.vo.MemberVO;
 
 import lombok.extern.log4j.Log4j;
-
+/**
+ * CustomUserDetailsService
+ * 
+ * @author 김가희
+ * @since 01.17
+ * 
+ *        
+ * 수정일                 수정자                         수정내용
+ * ----------  ---------------    ---------------------------
+ * 2023.01.17    김가희                        최초 생성
+ *        
+ */
 @Log4j
 public class CustomUserDetailsService implements UserDetailsService{
 	@Autowired

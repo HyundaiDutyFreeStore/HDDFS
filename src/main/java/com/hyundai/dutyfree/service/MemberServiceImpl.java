@@ -7,16 +7,16 @@ import com.hyundai.dutyfree.mapper.MemberMapper;
 import com.hyundai.dutyfree.vo.MemberVO;
 
 /**
- * MemberMepper
+ * MemberService
  *
- * @author 김찬중, 이준석
- * @since 10.06
+ * @author 김찬중, 김가희
+ * @since 01.12
  *
  *        <pre>
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
- * 2022.10.05	  이준석			최초 생성
- * 2022.10.07	  김찬중			로그인 서비스 구현
+ * 2023.01.12	  김찬중				최초 생성
+ * 2023.01.17    김가희                            시큐리티적용
  *        </pre>
  */
 @Service

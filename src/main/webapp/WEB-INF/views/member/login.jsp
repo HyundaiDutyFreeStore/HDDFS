@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!--
+/**
+ * login.jsp
+ *
+ * @author 김찬중, 김가희
+ * @since 01.09
+ *
+ *        <pre>
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.17    김가희                            시큐리티적용
+ * 2023.01.19    김가희                            소셜로그인(네이버)추가
+ * 2023.01.20    김가희                            소셜로그인(카카오)추가
+ *        
+-->
+
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <script type="text/javascript">
 	
