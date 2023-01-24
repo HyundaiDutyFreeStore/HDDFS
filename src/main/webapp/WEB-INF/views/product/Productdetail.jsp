@@ -2,12 +2,37 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <!-- // header -->
-<body>
-	<div id="wrap">
+<!-- <body>
+	<div id="wrap"> -->
 	    <!-- container -->
-		<main id="container" >
-			<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/productdetail.css">
+<main id="container" >
+<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/productdetail.css">
 <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/product.css">
+<script>
+$(function() {
+    $(window).scroll(function() {
+        var WScrollTop = $(window).scrollTop();
+        var val = $(document).height() - $(window).height() - $("#footer").outerHeight();
+        var headerHeight = $('#header').height();
+
+
+        $(".pd_visual").css('top', -WScrollTop + headerHeight)
+
+
+        // if (WScrollTop >= headerHeight){
+        //     $(".pd_visual").addClass("floor").css({top:""})
+        // } else {
+        //     $(".pd_visual").removeClass("floor").css({top:"121px"})
+        // }
+
+    });
+    $(".productdetail_box").scroll(function() {
+        var layerScroll = $(this).scrollTop();
+        $(".tab-style").css({top:(layerScroll)+"px"})
+    })
+});
+</script>
+<script src="https://cdn.hddfs.com/front/js/KO/product.js"></script>
 <script>
 //최근본 상품 쿠키에 저장하기
 $(function () {
@@ -15,7 +40,6 @@ $(function () {
 	addCookie2("${product.pcode}");
 });
 </script>
-<script src="https://cdn.hddfs.com/front/js/KO/product.js"></script>
 <script>
 //최근본 상품 쿠키에 저장하기
 function setCookie2(cookie_name, value) {
@@ -76,7 +100,7 @@ function loginChk() {
 </script>
 <article id="content" class="productdetail">
 	<section class="pd_area">
-		<div class="pd_visual">
+		<div class="pd_visual" style="position: fixed;">
 			<div class="info_button">
 				<div class="por_icons">
 					<span >세일</span><span>사은품</span><span>품절임박</span></div>
@@ -790,7 +814,6 @@ let count = parseInt($(".counts").val());
     <a href="javascript://" class="full_layer_close">닫기</a>
 </section> -->
 
-</div>
 
 <section class="setproduct">
 	<div class="box setGoosEvtList">
@@ -851,6 +874,7 @@ let count = parseInt($(".counts").val());
 <input type="hidden" id="goCallGoosInfo" value="go" />
 <input type="hidden" id="goCallReviewInfo" value="go" />
 <div class="ordertime_btn" onclick="location.href='https://www.hddfs.com/shop/om/consmGuide/useNotice.do#orderTimeInfo'"></div>
+</main>
 
 <script src="https://cdn.hddfs.com/front/js/KO/productdetail.js"></script>
 <script type="text/javascript">
@@ -907,7 +931,7 @@ function updateCart(){
  function cartConsist(){
 	 if (loginChk() == false) {
 			alert("로그인이 필요한 서비스입니다. 로그인해주세요");
-			location.href = "/join/login";
+			location.href = "/member/login";
 			return false; 
 		} else {
 			var productconsist=productamount();

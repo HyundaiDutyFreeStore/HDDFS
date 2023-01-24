@@ -82,6 +82,10 @@
 										href="javascript:requestAnswer('인도장안내')"><span class="img"><img
 												src="/resources/images/gps.png"
 												alt=""></span><span class="txt">인도장 안내</span></a></li>
+									<li title="인도장 혼잡도 확인"><a
+										href="javascript:conf('인천공항')"><span class="img"><img
+												src="/resources/images/gps.png"
+												alt=""></span><span class="txt">인도장 혼잡도 확인</span></a></li>
 								</ul>
 							</div>
 						</div>
@@ -104,16 +108,16 @@
 		<div class="chat-wrap">
     	<!-- 홈 버튼 -->
    		 <button type="button" class="btn-gohome" title="홈 버튼" onclick="home();"></button>
-    	<div class="chat-forms">
+    	<!-- <div class="chat-forms">
    			<form id="f-chat-wrap" method="post" class="forms" onsubmit="return false;" autocomplete="off">
-      			<!-- 검색어 입력 부분 -->
+      			검색어 입력 부분
         		<label for="inp-chat" style="position: absolute; width: 1px; height: 1px; top: 0; left: 0; font-size: 1px; overflow: hidden;">검색어</label>
         		<input type="text" class="inp-chat" id="inp-chat" placeholder="하이(H-AI)봇에 무엇이든 물어보세요!">
 
-   				<!-- 메시지 전송 버튼 -->
+   				메시지 전송 버튼
         		<button type="submit" class="btn-send" title="전송"></button>
     		</form>
-    	</div>
+    	</div> -->
 
    
 </div>
@@ -218,6 +222,7 @@
 			clickMenu(ter);
 			var terImg;
 			var terTxt;
+			var terConf;
 			if(ter=='인천공항 1터미널 동쪽'){
 				console.log("인천공항 1터미널 동쪽");
 				terImg = "/resources/images/ICNT1W.jpg";
@@ -252,13 +257,44 @@
 								src="`+terImg+`"
 								alt="">
 						</div>
-						<div class="desc">`+terTxt+`</div>
+						<div class="desc">`+terTxt+`
+						<button type="button" class="btn-link is-node"
+	                        onclick="conf('`+ter+`')">
+	                        <span>혼잡도 확인</span> 
+	                    	</button>
+						</div>
 					</div>
 				</div>
 				</div>`;
 				document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 			scrollDown();
-		} 
+		}
+		//혼잡도 가져오기
+		function conf(ter){
+			console.log(ter+"인도장 혼잡도 확인");
+			clickMenu(ter+"인도장 혼잡도 확인");
+			
+			$.ajax({
+				type : 'GET',
+				url : "/common/conf",
+				success: function(data){
+					console.log("ajax성공");
+					cnt = data.cnt;
+					console.log("현재인원수: "+cnt);
+					var confAnswer = "현재 인원수는 "+cnt+"명 입니다.";
+					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+		                <div class="bubble has-moving in" style="max-height: 2468px;">
+		                <div class="inner">`
+		                + confAnswer
+		                +`</div>`;
+					 document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+			         scrollDown();
+				}
+			});
+			
+			
+			scrollDown();
+		}
 		// 페이지 맨 하단으로 이동
 	    function scrollDown() {
 	        setTimeout(function () {
