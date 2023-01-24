@@ -84,9 +84,9 @@
 	</beans:bean>
 	
 	<!-- 채팅 -->
-	<websocket:handlers>
+	<!-- <websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
 		<websocket:sockjs></websocket:sockjs>
-	</websocket:handlers>
+	</websocket:handlers> -->
 
 </beans:beans>
