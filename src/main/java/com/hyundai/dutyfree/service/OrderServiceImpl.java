@@ -1,6 +1,5 @@
 package com.hyundai.dutyfree.service;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.OrderMapper;
+import com.hyundai.dutyfree.vo.CustomerVO;
 import com.hyundai.dutyfree.vo.MemberVO;
-import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
@@ -31,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderMapper mapper;
+	
+	
 	@Override
 	public void insertPassport(PassportVO passport) {
 		
@@ -110,6 +111,8 @@ public class OrderServiceImpl implements OrderService {
 		mapper.deleteorder(oid);
 	}
 	
-	
-
+	@Override
+	public List<CustomerVO> getCustomerPerTime(String odate) {
+		return mapper.getCustomerPerTime(odate);
+	}
 }

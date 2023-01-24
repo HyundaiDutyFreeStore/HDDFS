@@ -2,7 +2,7 @@ package com.hyundai.dutyfree.service;
 
 import java.util.List;
 
-import com.hyundai.dutyfree.vo.OrderItemListVO;
+import com.hyundai.dutyfree.vo.CustomerVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
@@ -38,4 +38,6 @@ public interface OrderService {
 	public List<OrderListVO> getorderlistBymid(String mid,String align);
 	
 	public void deleteorder(String oid);
+	
+	public List<CustomerVO> getCustomerPerTime(String odeptdate);
 }

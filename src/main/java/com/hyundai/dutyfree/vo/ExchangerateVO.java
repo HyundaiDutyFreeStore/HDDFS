@@ -1,8 +1,6 @@
 package com.hyundai.dutyfree.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * MemberVO
@@ -17,10 +15,7 @@ import lombok.NoArgsConstructor;
  *        </pre>
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ExchangerateVO {
 	private String mcountry; // 화폐
 	private double mmoney; // 환률
-
 }
