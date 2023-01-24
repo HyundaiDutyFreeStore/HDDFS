@@ -49,66 +49,65 @@
 		<div class="container">
 			<div class="contents">
 				<div id="intro" class="intro-wrap">
-						<!-- 인트로 캐릭터 (채널별 표시) -->
-						<div class="intro-character" style="padding: 10px;">
-							<p>FAQ</p>
+					<!-- 인트로 캐릭터 (채널별 표시) -->
+					<div class="intro-character" style="padding: 10px;">
+						<p>FAQ</p>
 
-							<div id="subIntroMsg"
-								style='font-size: 14px; font-weight: normal; text-align: center; padding-top: 10px;'>
-								현대백화점인터넷면세점 고객센터입니다. 무엇을 도와드릴까요?</div>
+						<div id="subIntroMsg"
+							style='font-size: 14px; font-weight: normal; text-align: center; padding-top: 10px;'>
+							현대백화점인터넷면세점 고객센터입니다. 무엇을 도와드릴까요?</div>
 
-							<!-- <div class="characters" style="margin: 10px auto 0;">
+						<!-- <div class="characters" style="margin: 10px auto 0;">
 								<span class=""><img
 									src="/resources/images/hddfs.png"></span>
 							</div> -->
+					</div>
+					<!-- 인트로 추천 GRID 타입 -->
+					<div id="intro-faq-grid" class="intro-faq is-basic"
+						style="margin: 0px;">
+						<!-- <p>다른 고객님들이 자주 이용하는 메뉴입니다.</p> -->
+						<div class="inner">
+							<ul>
+								<li title="내주문 보기"><a
+									href="javascript:requestAnswer('면세한도 안내')"><span
+										class="img"><img src="/resources/images/shopping.png"
+											alt=""></span><span class="txt">면세한도 안내</span></a></li>
+								<li title="취소/반품/교환"><a
+									href="javascript:requestAnswer('기내반입금지물품')"><span
+										class="img"><img src="/resources/images/plane.png"
+											alt=""></span><span class="txt">기내반입금지물품</span></a></li>
+								<li title="자주하는 질문"><a
+									href="javascript:requestAnswer('인도장안내')"><span class="img"><img
+											src="/resources/images/gps.png" alt=""></span><span
+										class="txt">인도장 안내</span></a></li>
+								<li title="시간당 고객수 확인"><a
+									href="javascript:requestAnswer('시간당 고객수 확인')"><span
+										class="img"><img src="/resources/images/gps.png" alt=""></span><span
+										class="txt">시간당 고객수 확인</span></a></li>
+							</ul>
 						</div>
-						<!-- 인트로 추천 GRID 타입 -->
-						<div id="intro-faq-grid" class="intro-faq is-basic"
-							style="margin: 0px;">
-							<!-- <p>다른 고객님들이 자주 이용하는 메뉴입니다.</p> -->
-							<div class="inner">
-								<ul>
-									<li title="내주문 보기"><a
-										href="javascript:requestAnswer('면세한도 안내')"><span
-											class="img"><img
-												src="/resources/images/shopping.png"
-												alt=""></span><span class="txt">면세한도 안내</span></a></li>
-									<li title="취소/반품/교환"><a
-										href="javascript:requestAnswer('기내반입금지물품')"><span
-											class="img"><img
-												src="/resources/images/plane.png"
-												alt=""></span><span class="txt">기내반입금지물품</span></a></li>
-									<li title="자주하는 질문"><a
-										href="javascript:requestAnswer('인도장안내')"><span class="img"><img
-												src="/resources/images/gps.png"
-												alt=""></span><span class="txt">인도장 안내</span></a></li>
-									<li title="시간당 고객수 확인"><a
-										href="javascript:requestAnswer('시간당 고객수 확인')"><span class="img"><img
-												src="/resources/images/gps.png"
-												alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
-								</ul>
-							</div>
-						</div>
-						</div>
+					</div>
+				</div>
 				<div id="chat-list" class="chat-list">
-					
-						<!-- 처음시작 -->
-						<div id="OT8HrethHwsPFv60vWIq" class="chat-item is-ktalk"
-							style="visibility: visible;">
-							<div id="RmczOk1feOuFhOAUqzZg" class="bubble has-moving in"
-								style="max-height: 357px;">
-								<div class="inner">고객님, 안녕하세요. 무엇이 궁금하신가요?</div>
-							</div>
-							<!-- <div class="date">오후 8:43</div> -->
+
+					<!-- 처음시작 -->
+					<div id="OT8HrethHwsPFv60vWIq" class="chat-item is-ktalk"
+						style="visibility: visible;">
+						<div id="RmczOk1feOuFhOAUqzZg" class="bubble has-moving in"
+							style="max-height: 357px;">
+							<div class="inner">고객님, 안녕하세요. 무엇이 궁금하신가요?</div>
 						</div>
+						<!-- <div class="date">오후 8:43</div> -->
+					</div>
 					<!-- </div> -->
 				</div>
 			</div>
 		</div>
 		<div class="chat-wrap">
-    	<!-- 홈 버튼 -->
-   		 <button type="button" class="btn-gohome" title="홈 버튼" onclick="home();"></button>
-    	<!-- <div class="chat-forms">
+			<!-- 홈 버튼 -->
+			<button type="button" class="btn-gohome" title="홈 버튼"
+				onclick="home();"></button>
+			<!-- <div class="chat-forms">
    			<form id="f-chat-wrap" method="post" class="forms" onsubmit="return false;" autocomplete="off">
       			검색어 입력 부분
         		<label for="inp-chat" style="position: absolute; width: 1px; height: 1px; top: 0; left: 0; font-size: 1px; overflow: hidden;">검색어</label>
@@ -119,8 +118,8 @@
     		</form>
     	</div> -->
 
-   
-</div>
+
+		</div>
 	</div>
 
 	<script>
@@ -159,6 +158,10 @@
 								href="javascript:requestAnswer('인도장안내')"><span class="img"><img
 										src="/resources/images/gps.png"
 										alt=""></span><span class="txt">인도장 안내</span></a></li>
+							<li title="시간당 고객수 확인"><a
+								href="javascript:requestAnswer('시간당 고객수 확인')"><span class="img"><img
+										src="/resources/images/gps.png"
+										alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -320,18 +323,19 @@
 		
 		 function customCnt(ter,date) {
 			 console.log("날짜구하기");
+			 console.log(new Date());
 			 var today = new Date();
+			 console.log("today: "+today);
 				var tomorrow = new Date();
 				var datomorrow = new Date();
 				
 				var now = today.getDate();	//계산을 위한 오늘날짜
-				
 				tomorrow.setDate(now+1);
 				datomorrow.setDate(now+2);
 				
-				today = today.toISOString().substring(0,10).replace(/-/g,'');
-				tomorrow = tomorrow.toISOString().substring(0,10).replace(/-/g,'');
-				datomorrow = datomorrow.toISOString().substring(0,10).replace(/-/g,'');
+				today = getFormatDate(today);
+				tomorrow = getFormatDate(tomorrow);
+				datomorrow = getFormatDate(datomorrow);
 				
 				console.log("today : "+	today);
 				console.log("tomorrow : "+ tomorrow);
@@ -394,6 +398,16 @@
 					}
 				});
 		 }
+		
+		//시간포맷바꾸는함수
+		 function getFormatDate(date){
+			    var year = date.getFullYear();              //yyyy
+			    var month = (1 + date.getMonth());          //M
+			    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+			    var day = date.getDate();                   //d
+			    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+			    return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+			}
 		
 		// 페이지 맨 하단으로 이동
 	    function scrollDown() {

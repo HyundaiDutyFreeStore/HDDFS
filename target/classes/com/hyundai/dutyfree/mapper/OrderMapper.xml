@@ -72,7 +72,7 @@
 		TO_CHAR ( a.odeptdate, 'HH24' )
 		) a
 		right join ( SELECT
-		to_number(TO_CHAR ( LEVEL )) as hours FROM DUAL CONNECT
+		to_number(TO_CHAR ( LEVEL ))-1 as hours FROM DUAL CONNECT
 		BY LEVEL <= 24
 		) b on a.hours = b.hours
 		order by 2 ]]>
