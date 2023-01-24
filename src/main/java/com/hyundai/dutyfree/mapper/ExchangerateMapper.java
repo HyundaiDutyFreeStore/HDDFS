@@ -19,5 +19,7 @@ public interface ExchangerateMapper {
 
 	// 환률수정
 	public void updateExchangerate(ExchangerateVO Exchangerate);
+	
+	public double getExchangerate(String mcountry);
 
 }

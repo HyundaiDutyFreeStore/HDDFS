@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +35,7 @@ import lombok.AllArgsConstructor;
  * 수정일                 수정자                          수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.19	  김찬중			       최초생성
- * 2023.01.20	  김찬중			       환률 API 적용 
+ * 2023.01.20	  김찬중			       환률 API 적용
  *        </pre>
  */
 
@@ -50,7 +52,7 @@ public class HomeController {
 	private ExchangerateService erservice;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model,HttpSession session) {
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -65,38 +67,41 @@ public class HomeController {
 		String strToday = sdf.format(c1.getTime());
 		try {
 
-			/*
-			 * URL url = new URL(
-			 * "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=uZmFXmU6tqwDHzhmZpmO1PW44bOPGHht&searchdate="
-			 * + strToday + "&data=AP01");
-			 * 
-			 * BufferedReader bf;
-			 * 
-			 * bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-			 * result = bf.readLine(); JsonParser parser = new JsonParser(); JsonElement
-			 * element = parser.parse(result); JsonArray arr = element.getAsJsonArray();
-			 * String usdstr =
-			 * arr.get(22).getAsJsonObject().get("deal_bas_r").getAsString(); double KRW =
-			 * Math.round(Float.valueOf(usdstr.replace(",", "")) * 100 / 100.0); String
-			 * eurstr = arr.get(8).getAsJsonObject().get("deal_bas_r").getAsString(); double
-			 * EUR = Math.round(KRW / Float.valueOf(eurstr.replace(",", "")) * 100) / 100.0;
-			 * double CNY = Math.round(KRW /
-			 * arr.get(6).getAsJsonObject().get("deal_bas_r").getAsFloat() * 100) / 100.0;
-			 * double JPY = Math.round(KRW /
-			 * arr.get(12).getAsJsonObject().get("deal_bas_r").getAsFloat() * 10000) /
-			 * 100.0; // System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " +
-			 * KRW + ", // EUR : " + EUR); String[] country = { "KRW", "EUR", "CNY", "JPY"
-			 * }; double[] money = { KRW, EUR, CNY, JPY };
-			 * 
-			 * for (int i = 0; i < 4; i++) { ExchangerateVO evo = new ExchangerateVO();
-			 * evo.setMcountry(country[i]); evo.setMmoney(money[i]);
-			 * erservice.updateExchangerate(evo); }
-			 */
+			URL url = new URL(
+					"https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=uZmFXmU6tqwDHzhmZpmO1PW44bOPGHht&searchdate="
+							+ strToday + "&data=AP01");
 
+			BufferedReader bf;
+
+			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+			result = bf.readLine();
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+			JsonArray arr = element.getAsJsonArray();
+			String usdstr = arr.get(22).getAsJsonObject().get("deal_bas_r").getAsString();
+			double KRW = Math.round(Float.valueOf(usdstr.replace(",", "")) * 100 / 100.0);
+			String eurstr = arr.get(8).getAsJsonObject().get("deal_bas_r").getAsString();
+			double EUR = Math.round(KRW / Float.valueOf(eurstr.replace(",", "")) * 100) / 100.0;
+			double CNY = Math.round(KRW / arr.get(6).getAsJsonObject().get("deal_bas_r").getAsFloat() * 100) / 100.0;
+			double JPY = Math.round(KRW / arr.get(12).getAsJsonObject().get("deal_bas_r").getAsFloat() * 10000) / 100.0;
+			//System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " + KRW + ", EUR : " + EUR);
+			String[] country = { "KRW", "EUR", "CNY", "JPY" };
+			double[] money = { KRW, EUR, CNY, JPY };
+
+			for (int i = 0; i < 4; i++) {
+				ExchangerateVO evo = new ExchangerateVO();
+				evo.setMcountry(country[i]);
+				evo.setMmoney(money[i]);
+				erservice.updateExchangerate(evo);
+			}
+
+			
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println(erservice.getExchangerate("KRW"));
+		session.setAttribute("KRW_WON", erservice.getExchangerate("KRW"));
 		return "Index";
 	}
 

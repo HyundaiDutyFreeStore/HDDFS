@@ -572,7 +572,7 @@
                                     }
                                     var result = data.result;
                                     $(".exchageRateTxt").html(
-                                        "$1 = " + result.krw +
+                                        "$1 = " + "${KRW}" +
                                         " 원</em>");
                                     /* 
                                     if(getCookie("currencyNtnlCd") =="KR"){
@@ -1537,7 +1537,7 @@
 									class="ko">KRW</a> <a href="javascript:"
 									onclick="chgCurrencyInfo('CNY');" class="cn">CNY</a>
 							</div></li>
-						<li class="exchange_rate exchageRateTxt" id="Exchange"></li>
+						<li class="exchange_rate exchageRateTxts" id="Exchanges"> $1 = ${KRW_WON} 원 </li>
 					</ul>
 				</div>
 				<!-- 환율 -->
@@ -1561,7 +1561,7 @@
                                 const num = parseFloat(String(JSON.parse(result).result));
                                 const num2 = num.toFixed(1);
                                 const Exchange = document.getElementById("Exchange");
-                                Exchange.innerText = "1$ =" + String(num2) + " 원";
+                                /* Exchange.innerText = "1$ =" + String(num2) + " 원"; */
                                 console.log(result);
 
                             })
