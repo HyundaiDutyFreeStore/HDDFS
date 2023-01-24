@@ -10,15 +10,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hyundai.dutyfree.vo.MemberVO;
 
 /**
- * MemberVO
+ * OrderMapperTests
  * 
- * @author 김찬중
- * @since 01.09
+ * @author 박진수
+ * @since 01.13
  * 
  *        <pre>
  * 수정일                 수정자                                  수정내용
  * ----------  ---------------    ---------------------------
- * 2023.01.09   박진수                               최초 생성
+ * 2023.01.13   박진수                               최초 생성
  *        </pre>
  */
 
