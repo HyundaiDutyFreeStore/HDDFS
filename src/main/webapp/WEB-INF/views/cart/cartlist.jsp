@@ -103,7 +103,7 @@
 													value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}"
 													pattern="#,##0.##" /></strong>
                                                 <span><fmt:formatNumber
-													value="${cart.pprice*(1-(cart.pdiscount/100))*1267*cart.cartstock}"
+													value="${cart.pprice*(1-(cart.pdiscount/100))*KRW_WON*cart.cartstock}"
 													pattern="#,#00" />원</span>
                                             </p>                                                
                                             </a>
@@ -168,7 +168,7 @@
 													value="${cart.pprice*(1-(cart.pdiscount/100))*cart.cartstock}"
 													pattern="#,##0.##" /></strong>
                                                 <span><fmt:formatNumber
-													value="${cart.pprice*(1-(cart.pdiscount/100))*1267*cart.cartstock}"
+													value="${cart.pprice*(1-(cart.pdiscount/100))*KRW_WON*cart.cartstock}"
 													pattern="#,#00" />원</span>
                                             </p>                                                
                                         </a>
@@ -370,14 +370,14 @@ function setOrderPrice(){
 		cartcounttotal+=1;
 	});
 	$(".totalGoosUsd").text("$"+priceComma(cartpricetotal.toFixed(2)));
-	$(".totalGoosKrw").text(priceComma((cartpricetotal*1267).toFixed(0))+"원");
+	$(".totalGoosKrw").text(priceComma((cartpricetotal*parseFloat("${KRW_WON}")).toFixed(0))+"원");
 	$(".sale.totalDcUsd").text("$"+priceComma(cartdistotal.toFixed(2)));
-	$(".sale.totalDcKrw").text(priceComma((cartdistotal*1267).toFixed(0))+"원");
+	$(".sale.totalDcKrw").text(priceComma((cartdistotal*parseFloat("${KRW_WON}")).toFixed(0))+"원");
 	$(".sumGoosQty").text(cartcounttotal);
 	$(".payTotalSettUsd").text("$"+priceComma((cartpricetotal-cartdistotal).toFixed(2)));
-	$(".payTotalSettKrw").text(priceComma(((cartpricetotal*1267)-(cartdistotal*1267)).toFixed(0))+"원");
+	$(".payTotalSettKrw").text(priceComma(((cartpricetotal*parseFloat("${KRW_WON}"))-(cartdistotal*parseFloat("${KRW_WON}"))).toFixed(0))+"원");
 	$(".totalRsvg").text("${mhdiscount}"+"%");
-	$(".totalRsvgDcKrw").text(priceComma((((cartpricetotal*1267)-(cartdistotal*1267))*("${mhdiscount}"/100)).toFixed(0))+"원");
+	$(".totalRsvgDcKrw").text(priceComma((((cartpricetotal*parseFloat("${KRW_WON}"))-(cartdistotal*parseFloat("${KRW_WON}")))*("${mhdiscount}"/100)).toFixed(0))+"원");
 }
 
 function priceComma(price) {

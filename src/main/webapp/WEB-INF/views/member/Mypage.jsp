@@ -621,7 +621,7 @@
 			                                        </c:forEach>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                        <p class="dollar">$ <fmt:formatNumber value="${orderlist.ordertotalprice-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
-			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*1267}" pattern="#,##0" />원</span></p>
+			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
 			                                        </td>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                    	${orderlist.ostatus }</td>
@@ -736,7 +736,7 @@
 			                                        </c:forEach>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                        <p class="dollar">$<fmt:formatNumber value="${orderlist.ordertotalprice-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
-			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*1267}" pattern="#,##0" />원</span></p>
+			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
 			                                        </td>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                    	${orderlist.ostatus }</td>
@@ -824,8 +824,6 @@
 		location.href = ctx_shop + '/dm/main.do';
 	}
 	
-	/* $(".dollar").text("$"+ priceComma(((parseFloat("${orderprice}") - parseFloat("${orderdis}"))).toFixed(2)));
-	$(".k_won").text(priceComma(((parseFloat("${orderprice}") * 1267) - (parseFloat("${orderdis}") * 1267)).toFixed(0))+ "원"); */
 	
 	function priceComma(price) {
 		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

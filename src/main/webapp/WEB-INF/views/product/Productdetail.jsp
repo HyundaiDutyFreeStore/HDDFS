@@ -175,7 +175,7 @@ function loginChk() {
 													pattern="#,##0.##"/></del>
 													<del class="won">
 														<fmt:formatNumber
-													value="${product.pprice*1267}"
+													value="${product.pprice*KRW_WON}"
 													pattern="#,#00"/>원</del>
 												</li>
 												<li class="dispriceInfo">
@@ -185,7 +185,7 @@ function loginChk() {
 													pattern="#,##0.##" /></strong>
 													<p>
 														<fmt:formatNumber
-													value="${product.pprice*(1-(product.pdiscount/100))*1267}" pattern="#,#00"/>원</p>
+													value="${product.pprice*(1-(product.pdiscount/100))*KRW_WON}" pattern="#,#00"/>원</p>
 												</li>
 											</ul>
 										</div>
@@ -259,8 +259,8 @@ function loginChk() {
                 	<dt class="dorPrice0" value=<c:out value="${product.pprice*(1-(product.pdiscount/100))}"/>>$<fmt:formatNumber
 													value="${product.pprice*(1-(product.pdiscount/100))}"
 								pattern="#,##0.##" /></dt>
-                    <dd class="wonPrice0" value=<c:out value="${product.pprice*(1-(product.pdiscount/100))*1267}"/>><fmt:formatNumber
-													value="${product.pprice*(1-(product.pdiscount/100))*1267}" pattern="#,#00" /> <em>원</em></dd>
+                    <dd class="wonPrice0" value=<c:out value="${product.pprice*(1-(product.pdiscount/100))*KRW_WON}"/>><fmt:formatNumber
+													value="${product.pprice*(1-(product.pdiscount/100))*KRW_WON}" pattern="#,#00" /> <em>원</em></dd>
                  </dl>
                 </div>
         </div>
@@ -288,7 +288,7 @@ let count = parseInt($(".counts").val());
 			var wonprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(1).attr("value");
 	      		
 			var chDorprice = count*dorprice;
-			var chWonprice = "${product.pprice*1267}"*count;
+			var chWonprice = "${product.pprice*KRW_WON}"*count;
 				
 			$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
 			$(el).closest(".detailBox").find(".priceInfo").children().eq(1).text(priceComma(chWonprice.toFixed(0))+'원');
@@ -321,7 +321,7 @@ let count = parseInt($(".counts").val());
 		var wonprice = $(el).closest(".detailBox").find(".priceInfo").children().eq(1).attr("value");
       		
 		var chDorprice = count*dorprice;
-		var chWonprice = "${product.pprice*1267}"*count;
+		var chWonprice = "${product.pprice*KRW_WON}"*count;
 			
 			
 		$(el).closest(".detailBox").find(".priceInfo").children().eq(0).text('$'+chDorprice.toFixed(2).toLocaleString());
@@ -370,7 +370,7 @@ let count = parseInt($(".counts").val());
 							<dt>$<fmt:formatNumber
 													value="${product.pprice*(1-(product.pdiscount/100))}"
 													pattern="#,##0.##" /></dt>
-													<dd><fmt:formatNumber value="${product.pprice*(1-(product.pdiscount/100))*1267}" pattern="#,#00" /> <em>원</em></dd></dl>
+													<dd><fmt:formatNumber value="${product.pprice*(1-(product.pdiscount/100))*KRW_WON}" pattern="#,#00" /> <em>원</em></dd></dl>
 													</div>
 		                </div>
 					<div class="button_area">
