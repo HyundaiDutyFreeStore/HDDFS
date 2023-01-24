@@ -8,8 +8,59 @@
 		<main id="container" >
 			<link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/productdetail.css">
 <link rel="stylesheet" href="https://cdn.hddfs.com/front/css/KO/product.css">
+<script>
+//최근본 상품 쿠키에 저장하기
+$(function () {
+	console.log("펑션들어옴");
+	addCookie2("${product.pcode}");
+});
+</script>
 <script src="https://cdn.hddfs.com/front/js/KO/product.js"></script>
 <script>
+//최근본 상품 쿠키에 저장하기
+function setCookie2(cookie_name, value) {
+	  var cookie_value = escape(value);
+	  document.cookie = cookie_name + '=' + cookie_value;
+}
+ function getCookie2(cookie_name) {
+	  var x, y;
+	  var val = document.cookie.split(';');
+
+	  for (var i = 0; i < val.length; i++) {
+	    x = val[i].substr(0, val[i].indexOf('='));
+	    y = val[i].substr(val[i].indexOf('=') + 1);
+	    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+	    if (x == cookie_name) {
+	      return unescape(y); // unescape로 디코딩 후 값 리턴
+	    }
+	  }
+} 
+
+function addCookie2(id) {
+	  var items = getCookie2('productItems'); // 이미 저장된 값을 쿠키에서 가져오기
+	  var maxItemNum = 5; // 최대 저장 가능한 아이템개수
+	  //var expire = 7; // 쿠키값을 저장할 기간
+	  if (items) {
+	    var itemArray = items.split(',');
+	    console.log(itemArray);
+	    if (itemArray.indexOf(id) != -1) {
+	      // 이미 존재하는 경우 종료
+	      console.log('Already exists.');
+	    }
+	    else {
+	      // 새로운 값 저장 및 최대 개수 유지하기
+	      itemArray.unshift(id);
+	      if (itemArray.length > maxItemNum ) itemArray.length = 5;
+	      items = itemArray.join(',');
+	      setCookie2('productItems', items);
+	    }
+	  }
+	  else {
+	    // 신규 id값 저장하기
+	    setCookie2('productItems', id);
+	  }
+}
+//로그인한 유저인지 체크하기
 function loginChk() {
 	if ("${mid}" === '') {
 		console.log("아이디는공백");

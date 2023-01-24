@@ -1,7 +1,6 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -21,13 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyundai.dutyfree.auth.SNSLogin;
 import com.hyundai.dutyfree.auth.SnsValue;
-import com.hyundai.dutyfree.security.CustomUserDetailsService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
-import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
-import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.ProductVO;
@@ -44,8 +40,10 @@ import lombok.extern.log4j.Log4j;
  * 수정일                 수정자                          수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.11	  김찬중			       회원가입 완료
  * 2023.01.17    김가희                            시큐리티적용
  * 2023.01.19    김가희                            소셜로그인(네이버)추가
+ * 2023.01.20    김가희                            소셜로그인(카카오)추가
  * 2023.01.22         박진수			  마이페이지 주문목록 보여지게 설정	
  *        </pre>
  */
@@ -57,7 +55,7 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberservice;
-	
+
 	@Autowired
 	private OrderService orderservice;
 	
@@ -72,6 +70,9 @@ public class MemberController {
 
 	@Autowired
 	private SnsValue naverSns;
+
+	@Autowired
+	private SnsValue kakaoSns;
 
 	// 약관 동의 페이지 진입 (회원가입1)
 	@RequestMapping(value = "termsAgree", method = RequestMethod.GET)
@@ -195,7 +196,10 @@ public class MemberController {
 			Model model) {
 		// 소셜로그인(네이버)
 		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthLogin());
+		model.addAttribute("naver_url", snsLogin.getAuthLogin());
+		// 소셜로그인(카카오)
+		SNSLogin snsLogin2 = new SNSLogin(kakaoSns);
+		model.addAttribute("kakao_url", snsLogin2.getAuthLogin());
 
 		// 인터셉터로 인해 로그인페이지로 강제이동된 경우 이전페이지 저장
 		String uri = request.getHeader("Referer");
@@ -208,8 +212,6 @@ public class MemberController {
 		model.addAttribute("error", error);
 		log.info("로그인 페이지 진입 error= " + error);
 	}
-	
-	
 
 	// 마이페이지
 	@RequestMapping(value = "/Mypage", method = RequestMethod.GET)
@@ -261,10 +263,43 @@ public class MemberController {
 		 
 }
 
+	/*
+	 * @GetMapping("/logout") public String logout(HttpServletRequest request,
+	 * HttpServletResponse response, HttpSession session) throws IOException {
+	 * System.out.println("로그아웃 컨트롤러 들어옴"); String tocken = (String)
+	 * session.getAttribute("kakaoToken"); System.out.println("액세스토큰: " + tocken);
+	 * 
+	 * if (tocken != null) { System.out.println("카카오로그인이지"); logout(tocken); }
+	 * session.invalidate();
+	 * 
+	 * SecurityContext securityContext = SecurityContextHolder.getContext(); new
+	 * SecurityContextLogoutHandler().logout(request, response,
+	 * securityContext.getAuthentication());
+	 * 
+	 * return "redirect:/"; }
+	 * 
+	 * public void logout(String access_Token) { String reqURL =
+	 * "https://kapi.kakao.com/v1/user/logout"; try { URL url = new URL(reqURL);
+	 * HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	 * conn.setRequestMethod("POST"); conn.setRequestProperty("Authorization",
+	 * "Bearer " + access_Token);
+	 * 
+	 * int responseCode = conn.getResponseCode();
+	 * System.out.println("responseCode : " + responseCode);
+	 * 
+	 * BufferedReader br = new BufferedReader(new
+	 * InputStreamReader(conn.getInputStream()));
+	 * 
+	 * String result = ""; String line = "";
+	 * 
+	 * while ((line = br.readLine()) != null) { result += line; }
+	 * System.out.println(result); } catch (IOException e) { e.printStackTrace(); }
+	 * }
+	 */
 	
-	
-	//-----------------------아직 안쓰는 로직들 (회원수정,삭제)------------------------
-	
+
+	// -----------------------아직 안쓰는 로직들 (회원수정,삭제)------------------------
+
 	/*
 	 * // 회원정보 수정 페이지 이동
 	 * 

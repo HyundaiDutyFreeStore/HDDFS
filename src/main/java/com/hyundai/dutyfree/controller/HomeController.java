@@ -24,8 +24,19 @@ import com.hyundai.dutyfree.vo.ExchangerateVO;
 import lombok.AllArgsConstructor;
 
 /**
- * Handles requests for the application home page.
+ * MemberController
+ *
+ * @author 김찬중
+ * @since 01.19
+ *
+ *        <pre>
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.19	  김찬중			       최초생성
+ * 2023.01.20	  김찬중			       환률 API 적용 
+ *        </pre>
  */
+
 @Controller
 @AllArgsConstructor
 public class HomeController {

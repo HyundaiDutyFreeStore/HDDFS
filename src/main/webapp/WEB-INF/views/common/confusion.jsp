@@ -69,7 +69,7 @@
 								alt=""
 								onerror="this.onerror=null; this.src='https://cdn.hddfs.com/front/images/KO/common/no_img760x267.jpg';">
 
-							<video src="http://192.168.0.34:8080/video" controls></video>
+							<!-- <video src="http://192.168.0.34:8080/video" controls></video> -->
 						</div>
 						<ul class="dot_list airport">
 							<li><strong>위치안내</strong>11번 게이트 맞은편 4층</li>
@@ -130,7 +130,7 @@
 					</dd>
 				</dl>
 			</div>
-			<h4 class="h4_type line2 mgtsm">지점안내</h4>
+			<h4 class="h4_type line2 mgtsm">실시간 대기 안내</h4>
 			<div class="accordion_list info_store">
 				<dl>
 					<dt>

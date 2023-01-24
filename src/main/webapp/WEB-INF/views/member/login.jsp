@@ -76,11 +76,6 @@
 
 
 				</div>
-				<div class="dang_type" id="loginErr">
-					<%-- <c:if test="${error eq 'yes'}">
-					<p class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</p>
-				</c:if> --%>
-				</div>
 				<!-- <div class="id_save">
 					<span class="checkbox small"> <input type="checkbox"
 						name="saveId" id="umbSaveId" value="Y"> <label
@@ -100,7 +95,13 @@
 			<br><br>
 			<p>
 			<a href = "${naver_url}"><img src="/resources/images/naverlogin.png" alt="Naver" width="200px"/></a>
+			&nbsp; &nbsp;
+			<a href = "${kakao_url}"><img src="/resources/images/kakaoLogin.png" alt="kakao" width="200px" height="60px"/></a>
 			</p>
+			<br>
+			<%-- <p>
+			
+			</p> --%>
 			<p>
 				<a href="/member/termsAgree" class="join">회원가입</a>
 			</p>

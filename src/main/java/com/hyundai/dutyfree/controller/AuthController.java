@@ -34,21 +34,36 @@ public class AuthController {
 
 	@Autowired
 	private SnsValue naverSns;
+	
+	@Autowired
+	private SnsValue kakaoSns;
 
 	//소셜로그인 콜백처리 (소셜로그인에서 성공적으로 콜백이 왔을 때 해당 회원이 없으면 가입시키고, 있으면 그 아이디로 로그인시키기)
-		@RequestMapping(value = "/auth/{snsService}/callback", method = { RequestMethod.GET, RequestMethod.POST })
+		@RequestMapping(value = "/auth/{snsService}/callback", method = {RequestMethod.GET, RequestMethod.POST  })
 		public String snsLoginCallback(@PathVariable String snsService, Model model, @RequestParam String code,
 				HttpSession session) throws Exception {
-
+			System.out.println("콜백시 code="+code);
 			log.info("snsLoginCallback: service: "+snsService);
 			SnsValue sns = null;
-			if (snsService.equals("naver"))
+			if (snsService.equals("naver")) {
 				sns = naverSns;
-
+			}else if (snsService.equals("kakao")) {
+				sns = kakaoSns;
+			}
+				
+			MemberVO snsUser = new MemberVO();
+			String accessToken = null;
 			// 1. code를 이용해서 access_token 받기
 			// 2. access_token을 이용해서 사용자 profile 정보 가져오기
 			SNSLogin snsLogin = new SNSLogin(sns);
-			MemberVO snsUser = snsLogin.getUserProfile(code); // 1,2번 동시
+			if (snsService.equals("kakao")) {
+				accessToken = snsLogin.getUserProfile2(code);
+				System.out.println("kakao여서 accessToken: "+accessToken);
+				snsUser = snsLogin.getUserInfoByToken(accessToken);
+			}else {
+				snsUser = snsLogin.getUserProfile(code);
+			}
+			
 			log.info("Profile>>" + snsUser);
 			snsUser.setMpassword("123456");
 			
@@ -69,6 +84,7 @@ public class AuthController {
 			SecurityContext securityContext = SecurityContextHolder.getContext();
 			securityContext.setAuthentication(authentication);
 			session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+			session.setAttribute("kakaoToken", accessToken);
 
 			return "redirect:/";
 		}

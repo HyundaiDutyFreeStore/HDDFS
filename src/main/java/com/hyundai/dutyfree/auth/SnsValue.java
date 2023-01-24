@@ -17,6 +17,7 @@ public class SnsValue implements SnsUrls {
 	private String profileUrl;
 	
 	private boolean isNaver;
+	private boolean isKakao;
 	
 	public SnsValue(String service, String clientId, String clientSecret, String redirectUrl) {
 		this.service = service;
@@ -25,9 +26,13 @@ public class SnsValue implements SnsUrls {
 		this.redirectUrl = redirectUrl;
 		
 		this.isNaver = service.equals("naver");
+		this.isKakao = service.equals("kakao");
 		if(service.equals("naver")) {
 			this.api20Instance = NaverAPI20.getInstance();
 			this.profileUrl = NAVER_PROFILE_URL;
+		}else if(service.equals("kakao")) {
+			this.api20Instance = KakaoAPI20.getInstance();
+			this.profileUrl = KAKAO_PROFILE_URL;
 		}
 	}
 	
