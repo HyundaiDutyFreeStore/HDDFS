@@ -118,6 +118,7 @@
 									<p class="f_ti">국적</p> <span class="input_de"><select
 										id="mNationality" name="mNationality">
 											<option value="">선택</option>
+											<option value="한국">한국</option>
 											<option value="미국">미국(미국내경유포함)</option>
 											<option value="캐나다">캐나다</option>
 											<option value="호주">호주</option>
