@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,6 +76,15 @@ public class MemberController {
 
 	@Autowired
 	private SnsValue kakaoSns;
+	
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
+	
+	@Autowired
+	private SnsValue googleSns;
 
 	// 약관 동의 페이지 진입 (회원가입1)
 	@RequestMapping(value = "termsAgree", method = RequestMethod.GET)
@@ -199,6 +212,10 @@ public class MemberController {
 		// 소셜로그인(카카오)
 		SNSLogin snsLogin2 = new SNSLogin(kakaoSns);
 		model.addAttribute("kakao_url", snsLogin2.getAuthLogin());
+		// 소셜로그인(구글)
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+		model.addAttribute("google_url", url);
 
 		// 인터셉터로 인해 로그인페이지로 강제이동된 경우 이전페이지 저장
 		String uri = request.getHeader("Referer");

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -45,27 +46,29 @@
 	<!-- 소셜로그인 oauth2 설정 -->
 	<!-- 네이버 로그인 -->
 	<beans:bean id="naverClientID" class="java.lang.String">
-		<beans:constructor-arg value="9GBc2PKq3ivb5rxF5Pqh" />
+		<beans:constructor-arg
+			value="9GBc2PKq3ivb5rxF5Pqh" />
 	</beans:bean>
 	<beans:bean id="naverClientSecret" class="java.lang.String">
-		<beans:constructor-arg
-			value="asAw2VW64S" />
+		<beans:constructor-arg value="asAw2VW64S" />
 	</beans:bean>
 	<beans:bean id="naverRedirectUrl" class="java.lang.String">
 		<beans:constructor-arg
 			value="http://localhost:8080/auth/naver/callback" />
 	</beans:bean>
 
-	<beans:bean id="naverSns" class="com.hyundai.dutyfree.auth.SnsValue">
+	<beans:bean id="naverSns"
+		class="com.hyundai.dutyfree.auth.SnsValue">
 		<beans:constructor-arg value="naver" />
 		<beans:constructor-arg ref="naverClientID" />
 		<beans:constructor-arg ref="naverClientSecret" />
 		<beans:constructor-arg ref="naverRedirectUrl" />
 	</beans:bean>
-	
+
 	<!-- 카카오 로그인 -->
 	<beans:bean id="kakaoClientID" class="java.lang.String">
-		<beans:constructor-arg value="4166b68e47aa316263372a0b8acd6022" />
+		<beans:constructor-arg
+			value="4166b68e47aa316263372a0b8acd6022" />
 	</beans:bean>
 	<beans:bean id="kakaoClientSecret" class="java.lang.String">
 		<beans:constructor-arg
@@ -75,18 +78,51 @@
 		<beans:constructor-arg
 			value="http://localhost:8080/auth/kakao/callback" />
 	</beans:bean>
-	
-	<beans:bean id="kakaoSns" class="com.hyundai.dutyfree.auth.SnsValue">
+
+	<beans:bean id="kakaoSns"
+		class="com.hyundai.dutyfree.auth.SnsValue">
 		<beans:constructor-arg value="kakao" />
 		<beans:constructor-arg ref="kakaoClientID" />
 		<beans:constructor-arg ref="kakaoClientSecret" />
 		<beans:constructor-arg ref="kakaoRedirectUrl" />
 	</beans:bean>
+
+	<!-- 구글 로그인-->
+	<beans:bean id="googleClientID" class="java.lang.String">
+		<beans:constructor-arg value="810238020221-c1sn8lhq6jgea7oge6853bqfvqn28k92.apps.googleusercontent.com" />
+	</beans:bean>
+	<beans:bean id="googleClientSecret" class="java.lang.String">
+		<beans:constructor-arg
+			value="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" />
+	</beans:bean>
+	<beans:bean id="googleRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg
+			value="http://localhost:8080/auth/google/callback" />
+	</beans:bean>
+
+	<beans:bean id="googleSns" class="com.hyundai.dutyfree.auth.SnsValue">
+		<beans:constructor-arg value="google" />
+		<beans:constructor-arg ref="googleClientID" />
+		<beans:constructor-arg ref="googleClientSecret" />
+		<beans:constructor-arg ref="googleRedirectUrl" />
+	</beans:bean>
 	
+	<beans:bean id="googleConnectionFactory"
+	           class="org.springframework.social.google.connect.GoogleConnectionFactory">
+	   <beans:constructor-arg ref="googleClientID" />
+	   <beans:constructor-arg ref="googleClientSecret" />
+    </beans:bean>
+
+	<beans:bean id="googleOAuth2Parameters"
+		class="org.springframework.social.oauth2.OAuth2Parameters">
+		<!-- <beans:property name="scope" value="https://www.googleapis.com/auth/userinfo.email" /> -->
+		<beans:property name="scope" value="https://www.googleapis.com/auth/contacts.readonly" />
+		<beans:property name="redirectUri" ref="googleRedirectUrl" />
+	</beans:bean>
+
+
 	<!-- 채팅 -->
-	<!-- <websocket:handlers>
-		<websocket:mapping handler="chattingHandler" path="/chatting"/>
-		<websocket:sockjs></websocket:sockjs>
-	</websocket:handlers> -->
+	<!-- <websocket:handlers> <websocket:mapping handler="chattingHandler" path="/chatting"/> 
+		<websocket:sockjs></websocket:sockjs> </websocket:handlers> -->
 
 </beans:beans>

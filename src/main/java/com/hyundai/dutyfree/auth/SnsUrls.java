@@ -21,8 +21,9 @@ public interface SnsUrls {
 	static final String KAKAO_ACCESS_TOKEN = "https://kauth.kakao.com/oauth/token";
 	static final String KAKAO_AUTH = "https://kauth.kakao.com/oauth/authorize";
 	static final String KAKAO_PROFILE_URL = "https://kapi.kakao.com/v2/user/me";
-			
-	//static final String GOOGLE_PROFILE_URL = "https://www.googleapis.com/plus/v1/people/me";
+	
+	//구글 로그인 링크
+	static final String GOOGLE_PROFILE_URL = "https://www.googleapis.com/plus/v1/people/me";
 	
 
 }
