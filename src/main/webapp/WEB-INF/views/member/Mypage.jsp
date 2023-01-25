@@ -624,7 +624,19 @@
 			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
 			                                        </td>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
-			                                    	${orderlist.ostatus }</td>
+			                                    	<c:choose>
+			                                       	<c:when test="${orderlist.ostatus eq '결제완료' }">
+			                                    	<strong>${orderlist.ostatus }</strong><br/><br/>
+			                                    	<a href="javascript:payCancel('${orderlist.opaymentkey }','${orderlist.oid }');">결제취소</a>
+			                                    	</c:when>
+			                                    	<c:when test="${orderlist.ostatus eq '결제취소' }">
+			                                    	<strong style="color: red;">${orderlist.ostatus }</strong>
+			                                    	</c:when>
+			                                    	<c:otherwise>
+			                                    	${orderlist.ostatus }
+			                                    	</c:otherwise>
+			                                    	</c:choose>
+			                                    	</td>
 												</tr>
 												<c:if test="${orderlist.orderitemlist.size()> 1}">
 												<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
@@ -739,7 +751,19 @@
 			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
 			                                        </td>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
-			                                    	${orderlist.ostatus }</td>
+			                                       	<c:choose>
+			                                       	<c:when test="${orderlist.ostatus eq '결제완료' }">
+			                                    	<strong>${orderlist.ostatus }</strong><br/><br/>
+			                                    	<a href="javascript:payCancel('${orderlist.opaymentkey }','${orderlist.oid }');">결제취소</a>
+			                                    	</c:when>
+			                                    	<c:when test="${orderlist.ostatus eq '결제취소' }">
+			                                    	<strong style="color: red;">${orderlist.ostatus }</strong>
+			                                    	</c:when>
+			                                    	<c:otherwise>
+			                                    	${orderlist.ostatus }
+			                                    	</c:otherwise>
+			                                    	</c:choose>
+			                                    	</td>
 												</tr>
 												
 												<c:if test="${orderlist.orderitemlist.size()> 1}">
@@ -841,6 +865,49 @@
 			location.href="/member/Mypage?align=odate";
 		}
 	    
+	}
+	
+	function payCancel(paymentKey,oid){
+		var popup=confirm('결제를 취소하시겠어요?');
+		if(popup){
+			const Data={
+					oid: oid
+			};
+			$.ajax({
+				method:"post",
+				data : Data,
+				url : "/order/cancelorder",
+				success : function(data){
+				if(data=='yes'){
+					tossPayCancel(paymentKey,oid);
+				}
+				},
+				error : function(){
+		    	}
+			});
+	       
+		}else{
+			return false;
+		} 
+	}
+	function tossPayCancel(paymentKey,oid){
+		 var paymentData = {
+		            orderId : oid,
+		            paymentKey: paymentKey,
+		            mid:"${mid}"
+		        };
+		        $.ajax({
+		        	method:"post",
+		        	data: paymentData,
+		        	url : "/pay/cancelSuccess",
+		        	success : function(data){
+		        		alert("결제가 취소되었습니다");
+		        		location.href="/member/Mypage?mid=${mid}&align=${align}";
+		        		
+		        	},
+		        	error : function(){
+		    		}
+		        });
 	}
 	
 

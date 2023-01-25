@@ -378,7 +378,7 @@ public class OrderController {
 
 	}
 	
-	@RequestMapping("/cancelorder")
+	@RequestMapping("/deleteorder")
 	@ResponseBody
 	public String deleteorder(String oid) {
 		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
@@ -387,6 +387,18 @@ public class OrderController {
 			cartservice.redproductcnt(product.getPcode(), product.getPstock()+oi.getOamount(), product.getPsel()-oi.getOamount());
 		}
 		orderservice.deleteorder(oid);
+		return "yes";
+	}
+	
+	@RequestMapping("/cancelorder")
+	@ResponseBody
+	public String cancelorder(String oid) {
+		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
+		for(OrderItemVO oi : oiv) {
+			ProductVO product=productservice.productdetail(oi.getPcode());
+			cartservice.redproductcnt(product.getPcode(), product.getPstock()+oi.getOamount(), product.getPsel()-oi.getOamount());
+		}
+		orderservice.Updateostatus("pay_cancel", oid);
 		return "yes";
 	}
 

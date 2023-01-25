@@ -1879,7 +1879,7 @@ $(document).ready(function(){
 		$.ajax({
 			method:"post",
 			data : Data,
-			url : "/order/cancelorder",
+			url : "/order/deleteorder",
 			success : function(data){
 			if(data=='yes'){
 				$('#settInfoLayerPopupmodal').hide();
@@ -1925,7 +1925,9 @@ $(document).ready(function(){
 			error : function(){
 	    	}
 		});
-	  
+	  	console.log("oid:"+oid);
+	  	
+	  	
 		pay_button.addEventListener("click", function () {
         var paymentData = {
             amount: total_bill_dollar_text,
@@ -1936,7 +1938,7 @@ $(document).ready(function(){
             failUrl: window.location.origin+"/pay/" +oid+ "/fail",
         };
         tossPayments.requestPayment('카드', paymentData);
-    	});
+    	});  
 }
 	
 </script>
