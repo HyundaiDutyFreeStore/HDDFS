@@ -115,4 +115,16 @@ public class OrderServiceImpl implements OrderService {
 	public List<CustomerVO> getCustomerPerTime(String odept, String odeptdate) {
 		return mapper.getCustomerPerTime(odept, odeptdate);
 	}
+
+	@Override
+	public void Updateostatus(String ostatus, String oid) {
+		mapper.Updateostatus(ostatus, oid);
+		
+	}
+
+	@Override
+	public void UpdateorderPaymentKey(String opaymentkey, String oid) {
+		mapper.UpdateorderPaymentKey(opaymentkey, oid);
+		
+	}
 }

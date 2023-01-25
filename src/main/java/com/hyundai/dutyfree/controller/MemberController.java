@@ -266,7 +266,19 @@ public class MemberController {
 			  
 				orderlist.setOrdertotalprice(orderprice);
 				orderlist.setOrdertotaldisprice(orderdis);
+				
+				//주문상태에 따라 한글로 바꿈
+				if(orderlist.getOstatus().equals("delivery_complete")) {
+					orderlist.setOstatus("인도완료");
+				}else if(orderlist.getOstatus().equals("on_delivery")) {
+					orderlist.setOstatus("인도중");
+				}else if(orderlist.getOstatus().equals("pay_complete")) {
+					orderlist.setOstatus("결제완료");
+				}else {
+					orderlist.setOstatus("결제취소");
+				}
 			}
+			
 				model.addAttribute("orderlistsize", orderlists.size());
 			}
 		  model.addAttribute("align", align);
