@@ -18,8 +18,9 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import com.hyundai.dutyfree.vo.MemberVO;
+
 /**
- * SNSLogin
+ * SnsLogin
  * 
  * @author 김가희
  * @since 01.19
@@ -28,20 +29,20 @@ import com.hyundai.dutyfree.vo.MemberVO;
  * 수정일                 수정자                              수정내용
  * ----------  ---------------  ---------------------------
  * 2023.01.19   김가희                         최초 생성
- * 2023.01.20   김가희                         카카오 추가
- *        
+ * 2023.01.20   김가희                         카카오 추가       
+ * 2023.01.25   김가희                         구글 추가
  */
 public class SNSLogin {
 	private OAuth20Service oauthService;
 	private SnsValue sns;
 
 	public SNSLogin(SnsValue sns) {
-		if (sns.isNaver()) {
-			this.oauthService = new ServiceBuilder(sns.getClientId()).apiSecret(sns.getClientSecret())
-					.callback(sns.getRedirectUrl()).scope("profile").build(sns.getApi20Instance());
-		} else if (sns.isKakao()) {
+		if (sns.isKakao()) {
 			this.oauthService = new ServiceBuilder(sns.getClientId()).apiSecret(sns.getClientSecret())
 					.callback(sns.getRedirectUrl()).build(sns.getApi20Instance());
+		} else {
+			this.oauthService = new ServiceBuilder(sns.getClientId()).apiSecret(sns.getClientSecret())
+					.callback(sns.getRedirectUrl()).scope("profile").build(sns.getApi20Instance());
 		}
 
 		this.sns = sns;
@@ -100,17 +101,35 @@ public class SNSLogin {
 	}
 
 	private MemberVO parseJson(String body) throws Exception {
+		System.out.println("parseJson에서의 body: "+body);
 		MemberVO member = new MemberVO();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.readTree(body);
 
-		JsonNode resNode = rootNode.get("response");
-		member.setMid(resNode.get("id").asText());
-		member.setMname(resNode.get("name").asText());
-		member.setMphone(resNode.get("mobile").asText());
-		member.setMgender(resNode.get("gender").asText());
-		// member.setNickname(resNode.get("nickname").asText());
-		member.setMemail(resNode.get("email").asText());
+		if (this.sns.isGoogle()) {
+			member.setMid(rootNode.get("id").asText());
+			member.setMname(rootNode.get("name").asText());
+			member.setMemail(rootNode.get("email").asText());
+			member.setMphone("");
+			member.setMgender("");
+			/*
+			 * JsonNode nameNode = rootNode.path("name"); String uname =
+			 * nameNode.get("familyName").asText() + nameNode.get("givenName").asText();
+			 * member.setMname(uname);
+			 */
+
+			
+			
+		} else if (this.sns.isNaver()) {
+			JsonNode resNode = rootNode.get("response");
+			member.setMid(resNode.get("id").asText());
+			member.setMname(resNode.get("name").asText());
+			member.setMphone(resNode.get("mobile").asText());
+			member.setMgender(resNode.get("gender").asText());
+			// member.setNickname(resNode.get("nickname").asText());
+			member.setMemail(resNode.get("email").asText());
+		}
+		
 
 		return member;
 	}
@@ -132,7 +151,7 @@ public class SNSLogin {
 		MemberVO member = new MemberVO();
 		JSONObject body = new JSONObject(response.getBody());
 		System.out.println("불러오는영역: " + body);
-		String id = body.getLong("id")+"";
+		String id = body.getLong("id") + "";
 		member.setMid(id);
 		String email = body.getJSONObject("kakao_account").getString("email");
 		member.setMemail(email);
