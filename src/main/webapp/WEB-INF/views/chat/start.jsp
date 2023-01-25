@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!--  
@@ -203,12 +202,8 @@
                 +`</div>`;
                 if(menu=='인도장안내'){
                 	 template += ` <button type="button" class="btn-link is-node"
-                         onclick="platform('인천공항 1터미널 동쪽')">
-                         <span>인천공항 1터미널 동쪽</span> 
-                     </button>`;
-                	 template += ` <button type="button" class="btn-link is-node"
-                         onclick="platform('인천공항 1터미널 서쪽')">
-                         <span>인천공항 1터미널 서쪽</span> 
+                         onclick="platform('인천공항 1터미널')">
+                         <span>인천공항 1터미널</span> 
                      </button>`;
                 	 template += ` <button type="button" class="btn-link is-node"
                          onclick="platform('인천공항 2터미널')">
@@ -221,12 +216,8 @@
                 }
                 if(menu=='시간당 고객수 확인'){
                	 template += ` <button type="button" class="btn-link is-node"
-                        onclick="customCnt('인천공항 1터미널 동쪽')">
-                        <span>인천공항 1터미널 동쪽</span> 
-                    </button>`;
-               	 template += ` <button type="button" class="btn-link is-node"
-                        onclick="customCnt('인천공항 1터미널 서쪽')">
-                        <span>인천공항 1터미널 서쪽</span> 
+                        onclick="customCnt('인천공항 1터미널')">
+                        <span>인천공항 1터미널</span> 
                     </button>`;
                	 template += ` <button type="button" class="btn-link is-node"
                         onclick="customCnt('인천공항 2터미널')">
@@ -249,16 +240,10 @@
 			var terImg;
 			var terTxt;
 			var terConf;
-			if(ter=='인천공항 1터미널 동쪽'){
-				console.log("인천공항 1터미널 동쪽");
+			if(ter=='인천공항 1터미널'){
+				console.log("인천공항 1터미널");
 				terImg = "https://cdn.hddfs.com/files/om/20200831/3b429243_202008311038223570.jpg";
 				terTxt = `  ▶ 위치안내: 11번 게이트 맞은편 4층
-					▶ 문의안내: 1811-6688</div>`;
-			}
-			if(ter=='인천공항 1터미널 서쪽'){
-				console.log("인천공항 1터미널 서쪽");
-				terImg = "https://cdn.hddfs.com/files/om/20200831/0742db50_202008311039325500.jpg";
-				terTxt = `  ▶ 위치안내: 43번 게이트 맞은편 4층
 					▶ 문의안내: 1811-6688</div>`;
 			}
 			if(ter=='인천공항 2터미널'){
@@ -322,7 +307,7 @@
 			scrollDown();
 		}
 		
-		 function customCnt(ter,date) {
+		 function customCnt(ter) {
 			 console.log("날짜구하기");
 			 console.log(new Date());
 			 var today = new Date();
@@ -371,7 +356,8 @@
 			 $.ajax({
 					type : 'GET',
 					url : "/common/conffut",
-					data : {odeptdate : date},
+					data : {odeptdate : date,
+							odept : ter},
 					success: function(data){
 						console.log("ajax성공");
 						console.log(data.customers);

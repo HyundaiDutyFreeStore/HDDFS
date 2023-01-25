@@ -82,7 +82,18 @@ public class PedestrianController {
 	@ResponseBody
 	@GetMapping(value = "/conffut", produces = "application/json;")
 	public String getConfFut(String odept, String odeptdate) {
-		// System.out.println("시간대 들어옴: "+odeptdate);
+		switch(odept){
+			case "인천공항 1터미널":
+				odept = "ICNT1";
+				break;
+			case "인천공항 2터미널":
+				odept = "ICNT2";
+				break;
+			default:
+				odept = "GMP";
+				break;
+		}
+		System.out.println("인도장 들어옴: "+odept);
 		List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime(odept, odeptdate);
 		// List<CustomerVO> getCustomerPerTime =
 		// orderservice.getCustomerPerTime("20230120");
