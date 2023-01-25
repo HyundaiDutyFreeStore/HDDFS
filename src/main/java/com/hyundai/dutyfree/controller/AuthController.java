@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +50,15 @@ public class AuthController {
 	
 	@Autowired
 	private SnsValue kakaoSns;
+	
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
+	
+	@Autowired
+	private SnsValue googleSns;
 
 	//소셜로그인 콜백처리 (소셜로그인에서 성공적으로 콜백이 왔을 때 해당 회원이 없으면 가입시키고, 있으면 그 아이디로 로그인시키기)
 		@RequestMapping(value = "/auth/{snsService}/callback", method = {RequestMethod.GET, RequestMethod.POST  })
@@ -60,6 +71,8 @@ public class AuthController {
 				sns = naverSns;
 			}else if (snsService.equals("kakao")) {
 				sns = kakaoSns;
+			}else if (snsService.equals("google")) {
+				sns = googleSns;
 			}
 				
 			MemberVO snsUser = new MemberVO();

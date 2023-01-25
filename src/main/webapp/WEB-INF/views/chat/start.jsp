@@ -82,7 +82,7 @@
 										class="txt">인도장 안내</span></a></li>
 								<li title="시간당 고객수 확인"><a
 									href="javascript:requestAnswer('시간당 고객수 확인')"><span
-										class="img"><img src="/resources/images/gps.png" alt=""></span><span
+										class="img"><img src="/resources/images/crowd.png" alt=""></span><span
 										class="txt">시간당 고객수 확인</span></a></li>
 							</ul>
 						</div>
@@ -160,7 +160,7 @@
 										alt=""></span><span class="txt">인도장 안내</span></a></li>
 							<li title="시간당 고객수 확인"><a
 								href="javascript:requestAnswer('시간당 고객수 확인')"><span class="img"><img
-										src="/resources/images/gps.png"
+										src="/resources/images/crowd.png"
 										alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
 						</ul>
 					</div>
@@ -202,12 +202,8 @@
                 +`</div>`;
                 if(menu=='인도장안내'){
                 	 template += ` <button type="button" class="btn-link is-node"
-                         onclick="platform('인천공항 1터미널 동쪽')">
-                         <span>인천공항 1터미널 동쪽</span> 
-                     </button>`;
-                	 template += ` <button type="button" class="btn-link is-node"
-                         onclick="platform('인천공항 1터미널 서쪽')">
-                         <span>인천공항 1터미널 서쪽</span> 
+                         onclick="platform('인천공항 1터미널')">
+                         <span>인천공항 1터미널</span> 
                      </button>`;
                 	 template += ` <button type="button" class="btn-link is-node"
                          onclick="platform('인천공항 2터미널')">
@@ -220,12 +216,8 @@
                 }
                 if(menu=='시간당 고객수 확인'){
                	 template += ` <button type="button" class="btn-link is-node"
-                        onclick="customCnt('인천공항 1터미널 동쪽')">
-                        <span>인천공항 1터미널 동쪽</span> 
-                    </button>`;
-               	 template += ` <button type="button" class="btn-link is-node"
-                        onclick="customCnt('인천공항 1터미널 서쪽')">
-                        <span>인천공항 1터미널 서쪽</span> 
+                        onclick="customCnt('인천공항 1터미널')">
+                        <span>인천공항 1터미널</span> 
                     </button>`;
                	 template += ` <button type="button" class="btn-link is-node"
                         onclick="customCnt('인천공항 2터미널')">
@@ -248,27 +240,21 @@
 			var terImg;
 			var terTxt;
 			var terConf;
-			if(ter=='인천공항 1터미널 동쪽'){
-				console.log("인천공항 1터미널 동쪽");
-				terImg = "/resources/images/ICNT1W.jpg";
+			if(ter=='인천공항 1터미널'){
+				console.log("인천공항 1터미널");
+				terImg = "https://cdn.hddfs.com/files/om/20200831/3b429243_202008311038223570.jpg";
 				terTxt = `  ▶ 위치안내: 11번 게이트 맞은편 4층
-					▶ 문의안내: 1811-6688</div>`;
-			}
-			if(ter=='인천공항 1터미널 서쪽'){
-				console.log("인천공항 1터미널 서쪽");
-				terImg = "/resources/images/ICNT1E.jpg";
-				terTxt = `  ▶ 위치안내: 43번 게이트 맞은편 4층
 					▶ 문의안내: 1811-6688</div>`;
 			}
 			if(ter=='인천공항 2터미널'){
 				console.log("인천공항 2터미널");
-				terImg = "/resources/images/ICNT2.jpg";
+				terImg = "https://cdn.hddfs.com/files/om/20200831/0742db50_202008311039325500.jpg";
 				terTxt = `  ▶ 위치안내: 2번 출입국 심사대 통과 후 252번 게이트 건너편 4층
 					▶ 문의안내: 1811-6688</div>`;
 			}
 			if(ter=='김포공항'){
 				console.log("김포공항");
-				terImg = "/resources/images/GMP.jpg";
+				terImg = "https://cdn.hddfs.com/files/om/20181005/014b0326_201810051531252800.jpg";
 				terTxt = `  ▶ 위치안내: 출입국 심사대 통과 후 34번 게이트 맞은편
 					▶ 문의안내: 1811-6688</div>`;
 			}
@@ -321,7 +307,7 @@
 			scrollDown();
 		}
 		
-		 function customCnt(ter,date) {
+		 function customCnt(ter) {
 			 console.log("날짜구하기");
 			 console.log(new Date());
 			 var today = new Date();
@@ -370,7 +356,8 @@
 			 $.ajax({
 					type : 'GET',
 					url : "/common/conffut",
-					data : {odeptdate : date},
+					data : {odeptdate : date,
+							odept : ter},
 					success: function(data){
 						console.log("ajax성공");
 						console.log(data.customers);
@@ -419,6 +406,4 @@
 	    }
 	</script>
 </body>
-
-
 </html>
