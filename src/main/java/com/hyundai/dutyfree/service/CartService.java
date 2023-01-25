@@ -21,7 +21,7 @@ public interface CartService {
 	
 	public List<CartVO> getCartList(String mid,String align);
 	
-	public void redproductcnt(String pcode, int pstock);
+	public void redproductcnt(String pcode, int pstock,int psel);
 	
 	public int Cartitemconsist(CartVO cart);
 	

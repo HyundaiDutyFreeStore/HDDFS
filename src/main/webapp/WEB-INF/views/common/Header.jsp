@@ -397,6 +397,19 @@
 	left: 50% !important;
 	transform: translate(-50%, -50%) !important;
 }
+
+#Mask {
+  display: none;
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:#000;
+  opacity:.3; 
+  filter:alpha(opacity:30);
+  z-index: 150;
+}
 </style>
 
 <div class="main_popup2">

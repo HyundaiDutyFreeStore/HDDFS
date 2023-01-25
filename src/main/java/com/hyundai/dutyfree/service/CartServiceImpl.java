@@ -43,9 +43,10 @@ public class CartServiceImpl implements CartService {
 
 
 	@Override
-	public void redproductcnt(String pcode, int pstock) {
+	public void redproductcnt(String pcode, int pstock,int psel) {
 		ProductVO product=cartmapper.prodinfo(pcode);
-		product.setPstock(product.getPstock()-pstock);
+		product.setPstock(pstock);
+		product.setPsel(psel);
 		cartmapper.redproductcnt(product);
 		
 	}

@@ -46,7 +46,7 @@
 	
 	<update id="redproductcnt">
 		update 	product
-		set pstock=#{pstock}
+		set pstock=#{pstock}, psel=#{psel}
 		where pcode=#{pcode}
 	</update>
 	

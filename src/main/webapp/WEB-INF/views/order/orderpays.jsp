@@ -1568,6 +1568,7 @@
 			type="hidden" name="sellerOrderReferenceKey" value="" /> \
 	</form>
 </div>
+<div id="Mask"></div>
 <div id="settInfoLayerPopupmodal" tabindex="-1" role="dialog" style="position: absolute; height: auto; width: 412px; top: 351.5px; left: 1000px; display: none;" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front event_type ui-draggable ui-resizable" aria-describedby="settInfoLayerPopup" aria-labelledby="ui-id-11">
 <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle">
 <span id="ui-id-11" class="ui-dialog-title">&nbsp;</span>
@@ -1621,9 +1622,7 @@ $(document).ready(function(){
         $(this).next(".cont_tg_box").slideToggle();
     });
 });
-
 </script>
-
 <div class="layer_popup">
     <div class="popupcont_wrap">
         <p class="lartitle">고객님의 정보를<br> 다시 한번 확인해주세요.</p>
@@ -1641,11 +1640,14 @@ $(document).ready(function(){
                    <tr>
                        <th>출국장소</th>
                        <c:choose>
+                       <c:when test="${ orderlist.oplace eq 'ICNT1'}">
+                       <td>인천공항 T1</td>
+                       </c:when>
+                       <c:when test="${ orderlist.oplace eq 'ICNT2'}">
+                       <td>인천공항 T2</td>
+                       </c:when>
                        <c:when test="${ orderlist.oplace eq 'KIM'}">
                        <td>김포공항</td>
-                       </c:when>
-                       <c:when test="${ orderlist.oplace eq 'ICN'}">
-                       <td>인천공항</td>
                        </c:when>
                        </c:choose>
                    </tr>
@@ -1818,14 +1820,9 @@ $(document).ready(function(){
 					});
 </script> </main>
 <!-- // container -->
-<script src="https://js.tosspayments.com/v1"></script>
+<script src="https://js.tosspayments.com/v1/payment"></script>
 
 <script type="text/javascript">
-	
-
-	function sellerInfo() {
-		$("#seller_information").dialog("open");
-	}
 	$(document).ready(function() {
 		// 다이얼로그 초기화
 		$("#seller_information").dialog({
@@ -1846,6 +1843,19 @@ $(document).ready(function(){
 		
 		
 	});
+	
+	jQuery.fn.center = function () {
+	    this.css("position","absolute");
+	    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+	    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+	    return this;
+	}
+	function showpopup(){
+		$("#settInfoLayerPopupmodal").show();
+		$("#settInfoLayerPopupmodal").center();
+		$("#Mask").show();
+	}
+	
 	function moveToMain() {
 		location.href = ctx_shop + '/dm/main.do';
 	}
@@ -1853,7 +1863,6 @@ $(document).ready(function(){
 	function priceComma(price) {
 		return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
-
 	
 	
 	
@@ -1870,12 +1879,12 @@ $(document).ready(function(){
 		$.ajax({
 			method:"post",
 			data : Data,
-			url : "/order/deleteorder",
+			url : "/order/cancelorder",
 			success : function(data){
 			if(data=='yes'){
 				$('#settInfoLayerPopupmodal').hide();
+				$('#Mask').hide();
 			}
-
 			},
 			error : function(){
 	    	}
@@ -1885,7 +1894,7 @@ $(document).ready(function(){
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
 	
 	function orderexec(){
-		$('#settInfoLayerPopupmodal').show();
+		showpopup();
 		
 		var mhpoint =(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
 		var total_bill_dollar_text=((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2);
@@ -1918,7 +1927,6 @@ $(document).ready(function(){
 		});
 	  
 		pay_button.addEventListener("click", function () {
-
         var paymentData = {
             amount: total_bill_dollar_text,
             orderId : oid,
@@ -1927,8 +1935,6 @@ $(document).ready(function(){
             successUrl: window.location.origin+"/pay/"+oid+ "/success",
             failUrl: window.location.origin+"/pay/" +oid+ "/fail",
         };
-
-
         tossPayments.requestPayment('카드', paymentData);
     	});
 }

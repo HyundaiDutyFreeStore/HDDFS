@@ -83,7 +83,7 @@
                          <a href="/product/Productdetail?pcode=${ cart.pcode}">
                          </c:when>
                          <c:otherwise>
-                         <a href="/product/Productdetail?mid=$[mid}&pcode=${ cart.pcode}">
+                         <a href="/product/Productdetail?mid=${mid}&pcode=${ cart.pcode}">
                          </c:otherwise>
                         </c:choose>
                                 <div class="item_img">
@@ -386,13 +386,12 @@ function priceComma(price) {
 
 function OrderSingle(el){
 	let passportflag=false;
-	let cartstock=parseInt($(el).closest(".item_cont.type_de").find("#item_info").find("input[name='cartstock']").val());
-	let cartcounttotal=parseInt($(".sumGoosQty").text());
+	let cartstock=parseInt($(el).closest(".item_cont.type_de").find(".item_info_wrap.info").find("input[name='cartstock']").val());
 	let pcode=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='pcode']").val();
 	let mhdiscount=$(el).closest(".item_cont.type_de").find("#item_info").find("input[name='mhdiscount']").val();
 	$('#Orderexec').append('<input name="orderitem[0].pcode" type="hidden" value="'+pcode+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oamount" type="hidden" value="'+cartstock+'">');
-	$('#Orderexec').append('<input name="cartcounttotal" type="hidden" value="'+cartcounttotal+'">');
+	$('#Orderexec').append('<input name="cartcounttotal" type="hidden" value="'+1+'">');
 	$('#Orderexec').append('<input name="orderitem[0].oid" type="hidden" value="">');
 	$('#Orderexec').append('<input name="mhdiscount" type="hidden" value="'+mhdiscount+'">');
 	if("${userpassport}"== ""){
