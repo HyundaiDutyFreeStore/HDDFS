@@ -10,6 +10,7 @@ package com.hyundai.dutyfree.auth;
  * ----------  ---------------  ---------------------------
  * 2023.01.19   김가희                         최초 생성
  * 2023.01.20   김가희                         카카오 추가       
+ * 2023.01.25   김가희                         구글 추가
  */
 public interface SnsUrls {
 	//네이버 로그인 링크
@@ -23,7 +24,7 @@ public interface SnsUrls {
 	static final String KAKAO_PROFILE_URL = "https://kapi.kakao.com/v2/user/me";
 	
 	//구글 로그인 링크
-	static final String GOOGLE_PROFILE_URL = "https://www.googleapis.com/plus/v1/people/me";
+	static final String GOOGLE_PROFILE_URL = "https://www.googleapis.com/oauth2/v2/userinfo";
 	
 
 }
