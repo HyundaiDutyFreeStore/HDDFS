@@ -81,21 +81,22 @@ public class PedestrianController {
 
 	@ResponseBody
 	@GetMapping(value = "/conffut", produces = "application/json;")
-	public String getConfFut(String odeptdate) {
-		System.out.println("시간대 들어옴: "+odeptdate);
-		List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime(odeptdate);
-		//List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime("20230120");
+	public String getConfFut(String odept, String odeptdate) {
+		// System.out.println("시간대 들어옴: "+odeptdate);
+		List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime(odept, odeptdate);
+		// List<CustomerVO> getCustomerPerTime =
+		// orderservice.getCustomerPerTime("20230120");
 		JSONObject jsonObj = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		// 시간대별 인원
 		for (int i = 0; i < 24; i++) {
 			JSONObject obj = new JSONObject(getCustomerPerTime.get(i));
 			jarr.put(obj);
-			//jsonObj.put(String.valueOf(i), getCustomerPerTime.get(i).getCount());
+			// jsonObj.put(String.valueOf(i), getCustomerPerTime.get(i).getCount());
 		}
 		jsonObj.put("customers", jarr);
 		String json = jsonObj.toString();
-		System.out.println(json);
+		// System.out.println(json);
 		return json;
 	}
 }

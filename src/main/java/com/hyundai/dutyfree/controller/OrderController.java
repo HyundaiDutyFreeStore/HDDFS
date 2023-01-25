@@ -132,21 +132,16 @@ public class OrderController {
 		java.util.Date nowdate = new java.util.Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String oid = "OR" + simpleDateFormat.format(nowdate);
-		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "결제완료",
+		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "pay_complete",
 				request.getParameter("olvodeptdate"), request.getParameter("olvoplnum"),
 				request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);
-			cartservice.redproductcnt(order.getPcode(), order.getOamount());
+			cartservice.redproductcnt(order.getPcode(),product.getPstock()-order.getOamount(), product.getPsel()+order.getOamount());
 			CartVO cart = new CartVO();
 			cart.setPcode(order.getPcode());
 			cart.setMid(prin.getName());
-
-			// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제 if
-			if (cartservice.Cartitemconsist(cart) == 1) {
-				cartservice.deleteCart(cart);
-			}
 
 			ordertotalstock += order.getOamount();
 		}
@@ -267,7 +262,6 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -313,7 +307,6 @@ public class OrderController {
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
-
 	}
 
 	//
@@ -385,10 +378,14 @@ public class OrderController {
 
 	}
 	
-	@RequestMapping("/deleteorder")
+	@RequestMapping("/cancelorder")
 	@ResponseBody
 	public String deleteorder(String oid) {
-		
+		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
+		for(OrderItemVO oi : oiv) {
+			ProductVO product=productservice.productdetail(oi.getPcode());
+			cartservice.redproductcnt(product.getPcode(), product.getPstock()+oi.getOamount(), product.getPsel()-oi.getOamount());
+		}
 		orderservice.deleteorder(oid);
 		return "yes";
 	}

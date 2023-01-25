@@ -22,7 +22,7 @@ public class CountCustomerTest {
 	public void getConfFut() {
 
 		//List<CustomerVO> getCustomerPerTime = orderservice.getCustomerPerTime(request.getParameter("odeptdate"));
-		List<CustomerVO> getCustomerPerTime = ordermapper.getCustomerPerTime("20230120");
+		List<CustomerVO> getCustomerPerTime = ordermapper.getCustomerPerTime("ICNT1", "20230125");
 		JSONObject jsonObj = new JSONObject();
 		// 시간대별 인원
 		for (int i = 0; i < 24; i++) {

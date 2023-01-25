@@ -137,8 +137,6 @@ public class CartController {
 			cart.setPcode(request.getParameter("pcode"));
 			
 			cartservice.UpdateCartstock(cart);
-		
-			cartservice.redproductcnt(request.getParameter("pcode"), Integer.parseInt(request.getParameter("cartstock")));
 
 			return "success";
 

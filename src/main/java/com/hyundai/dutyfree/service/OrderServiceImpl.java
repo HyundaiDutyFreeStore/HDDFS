@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public List<CustomerVO> getCustomerPerTime(String odate) {
-		return mapper.getCustomerPerTime(odate);
+	public List<CustomerVO> getCustomerPerTime(String odept, String odeptdate) {
+		return mapper.getCustomerPerTime(odept, odeptdate);
 	}
 }

@@ -67,12 +67,12 @@
 		COUNT(*) AS count , to_number(TO_CHAR ( a.odeptdate, 'HH24' )) AS
 		hours
 		FROM orderlist a
-		WHERE a.odeptdate BETWEEN to_date(#{odeptdate}, 'YYYYMMDD') AND to_date(#{odeptdate}, 'YYYYMMDD') +  0.99999
+		WHERE a.odeptdate BETWEEN to_date(#{odeptdate}, 'YYYYMMDD') AND to_date(#{odeptdate}, 'YYYYMMDD') +  0.99999 AND a.odept=#{odept}
 		GROUP BY
 		TO_CHAR ( a.odeptdate, 'HH24' )
 		) a
 		right join ( SELECT
-		to_number(TO_CHAR ( LEVEL )) as hours FROM DUAL CONNECT
+		to_number(TO_CHAR ( LEVEL ))-1 as hours FROM DUAL CONNECT
 		BY LEVEL <= 24
 		) b on a.hours = b.hours
 		order by 2 ]]>

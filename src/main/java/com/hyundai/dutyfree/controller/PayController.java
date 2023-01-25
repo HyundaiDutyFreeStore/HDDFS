@@ -5,6 +5,7 @@ import java.io.File;
 import java.security.Principal;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -38,8 +39,13 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.hyundai.dutyfree.service.CartService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
+import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemVO;
+import com.hyundai.dutyfree.vo.ProductVO;
 
 
 /**
@@ -68,6 +74,12 @@ public class PayController {
     @Autowired
 	private MemberService memberservice;
     
+    @Autowired
+    private OrderService orderservice;
+    
+    @Autowired
+    private CartService cartservice;
+    
     @PostConstruct
     private void init() {
         restTemplate.setErrorHandler(new ResponseErrorHandler() {
@@ -88,7 +100,10 @@ public class PayController {
     public String confirmPayment(
             @RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount,
             Model model,HttpServletRequest requests,Principal prin) throws Exception {
-
+    	
+    	
+    	System.out.println(paymentKey);
+    	
         HttpHeaders headers = new HttpHeaders();
        
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
@@ -105,6 +120,19 @@ public class PayController {
                 "https://api.tosspayments.com/v1/payments/" + paymentKey, request, JsonNode.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        	List<OrderItemVO> orderitemlist=orderservice.getOrderitemlist(orderId);
+        	for (OrderItemVO order : orderitemlist) {
+    			CartVO cart = new CartVO();
+    			cart.setPcode(order.getPcode());
+    			cart.setMid(prin.getName());
+
+    			// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제 if
+    			if (cartservice.Cartitemconsist(cart) == 1) {
+    				cartservice.deleteCart(cart);
+    			}
+
+    		}
+        	
             JsonNode successNode = responseEntity.getBody();
             model.addAttribute("oid", successNode.get("orderId").asText());
             String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
