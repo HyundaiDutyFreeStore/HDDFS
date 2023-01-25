@@ -3,6 +3,8 @@ package com.hyundai.dutyfree.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hyundai.dutyfree.vo.CustomerVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
@@ -40,5 +42,5 @@ public interface OrderMapper {
 	
 	public void deleteorder(String oid);
 	
-	public List<CustomerVO> getCustomerPerTime(String odeptdate);
+	public List<CustomerVO> getCustomerPerTime(@Param("odept")String odept, @Param("odeptdate")String odeptdate);
 }

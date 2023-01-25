@@ -39,5 +39,5 @@ public interface OrderService {
 	
 	public void deleteorder(String oid);
 	
-	public List<CustomerVO> getCustomerPerTime(String odeptdate);
+	public List<CustomerVO> getCustomerPerTime(String odept,String odeptdate);
 }
