@@ -76,9 +76,7 @@
 						function(evt) {
 							getSvmtAmtAble();
 							fnGetOffSptmCard();
-
 							getTotBuyAmtNtnl();
-
 							$('#hpointAmt')
 									.parent()
 									.html(
@@ -92,22 +90,17 @@
 														'chgUmbMbshPop', 450,
 														500);
 											});
-
 							$(".btn_view").click(function() {
 								$(this).toggleClass("plus");
 								$(".mymenu").toggleClass("plus");
 							});
-
 						});
-
 		$(function() {
-
 			$('#btnHeaderPsptChg').click(
 					function() {
 						location.href = ctx_curr
 								+ '/mm/myInfo/inptMbshPwd.do?type=pspt';
 					});
-
 			$(
 					'#btnHeaderUmbSwitcJoin1,#btnHeaderUmbSwitcJoin2,#btnHeaderUmbSwitcJoin3')
 					.click(
@@ -117,7 +110,6 @@
 										'chgUmbMbshPop', 450, 500);
 							});
 		});
-
 		function fnGetOcrnPntAmt() {
 			$
 					.ajax({
@@ -129,7 +121,6 @@
 							if (!crew.ajaxValidate(data)) {
 								return;
 							}
-
 							if (data.redirect != null) {
 								if (data.redirect.ocrnPnt != null) {
 									$('#hpointAmt')
@@ -153,13 +144,11 @@
 															450, 500);
 												});
 							}
-
 						},
 						error : function(jqXHR, textStatus, errorThrown) {
 						}
 					});
 		}
-
 		function fnGetOffSptmCard() {
 			$.ajax({
 				async : true,
@@ -182,7 +171,6 @@
 				}
 			});
 		}
-
 		function fnGetHpointAmt() {
 			$.ajax({
 				async : true,
@@ -200,7 +188,6 @@
 				}
 			});
 		}
-
 		function fnGetHpointPlsAmt() {
 			$
 					.ajax({
@@ -220,7 +207,6 @@
 						}
 					});
 		}
-
 		function getSvmtAmtAble() {
 			$.ajax({
 				async : true,
@@ -240,7 +226,6 @@
 				}
 			});
 		}
-
 		function getTotBuyAmtNtnl() {
 			$
 					.ajax({
@@ -252,14 +237,12 @@
 							var vInfo = data.info;
 							var totBuyAmtNtnl = vInfo.data.totBuyAmtNtnl;
 							var nextLvluBuyAmtNtnl = vInfo.data.nextLvluBuyAmtNtnl;
-
 							$('#setTotBuyAmtNtnl')
 									.html(
 											'<strong>＄'
 													+ comma(Math
 															.round(totBuyAmtNtnl * 100) / 100)
 													+ '</strong>');
-
 							if (totBuyAmtNtnl > nextLvluBuyAmtNtnl) {
 								$('#setRestPrice').html('<strong>＄0</strong>');
 							} else {
@@ -270,7 +253,6 @@
 																.round((nextLvluBuyAmtNtnl - totBuyAmtNtnl) * 100) / 100)
 														+ '</strong>');
 							}
-
 							var percentValue = 0;
 							if ((totBuyAmtNtnl / nextLvluBuyAmtNtnl * 100) > 100) {
 								percentValue = 100;
@@ -278,31 +260,24 @@
 								percentValue = totBuyAmtNtnl
 										/ nextLvluBuyAmtNtnl * 100;
 							}
-
 						},
 						error : function(jqXHR, textStatus, errorThrown) {
 						}
 					});
 		}
-
 		function goUrl(url) {
 			location.href = ctx_shop + url;
 		}
-
 		function liMyChgPwd() {
-
 			var vAucaType = 'GENE';
 			if (vAucaType == 'INTG') {
-
 				alert('고객님은 H.Point통합회원이십니다. H.Point통합회원의 경우 비밀번호변경은 통합멤버십 사이트에서 가능합니다.');
 				popup = window.open(gUmbMbshUrl + '/cu/mem/showCustInfo.shd',
 						'umbIndexPop', "width=800, height=920");
-
 			} else {
 				location.href = ctx_shop + '/mm/myInfo/inptMbshPwd.do?type=pwd';
 			}
 		}
-
 		function goHPointPay(umbMbshId) {
 			if (umbMbshId != '') { // 통합회원: H.Point Pay 이동
 				goUrl('/mm/myOrder/listHPointPay.do');
@@ -311,7 +286,6 @@
 						'chgUmbMbshPop', 450, 500);
 			}
 		}
-
 		$(function() {
 			$('.myinfo .name strong').each(function() {
 				if (this.offsetHeight < this.scrollHeight) {
@@ -346,50 +320,38 @@
 
 					<script>
 						$(document).ready(function() {
-
 							//최초 페이지 접근시(날짜조건 빈값일경우) - 온라인/출국일기준
-
 							var stDt = new Date(); //시작일자
 							var endDt = new Date(); //끝일자
-
 							stDt.setMonth(endDt.getMonth() - 1); // 끝일자 월 계산 (현재+2)
-
 							var sYear = stDt.getFullYear();
 							var sMonth = stDt.getMonth() + 1;
 							var sDay = stDt.getDate();
-
 							var eYear = endDt.getFullYear();
 							var eMonth = endDt.getMonth() + 1;
 							var eDay = endDt.getDate();
-
 							//월,일 2자리수로 셋팅
 							if (sMonth < 10)
 								sMonth = "0" + sMonth;
 							if (sDay < 10)
 								sDay = "0" + sDay;
-
 							if (eMonth < 10)
 								eMonth = "0" + eMonth;
 							if (eDay < 10)
 								eDay = "0" + eDay;
-
 							$("#stDt").val(sYear + '-' + sMonth + '-' + sDay);
 							$("#endDt").val(eYear + '-' + eMonth + '-' + eDay);
-
 							// 사용자가 날짜 직접 입력시
 							$('#stDt, #endDt').keyup(function() {
 								$(this).val(fnAutoHypenBymd($(this).val())); // 자동하이픈 처리
 							});
-
 							// 날짜 수정시 개월버튼 class삭제
 							/* $('#stDt, #endDt').on("change", function(){
 								$(".monthbox >li >a").removeClass("current")
 							}) */
-
 						});
 						//개월버튼 선택에 따른 날짜 셋팅
 						function fnDateSetting(obj, num) {
-
 							//시작 일자를 기준으로 세팅 - 주문내역
 							if ($("#tabCtgDpatType").hasClass("ui-tabs-active")) { // 출국일 기준
 								var stDt = $("#stDt").val();
@@ -414,38 +376,31 @@
 										"getDate")); //끝일자
 								stDt.setMonth(stDt.getMonth() - Number(num)); // 시작일자 월 계산
 							}
-
 							var sYear = stDt.getFullYear();
 							var sMonth = stDt.getMonth() + 1;
 							var sDay = stDt.getDate();
-
 							var eYear = endDt.getFullYear();
 							var eMonth = endDt.getMonth() + 1;
 							var eDay = endDt.getDate();
-
 							//월,일 2자리수로 셋팅
 							if (sMonth < 10)
 								sMonth = "0" + sMonth;
 							if (sDay < 10)
 								sDay = "0" + sDay;
-
 							if (eMonth < 10)
 								eMonth = "0" + eMonth;
 							if (eDay < 10)
 								eDay = "0" + eDay;
-
 							$("#stDt").val(sYear + '-' + sMonth + '-' + sDay);
 							$("#endDt").val(eYear + '-' + eMonth + '-' + eDay);
 							$("#monVal").val(num); //개월수 flag
 							$(".monthbox >li >a").removeClass("current")
 							$(obj).addClass("current")
 						}
-
 						// 조회전 검색조건 검증
 						function fnValidation() {
 							var stDt = $("#stDt").val();
 							var endDt = $("#endDt").val();
-
 							//오늘날짜
 							var today = new Date();
 							var year = today.getFullYear();
@@ -456,7 +411,6 @@
 							if (day < 10)
 								day = "0" + day;
 							today = year + '-' + month + '-' + day;
-
 							if ($.trim(stDt) == "") {
 								alert("시작일자를 입력하세요.");
 								return;
@@ -473,7 +427,6 @@
 								alert("종료 일자를 확인해주세요.");
 								return;
 							}
-
 							var stDt = new Date($("#stDt")
 									.datepicker("getDate"));
 							var endDt = new Date($("#endDt").datepicker(
@@ -481,7 +434,6 @@
 							var yrDate = new Date($("#endDt").datepicker(
 									"getDate"));
 							yrDate.setMonth(yrDate.getMonth() - 12); // 종료일자의 1년전
-
 							if (stDt - yrDate < 0) {
 								alert("조회기간은 최대 1년까지입니다.");
 								return;
@@ -490,10 +442,8 @@
 								alert("종료일은 시작일보다 커야합니다.");
 								return;
 							}
-
 							fnSearch(); //부모창 조회함수 호출!
 						}
-
 						//날짜포맷에 맞는지 검사
 						function isDateFormat(d) {
 							var df = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
@@ -502,14 +452,11 @@
 						// 윤년여부 검사
 						function isLeaf(year) {
 							var leaf = false;
-
 							if (year % 4 == 0) {
 								leaf = true;
-
 								if (year % 100 == 0) {
 									leaf = false;
 								}
-
 								if (year % 400 == 0) {
 									leaf = true;
 								}
@@ -524,19 +471,15 @@
 							}
 							var month_day = [ 31, 28, 31, 30, 31, 30, 31, 31,
 									30, 31, 30, 31 ];
-
 							var dateToken = d.split('-');
 							var year = Number(dateToken[0]);
 							var month = Number(dateToken[1]);
 							var day = Number(dateToken[2]);
-
 							// 날짜가 0이면 false
 							if (day == 0) {
 								return false;
 							}
-
 							var isValid = false;
-
 							// 윤년일때
 							if (isLeaf(year)) {
 								if (month == 2) {
@@ -571,7 +514,6 @@
 											<colgroup>
 												<col width="108px">
 												<col width="100%">
-												<col width="140px">
 												<col width="298px">
 												<col width="55px">
 												<col width="156px">
@@ -582,7 +524,6 @@
 													<th>출국일자</th>
 													<th>주문일자/<br>주문번호
 													</th>
-													<th>교환권</th>
 													<th>상품명</th>
 													<th>수량</th>
 													<th>총결제금액</th>
@@ -598,7 +539,6 @@
 													${orderlist.odate }
 													<p>${orderlist.oid }</p>
 													</td>
-													<td rowspan="${orderlist.orderitemlist.size()}"></td>
 													<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
 													<c:if test="${status.first }">
 													<td rowspan="1">
@@ -699,7 +639,6 @@
 											<colgroup>
 												<col width="108px">
 												<col width="100%">
-												<col width="140px">
 												<col width="298px">
 												<col width="55px">
 												<col width="156px">
@@ -709,7 +648,6 @@
 												<tr>
 													<th>주문일자/<br>주문번호</th>
 													<th>출국일자</th>
-													<th>교환권</th>
 													<th>상품명</th>
 													<th>수량</th>
 													<th>총결제금액</th>
@@ -725,7 +663,6 @@
 													<fmt:parseDate value="${orderlist.odeptdate }" var="odeptdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
 													<fmt:formatDate value="${odeptdate }" pattern="yyyy-MM-dd"/>
 													</td>
-													<td rowspan="${orderlist.orderitemlist.size()}"></td>
 													<c:forEach var="orderitem" items="${orderlist.orderitemlist }" varStatus="status">
 													<c:if test="${status.first }">
 													<td rowspan="1">
@@ -826,7 +763,6 @@
 </main>
 <!-- // container -->
 <script type="text/javascript">
-
 	if("${align}"=='odeptdate'){
 		$("#tabCtgDpatType").attr("class","ui-state-default ui-tabs-active");
 		$("#tabCtgOrderType").attr("class","ui-state-default");
@@ -910,7 +846,5 @@
 		        });
 	}
 	
-
-
 </script>
 <%@ include file="../common/Footer.jsp"%>
