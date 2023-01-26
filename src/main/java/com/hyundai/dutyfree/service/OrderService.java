@@ -5,19 +5,23 @@ import java.util.List;
 import com.hyundai.dutyfree.vo.CustomerVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
+import com.hyundai.dutyfree.vo.OrderMemberVO;
 import com.hyundai.dutyfree.vo.PassportVO;
 
 
 /**
  * OrderService
  * 
- * @author 박진수
+ * @author 박진수, 김찬중
  * @since 01.16
  * 
  *        <pre>
  * 수정일                 수정자                              수정내용
  * ----------  ---------------  ---------------------------
  * 2023.01.16    박진수                        최초 생성
+ * 2023.01.20    박진수                        OrderService 완료
+ * 2023.01.23    김찬중                        시간대 별 고객 리스트 추가
+ * 2023.01.26    김찬중                        인도장 이용 예정 고객 리스트 추가
  *        </pre>
  */
 public interface OrderService {
@@ -38,10 +42,12 @@ public interface OrderService {
 	public List<OrderListVO> getorderlistBymid(String mid,String align);
 	
 	public void deleteorder(String oid);
-	
+	//시간대별 고객 수
 	public List<CustomerVO> getCustomerPerTime(String odept,String odeptdate);
 	
 	public void Updateostatus(String ostatus,String oid);
 	
 	public void UpdateorderPaymentKey(String opaymentkey,String oid);
+	//인도장 이용 예정 고객
+	public List<OrderMemberVO> OrderMemberCheck();
 }
