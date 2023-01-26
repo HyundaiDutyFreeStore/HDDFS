@@ -32,4 +32,5 @@ public class OrderListVO {
 	private List<OrderItemVO> orderitemlist;
 	private float ordertotalprice;
 	private float ordertotaldisprice;
+	private String opaymentkey;
 }

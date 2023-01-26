@@ -43,4 +43,8 @@ public interface OrderMapper {
 	public void deleteorder(String oid);
 	
 	public List<CustomerVO> getCustomerPerTime(@Param("odept")String odept, @Param("odeptdate")String odeptdate);
+	
+	public void Updateostatus(@Param("ostatus")String ostatus, @Param("oid")String oid);
+	
+	public void UpdateorderPaymentKey(@Param("opaymentkey")String opaymentkey, @Param("oid")String oid);
 }

@@ -40,4 +40,8 @@ public interface OrderService {
 	public void deleteorder(String oid);
 	
 	public List<CustomerVO> getCustomerPerTime(String odept,String odeptdate);
+	
+	public void Updateostatus(String ostatus,String oid);
+	
+	public void UpdateorderPaymentKey(String opaymentkey,String oid);
 }
