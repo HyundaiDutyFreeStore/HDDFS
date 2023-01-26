@@ -1895,13 +1895,7 @@ function tab_change(el){
 			            flowMode: 'DIRECT',
 			            easyPay: confpayment
 			        };
-				tossPayments.requestPayment('카드', paymentData).catch(function (error) {
-		        	  if (error.code === 'USER_CANCEL') {
-		        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
-		        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
-		        		    console.log('회사가 없어');
-		        		  }
-		        })
+				tossPayments.requestPayment('카드', paymentData);
 			}else if(confpayment==null && otherpayment!=null){
 				var paymentData = {
 			            amount: total_bill_dollar_text,
@@ -1911,13 +1905,7 @@ function tab_change(el){
 			            successUrl: window.location.origin+"/pay/"+oid+ "/success",
 			            failUrl: window.location.origin+"/pay/" +oid+ "/fail"
 			        };
-				tossPayments.requestPayment(otherpayment, paymentData).catch(function (error) {
-		        	  if (error.code === 'USER_CANCEL') {
-		        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
-		        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
-		        		    console.log('회사가 없어');
-		        		  }
-		        })
+				tossPayments.requestPayment(otherpayment, paymentData);
 			}else{
 				return false;
 			}
@@ -1930,13 +1918,7 @@ function tab_change(el){
 	            successUrl: window.location.origin+"/pay/"+oid+ "/success",
 	            failUrl: window.location.origin+"/pay/" +oid+ "/fail"
 	        };
-	        tossPayments.requestPayment('카드', paymentData).catch(function (error) {
-	        	  if (error.code === 'USER_CANCEL') {
-	        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
-	        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
-	        		    console.log('회사가 없어');
-	        		  }
-	        })
+	        tossPayments.requestPayment('카드', paymentData);
 		}
 
     });  
