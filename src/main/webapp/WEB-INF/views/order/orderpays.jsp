@@ -208,19 +208,19 @@
 									<div class="payment_method_dim" style="display: none;"></div>
 									<ul class="tab_square ">
 										<li><a class="settGrpDoma" id="settGrpDoma_005_1"
-											noHref="#005_1" data-cardbadge="Y">H.POINT PAY
+											 nohref="005_1"data-cardbadge="Y" onclick="tab_change(this);">H.POINT PAY
 												<p class="flag">혜택</p>
 										</a></li>
 										<li><a class="settGrpDoma" id="settGrpDoma_001_2"
-											noHref="#001_2" data-cardbadge="Y">신용카드
+											nohref="001_2" data-cardbadge="Y" onclick="tab_change(this);">신용카드
 												<p class="flag">혜택</p>
 										</a></li>
 										<li><a class="settGrpDoma" id="settGrpDoma_003_3"
-											noHref="#003_3" data-cardbadge="Y">간편결제
+											 nohref="003_3" data-cardbadge="Y" onclick="tab_change(this);">간편결제
 												<p class="flag">혜택</p>
 										</a></li>
 										<li><a class="settGrpDoma" id="settGrpDoma_004_4"
-											noHref="#004_4" data-cardbadge="">다른결제수단</a></li>
+											 nohref="004_4" data-cardbadge="" onclick="tab_change(this);">다른결제수단</a></li>
 									</ul>
 
 									<div class="panel">
@@ -594,83 +594,50 @@
 													for="befSettWaySaveYn_003_3">선택한 결제수단 다음에도 사용</label>
 											</div>
 											<div class="easypayment">
-												<a noHref class="item settSvmt simpSett_003_3active"
+												<a noHref class="item settSvmt simpSett_003_3"
 													data-grpsettcd="003" data-grpdispordg="3"
-													data-dispsettwaycd="106" data-settwaynm="카카오페이"
+													data-dispsettwaycd="106" data-settwaynm="삼성페이"
 													data-settovsecd="">
 													<div class="active">
 														<span class="img"> <img
-															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102106.png"
-															alt="카카오페이">
+															src="/resources/images/samsung_pay.png"
+															alt="삼성페이">
 														</span>
-														<p>카카오페이</p>
+														<p>삼성페이</p>
 													</div>
 												</a> <a noHref class="item settSvmt simpSett_003_3"
 													data-grpsettcd="003" data-grpdispordg="3"
-													data-dispsettwaycd="109" data-settwaynm="페이코"
+													data-dispsettwaycd="109" data-settwaynm="LG페이"
 													data-settovsecd="">
-													<div class="">
-														<span class="tag">PAYCO 2% 포인트 적립</span> <span class="img">
+													<div class="active">
+														<span class="img">
 															<img
-															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102109.png"
-															alt="페이코">
+															src="/resources/images/lg_pay.png"
+															alt="LG페이">
 														</span>
-														<p>페이코</p>
+														<p>LG페이</p>
 													</div>
 												</a> <a noHref class="item settSvmt simpSett_003_3"
 													data-grpsettcd="003" data-grpdispordg="3"
-													data-dispsettwaycd="202" data-settwaynm="위쳇페이"
+													data-dispsettwaycd="202" data-settwaynm="토스페이"
 													data-settovsecd="P141">
-													<div class="">
+													<div class="active">
 														<span class="img"> <img
-															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102202.png"
-															alt="위쳇페이">
+															src="/resources/images/tosspay.png"
+															alt="토스페이">
 														</span>
-														<p>위쳇페이</p>
+														<p>토스페이</p>
 													</div>
-												</a> <a noHref class="item settSvmt simpSett_003_3"
-													data-grpsettcd="003" data-grpdispordg="3"
-													data-dispsettwaycd="201" data-settwaynm="Alipay+"
-													data-settovsecd="P003">
-													<div class="">
-														<span class="img"> <img
-															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102201.png"
-															alt="Alipay+">
-														</span>
-														<p>Alipay+</p>
-													</div>
-												</a> <a noHref class="item settSvmt simpSett_003_3"
-													data-grpsettcd="003" data-grpdispordg="3"
-													data-dispsettwaycd="107" data-settwaynm="스마일페이"
-													data-settovsecd="">
-													<div class="">
-														<span class="img"> <img
-															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102107.png"
-															alt="스마일페이">
-														</span>
-														<p>스마일페이</p>
-													</div>
-												</a> <a noHref class="item settSvmt simpSett_003_3"
+												</a><a noHref class="item settSvmt simpSett_003_3"
 													data-grpsettcd="003" data-grpdispordg="3"
 													data-dispsettwaycd="108" data-settwaynm="네이버페이"
 													data-settovsecd="">
-													<div class="">
+													<div class="active">
 														<span class="img"> <img
 															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102108.png"
 															alt="네이버페이">
 														</span>
 														<p>네이버페이</p>
-													</div>
-												</a> <a noHref class="item settSvmt simpSett_003_3"
-													data-grpsettcd="003" data-grpdispordg="3"
-													data-dispsettwaycd="205" data-settwaynm="UnionPay"
-													data-settovsecd="P002">
-													<div class="">
-														<span class="img"> <img
-															src="https://cdn.hddfs.com/front/images/KO/payment/easy_ic_biz_KRO0102205.png"
-															alt="UnionPay">
-														</span>
-														<p>UnionPay</p>
 													</div>
 												</a>
 											</div>
@@ -737,15 +704,10 @@
 										</div>
 										<div id="004_4" class="payway_area_other cont_item">
 											<div class="otherpayment">
-												<div class="alsoused chk">
-													<input type="checkbox" id="befSettWaySaveYn_004_4"
-														class="befSettWaySaveYn"> <label
-														for="befSettWaySaveYn_004_4">선택한 결제수단 다음에도 사용</label>
-												</div>
-												<div class="item card_banktransfer checked">
+												<!-- <div class="item card_banktransfer checked">
 													<div class="chk">
 														<input type="radio" class="settSvmt" name="etcSett_004_4"
-															id="etcSett_004_4_103" checked value="103"
+															id="etcSett_004_4_101" checked value="101"
 															data-grpsettcd="004" data-grpdispordg="4"
 															data-dispsettwaynm="무통장입금" data-dispsettwaycd="103">
 														<label for="etcSett_004_4_103">
@@ -826,53 +788,41 @@
 													</div>
 													<div class="paymentguide settGrp004 settTextDataNtc">
 													</div>
-												</div>
+												</div> -->
 												<div class="item card_mobilepayment">
 													<div class="chk">
-														<input type="radio" name="etcSett_004_4"
-															id="etcSett_004_4_104" value="104" data-grpsettcd="004"
-															data-grpdispordg="4" data-dispSettWayNm="휴대폰 소액결제"
+														<input type="radio" name="etcSett"
+															id="etcSett_004_4_102" value="휴대폰" data-grpsettcd="004"
+															data-grpdispordg="4" data-dispSettWayNm="휴대폰 결제"
 															class="settSvmt" data-dispsettwaycd="104"
 															data-settovsecd=""> <label
-															for="etcSett_004_4_104">
+															for="etcSett_004_4_102">
 															<div>
-																<p>휴대폰 소액결제</p>
+																<p>휴대폰 결제</p>
 															</div>
 														</label>
 
 													</div>
+												</div>
+												<div class="item VirtualAccount_payment" style="margin-left: 0px;">
+													<div class="chk">
+														<input type="radio" name="etcSett" id="etcSett_004_4_103" value="가상계좌" data-grpsettcd="004" data-grpdispordg="4" data-dispsettwaynm="가상계좌" class="settSvmt" data-dispsettwaycd="104" data-settovsecd="" data-gtm-form-interact-field-id="1"> 
+														<label for="etcSett_004_4_103">
+															<div>
+																<p>가상계좌</p>
+															</div>
+														</label>
 
-													<div class="paymentguide payment1044 settTextDataNoti">
 													</div>
-													<div class="paymentguide payment103314 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103374 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103274 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103204 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103114 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103044 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103034 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103344 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103054 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103264 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103234 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103714 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103324 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103394 settTextDataNoti">
-													</div>
-													<div class="paymentguide settGrp004 settTextDataNtc">
+												</div>
+												<div class="item BankTransfer_payment" style="margin-left: 0px;">
+													<div class="chk">
+														<input type="radio" name="etcSett" id="etcSett_004_4_104" value="계좌이체" data-grpsettcd="004" data-grpdispordg="4" data-dispsettwaynm="계좌이체" class="settSvmt" data-dispsettwaycd="104" data-settovsecd="" data-gtm-form-interact-field-id="1"> <label for="etcSett_004_4_104">
+															<div>
+																<p>계좌이체</p>
+															</div>
+														</label>
+
 													</div>
 												</div>
 											</div>
@@ -927,43 +877,6 @@
 									class="exceptDc dcInfo">0</em></li>
 								<li><span>상품할인</span> <em>원</em><em class="exceptDc dcInfo">380</em>
 								</li>
-								<li><span>인터넷회원할인</span> <em>원</em><em
-									class="exceptDc dcInfo">0</em></li>
-								<li><span>쿠폰할인</span> <em>원</em><em class="dcCupKrw dcInfo">0</em>
-								</li>
-								<li><span class="card"> <empty
-											id="cardPtnrPmptDcTypeText"></empty>즉시할인(<ez class="card"></ez>)
-								</span> <em>원</em><em class="pmptDcAmt dcInfo">0</em></li>
-								<li><span class="type">제휴사인증할인 (<ez class="type"></ez>)
-								</span> <em>원</em><em class="ptnrPmptDcAmt dcInfo">0</em></li>
-								<li><span>즉시할인 적립금</span> <em>원</em><em
-									class="pay_data_pmptUseSvmtAmt dcInfo">0</em></li>
-								<li><span>일반적립금</span> <em>원</em><em
-									class="svmtUseKrw settWay dcInfo">0</em></li>
-								<li><span>이벤트플러스적립금</span> <em>원</em><em
-									class="evntSvmtUseKrw settWay dcInfo">0</em></li>
-								<li><span>브랜드플러스적립금</span> <em>원</em><em
-									class="branSvmtUseKrw settWay dcInfo">0</em></li>
-								<li><span>제휴플러스적립금</span> <em>원</em><em
-									class="ptnsSvmtUseKrw settWay dcInfo">0</em></li>
-								<li><span>결제플러스적립금</span> <em>원</em><em
-									class="settSvmtUseKrw settWay dcInfo">0</em></li>
-								<li><span>H.Point</span> <em>원</em><em
-									class="hPoinUseKrw settWay dcInfo">0</em></li>
-								<li><span>H.Point Plus 포인트</span> <em>원</em><em
-									class="hPoinPlsUseKrw settWay dcInfo">0</em></li>
-								<li><span>제휴포인트 (복지포인트)</span> <em>원</em><em
-									class="ezwelWlfrPoinUseKrw dcInfo">0</em></li>
-								<li><span>제휴포인트 (복지적립금)</span> <em>원</em><em
-									class="ezwelSvmtUseKrw dcInfo">0</em></li>
-								<li><span>제휴포인트 (특별 복지포인트)</span> <em>원</em><em
-									class="ezwelSpclPoinUseKrw dcInfo">0</em></li>
-								<li><span>예치금</span> <em>원</em><em
-									class="cdpstUseKrw settWay dcInfo">0</em></li>
-								<li><span>선수금</span> <em>원</em><em
-									class="advsUseKrw settWay dcInfo">0</em></li>
-								<li><span>상품권 전환금</span> <em>원</em><em
-									class="gfCaCdpstUseKrw settWay dcInfo">0</em></li>
 							</ul></li>
 						<li id="chagDcEvtInfoDl" style="display: none"><strong>
 								청구할인 예상금액
@@ -1604,15 +1517,15 @@ $(document).ready(function(){
                 }
             }
             
-            $("#settInfoLayerPopup").dialog("close");
+            /* $("#settInfoLayerPopup").dialog("close"); */
             
-            
-                doSett();
+            /* 
+                doSett(); */
             
         } else if(type == "dpatproh") {
             $(".jeju_pop").dialog("close");
         } else {
-        	$("#settInfoLayerPopup").dialog("close");
+        	/* $("#settInfoLayerPopup").dialog("close"); */
         }
     });
     
@@ -1731,7 +1644,7 @@ $(document).ready(function(){
 			});
 		});
 		// E: 2022-05-11 H.Point Pay 카드, 계좌 선택 추가
-		if (isLogin) {
+		if ("${mid ne null }") {
 			if ($("#fregInfoTit").length > 0) {
 				$("#fregInfoTit").addClass("open");
 				$(".gift_list").show();
@@ -1761,7 +1674,7 @@ $(document).ready(function(){
 		if ($("#sbagUseYn").length > 0) {
 			$("#sbagUseYn > a:first").click();
 		}
-		if (isLogin) {
+		if ("${mid ne null }") {
 			$(".payway-swiper")
 					.each(
 							function(index, element) {
@@ -1823,6 +1736,41 @@ $(document).ready(function(){
 <script src="https://js.tosspayments.com/v1/payment"></script>
 
 <script type="text/javascript">
+function tab_change(el){
+	$('#settGrpDoma_005_1').closest("li").removeClass('ui-tabs-active');
+	$('#settGrpDoma_001_2').closest("li").removeClass('ui-tabs-active');
+	$('#settGrpDoma_003_3').closest("li").removeClass('ui-tabs-active');
+	$('#settGrpDoma_004_4').closest("li").removeClass('ui-tabs-active');
+	
+	$(el).closest("li").addClass('ui-tabs-active').show();
+	
+	
+	var id=$(el).attr("nohref");
+	$(".item.settSvmt.simpSett_003_3.active").attr("class","item settSvmt simpSett_003_3");
+	$("input:radio[name='etcSett']").prop('checked',false);
+	$('#005_1').css('display','none');
+	$('#001_2').css('display','none');
+	$('#003_3').css('display','none');
+	$('#004_4').css('display','none');
+	$('#'+id).css('display', 'block');
+}
+	
+	
+	//다른 결제 수단인지 확인
+	var otherpayment='';
+	$("input:radio[name=etcSett]").click(function(){
+    otherpayment=$("input[name=etcSett]:checked").val();
+    console.log(otherpayment);
+	});
+
+//둘중에 하나라도 지불수단이 있는지 확인
+	function consistpayment(){
+		if(confpayment==null&&otherpayment==null){
+			return false;
+		}else{
+			return true;
+		}
+	}	
 	$(document).ready(function() {
 		// 다이얼로그 초기화
 		$("#seller_information").dialog({
@@ -1891,7 +1839,9 @@ $(document).ready(function(){
 		});
 	});
 	
+	
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
+	
 	
 	function orderexec(){
 		showpopup();
@@ -1926,21 +1876,74 @@ $(document).ready(function(){
 	    	}
 		});
 	  	console.log("oid:"+oid);
-	  	
-	  	
-		pay_button.addEventListener("click", function () {
-        var paymentData = {
-            amount: total_bill_dollar_text,
-            orderId : oid,
-            orderName: "${orderName}",
-            customerName: "${mid}",
-            successUrl: window.location.origin+"/pay/"+oid+ "/success",
-            failUrl: window.location.origin+"/pay/" +oid+ "/fail",
-        };
-        tossPayments.requestPayment('카드', paymentData);
-    	});  
+
+		pay_button.addEventListener("click", function (){
+		//간편결제인지 확인
+		var confpayment=$('.item.settSvmt.simpSett_003_3.active').attr('data-settwaynm');
+		var otherpayment=$("input[name=etcSett]:checked").val();
+		console.log(confpayment);
+		if(confpayment!=null||otherpayment!=null){
+			if(confpayment!=null && otherpayment==null){
+				console.log(confpayment);
+				var paymentData = {
+			            amount: total_bill_dollar_text,
+			            orderId : oid,
+			            orderName: "${orderName}",
+			            customerName: "${mid}",
+			            successUrl: window.location.origin+"/pay/"+oid+ "/success",
+			            failUrl: window.location.origin+"/pay/" +oid+ "/fail",
+			            flowMode: 'DIRECT',
+			            easyPay: confpayment
+			        };
+				tossPayments.requestPayment('카드', paymentData).catch(function (error) {
+		        	  if (error.code === 'USER_CANCEL') {
+		        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
+		        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
+		        		    console.log('회사가 없어');
+		        		  }
+		        })
+			}else if(confpayment==null && otherpayment!=null){
+				var paymentData = {
+			            amount: total_bill_dollar_text,
+			            orderId : oid,
+			            orderName: "${orderName}",
+			            customerName: "${mid}",
+			            successUrl: window.location.origin+"/pay/"+oid+ "/success",
+			            failUrl: window.location.origin+"/pay/" +oid+ "/fail"
+			        };
+				tossPayments.requestPayment(otherpayment, paymentData).catch(function (error) {
+		        	  if (error.code === 'USER_CANCEL') {
+		        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
+		        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
+		        		    console.log('회사가 없어');
+		        		  }
+		        })
+			}else{
+				return false;
+			}
+		}else{
+	        var paymentData = {
+	            amount: total_bill_dollar_text,
+	            orderId : oid,
+	            orderName: "${orderName}",
+	            customerName: "${mid}",
+	            successUrl: window.location.origin+"/pay/"+oid+ "/success",
+	            failUrl: window.location.origin+"/pay/" +oid+ "/fail"
+	        };
+	        tossPayments.requestPayment('카드', paymentData).catch(function (error) {
+	        	  if (error.code === 'USER_CANCEL') {
+	        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
+	        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
+	        		    console.log('회사가 없어');
+	        		  }
+	        })
+		}
+
+    });  
+		
+		
 }
-	
+
 </script>
 
 <%@ include file="../common/Footer.jsp" %>
