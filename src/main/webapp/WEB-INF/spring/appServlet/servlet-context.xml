@@ -4,11 +4,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
@@ -87,9 +89,10 @@
 		<beans:constructor-arg ref="kakaoRedirectUrl" />
 	</beans:bean>
 
-	<!-- 구글 로그인-->
+	<!-- 구글 로그인 -->
 	<beans:bean id="googleClientID" class="java.lang.String">
-		<beans:constructor-arg value="810238020221-c1sn8lhq6jgea7oge6853bqfvqn28k92.apps.googleusercontent.com" />
+		<beans:constructor-arg
+			value="810238020221-c1sn8lhq6jgea7oge6853bqfvqn28k92.apps.googleusercontent.com" />
 	</beans:bean>
 	<beans:bean id="googleClientSecret" class="java.lang.String">
 		<beans:constructor-arg
@@ -100,24 +103,28 @@
 			value="http://localhost:8080/auth/google/callback" />
 	</beans:bean>
 
-	<beans:bean id="googleSns" class="com.hyundai.dutyfree.auth.SnsValue">
+	<beans:bean id="googleSns"
+		class="com.hyundai.dutyfree.auth.SnsValue">
 		<beans:constructor-arg value="google" />
 		<beans:constructor-arg ref="googleClientID" />
 		<beans:constructor-arg ref="googleClientSecret" />
 		<beans:constructor-arg ref="googleRedirectUrl" />
 	</beans:bean>
-	
+
 	<beans:bean id="googleConnectionFactory"
-	           class="org.springframework.social.google.connect.GoogleConnectionFactory">
-	   <beans:constructor-arg ref="googleClientID" />
-	   <beans:constructor-arg ref="googleClientSecret" />
-    </beans:bean>
+		class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<beans:constructor-arg ref="googleClientID" />
+		<beans:constructor-arg ref="googleClientSecret" />
+	</beans:bean>
 
 	<beans:bean id="googleOAuth2Parameters"
 		class="org.springframework.social.oauth2.OAuth2Parameters">
-		<beans:property name="scope" value="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email" />
-		<!-- <beans:property name="scope" value="https://www.googleapis.com/auth/contacts.readonly" /> -->
-		<beans:property name="redirectUri" ref="googleRedirectUrl" />
+		<beans:property name="scope"
+			value="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email" />
+		<!-- <beans:property name="scope" value="https://www.googleapis.com/auth/contacts.readonly" 
+			/> -->
+		<beans:property name="redirectUri"
+			ref="googleRedirectUrl" />
 	</beans:bean>
 
 
