@@ -77,7 +77,7 @@
 											<option value="">선택</option>
 											<option value="ICNT1">인천공항 T1</option>
 											<option value="ICNT2">인천공항 T2</option>
-											<option value="KIM">김포공항</option>
+											<option value="GMP">김포공항</option>
 									</select>
 								</span>
 								</li>
@@ -475,10 +475,30 @@ $(document)
 		});
 
 function priceComma(price) {
-return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+function isvalueEmpty(){
+	if($('#orderDpatPlacCd').val()==''){
+		alert('출국장소를 입력해주새요.');
+		return false;
+	}else if($('#openNm').val()==''){
+		alert('편명을 입력해주세요.');
+		return false;
+	}else if($('#odeptdate').val()=='' || $('#dpatTmH').val()=='' || $('#dpatTmM').val()==''){
+		alert('출국일시를 입력해주세요.');
+		return false;
+	}else if($('#ugntComuMophNo').val()==''){
+		alert('긴급연락처를 입력하세요.');
+		return false;
+	}else{
+		return true;
+	}
+}
 function sendDepartInfo(){
+	var pass=isvalueEmpty();
+	
+	if(pass){
 	<%List<OrderItemVO> list = (List<OrderItemVO>) request.getAttribute("orderitemlist");
 
 			for (int i = 0; i < list.size(); i++) {%>
@@ -497,7 +517,8 @@ function sendDepartInfo(){
 	}
 	$('#sendDepartInfo').attr('action','/order/orderpays');
 	$('#sendDepartInfo').submit();
-}
+		}
+	}
 
 
 

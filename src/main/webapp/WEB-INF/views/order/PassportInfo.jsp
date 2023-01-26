@@ -189,6 +189,33 @@
 
 				<script type="text/javascript">
 				
+				
+				function isvalueEmpty(){
+					if($('#mBirth').val()==''){
+						alert('생년월일을 입력해주세요.');
+						return false;
+					}else if($('#mNationality').val()==''){
+						alert('국적을 입력해주세요.');
+						return false;
+					}else if($('#mbshEngLstnm').val()==''){
+						alert('성을 입력해주세요.');
+						return false;
+					}else if($('#mbshEngFstnm').val()==''){
+						alert('이름을 입력해주세요.');
+						return false;
+					}else if($('#psptNo').val()==''){
+						alert('여권번호를 입력해주세요.');
+						return false;
+					}else if($('#mPsptexdit').val()==''){
+						alert('여권기간만료일을 입력해주세요.');
+						return false;
+					}else{
+						return true;
+					}
+					
+				}
+				
+				
 				function guidePspt() {
 					if ($("#guidePspt").hasClass("on")) {
 						$("#guidePspt").removeClass("on");
@@ -197,9 +224,12 @@
 					}
 				}
 				function savePassPort(){
+					var pass=isvalueEmpty();
+					if(pass){
 					 $("#mName").attr("disabled", false);
 					 $("#mGender").attr("disabled",false); 
 					$("#enrollPassport").submit();
+					}
 				}
 				
 				$(function() {
@@ -249,6 +279,8 @@
 				    //초기값을 오늘 날짜로 설정해줘야 합니다.
 				    $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
 				});
+				
+				
 				</script>
 
 				<script type="text/javascript">
