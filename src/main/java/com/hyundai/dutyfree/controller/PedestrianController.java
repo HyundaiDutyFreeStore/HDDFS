@@ -3,8 +3,6 @@ package com.hyundai.dutyfree.controller;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +46,7 @@ public class PedestrianController {
 
 	@ResponseBody
 	@GetMapping(value = "/conf", produces = "application/json;")
-	public String getConf(HttpServletRequest request) {
+	public String getConf() {
 
 		// 파일이 위치한 실제 경로
 		String path = "C:/resources";

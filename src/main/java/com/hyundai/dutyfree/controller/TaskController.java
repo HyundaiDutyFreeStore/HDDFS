@@ -40,7 +40,7 @@ public class TaskController {
 	@Autowired
 	private PedestrianService pedestrianservice;
 	
-	public void getConf() {
+	public int realTimeConfusion() {
 		String path = "C:/resources";
 		String path_in = path + "/analyzeReport/loginside.csv";
 		String path_out = path + "/analyzeReport/logoutside.csv";
@@ -61,6 +61,7 @@ public class TaskController {
 		}
 		int count = inside - outside;
 		count = Math.max(count, 0);
+		return count;
 	}
 	
 	@Scheduled(fixedDelay = 59999)
@@ -130,7 +131,7 @@ public class TaskController {
 					+ "							<li><strong>상담시간</strong>09:30 ~ 18:30</li>\n"
 					+ "						</ul>\n" + "					</dd>\n" + "				</dl>\n"
 					+ "			</div>\n" + "			<h4 class=\"h4_type line2 mgtsm\">이용 예정 고객 안내</h4>\n" + confuse
-					+ "			<h4 class=\"h4_type line2 mgtsm\">실시간 혼잡도 안내</h4>\n"
+					+ "			<h4 class=\"h4_type line2 mgtsm\">현재 대기 고객은" + realTimeConfusion() + "명 입니다.</h4>\n"
 					+ "		</div>";
 			try {
 				MimeMessage message = mailSender.createMimeMessage();

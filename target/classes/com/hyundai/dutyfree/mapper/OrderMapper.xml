@@ -102,20 +102,23 @@
 	<select id="LastMember"
 		resultType="com.hyundai.dutyfree.vo.CustomerVO">
 		<![CDATA[
-		SELECT NVL ( count, 0 ) as count, b.hours as hours
+		SELECT NVL ( a.count, 0 ) as count, b.hours as hours
 		FROM (
 		SELECT
-		COUNT(*) AS count , to_number(TO_CHAR ( a.odeptdate, 'HH24' )) AS
+		COUNT(*) AS count , to_number(TO_CHAR ( odeptdate, 'HH24' )) AS
 		hours
-		FROM orderlist a
-		WHERE a.odeptdate BETWEEN to_date(#{odeptdate}, 'YYMMDDHH24')- 3/24 AND to_date(#{odeptdate}, 'YYMMDDHH24')    
-		AND a.odept=#{odept} AND a.ostatus != 'pay_cancel'
+		FROM orderlist
+		WHERE odeptdate BETWEEN to_date(#{odeptdate}, 'YYMMDDHH24')- 3/24 AND to_date(#{odeptdate}, 'YYMMDDHH24')    
+		AND odept=#{odept} AND ostatus != 'pay_cancel'
 		GROUP BY
-		TO_CHAR ( a.odeptdate, 'HH24' )
+		TO_CHAR ( odeptdate, 'HH24' )
 		) a
-		join ( SELECT
-		to_number(TO_CHAR ( LEVEL ))-1 as hours FROM DUAL CONNECT
-		BY LEVEL <= 24
+		RIGHT join ( SELECT
+            to_char(to_char( CURRENT_DATE, 'HH24') + ROWNUM ) AS hours
+        FROM
+            dual
+        CONNECT BY
+            level <= 3
 		) b on a.hours = b.hours
 		order by 2
 		]]>
