@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hyundai.dutyfree.vo.OrderMemberVO;
+import com.hyundai.dutyfree.vo.CustomerVO;
 
 /**
  * CountCustomerTest
@@ -19,8 +19,9 @@ import com.hyundai.dutyfree.vo.OrderMemberVO;
  *        <pre>
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
- * 2023.01.20    김찬중                         최초 생성
+ * 2023.01.20    김찬중                        최초 생성
  * 2023.01.26    김찬중                        인도장 이용 예정 고객 리스트 추가
+ * 2023.01.27    김찬중                        3시간 전 인도장 이용 예정 고객 리스트 추가
  *        </pre>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,12 +42,18 @@ public class CountCustomerTest {
 	 * getCustomerPerTime.get(i).getCount()); } String json = jsonObj.toString();
 	 * System.out.println(json); }
 	 */
-	
+
+	/*
+	 * @Test public void getConfFut() { List<OrderMemberVO> OrderMemberCheck =
+	 * ordermapper.OrderMemberCheck(); for (int i = 0; i < OrderMemberCheck.size();
+	 * i++) { System.out.println(OrderMemberCheck.get(i).toString()); } }
+	 */
+
 	@Test
-	public void getConfFut() {
-		List<OrderMemberVO> OrderMemberCheck = ordermapper.OrderMemberCheck();
-		for(int i=0;i<OrderMemberCheck.size();i++) {
-			System.out.println(OrderMemberCheck.get(i).toString());
+	public void getthree() {
+		List<CustomerVO> LastMember = ordermapper.LastMember("ICNT1", "2023012712");
+		for (int i = 0; i < LastMember.size(); i++) {
+			System.out.println(LastMember.get(i).toString());
 		}
 	}
 

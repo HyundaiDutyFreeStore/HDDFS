@@ -127,4 +127,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderMemberVO> OrderMemberCheck(){
 		return mapper.OrderMemberCheck();
 	}
+	//3시간 전 이용 예정 고객
+	@Override
+	public List<CustomerVO> LastMember(String odept, String odeptdate){
+		return mapper.LastMember(odept, odeptdate);
+	}
 }

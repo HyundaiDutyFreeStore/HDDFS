@@ -54,4 +54,6 @@ public interface OrderMapper {
 	public void UpdateorderPaymentKey(@Param("opaymentkey") String opaymentkey, @Param("oid") String oid);
 	//인도장 이용 예정 고객
 	public List<OrderMemberVO> OrderMemberCheck();
+	//3시간 전 이용 예정 고객
+	public List<CustomerVO> LastMember(@Param("odept") String odept, @Param("odeptdate") String odeptdate);
 }

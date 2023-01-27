@@ -93,9 +93,31 @@
 		select member.mname, member.memail, o.odept, o.oid, o.odeptdate from
 		(select * 
 		from orderlist
-		where odeptdate <= CURRENT_DATE + 2/24 AND odeptdate >= CURRENT_DATE
+		where odeptdate <= CURRENT_DATE + 3/24 AND odeptdate >= CURRENT_DATE + 2/24 + 59/(24*60)
 		and not ostatus = 'pay_cancel'
 		) o join member on member.mid = o.mid
+		]]>
+	</select>
+	
+	<select id="LastMember"
+		resultType="com.hyundai.dutyfree.vo.CustomerVO">
+		<![CDATA[
+		SELECT NVL ( count, 0 ) as count, b.hours as hours
+		FROM (
+		SELECT
+		COUNT(*) AS count , to_number(TO_CHAR ( a.odeptdate, 'HH24' )) AS
+		hours
+		FROM orderlist a
+		WHERE a.odeptdate BETWEEN to_date(#{odeptdate}, 'YYMMDDHH24')- 3/24 AND to_date(#{odeptdate}, 'YYMMDDHH24')    
+		AND a.odept=#{odept} AND a.ostatus != 'pay_cancel'
+		GROUP BY
+		TO_CHAR ( a.odeptdate, 'HH24' )
+		) a
+		join ( SELECT
+		to_number(TO_CHAR ( LEVEL ))-1 as hours FROM DUAL CONNECT
+		BY LEVEL <= 24
+		) b on a.hours = b.hours
+		order by 2
 		]]>
 	</select>
 </mapper>
