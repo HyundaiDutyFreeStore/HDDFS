@@ -122,14 +122,28 @@ public class OrderServiceImpl implements OrderService {
 		mapper.UpdateorderPaymentKey(opaymentkey, oid);
 
 	}
-	//인도장 이용 예정 고객
+
+	// 인도장 이용 예정 고객
 	@Override
-	public List<OrderMemberVO> OrderMemberCheck(){
+	public List<OrderMemberVO> OrderMemberCheck() {
 		return mapper.OrderMemberCheck();
 	}
-	//3시간 전 이용 예정 고객
+
+	// 3시간 전 이용 예정 고객
 	@Override
-	public List<CustomerVO> LastMember(String odept, String odeptdate){
+	public List<CustomerVO> LastMember(String odept, String odeptdate) {
 		return mapper.LastMember(odept, odeptdate);
+	}
+
+	// 30분 전 이용 예정 고객
+	@Override
+	public List<OrderMemberVO> LastHalfMember(){
+		return mapper.LastHalfMember();
+	}
+
+	// 상품을 찾아가지 않은 고객
+	@Override
+	public List<OrderMemberVO> FailMember(){
+		return mapper.FailMember();
 	}
 }
