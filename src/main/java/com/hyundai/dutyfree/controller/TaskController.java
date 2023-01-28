@@ -66,7 +66,7 @@ public class TaskController {
 	
 	@Scheduled(fixedDelay = 59999)
 	public void mailSender() {
-		System.out.println("고객에게 이메일 전송");
+		System.out.println("Spring Scheduler 작동");
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddHH");
 		/* 이메일 보내기 */
 		List<OrderMemberVO> customer3h = orderservice.OrderMemberCheck();
