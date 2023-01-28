@@ -96,20 +96,7 @@
 									class="btn">자세히보기</a>
 							</div>
 							<div class="point_discount accordion_box">
-								<div class="enter_amount whether_use_points">
-									<strong>즉시할인 적립금</strong>
-									<ul class="chk">
-										<li><input type="radio" name="pmptUseSvmtUseYn"
-											id="pmptUseSvmtUse_Y" value="Y" disabled="disabled">
-											<label for="pmptUseSvmtUse_Y">전액 즉시사용(<em
-												class="pmptUseSvmtAmt">0</em>원)
-										</label></li>
-										<li><input type="radio" name="pmptUseSvmtUseYn"
-											id="pmptUseSvmtUse_N" value="N" checked disabled="disabled">
-											<label for="pmptUseSvmtUse_N">적립</label></li>
-									</ul>
-								</div>
-								<div class="enter_amount">
+								<div class="enter_amount" style='width: 700px;'>
 									<dl>
 										<dt>
 											일반적립금
@@ -127,7 +114,7 @@
 											</div>
 										</dt>
 										<dd>
-											<em>10,000</em>원
+											<em class='mtotal'>${member.mtotal }</em>원
 										</dd>
 									</dl>
 									<div class="input">
@@ -174,7 +161,7 @@
 						<!-- //대한항공 스카이패스 마일리지 적립 -->
 
 						<!-- S: 2022-08-26 쇼핑백 추가-->
-						<li id="sbagUseYn" class="open">
+						<!-- <li id="sbagUseYn" class="open">
 							<div class="title">
 								<h4>친환경 캠페인 참여</h4>
 								<a href="#none" class="btn">자세히보기</a>
@@ -195,404 +182,27 @@
 								<p class="p_dot_list mgtxs">친환경 캠페인에 동참하시면 상품 인도시 일회용 쇼핑백 없이
 									완충재만 제공 됩니다.</p>
 							</div>
-						</li>
+						</li> -->
 						<!-- E: 2022-08-26 쇼핑백 추가-->
 
 						<li id="settInfoTit" class="cat_tit">
 							<div class="title">
 								<h4>결제정보</h4>
-								<em></em> <a href="javascript:void(0);" class="btn">자세히보기</a>
+								<em style="font-size: 13px;">(미선택시 카드 결제로 됩니다)</em> <a href="javascript:void(0);" class="btn">자세히보기</a>
 							</div>
 							<div class="payment_method accordion_box">
 								<div class="tab-action">
 									<div class="payment_method_dim" style="display: none;"></div>
 									<ul class="tab_square ">
-										<li><a class="settGrpDoma" id="settGrpDoma_005_1"
-											 nohref="005_1"data-cardbadge="Y" onclick="tab_change(this);">H.POINT PAY
-												<p class="flag">혜택</p>
-										</a></li>
-										<li><a class="settGrpDoma" id="settGrpDoma_001_2"
-											nohref="001_2" data-cardbadge="Y" onclick="tab_change(this);">신용카드
-												<p class="flag">혜택</p>
-										</a></li>
 										<li><a class="settGrpDoma" id="settGrpDoma_003_3"
 											 nohref="003_3" data-cardbadge="Y" onclick="tab_change(this);">간편결제
-												<p class="flag">혜택</p>
 										</a></li>
 										<li><a class="settGrpDoma" id="settGrpDoma_004_4"
 											 nohref="004_4" data-cardbadge="" onclick="tab_change(this);">다른결제수단</a></li>
 									</ul>
 
 									<div class="panel">
-										<div id="005_1" class="payway_area_hpay cont_item">
-											<div class="alsoused chk">
-												<input type="checkbox" id="befSettWaySaveYn_005_1"
-													class="befSettWaySaveYn"> <label
-													for="befSettWaySaveYn_005_1">선택한 결제수단 다음에도 사용</label>
-											</div>
-
-											<div class="mgts hpay_choose">
-												<div class="chk">
-													<input type="radio" id="hpay_01" name="hpay"
-														checked="checked"> <label for="hpay_01"><img
-														src="https://cdn.hddfs.com/front/images/KO/common/logo_hpay_s.jpg"
-														alt="H.Point Pay"> 카드결제 <span class="hpay_tag">15만원이상
-															8%리워드</span> </label>
-												</div>
-											</div>
-											<div class="hpay_box card active">
-												<div class="payway-swiper">
-													<div class="swiper-wrapper">
-														<!--
-                                                                
-                                                                 -->
-														<div class="swiper-slide item">
-															<div class="default">
-																<button type="button" onclick="checkHpayTerms('card');">카드선택</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="mgtm hpay_choose">
-												<div class="chk">
-													<input type="radio" id="hpay_02" name="hpay"> <label
-														for="hpay_02"><img
-														src="https://cdn.hddfs.com/front/images/KO/common/logo_hpay_s.jpg"
-														alt="H.Point Pay"> 계좌이체 </label>
-												</div>
-											</div>
-											<div class="hpay_box bankbook">
-												<div class="payway-swiper">
-													<div class="swiper-wrapper">
-
-														<div class="swiper-slide item">
-															<div class="default">
-																<button type="button" onclick="checkHpayTerms('bank');">계좌추가</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-
-											<div class="paymentguide settGrp110">
-												<strong>결제안내</strong>
-												<ul class="dot">
-													<span style="color: #ff0000">2023.01.01~01.31&nbsp;H.Point
-														Pay(카드,계좌) 15만원 이상 결제시 최대 8만포인트&nbsp;적립 프로모션</span>
-													<br />
-													<br /> &bull; 리워드는 결제금액 구간별로 상이하며, 세부 내용은 혜택페이지를 참고하시기
-													바랍니다.
-													<br />
-													<ul class="attention_list"
-														style="list-style-type: none; box-sizing: border-box; font-size: 13px; font-family: &amp; quot; Noto Sans CJK KR&amp;quot; , 본고딕 , &amp;quot; sans-serif &amp;quot; , sans-serif; white-space: normal; word-spacing: 0px; text-transform: none; font-weight: 400; color: rgb(27, 30, 35); padding-bottom: 0px; font-style: normal; padding-top: 0px; padding-left: 0px; orphans: 2; widows: 2; margin: 0px; letter-spacing: 0px; padding-right: 0px; background-color: rgb(255, 255, 255); text-indent: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">
-														<br />
-													</ul>
-												</ul>
-											</div>
-											<div class="paymentguide settGrp005">
-												<strong>유의사항</strong>
-												<p>
-													&middot; H.Point Pay는&nbsp; 현대백화점그룹 온라인몰에서 사용하실 수 있는 그룹 통합
-													간편결제 서비스 입니다.<br /> &middot; 현대백화점 그룹 전 계열사 어느곳에서나 가입이
-													가능하며, 해당 계열사에서 등록하신 결제수단을 통해 인터넷면세점에서 주문이 가능하십니다.<br />
-													&nbsp; ※단, 현대백화점카드는 제외
-												</p>
-											</div>
-										</div>
-										<div id="001_2" class="payway_area_card  cont_item">
-											<div class="item" id="defaultItem">
-												<div class="default settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd=""
-													data-settwaynm="" data-settcardid="" data-settovsecd="">
-													<button type="button" class="orderSettCardList"
-														data-depth="1">카드선택</button>
-												</div>
-											</div>
-											<div class="item" id="cartItem">
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="06"
-													data-settwaynm="현대카드" data-settcardid="4"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_2"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_2">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016406">
-														<dl>
-															<dt>현대카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<div class="chk">
-															<input type="checkbox" name="hyundaiCardM_001_2"
-																id="hyundaiCardM_001_2"> <label
-																for="hyundaiCardM_001_2">M포인트 사용</label>
-														</div>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="4" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="04"
-													data-settwaynm="신한카드" data-settcardid="6"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_3"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_3">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016404">
-														<dl>
-															<dt>신한카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="6" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="01"
-													data-settwaynm="비씨카드" data-settcardid="0100"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_4"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_4">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016401">
-														<dl>
-															<dt>비씨카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="0100" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="02"
-													data-settwaynm="국민카드" data-settcardid="0204"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_5"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_5">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016402">
-														<dl>
-															<dt>국민카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="0204" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="21"
-													data-settwaynm="롯데카드" data-settcardid="5"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_6"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_6">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016421">
-														<dl>
-															<dt>롯데카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="5" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="05"
-													data-settwaynm="삼성카드" data-settcardid="2"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_7"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_7">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016405">
-														<dl>
-															<dt>삼성카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="2" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="03"
-													data-settwaynm="하나카드" data-settcardid="11"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_8"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_8">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016403">
-														<dl>
-															<dt>하나카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="11" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="001" data-settwaycd="08"
-													data-settwaynm="NH카드" data-settcardid="14"
-													data-settovsecd="" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_9"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_9">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO016408">
-														<dl>
-															<dt>NH카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-														<select name="istmMonsCnt_001_2" data-grpsettcd="001"
-															data-grpdispordg="2" data-dispsettwaycd="001"
-															data-settcardid="14" data-settovsecd="" data-reload="N">
-														</select>
-													</div>
-												</div>
-												<div class="item_card settSvmt orderSettCardList_001_2"
-													data-grpsettcd="001" data-grpdispordg="2"
-													data-dispsettwaycd="002" data-settwaycd=""
-													data-settwaynm="해외신용카드" data-settcardid=""
-													data-settovsecd="P000" style="display: none;">
-													<div class="alsoused chk">
-														<input type="checkbox" id="befSettWaySaveYn_001_2_10"
-															class="befSettWaySaveYn"> <label
-															for="befSettWaySaveYn_001_2_10">선택한 결제수단 다음에도 사용</label>
-													</div>
-													<div class="color_KRO0164P000">
-														<dl>
-															<dt>해외신용카드</dt>
-															<dd>
-																<a href="javascript:void(0);"
-																	class="btn orderSettCardList" data-depth="2"
-																	onclick="return false;">카드변경</a>
-															</dd>
-														</dl>
-													</div>
-												</div>
-											</div>
-											<div class="paymentguide payment00142 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment00162 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment00101002 settTextDataNoti">
-												<strong>결제안내</strong>
-												<ul class="dot">
-													<strong>※BC카드 적용회원사: </strong>
-													<br />
-													우리(BC)카드,SC제일은행,하나(BC)카드,NH농협(BC)카드,IBK기업은행,KB국민(BC)카드,DGB대구은행,
-													<br /> BNK부산은행,BNK경남은행,한국씨티(BC)카드,신한(BC)카드,비씨카드㈜
-													자체발행카드(바로카드)에서 발행된 BC카드&nbsp;
-													<br />
-													<br />
-													<u><strong>자세한 내용은 카드사에 문의해 주시기 바랍니다.</strong></u>
-												</ul>
-											</div>
-											<div class="paymentguide payment00102042 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment00152 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment00122 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment001112 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment001142 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment0022 settTextDataNoti">
-											</div>
-											<div class="paymentguide settGrp001 settTextDataNtc"></div>
-
-											<div class="paymentguide payment002 settTextDataNoti">
-											</div>
-
-											<div class="paymentguide payment002 settTextDataNtc">
-												<strong>유의사항</strong>
-												<p>
-													<strong>[해외카드&nbsp;결제 시 유의사항]</strong><br /> <span
-														style="color: #ff0000">&bull;&nbsp;카드 발급 국가와 국적이
-														상이할 경우 결제가 불가할 수 있습니다.</span><br /> &bull; 주문 전체가 아닌 부분 취소 시에는
-													카드 취소가 불가하며, 현금으로 환불됩니다.<br /> &bull; 반품 금의 해외송금을 원하시는 경우
-													해외송금 수수료가 부과될 수 있습니다.<br /> &bull; 부분 취소 시
-													고객센터&nbsp;(1811-6688 / 운영시간 09:30~18:30) 로 문의하여 주시기 바랍니다.<br />
-												</p>
-											</div>
-
-										</div>
 										<div id="003_3" class="payway_area_easy  cont_item">
-											<div class="chk">
-												<input type="checkbox" id="befSettWaySaveYn_003_3"
-													class="befSettWaySaveYn"> <label
-													for="befSettWaySaveYn_003_3">선택한 결제수단 다음에도 사용</label>
-											</div>
 											<div class="easypayment">
 												<a noHref class="item settSvmt simpSett_003_3"
 													data-grpsettcd="003" data-grpdispordg="3"
@@ -653,10 +263,7 @@
 											<div class="paymentguide payment1093 settTextDataNoti">
 												<strong>결제안내</strong>
 												<ul class="dot">
-													<span style="color: #ff0000">2022.10.01~10.31 PAYCO
-														결제금액의 3% 무제한 포인트 적립 프로모션</span>
-													<br />
-													<br /> ※ PAYCO 간편결제 유의사항
+													※ PAYCO 간편결제 유의사항
 													<br /> - 온/오프라인 쇼핑은 물론 송금, 멤버십 적립까지 가능한 통합 서비스 입니다.
 													<br /> - 휴대폰과 카드 명의자가 동일해야 결제 가능하며, 결제금액 제한은 없습니다.
 													<br /> &nbsp; (지원카드: 모든 국내 신용/체크 카드)
@@ -666,129 +273,9 @@
 													양해부탁드립니다.
 												</ul>
 											</div>
-											<div class="paymentguide payment2023 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment2013 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment1073 settTextDataNoti">
-											</div>
-											<div class="paymentguide payment1083 settTextDataNoti">
-												<strong>결제안내</strong>
-												<ul class="dot">
-													&middot; 주문 변경 시 카드사 혜택 및 할부 적용 여부는 해당 카드사 정책에 따라 변경될 수
-													있습니다.
-													<br />
-													<br /> &middot; 네이버페이는 네이버 ID 로 별도 앱 설치 없이 신용카드 또는 은행계좌
-													정보를 등록하여 네이버페이 비밀번호로 결제할 수 있는 간편결제 서비스입니다.
-													<br />
-													<br /> &middot; 결제 가능한 신용카드 :&nbsp; 신한 ,&nbsp; 삼성 ,&nbsp;
-													현대 , BC,&nbsp; 국민 ,&nbsp; 하나 ,&nbsp; 롯데 , NH 농협 ,&nbsp; 씨티
-													,&nbsp; 카카오뱅크
-													<br />
-													<br /> &middot; 결제 가능한 은행 : NH 농협 ,&nbsp; 국민 ,&nbsp; 신한
-													,&nbsp; 우리 ,&nbsp; 기업 , SC 제일 ,&nbsp; 부산 ,&nbsp; 경남 ,&nbsp;
-													수협 ,&nbsp; 우체국 ,&nbsp; 미래에셋대우 ,&nbsp; 광주 ,&nbsp; 대구 ,&nbsp;
-													전북 ,&nbsp; 새마을금고 ,&nbsp; 제주은행 ,&nbsp; 신협 ,&nbsp; 하나은행
-													,&nbsp; 케이뱅크 ,&nbsp; 카카오뱅크 ,&nbsp; 삼성증권 , KDB 산업은행 , 씨티은행 ,
-													SBI 은행 ,&nbsp; 유안타증권 ,&nbsp; 유진투자증권
-													<br />
-													<br /> &middot; 네이버페이 카드 간편결제는 네이버페이에서 제공하는 카드사 별 무이자
-													,&nbsp; 청구할인 혜택을 받을 수 있습니다.
-													<br />
-												</ul>
-											</div>
-											<div class="paymentguide payment2053 settTextDataNoti">
-											</div>
-											<div class="paymentguide settGrp003 settTextDataNtc"></div>
-
 										</div>
 										<div id="004_4" class="payway_area_other cont_item">
 											<div class="otherpayment">
-												<!-- <div class="item card_banktransfer checked">
-													<div class="chk">
-														<input type="radio" class="settSvmt" name="etcSett_004_4"
-															id="etcSett_004_4_101" checked value="101"
-															data-grpsettcd="004" data-grpdispordg="4"
-															data-dispsettwaynm="무통장입금" data-dispsettwaycd="103">
-														<label for="etcSett_004_4_103">
-															<div>
-																<p>무통장입금</p>
-																<span>예금주 : (주)현대백화점면세점</span>
-															</div>
-															<ul>
-																<li><label>은행선택<i>*</i></label> <select
-																	name="virtAcntBnkCd_004_4" class="settSvmt"
-																	data-grpsettcd="004" data-grpdispordg="4">
-																		<option value="" data-bdgedispwrd="">선택</option>
-																		<option value="31" data-bdgedispwrd="">대구은행</option>
-																		<option value="37" data-bdgedispwrd="">전북은행</option>
-																		<option value="27" data-bdgedispwrd="">시티은행</option>
-																		<option value="20" data-bdgedispwrd="">우리은행</option>
-																		<option value="11" data-bdgedispwrd="">농협은행</option>
-																		<option value="04" data-bdgedispwrd="">국민은행</option>
-																		<option value="03" data-bdgedispwrd="">기업은행</option>
-																		<option value="34" data-bdgedispwrd="">광주은행</option>
-																		<option value="05" data-bdgedispwrd="">
-																			하나(외환)은행</option>
-																		<option value="26" data-bdgedispwrd="">신한은행</option>
-																		<option value="23" data-bdgedispwrd="">
-																			SC제일은행</option>
-																		<option value="71" data-bdgedispwrd="">우체국</option>
-																		<option value="32" data-bdgedispwrd="">부산은행</option>
-																		<option value="39" data-bdgedispwrd="">경남은행</option>
-																</select>
-																	<p>원하는 은행을 선택하시면, 결제완료페이지에서 입금하실 계좌번호를 확인할 수 있습니다.</p>
-																</li>
-																<li><label>입금자<i>*</i></label> <input type="text"
-																	name="svacOwrNm_004_4" value="유혜승" maxlength="7"
-																	placeholder="홍길동"></li>
-																<li><strong> 입금기한 <em id="004_4_depoDttm">2023년
-																			01월 10일 23:54</span>
-																	</em>
-																</strong>
-																	<ol class="list">
-																		<li>가상계좌의 입금가능 기한은 주문 당일 23:54분까지 이며, 미 입금 시 자동으로
-																			취소됩니다.</li>
-																		<li>매장 판매분으로 인해, 입금완료. 이후라도 입금 시점에 따라 재고부족으로 자동취소
-																			될 수 있습니다.</li>
-																	</ol></li>
-															</ul>
-														</label>
-													</div>
-
-													<div class="paymentguide payment1044 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103314 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103374 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103274 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103204 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103114 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103044 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103034 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103344 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103054 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103264 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103234 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103714 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103324 settTextDataNoti">
-													</div>
-													<div class="paymentguide payment103394 settTextDataNoti">
-													</div>
-													<div class="paymentguide settGrp004 settTextDataNtc">
-													</div>
-												</div> -->
 												<div class="item card_mobilepayment">
 													<div class="chk">
 														<input type="radio" name="etcSett"
@@ -1788,6 +1275,7 @@ function tab_change(el){
 		$('.won.totalSettKrw').text(priceComma(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0))+ "원");
 		$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*(parseFloat("${mhdiscount}")/100)).toFixed(0))+"원");
 		$('.totalRsvg').text("${mhdiscount}"+"%");
+		$('.mtotal').text(priceComma((parseFloat("${member.mtotal}")*parseFloat("${KRW_WON}")).toFixed(0)));
 		
 		
 	});
@@ -1842,6 +1330,16 @@ function tab_change(el){
 	
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
 	
+	function allUseSvmtClick(){
+		var won_totalSettKrw=((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0);
+		var mtotal=(parseFloat("${member.mtotal}")*parseFloat("${KRW_WON}")).toFixed(0);
+		if(won_totalSettKrw-mtotal<0){
+			$("input[name='svmtAmt']").val((won_totalSettKrw*(0.1)).toFixed(0));
+		}else{
+			$("input[name='svmtAmt']").val((mtotal*0.1).toFixed(0));
+		}
+
+	}
 	
 	function orderexec(){
 		showpopup();
@@ -1895,13 +1393,7 @@ function tab_change(el){
 			            flowMode: 'DIRECT',
 			            easyPay: confpayment
 			        };
-				tossPayments.requestPayment('카드', paymentData).catch(function (error) {
-		        	  if (error.code === 'USER_CANCEL') {
-		        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
-		        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
-		        		    console.log('회사가 없어');
-		        		  }
-		        })
+				tossPayments.requestPayment('카드', paymentData);
 			}else if(confpayment==null && otherpayment!=null){
 				var paymentData = {
 			            amount: total_bill_dollar_text,
@@ -1911,13 +1403,7 @@ function tab_change(el){
 			            successUrl: window.location.origin+"/pay/"+oid+ "/success",
 			            failUrl: window.location.origin+"/pay/" +oid+ "/fail"
 			        };
-				tossPayments.requestPayment(otherpayment, paymentData).catch(function (error) {
-		        	  if (error.code === 'USER_CANCEL') {
-		        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
-		        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
-		        		    console.log('회사가 없어');
-		        		  }
-		        })
+				tossPayments.requestPayment(otherpayment, paymentData);
 			}else{
 				return false;
 			}
@@ -1930,13 +1416,7 @@ function tab_change(el){
 	            successUrl: window.location.origin+"/pay/"+oid+ "/success",
 	            failUrl: window.location.origin+"/pay/" +oid+ "/fail"
 	        };
-	        tossPayments.requestPayment('카드', paymentData).catch(function (error) {
-	        	  if (error.code === 'USER_CANCEL') {
-	        		    // 결제 고객이 결제창을 닫았을 때 에러 처리
-	        		  } else if (error.code === 'INVALID_CARD_COMPANY') {
-	        		    console.log('회사가 없어');
-	        		  }
-	        })
+	        tossPayments.requestPayment('카드', paymentData);
 		}
 
     });  

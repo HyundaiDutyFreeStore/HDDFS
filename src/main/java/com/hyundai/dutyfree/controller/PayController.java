@@ -47,7 +47,6 @@ import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
-import com.hyundai.dutyfree.vo.ProductVO;
 
 /**
  * PayController
@@ -60,6 +59,7 @@ import com.hyundai.dutyfree.vo.ProductVO;
  * ----------  ---------------  ---------------------------
  * 2023.01.20    박진수                        최초 생성
  * 2023.01.20    박진수                        지불 구현
+ * 2023.01.21    김찬중                        결제 완료 시 qr 코드 전송 구현
  *        </pre>
  */
 @Controller
@@ -144,8 +144,8 @@ public class PayController {
 			model.addAttribute("oid", successNode.get("orderId").asText());
 			String secret = successNode.get("secret").asText(); // 가상계좌의 경우 입금 callback 검증을 위해서 secret을 저장하기를 권장함
 			// 주문 QR코드 전송
-			String root = requests.getSession().getServletContext().getRealPath("resources"); // 서블릿 경로의 resources 폴더 찾기
-			String savePath = root + "\\qrCodes\\"; // 파일 경로
+			String path = "C:/resources";
+			String savePath = path + "/qrImage/"; // 파일 경로
 			System.out.println(savePath);
 			// 파일 경로가 없으면 생성하기
 			File file = new File(savePath);
@@ -217,38 +217,40 @@ public class PayController {
 		return "fail";
 	}
 
-	@RequestMapping("/cancelSuccess") 
+	@RequestMapping("/cancelSuccess")
 	@ResponseBody
-	public String cancelSuccess(HttpServletRequest requests,Model model) throws JsonProcessingException { 
-		
-	  HttpHeaders headers = new HttpHeaders();
-	  
-	  //--header 'Authorization: Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==' \
-	  headers.set("Authorization", "Basic " +
-	  Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
-	  
-	  //--header 'Content-Type: application/json' \
-	  headers.setContentType(MediaType.APPLICATION_JSON);
-	  
-	  Map<String, String> payloadMap = new HashMap<String, String>();
-	  
-	  
-	  payloadMap.put("cancelReason", "취소해!"); 
-	  
-	  HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
-	  
-	  //--data '{"paymentKey":"7VNlVA_WPvooPLexBAmSx","amount":15000,"orderId":"nlsN6te-juOMMQgUU5iAM"}' 
+	public String cancelSuccess(HttpServletRequest requests, Model model) throws JsonProcessingException {
 
-	ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity("https://api.tosspayments.com/v1/payments/" + requests.getParameter("paymentKey")+"/cancel", request, JsonNode.class);
-	
-	String result="";
-	if (responseEntity.getStatusCode() == HttpStatus.OK) {
-		JsonNode successNode = responseEntity.getBody();
-		model.addAttribute("oid", successNode.get("orderId").asText());
-		result="yes";
-	}
-	return result;
-	
+		HttpHeaders headers = new HttpHeaders();
+
+		// --header 'Authorization: Basic
+		// dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==' \
+		headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
+
+		// --header 'Content-Type: application/json' \
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		Map<String, String> payloadMap = new HashMap<String, String>();
+
+		payloadMap.put("cancelReason", "취소해!");
+
+		HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
+
+		// --data
+		// '{"paymentKey":"7VNlVA_WPvooPLexBAmSx","amount":15000,"orderId":"nlsN6te-juOMMQgUU5iAM"}'
+
+		ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
+				"https://api.tosspayments.com/v1/payments/" + requests.getParameter("paymentKey") + "/cancel", request,
+				JsonNode.class);
+
+		String result = "";
+		if (responseEntity.getStatusCode() == HttpStatus.OK) {
+			JsonNode successNode = responseEntity.getBody();
+			model.addAttribute("oid", successNode.get("orderId").asText());
+			result = "yes";
+		}
+		return result;
+
 	}
 
 	@RequestMapping("/virtual-account/callback")
