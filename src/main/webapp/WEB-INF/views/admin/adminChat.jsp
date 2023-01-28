@@ -12,183 +12,99 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>웹소켓 채팅</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>현대백화점인터넷면세점 FAQ</title>
+
+<link rel="apple-touch-icon" href="/client/apple-touch-icon.png" />
+<link rel="apple-touch-icon-precomposed" href="/client/icon-normal.png" />
+
+<link rel="shortcut icon" type="image/x-icon"
+	href="https://ibot.hmall.com/images/20220816/5d2c556447e84403a00644ea61bdce3e.png" />
+<!-- CSS -->
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/smartTalk.css" />
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 </head>
+
 <c:set var="path" value="${pageContext.request.contextPath }" />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap"
+	rel="stylesheet">
 
-<style type="text/css">
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
-#totaldiv{
-	background-color:#ffcc66;
-	margin-right: 5%;
-    margin-bottom:5%;
-    margin-left:5%;
-    margin-top:2%;
-    border-radius:20px;
-    height:100%;
-}
+<body id="smartchat" class="smartchat themeA">
+	<div class="wrapper">
+		<div class="header">
+			<div class="header-inner">
+				<!-- Title -->
+				<h1>
+					<span class="logo">현대백화점 인터넷면세점 고객센터 실시간 상담</span>
+				</h1>
+			</div>
+		</div>
+		<div class="container">
+			<div class="contents">
+				<div id="intro" class="intro-wrap">
+					<!-- 인트로 캐릭터 (채널별 표시) -->
+					<div class="intro-character" style="padding: 10px;">
+						<p>1:1 실시간 상담</p>
 
-#messageWindow {
-	background: black;
-	color: greenyellow;
-}
-#inputMessage {
-	width: 85%;
-	height: 5%;
-	border: none;
-	background-color:#eeeeee;
-	border-radius:10px;
-	margin-left:0.5%;
+						<!-- 	<div id="subIntroMsg"
+							style='font-size: 14px; font-weight: normal; text-align: center; padding-top: 10px;'>
+							현대백화점인터넷면세점 고객센터입니다. 무엇을 도와드릴까요?</div> -->
 
-}
-#btn-submit{
-	border-color: #ffcc66;
-    color: white; 
-    background-color: #003478;
-    width:10%;
-    height:5%;
-    border-radius:10px;
-    margin-left:1%;
+						<!-- <div class="characters" style="margin: 10px auto 0;">
+								<span class=""><img
+									src="/resources/images/hddfs.png"></span>
+							</div> -->
+					</div>
+				</div>
+				<div id="chat-list" class="chat-list">
 
+					<!-- 처음시작 -->
+					<div id="OT8HrethHwsPFv60vWIq" class="chat-item is-ktalk"
+						style="visibility: visible;">
+						<div id="RmczOk1feOuFhOAUqzZg" class="bubble has-moving in"
+							style="max-height: 357px;">
+							<div class="inner">고객님, 안녕하세요. 무엇이 궁금하신가요?</div>
+						</div>
+						<!-- <div class="date">오후 8:43</div> -->
+					</div>
+					<!-- </div> -->
+				</div>
+			</div>
+		</div>
+		<div class="chat-wrap">
+			<!-- 홈 버튼 -->
+			<!-- 
+			<button type="button" class="btn-gohome" title="홈 버튼"
+				onclick="home();"></button>
+			-->
+			<div class="chat-forms">
+				<form id="f-chat-wrap" method="post" class="forms"
+					onsubmit="return false;" autocomplete="off">
+					<!-- 검색어 입력 부분  -->
+					<label for="inp-chat"
+						style="position: absolute; width: 1px; height: 1px; top: 0; left: 0; font-size: 1px; overflow: hidden;">검색어</label>
+					<input type="text" class="inp-chat" id="inp-chat"
+						placeholder="질문을 입력하세요">
 
+					<!--  메시지 전송 버튼 -->
+					<button type="submit" class="btn-send" title="전송"></button>
+				</form>
+			</div>
 
-}
-
-#btn-submit:hover,
-#btn-submit:focus {
-    background-color: #ffcc66;
-    border-color: #003478;
-    color: #003478; 
-
-}
-#main-container {
-/* 	width: 600px;
-	height: 680px;
-	border: 1px solid black;
-	margin: 10px;
-	display: inline-block;
-	font-family: 'Noto Serif KR', serif; */
-	padding-right: 20%;
-    padding-bottom:20%;
-    padding-left:20%;
-    padding-top:2%;
-    font-family: 'Noto Serif KR', serif;
-	overflow:hidden;
-}
-#chat-container {
-	vertical-align: bottom;
-	border: none;
-	border-radius:30px;
-	margin: 10px;
-	min-height: 85%;
-	max-height: 85%;
-	/* overflow: scroll; */
-	overflow-y:scroll;
-	overflow-x: hidden;
-	background: #003478;
-	background-image:url("${path}/resources/images/admin/chatbot.png");
-	background-repeat:no-repeat;background-position: center;
-	padding:10px;
-
-
-}
- ::-webkit-scrollbar{
- 	display:block;
- }
-.chat {
-	font-size: 20px;
-	color: black;
-	margin: 20px;
-	min-height: 20px;
-	padding: 10px;
-	min-width: 50px;
-	text-align: left;
-	height: auto;
-	word-break: break-all;
-	background: #ffffff;
-	width: auto;
-	display: inline-block;
-	border-radius: 10px 10px 10px 10px;
-
-}
-/* .notice {
-	color: #607080;
-	font-weight: bold;
-	border: none;
-	text-align: center;
-	background-color: #9bbbd4;
-	display: block;
-} */
-.my-chat {
-	text-align: right;
-	background: #ffcc66;
-	border-radius: 10px 10px 10px 10px;
-	margin-right:1px;
-	padding:10px;
-}
-#bottom-container {
-	margin: 10px;
-	width:100%;
-}
-.chat-info {
-	color: #eeeeee;
-	font-size: 12px;
-	text-align: right;
-	padding: 20px;
-	padding-top: 0px;
-}
-.chat-box {
-	text-align: left;
-}
-.my-chat-box {
-	text-align: right;
-}
-
-
-
-/*추가*/
-.board_list_head {
-    border-top: 3px solid #003478;
-    border-bottom: 2px solid #003478;
-    background-color:#003478;
-    color:#ffcc66;
-    border-radius:10px;
-    font-family: 'Noto Serif KR', serif;
-    padding: 10px 0;
-   
-}
-
-.board_list_head > div{
-    display: inline-block;
-    text-align: center;
-    font-size: 25px; /*본문글자크기*/
-    font-weight: 600;
-}
-
-
-</style>
-
-<section id="content">
-<div id="totaldiv">
-	<div id="main-container">  
-
-		<div id="chat-container"></div> 
-
-		<div id="bottom-container">
-
-			<input id="inputMessage" type="text"> 
-			<input id="btn-submit"     
-				type="submit" value="전송">
 
 		</div>
 	</div>
-	</div>
-</section>
 
-<script>
+
+	<script>
 	const adminsocket = new SockJS('http://localhost:8080/adminsocket');
 	adminsocket.onopen = function() {
 		console.log("소켓열림");
@@ -197,15 +113,15 @@
 	
 	//새로운 채팅이 보내지면
 	//전송 버튼 누르는 이벤트
-		$("#btn-submit").on("click", function(e) {
+		$(".btn-send").on("click", function(e) {
 			console.log("전송버튼");
-			let txt = $("#inputMessage").val();
+			let txt = $("#inp-chat").val();
 			var date = new Date();		
 	
 			if(txt!=""){
 				//로그인한사람(관리자)이 고객에게 보낸다
 				sendChat('${loginId}', '${memberInfo.mid}', txt, date);
-				$('#inputMessage').val("");
+				$('#inp-chat').val("");
 			}
 		});
 	
@@ -228,19 +144,18 @@
 					console.log("수신인:"+v['adminSecondUsid']);
 					
 					//발신인==관리자, 수신인==이채팅방고객 (내가보낸메세지이면)
-	 				if(v['adminFirstUsid']=='${adminInfo.mid}' && v['adminSecondUsid'] == otherUsid){ 
-						
-	 					$('#chat-container').append("<div class='my-chat-box'><div class='chat my-chat'>"
-									+ v['adminChatContent']
-									+ "</div></div>"); 
+	 					if(v['adminFirstUsid']=='${adminInfo.mid}' && v['adminSecondUsid'] == otherUsid){ 
+	 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;"><div class="inner">`+ v['adminChatContent'] +`</div></div></div>`;
+	 					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 	 				} 
-	 				//발신인==이채팅방고객, 수신인==관리자 (관리자가 보낸 메세지이면- 내가받음)  
+	 				//발신인==이채팅방고객, 수신인==관리자 (고객이 보낸 메세지이면- 내가받음) 
 	 	         	if(v['adminFirstUsid'] == otherUsid && v['adminSecondUsid']=='${adminInfo.mid}'){
-	 	         
-	 	         		$('#chat-container').append("<div class='chat-box'><div class='chat'>"
-									+ v['adminChatContent']
-									+ "</div></div>"); 
-										
+	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
+	 	                   <div class="inner">`
+	 	                   +v['adminChatContent']
+	 	                   +`</div>`;
+	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);		
 					}
 				});
 			}
@@ -250,17 +165,24 @@
 				console.log("보낸사람:"+data.adminFirstUsid);
 				console.log("채팅내용:"+data.adminChatContent);
 				console.log("받는사람:"+data.adminSecondUsid);
-			
 				//내가보냈으면
 				if(data.adminFirstUsid=='${adminInfo.mid}' && data.adminSecondUsid==otherUsid){
-					$('#chat-container').append("<div class='my-chat-box'><div class='chat my-chat'>" + data.adminChatContent + '</div></div>');
+					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;">
+ 			            <div class="inner">`+ data.adminChatContent +`</div></div></div>`;
+ 					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				}
 				//내가받았으면
 				else if(data.adminSecondUsid=='${adminInfo.mid}' && data.adminFirstUsid==otherUsid){
-					$('#chat-container').append("<div class='chat-box'><div class='chat'>" + data.adminChatContent + '</div></div>');
+					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
+	 	                   <div class="inner">`
+	 	                   +data.adminChatContent
+	 	                   +`</div>`;
+	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+				
 				}
 			}
-			
+			scrollDown();
 		}
 	
 	//메세지 전송 함수
@@ -277,7 +199,6 @@
 		this.adminSecondUsid = adminSecondUsid;
 		this.adminChatContent = adminChatContent;
 		this.adminChatDate = adminChatDate;
-		//this.adminChatFile = adminChatFile;
 	
 	};
 
@@ -285,7 +206,14 @@
 		console.log('onclose 실행');
 	};
 	
+	// 페이지 맨 하단으로 이동
+    function scrollDown() {
+        setTimeout(function () {
+            $('.contents').animate({
+                'scrollTop': $('.contents')[0].scrollHeight
+            }, 300);
+        }, 100);
+    }
 	
 	
 </script>
-

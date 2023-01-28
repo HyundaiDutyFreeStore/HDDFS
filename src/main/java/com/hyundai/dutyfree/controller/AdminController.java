@@ -16,7 +16,18 @@ import com.hyundai.dutyfree.admin.vo.AdminMessage;
 import com.hyundai.dutyfree.service.AdminService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.vo.MemberVO;
-
+/**
+ * AdminController
+ * 
+ * @author 김가희
+ * @since 01.26
+ * 
+ *        <pre>
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.26    김가희                        최초 생성
+ *        
+ */
 @Controller
 public class AdminController {
 
@@ -32,7 +43,9 @@ public class AdminController {
 		
 	}
 	
-	// 1:1 채팅방 보기
+	//1대1 실시간 상담
+	
+	// 1:1 채팅방 목록 보기
 	@RequestMapping("/admin/adminChatRoom")
 	public void adminChat(Model model, Principal prin) throws Exception {
 
@@ -101,6 +114,7 @@ public class AdminController {
 		System.out.println("멤버인포리스트:" + memberInfoList);
 	}
 
+	//관리자 1대1 실시간상담 입장
 	@RequestMapping("/admin/adminChat") // 1
 	public void adminChat(@RequestParam("memberUsid") String memberUsid,@RequestParam("adminUsid") String adminUsid, Model model) throws Exception {
 		// member와 admin의 정보 가져오기

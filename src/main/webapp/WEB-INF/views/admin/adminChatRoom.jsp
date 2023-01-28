@@ -102,8 +102,9 @@
 				 <c:if test="${not empty memberInfoList }">
 					<c:forEach var="memberInfoList" items="${memberInfoList }">
 						<div class="board_list_body">
-						<a href="${path}/admin/adminChat?adminUsid=admin&memberUsid=${memberInfoList.mid}" 
-						class="alink">
+						<%-- <a href="${path}/admin/adminChat?adminUsid=admin&memberUsid=${memberInfoList.mid}" 
+						class="alink"> --%>
+						<a href="#" class="alink" onclick="window.open('/admin/adminChat?adminUsid=admin&memberUsid=${memberInfoList.mid}','일대일채팅','width=500,height=500,location=no,status=no,scrollbars=yes');">
 						<div class="item">
 							<%-- <div class="col"><c:out value="${memberInfoList.memberUsid}"/></div> --%>
 							<div class="col" style="font-size:20px"><c:out value="${memberInfoList.latestMsg}"/></div>
