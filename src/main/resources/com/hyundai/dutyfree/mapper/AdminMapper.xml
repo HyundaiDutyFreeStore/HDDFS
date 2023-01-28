@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.dutyfree.mapper.AdminMapper">
+	<resultMap type="com.hyundai.dutyfree.admin.vo.AdminChat" id="adminChatMap">
+		<id property="adminFirstUsid" column="adminfirstusid"/>
+		<id property="adminSecondUsid" column="adminsecondusid"/>
+		<id property="adminChatContent" column="adminchatcontent"/>
+		<id property="adminChatDate" column="adminchatdate"/>
+	</resultMap>
+	
+	<resultMap type="com.hyundai.dutyfree.admin.vo.AdminMessage" id="adminMessageMap">
+		<id column="adminchatcontent" property="latestMsg"/>
+		<id column="adminchatdate" property="time"/>
+	</resultMap>
+	
+	<insert id="insertAdminChat">
+ 		INSERT INTO ADMIN_CHAT VALUES(#{adminFirstUsid},#{adminSecondUsid},#{adminChatContent},#{adminChatDate})
+ 	</insert>
+ 	
+ 	<select id="prevChat" resultType="List"
+		resultMap="adminChatMap">
+		SELECT * FROM ADMIN_CHAT WHERE adminfirstusid=#{mid} OR adminsecondusid=#{mid}
+		ORDER BY ADMINCHATDATE ASC
+	</select>
+
+	<select id="selectAdminInChat" resultType="List"
+		resultMap="adminChatMap">
+		SELECT * FROM ADMIN_CHAT ORDER BY ADMINCHATDATE ASC
+	</select>
+	
+	<select id="firstUsidList" resultType="String">
+ 		SELECT ADMINFIRSTUSID FROM ADMIN_CHAT WHERE ADMINSECONDUSID='admin' GROUP BY ADMINFIRSTUSID
+ 	</select>
+ 	
+	<select id="secondUsidList" resultType="String">
+ 		SELECT ADMINSECONDUSID FROM ADMIN_CHAT WHERE ADMINFIRSTUSID='admin' GROUP BY ADMINSECONDUSID
+ 	</select>
+ 	
+ 	<select id="loadAdminMessage" resultMap="adminMessageMap">
+ 		SELECT ROWNUM, X.* FROM 
+      (SELECT Y.* FROM ADMIN_CHAT Y WHERE (ADMINFIRSTUSID=#{adminUsid} AND ADMINSECONDUSID=#{memberUsid}) 
+      OR (ADMINFIRSTUSID=#{memberUsid} AND ADMINSECONDUSID=#{adminUsid}) ORDER BY ADMINCHATDATE DESC) X WHERE ROWNUM=1
+ 	</select>
+</mapper>
