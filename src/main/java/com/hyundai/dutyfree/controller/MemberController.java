@@ -274,6 +274,8 @@ public class MemberController {
 					orderlist.setOstatus("인도중");
 				}else if(orderlist.getOstatus().equals("pay_complete")) {
 					orderlist.setOstatus("결제완료");
+				}else if(orderlist.getOstatus().equals("fail_delivery")) {
+					orderlist.setOstatus("미인도");
 				}else {
 					orderlist.setOstatus("결제취소");
 				}

@@ -533,7 +533,7 @@
 												<tr>
 													<td rowspan="${orderlist.orderitemlist.size()}">
 													<fmt:parseDate value="${orderlist.odeptdate }" var="odeptdate" pattern="yyyy-MM-dd HH:mm:ss"></fmt:parseDate>
-													<fmt:formatDate value="${odeptdate }" pattern="yyyy-MM-dd"/>
+													<fmt:formatDate value="${odeptdate }" pattern="yyyy-MM-dd HH:mm"/>
 													</td>
 													<td rowspan="${orderlist.orderitemlist.size()}">
 													${orderlist.odate }

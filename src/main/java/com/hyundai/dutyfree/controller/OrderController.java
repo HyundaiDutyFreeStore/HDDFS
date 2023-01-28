@@ -147,9 +147,11 @@ public class OrderController {
 		}
 
 		member.setMid(prin.getName());
+		System.out.println("mhpoint:"+Integer.parseInt(request.getParameter("mhpoint")));
 		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
-
 		member.setMtotal(Double.parseDouble(request.getParameter("total_bill_dollar_text")));
+			
+		
 
 		// 주문자의 포인트 및 총주문금액을 업데이트
 		memberservice.updateMhpoint(member);
@@ -393,6 +395,8 @@ public class OrderController {
 	@RequestMapping("/cancelorder")
 	@ResponseBody
 	public String cancelorder(String oid) {
+		OrderListVO olv=orderservice.getorderlist(oid);
+		
 		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
 		for(OrderItemVO oi : oiv) {
 			ProductVO product=productservice.productdetail(oi.getPcode());

@@ -72,7 +72,7 @@
 								<li>
 									<p class="f_ti ico_compulsory">출국장소</p> <span class="input_de">
 										<select name="orderDpatPlacCd" class="required"
-										onchange="changeOrderDpatPlacCd(this.value)"
+										
 										id="orderDpatPlacCd" valmsg="출국장소를 선택해 주십시오.">
 											<option value="">선택</option>
 											<option value="ICNT1">인천공항 T1</option>
