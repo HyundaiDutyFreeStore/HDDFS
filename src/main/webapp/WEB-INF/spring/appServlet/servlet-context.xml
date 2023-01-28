@@ -129,7 +129,12 @@
 
 
 	<!-- 채팅 -->
-	<!-- <websocket:handlers> <websocket:mapping handler="chattingHandler" path="/chatting"/> 
-		<websocket:sockjs></websocket:sockjs> </websocket:handlers> -->
+	<beans:bean id="adminHandler" class="com.hyundai.dutyfree.chat.AdminSocketHandler"></beans:bean>
+	<websocket:handlers>
+		<websocket:mapping handler="adminHandler" path="/adminsocket"/>
+		<websocket:sockjs></websocket:sockjs>
+	</websocket:handlers>
+
 	<task:annotation-driven />
+
 </beans:beans>
