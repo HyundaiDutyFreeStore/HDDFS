@@ -123,5 +123,29 @@
 		order by 2
 		]]>
 	</select>
+	
+	<select id="LastHalfMember"
+		resultType="com.hyundai.dutyfree.vo.OrderMemberVO">
+		<![CDATA[
+		select member.mname, member.memail, o.odept, o.oid, o.odeptdate from
+		(select * 
+		from orderlist
+		where odeptdate <= CURRENT_DATE + 30/(24*60) AND odeptdate >= CURRENT_DATE + 29/(24*60)
+		and ostatus = 'on_delivery'
+		) o join member on member.mid = o.mid
+		]]>
+	</select>
+	
+	<select id="FailMember"
+		resultType="com.hyundai.dutyfree.vo.OrderMemberVO">
+		<![CDATA[
+		select member.mname, member.memail, o.odept, o.oid, o.odeptdate from
+		(select * 
+		from orderlist
+		where odeptdate <= CURRENT_DATE  AND odeptdate >= CURRENT_DATE - 1/(24*60)
+		and ostatus in ('on_delivery', 'fail_delivery')  
+		) o join member on member.mid = o.mid
+		]]>
+	</select>
 </mapper>
   

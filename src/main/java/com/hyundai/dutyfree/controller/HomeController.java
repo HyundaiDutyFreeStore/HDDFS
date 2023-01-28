@@ -100,7 +100,7 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(erservice.getExchangerate("KRW"));
+		//System.out.println(erservice.getExchangerate("KRW"));
 		session.setAttribute("KRW_WON", erservice.getExchangerate("KRW"));
 		return "Index";
 	}

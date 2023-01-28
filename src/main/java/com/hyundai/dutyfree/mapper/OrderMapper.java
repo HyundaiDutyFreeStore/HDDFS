@@ -46,14 +46,22 @@ public interface OrderMapper {
 
 	public void deleteorder(String oid);
 
-	//시간대 별 고객 수
+	// 시간대 별 고객 수
 	public List<CustomerVO> getCustomerPerTime(@Param("odept") String odept, @Param("odeptdate") String odeptdate);
 
 	public void Updateostatus(@Param("ostatus") String ostatus, @Param("oid") String oid);
 
 	public void UpdateorderPaymentKey(@Param("opaymentkey") String opaymentkey, @Param("oid") String oid);
-	//인도장 이용 예정 고객
+
+	// 인도장 이용 예정 고객
 	public List<OrderMemberVO> OrderMemberCheck();
-	//3시간 전 이용 예정 고객
+
+	// 3시간 전 이용 예정 고객
 	public List<CustomerVO> LastMember(@Param("odept") String odept, @Param("odeptdate") String odeptdate);
+
+	// 30분 전 이용 예정 고객
+	public List<OrderMemberVO> LastHalfMember();
+
+	// 상품을 찾아가지 않은 고객
+	public List<OrderMemberVO> FailMember();
 }
