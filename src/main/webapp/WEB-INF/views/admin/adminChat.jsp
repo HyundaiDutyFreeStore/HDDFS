@@ -142,19 +142,27 @@
 					console.log("v:"+v['adminChatContent']);
 					console.log("발신인:"+v['adminFirstUsid']);
 					console.log("수신인:"+v['adminSecondUsid']);
+					var dateInfo =formatDate(v['adminChatDate']);
+					console.log("형식변환: "+formatDate(v['adminChatDate']));
 					
 					//발신인==관리자, 수신인==이채팅방고객 (내가보낸메세지이면)
 	 					if(v['adminFirstUsid']=='${adminInfo.mid}' && v['adminSecondUsid'] == otherUsid){ 
-	 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;"><div class="inner">`+ v['adminChatContent'] +`</div></div></div>`;
+	 					var template = `<div class="chat-item is-customer">`;
+	 						template +=		`<div class="bubble has-moving in" style="max-height: 105px;">`
+	 						template +=			`<div class="inner">`+ v['adminChatContent'] +`</div>`
+	 						template +=		`</div>`
+	 						template += 	`<div class="date">`+dateInfo+`</div>`;
+	 						template +=`</div>`;
 	 					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 	 				} 
 	 				//발신인==이채팅방고객, 수신인==관리자 (고객이 보낸 메세지이면- 내가받음) 
 	 	         	if(v['adminFirstUsid'] == otherUsid && v['adminSecondUsid']=='${adminInfo.mid}'){
-	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
-	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
-	 	                   <div class="inner">`
-	 	                   +v['adminChatContent']
-	 	                   +`</div>`;
+	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">`;
+	 	         			template +=		`<div class="bubble has-moving in" style="max-height: 2468px;">`;
+	 	         			template += 		`<div class="inner">` +v['adminChatContent'] +`</div>`;
+	 	         			template +=		`</div>`;
+	 	                  	template += 	`<div class="date">`+dateInfo+`</div>`;
+	 	                  	template +=`</div>`;
 	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);		
 					}
 				});
@@ -168,8 +176,9 @@
 				//내가보냈으면
 				if(data.adminFirstUsid=='${adminInfo.mid}' && data.adminSecondUsid==otherUsid){
 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;">
- 			            <div class="inner">`+ data.adminChatContent +`</div></div></div>`;
- 					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+ 			            <div class="inner">`+ data.adminChatContent +`</div></div>`;
+ 			           template += `<div class="date">`+ formatDate(data.adminChatDate)+`</div></div>`;
+ 			           document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				}
 				//내가받았으면
 				else if(data.adminSecondUsid=='${adminInfo.mid}' && data.adminFirstUsid==otherUsid){
@@ -177,7 +186,8 @@
 	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
 	 	                   <div class="inner">`
 	 	                   +data.adminChatContent
-	 	                   +`</div>`;
+	 	                   +`</div></div>`;
+	 	                  template += `<div class="date">`+ formatDate(data.adminChatDate)+`</div></div>`;
 	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				
 				}
@@ -213,6 +223,33 @@
                 'scrollTop': $('.contents')[0].scrollHeight
             }, 300);
         }, 100);
+    }
+	
+  //시간 형식 바꾸기
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        	hour = '' +d.getHours();
+        	minute = '' +d.getMinutes();
+        	second = '' +d.getSeconds();
+        	
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+        console.log("hour의 길이: "+hour.length);
+        if (hour.length < 2)
+        	hour = '0' + hour;
+        if (minute.length < 2)
+        	minute = '0'+minute;
+        if (second.length < 2)
+        	second = '0'+second;
+        
+
+        return [year, month, day].join('-') +" "+ [hour, minute, second].join(':');
     }
 	
 	

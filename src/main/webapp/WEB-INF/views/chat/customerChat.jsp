@@ -140,8 +140,8 @@
 				//지금까지 대화내용 다시 띄워준다
 				$.each(allChatList,function(i,v){
 					console.log("v:"+v['adminChatDate']);
-					var date = v['adminChatDate'];
-					//var dateInfo = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+					/* var date = v['adminChatDate']; */
+					var dateInfo =formatDate(v['adminChatDate']);
 					console.log("형식변환: "+formatDate(v['adminChatDate']));
 					
 					//발신인==나, 수신인==관리자 (내가보낸메세지이면)
@@ -172,7 +172,7 @@
 				if(data.adminFirstUsid=='${myInfo.mid}'){
 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;">
  			            <div class="inner">`+ data.adminChatContent +`</div></div>`;
- 			        template += `<div class="date">`+data.adminChatDate+`</div></div>`;
+ 			        template += `<div class="date">`+ formatDate(data.adminChatDate)+`</div></div>`;
  					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				}
 				//내가받았으면
@@ -182,7 +182,7 @@
 	 	                   <div class="inner">`
 	 	                   +data.adminChatContent
 	 	                   +`</div></div>`;
-	 	            template += `<div class="date">`+data.adminChatDate+`</div></div>`
+	 	            template += `<div class="date">`+formatDate(data.adminChatDate)+`</div></div>`
 	 	         	document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				
 				}
@@ -220,18 +220,31 @@
         }, 100);
     }
 	
+  //시간 형식 바꾸기
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();
+        	hour = '' +d.getHours();
+        	minute = '' +d.getMinutes();
+        	second = '' +d.getSeconds();
+        	
 
         if (month.length < 2) 
             month = '0' + month;
         if (day.length < 2) 
             day = '0' + day;
+        console.log("hour의 길이: "+hour.length);
+        if (hour.length < 2)
+        	hour = '0' + hour;
+        if (minute.length < 2)
+        	minute = '0'+minute;
+        if (second.length < 2)
+        	second = '0'+second;
+        
 
-        return [year, month, day,hour].join('-');
+        return [year, month, day].join('-') +" "+ [hour, minute, second].join(':');
     }
 	
  	// 현재시간 반환 (ex; 오전 6:25)
