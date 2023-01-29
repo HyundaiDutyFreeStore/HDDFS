@@ -1,6 +1,7 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +18,7 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyundai.dutyfree.auth.SNSLogin;
 import com.hyundai.dutyfree.auth.SnsValue;
+import com.hyundai.dutyfree.service.CouponService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
+import com.hyundai.dutyfree.vo.CouponVO;
+import com.hyundai.dutyfree.vo.EventVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
@@ -85,6 +90,9 @@ public class MemberController {
 	
 	@Autowired
 	private SnsValue googleSns;
+	
+	@Autowired
+	private CouponService couponservice;
 
 	// 약관 동의 페이지 진입 (회원가입1)
 	@RequestMapping(value = "termsAgree", method = RequestMethod.GET)
@@ -184,7 +192,7 @@ public class MemberController {
 
 	// 회원가입 로직
 	@RequestMapping(value = "/mbshInformation", method = RequestMethod.POST)
-	public String joinPOST(MemberVO member) throws Exception {
+	public String joinPOST(MemberVO member,Model model) throws Exception {
 		log.info("회원가입 진입");
 
 		System.out.println("회원가입 memberVO: " + member.toString());
@@ -197,7 +205,16 @@ public class MemberController {
 		member.setMpassword(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
 		// 회원가입 쿼리 실행
 		memberservice.memberJoin(member);
-
+		
+		java.util.Date nowdate = new java.util.Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date=simpleDateFormat.format(nowdate);
+		//회원가입시 쿠폰을 등록
+		couponservice.MemberInsertCoupon(member.getMid(), "SAV20230129",date);
+		couponservice.MemberInsertCoupon(member.getMid(), "DIS20230129",date);
+		
+		model.addAttribute("couponaccess", "coupon");
+		
 		log.info("회원가입성공");
 		return "/member/done";
 	}
@@ -274,6 +291,8 @@ public class MemberController {
 					orderlist.setOstatus("인도중");
 				}else if(orderlist.getOstatus().equals("pay_complete")) {
 					orderlist.setOstatus("결제완료");
+				}else if(orderlist.getOstatus().equals("fail_delivery")) {
+					orderlist.setOstatus("미인도");
 				}else {
 					orderlist.setOstatus("결제취소");
 				}
@@ -281,6 +300,17 @@ public class MemberController {
 			
 				model.addAttribute("orderlistsize", orderlists.size());
 			}
+			if(orderservice.PassportConsist(prin.getName())==null) {
+				model.addAttribute("passport", null);
+			}else {
+				model.addAttribute("passport", orderservice.PassportConsist(prin.getName()));
+			}
+			
+			List<CouponVO> couponlist=couponservice.GetCouponInfo(prin.getName());
+			for(CouponVO coupon: couponlist) {
+				coupon.setEvent(couponservice.GetEventInfo(coupon.getEid()));
+			}
+		  model.addAttribute("couponlist",couponlist);
 		  model.addAttribute("align", align);
 		  model.addAttribute("orderlists", orderlists);
 		  model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
@@ -290,6 +320,23 @@ public class MemberController {
 		  memberservice.myPage(String.valueOf(mvo.getMhpoint())));
 		 
 }
+	@GetMapping("/Mypage_coupon")
+	public void Mypage_coupon(Model model,Principal prin) throws Exception {
+		
+		MemberVO mvo = memberservice.read(prin.getName());
+		
+		if(orderservice.PassportConsist(prin.getName())==null) {
+			model.addAttribute("passport", null);
+		}else {
+			model.addAttribute("passport", orderservice.PassportConsist(prin.getName()));
+		}
+		  model.addAttribute("member",mvo);
+		  model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
+		  model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
+		  model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
+		  model.addAttribute("mhpoint",
+		  memberservice.myPage(String.valueOf(mvo.getMhpoint())));
+	}
 
 	/*
 	 * @GetMapping("/logout") public String logout(HttpServletRequest request,
