@@ -30,18 +30,20 @@ import lombok.extern.log4j.Log4j;
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
  * 2023.01.17    김가희                        최초 생성
+ * 2023.01.29    김가희                        관리자 추가
  *        
  */
 @Log4j
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	private final RequestCache requestCache = new HttpSessionRequestCache();
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-	List<String> roleNames = new ArrayList<>();
+	
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
 
+		List<String> roleNames = new ArrayList<>();
 		log.warn("로그인성공");
 
 		auth.getAuthorities().forEach(autho -> {
@@ -51,7 +53,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		log.warn("ROLE NAMES: " + roleNames);
 
 		if (roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/admin/imsi");
+			response.sendRedirect("/admin/index");
 			return;
 		} else if (roleNames.contains("ROLE_MEMBER")) {
 
@@ -89,9 +91,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			}
 			log.info("success Handler에서 이동시킬 페이지: " + uri);
 			redirectStrategy.sendRedirect(request, response, uri);
+			return;
 		}
 
-		response.sendRedirect("/");
+		/* response.sendRedirect("/"); */
 
 	}
 

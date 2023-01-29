@@ -43,6 +43,12 @@ public class AdminController {
 		
 	}
 	
+	//메인으로 이동(임시2)
+	@RequestMapping("/admin/index")
+	public void goMain2() {
+			
+	}
+	
 	//1대1 실시간 상담
 	
 	// 1:1 채팅방 목록 보기

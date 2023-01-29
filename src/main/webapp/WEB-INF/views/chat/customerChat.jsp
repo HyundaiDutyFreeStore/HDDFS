@@ -30,6 +30,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<script type="text/javascript" src="date.js"></script>
 </head>
 
 <c:set var="path" value="${pageContext.request.contextPath }" />
@@ -128,6 +129,7 @@
 		//메세지 오면
 		adminsocket.onmessage = function(e) {
 			let data = JSON.parse(e.data);
+			
 			//이전메세지보내기 불러오기
 			if(data.prev != null){
 				console.log("data.prev: "+data.prev[0].adminChatContent);
@@ -137,11 +139,15 @@
 				});
 				//지금까지 대화내용 다시 띄워준다
 				$.each(allChatList,function(i,v){
-					console.log("v:"+v['adminChatContent']);
+					console.log("v:"+v['adminChatDate']);
+					var date = v['adminChatDate'];
+					//var dateInfo = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+					console.log("형식변환: "+formatDate(v['adminChatDate']));
 					
 					//발신인==나, 수신인==관리자 (내가보낸메세지이면)
 	 				if(v['adminFirstUsid']=='${myInfo.mid}'){ 
-	 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;"><div class="inner">`+ v['adminChatContent'] +`</div></div></div>`;
+	 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;"><div class="inner">`+ v['adminChatContent'] +`</div></div>`;
+	 					template += `<div class="date">`+dateInfo+`</div></div>`;
 	 					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 	 				} 
 	 				//발신인==관리자, 수신인==나 (관리자가 보낸 메세지이면- 내가받음)  
@@ -150,7 +156,8 @@
 	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
 	 	                   <div class="inner">`
 	 	                   +v['adminChatContent']
-	 	                   +`</div>`;
+	 	                   +`</div></div>`;
+	 	                template += `<div class="date">`+dateInfo+`</div></div>`
 	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);		
 					}
 				});
@@ -164,7 +171,8 @@
 				//내가보냈으면
 				if(data.adminFirstUsid=='${myInfo.mid}'){
 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;">
- 			            <div class="inner">`+ data.adminChatContent +`</div></div></div>`;
+ 			            <div class="inner">`+ data.adminChatContent +`</div></div>`;
+ 			        template += `<div class="date">`+data.adminChatDate+`</div></div>`;
  					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				}
 				//내가받았으면
@@ -173,8 +181,9 @@
 	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
 	 	                   <div class="inner">`
 	 	                   +data.adminChatContent
-	 	                   +`</div>`;
-	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+	 	                   +`</div></div>`;
+	 	            template += `<div class="date">`+data.adminChatDate+`</div></div>`
+	 	         	document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				
 				}
 			}
@@ -210,6 +219,30 @@
             }, 300);
         }, 100);
     }
+	
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+
+        return [year, month, day,hour].join('-');
+    }
+	
+ 	// 현재시간 반환 (ex; 오전 6:25)
+    function getCurrentTime() {
+        var currentTime = moment().format('A h:mm');
+
+        currentTime = currentTime.replace(/AM/gi, '오전');
+        currentTime = currentTime.replace(/PM/gi, '오후');
+
+        return currentTime;
+    };
 	
 	
 </script>
