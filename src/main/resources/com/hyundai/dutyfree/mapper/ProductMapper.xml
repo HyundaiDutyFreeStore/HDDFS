@@ -122,6 +122,14 @@
     	]]>
 
 	</select>
+	
+	<!-- 관리자 상품목록조회 -->
+	<select id="getList2"
+		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select *
+		from product
+		where rownum between 1 and 20
+	</select>
 
 	<!-- 조건에 맞는 총 상품개수 -->
 	<select id="getTotal" resultType="int" parameterType="HashMap">

@@ -15,7 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hyundai.dutyfree.admin.vo.AdminMessage;
 import com.hyundai.dutyfree.service.AdminService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.ProductVO;
+
+import lombok.extern.log4j.Log4j;
 /**
  * AdminController
  * 
@@ -28,6 +32,7 @@ import com.hyundai.dutyfree.vo.MemberVO;
  * 2023.01.26    김가희                        최초 생성
  *        
  */
+@Log4j
 @Controller
 public class AdminController {
 
@@ -36,11 +41,22 @@ public class AdminController {
 
 	@Autowired
 	private MemberService memberService;
-
-	//메인으로 이동(임시)
-	@RequestMapping("/admin/imsi")
-	public void goMain() {
-		
+	
+	@Autowired
+	private ProductService prodService;
+	
+	//메인으로 이동(임시2)
+	@RequestMapping("/admin/index")
+	public void goMain2() {
+			
+	}
+	
+	//상품목록 리스트 보기
+	@RequestMapping("/admin/prodList")
+	public void prodList(Model model){
+		List<ProductVO> list = prodService.getList2();
+		log.info("adminController에서 prodlist: "+list);
+		model.addAttribute("prodList", list);
 	}
 	
 	//1대1 실시간 상담
@@ -52,25 +68,22 @@ public class AdminController {
 		String adminUsid = prin.getName();
 
 		List<String> totalUsidList = new ArrayList<>();
-		List<String> firstUsidList = new ArrayList<>();
-		List<String> secondUsidList = new ArrayList<>();
+		/*
+		 * List<String> firstUsidList = new ArrayList<>(); List<String> secondUsidList =
+		 * new ArrayList<>();
+		 * 
+		 * // 관리자에게 메세지 보낸사람 firstUsidList = service.firstUsidList(); // 관리자에게 메세지 받은사람
+		 * secondUsidList = service.secondUsidList();
+		 * 
+		 * // 관리자에게 메세지 보내거나 받은사람 중복없이 totalUsidList에 넣기 for (int i = 0; i <
+		 * firstUsidList.size(); i++) { totalUsidList.add(firstUsidList.get(i)); }
+		 * 
+		 * for (int i = 0; i < secondUsidList.size(); i++) { if
+		 * (!totalUsidList.contains(secondUsidList.get(i))) {
+		 * totalUsidList.add(secondUsidList.get(i)); } }
+		 */
 
-		// 관리자에게 메세지 보낸사람
-		firstUsidList = service.firstUsidList();
-		// 관리자에게 메세지 받은사람
-		secondUsidList = service.secondUsidList();
-
-		// 관리자에게 메세지 보내거나 받은사람 중복없이 totalUsidList에 넣기
-		for (int i = 0; i < firstUsidList.size(); i++) {
-			totalUsidList.add(firstUsidList.get(i));
-		}
-
-		for (int i = 0; i < secondUsidList.size(); i++) {
-			if (!totalUsidList.contains(secondUsidList.get(i))) {
-				totalUsidList.add(secondUsidList.get(i));
-			}
-		}
-
+		totalUsidList = service.roomNoList();
 		System.out.println(totalUsidList);
 
 		// 각 채팅방의 사용자아이디,프로필사진,닉네임,최근메세지,그시간을 담은am객체들의 리스트

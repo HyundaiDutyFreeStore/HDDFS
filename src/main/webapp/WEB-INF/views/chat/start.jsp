@@ -1,17 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!--  
- * faq.jsp
- * 
- * @author 김가희
- * @since 01.23
- * 
- *        
- * 수정일                 수정자                              수정내용
- * ----------  ---------------  ---------------------------
- * 2023.01.23    김가희                        최초 생성
- *        
--->
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<sec:authorize access="hasRole('ROLE_MEMBER')">
+	<sec:authentication property="principal.username" var="mid" />
+</sec:authorize>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -84,6 +78,10 @@
 									href="javascript:requestAnswer('시간당 고객수 확인')"><span
 										class="img"><img src="/resources/images/crowd.png" alt=""></span><span
 										class="txt">시간당 고객수 확인</span></a></li>
+								<li title="1대1 실시간 문의"><a
+									href="javascript:chatStart()"><span
+										class="img"><img src="/resources/images/chatting.png" alt=""></span><span
+										class="txt">1대1 실시간 문의</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -162,6 +160,10 @@
 								href="javascript:requestAnswer('시간당 고객수 확인')"><span class="img"><img
 										src="/resources/images/crowd.png"
 										alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
+							<li title="1대1 실시간 문의"><a
+								href="javascript:chatStart()"><span class="img"><img 
+									src="/resources/images/chatting.png" 
+									alt=""></span><span class="txt">1대1 실시간 문의</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -175,6 +177,34 @@
 			var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;">
             <div class="inner">`+ menu +`</div></div></div>`;
 			document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+		}
+		function chatStart(){
+			clickMenu("1대1 실시간 문의");
+			if(loginChk()==false){
+				var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+		                <div class="bubble has-moving in" style="max-height: 2468px;">
+		                <div class="inner">로그인이 필요한 서비스입니다.<br>아래 로그인 버튼을 클릭해주세요</div><br>`;
+				template += ` <button type="button" class="btn-link"onclick="goLogin();">
+                        		<span>로그인 하러 가기</span> 
+                    		</button></div></div>`;
+				document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+				}
+			else{
+				var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
+	                <div class="bubble has-moving in" style="max-height: 2468px;">
+	                <div class="inner"> 1:1문의하기는 실시간채팅 상담 서비스입니다.
+
+	                아래 '1:1문의하기' 버튼을 클릭하여 궁금하신 사항을 접수해주시면 운영시간에 빠르게 확인하여 친절한 안내를 도와드리겠습니다.
+
+	                * 당일 16:00 이후 접수 건은 다음날 09:00 이후 답변
+	                * 주말 또는 공휴일 제외             </div><br>`;
+			template += ` <button type="button" class="btn-link"onclick="window.open('/chat/customerChat?adminId=admin&myId=${mid}','chat','width=500,height=500,location=no,status=no,scrollbars=yes');">
+                    		<span>1대1 실시간 문의 하러 가기</span> 
+                		</button></div></div>`;
+			document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+			}
+			scrollDown();
+			
 		}
 		function requestAnswer(menu){
 			clickMenu(menu);
@@ -385,6 +415,21 @@
 					}
 				});
 		 }
+		
+		//로그인 체크 함수
+		function loginChk(){
+			if("${mid}"==""){
+				return false;
+			}else{
+				return true;
+			}
+		}
+		
+		//로그인 창으로 이동시키는 함수
+		function goLogin(){
+			window.opener.location.href='/member/login';
+			close();
+		}
 		
 		//시간포맷바꾸는함수
 		 function getFormatDate(date){

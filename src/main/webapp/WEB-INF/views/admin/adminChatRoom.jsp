@@ -3,126 +3,86 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:set var="path" value="${pageContext.request.contextPath }"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
 
-  a:link { text-decoration: none; color: black;} 
- .alink:visited { text-decoration: none; color: black;}
-  a:active { text-decoration: none; color: black;}
-  a:hover {text-decoration:underline; color: black;}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
+<title>현대백화점인터넷면세점 관리자페이지</title>
 
-.board_list_wrap {
-    padding-right: 20%;
-    padding-bottom:40%;
-    padding-left:20%;
-    padding-top:5%;
-    font-family: 'Noto Serif KR', serif;
- 
-}
+<!-- Custom fonts for this template-->
+<link href="/resources/admin/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 
-.board_list_head,
-.board_list_body .item {
-    padding: 10px 0;
-    font-size: 0;
-}
+<!-- Custom styles for this template-->
+<link href="/resources/admin/css/sb-admin-2.min.css" rel="stylesheet">
+<!-- 새로 들어온 메세지를 보기위해서 5초마다 refresh중.. 이거 고민 -->
+<!-- <META HTTP-EQUIV="refresh" CONTENT="5"> -->
+</head>
 
-.board_list_head {
-    border-top: 3px solid #003478;
-    border-bottom: 2px solid #003478;
-    background-color:#003478;
-    color:#ffcc66;
-    border-radius:10px;
-    font-family: 'Noto Serif KR', serif;
-}
+<body id="page-top">
 
-.board_list_body .item {
-    border-bottom: 2px solid #eeeeee;
-    background-color:white;
-    border-radius:10px;
-    font-family: 'Noto Serif KR', serif;
-    opacity: 0.7;
-}
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-.board_list_head > div,
-.board_list_body .item > div {
-    display: inline-block;
-    text-align: center;
-    font-size: 15px; /*본문글자크기*/
-}
+<!-- sidebar -->
+<%@ include file="./common/sidebar.jsp"%>
 
-.board_list_head > div {
-    font-weight: 600;
-}
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
 
-.board_list .col {
-    width: 40%; 
-    padding-top:1%;
-    padding-bottom:1%;
-    font-size:20px; /*헤드글자크기*/
-    /*바꾸지마셈*/
-}
+    <!-- Main Content -->
+    <div id="content">
 
+        <!-- Topbar -->
+        <%@ include file="./common/topbar.jsp"%>
 
-.item:hover { 
-	opacity: 2.5; 
-	border-bottom: 2px solid #ffcc66;
-}
-
-
-
-
-
-
-
-
-
-</style>		
-		
-	<section id="content">
-	
-	
-			<div class="board_list_wrap">
-			<div class="board_list">
-			<div class="board_list_head">
-					<div class="col"><img src="${path }/resources/images/admin/message.png" width="35px" height="30px"/>&nbsp;&nbsp;1:1 문의 답변하기</div>
-					<!-- <div class="col">번호</div>
-					<div class="col">이름</div>
-					<div class="col">내용</div>
-					<div class="col">날짜</div> -->
-			</div>
-				 <c:if test="${empty memberInfoList}">
-					
-						<div class="col">조회 결과가 없습니다.</div>
-					
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+        <c:if test="${not empty memberInfoList }">
+			<c:forEach items="${memberInfoList}"  var="memberInfoList" varStatus="status">
+				<c:if test="${status.count%4 eq 1}">
+					<div class="row">
 				</c:if>
-				 <c:if test="${not empty memberInfoList }">
-					<c:forEach var="memberInfoList" items="${memberInfoList }">
-						<div class="board_list_body">
-						<%-- <a href="${path}/admin/adminChat?adminUsid=admin&memberUsid=${memberInfoList.mid}" 
-						class="alink"> --%>
-						<a href="#" class="alink" onclick="window.open('/admin/adminChat?adminUsid=admin&memberUsid=${memberInfoList.mid}','일대일채팅','width=500,height=500,location=no,status=no,scrollbars=yes');">
-						<div class="item">
-							<%-- <div class="col"><c:out value="${memberInfoList.memberUsid}"/></div> --%>
-							<div class="col" style="font-size:20px"><c:out value="${memberInfoList.latestMsg}"/></div>
-							<div class="col" style="font-size:17px"><c:out value="${memberInfoList.mname}"/></div>
- 							<div class="col"><fmt:formatDate value="${memberInfoList.time}" pattern="yyyy.MM.dd HH:mm"/></div>
- 							
- 						
-						</div>
-						</a>
-					</div>
-						
-					</c:forEach>
-				</c:if>
-		
-			</div>
-		</div>
-		
-		       
-	</section>
-	
-	
+				
+				<div class="col-xl-3 col-md-6 mb-4">
+				<a href="#" class="alink" onclick="window.open('/admin/adminChat?adminUsid=admin&memberUsid=${memberInfoList.mid}','일대일채팅','left=700, top=100, width=500,height=700,location=no,status=no,scrollbars=yes');">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    		고객ID: ${memberInfoList.mid} <br> (고객명 : ${memberInfoList.mname})</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">${memberInfoList.latestMsg}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <c:if test="${status.count%4 eq 0}">
+				</div>
+			</c:if>		
+			</c:forEach>
+		</c:if>
+            
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%@ include file="./common/footer.jsp"%>

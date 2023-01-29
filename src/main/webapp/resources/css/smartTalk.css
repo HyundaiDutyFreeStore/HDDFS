@@ -54,8 +54,8 @@
 #smartchat .chat-wrap .chat-forms .inp-chat::-webkit-input-placeholder {vertical-align:top; line-height:44px;color:#B8B8B8;}
 #smartchat .chat-wrap .chat-forms .inp-chat::-ms-input-placeholder {vertical-align:top; line-height:44px;color:#B8B8B8;}
 #smartchat .chat-wrap .chat-forms .inp-chat:-ms-input-placeholder {vertical-align:top; line-height:44px;color:#B8B8B8 !important;}
-#smartchat .chat-wrap .chat-forms .btn-send {position:absolute; right:12px; top:13px; display:inline-block; vertical-align:middle; width:22px; height:22px; background:url('../images/smartTalk/btn_send.png'); background-size:22px auto;} /* 201202 배경색 변경 */
-#smartchat .chat-wrap .chat-forms:focus-within .btn-send {background:url('../images/smartTalk/btn_send_active.png'); background-size:22px auto;} /* 20220415 추가 */
+#smartchat .chat-wrap .chat-forms .btn-send {position:absolute; right:12px; top:13px; display:inline-block; vertical-align:middle; width:22px; height:22px; background:url('../images/btn_send.png'); background-size:22px auto;} /* 201202 배경색 변경 */
+#smartchat .chat-wrap .chat-forms:focus-within .btn-send {background:url('../images/btn_send_active.png'); background-size:22px auto;} /* 20220415 추가 */
 #smartchat .chat-wrap .btn-del {position:absolute; right:10px; top:-40px; display:inline-block; vertical-align:middle; width:29px; height:29px; background-image:url('../images/smartTalk/btn_del.png');}
 #smartchat .chat-wrap .btn-gohome {position:absolute; right:20px; top:-44px; display:inline-block; vertical-align:middle; width:42px; height:42px; border-radius: 50%; background-image:url('../images/btn_gohome.png'); /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);-moz-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */}
 #smartchat .chat-wrap .btn-cquit {position:absolute; left:4px; top:10px; width:36px; height:32px; background-color:#fff; background-image:url('../images/smartTalk/ico_cquit.png');}

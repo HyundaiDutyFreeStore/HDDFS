@@ -233,6 +233,6 @@
 <script>
     $( document ).ready(function() {
     let span_text = document.querySelectorAll('number_of_cust');
-    console(span_text);
+    
 });
 </script>
