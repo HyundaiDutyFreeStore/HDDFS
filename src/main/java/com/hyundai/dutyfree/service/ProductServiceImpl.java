@@ -66,5 +66,10 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.productdetail(pcode);
 	}
 
+	@Override
+	public List<ProductVO> getList2() {
+		return mapper.getList2();
+	}
 
+	
 }

@@ -34,5 +34,8 @@ public interface ProductService {
 
 	//상품 디테일
 	public ProductVO productdetail(String pcode);
+	
+	//관리자 상품목록
+	public List<ProductVO> getList2();
 
 }
