@@ -59,6 +59,12 @@ public class AdminServiceImpl implements AdminService {
 	public List<String> secondUsidList() {
 		return mapper.secondUsidList();
 	}
+	
+	//관리자가 모든 채팅방ID 조회 
+	@Override
+	public List<String> roomNoList() {
+		return mapper.roomNoList();
+	}
 
 	//관리자와 특정고객의 가장 최신 대화 조회
 	@Override

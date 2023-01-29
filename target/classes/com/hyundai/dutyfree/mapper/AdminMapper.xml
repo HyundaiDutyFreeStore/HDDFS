@@ -8,6 +8,7 @@
 		<id property="adminSecondUsid" column="adminsecondusid"/>
 		<id property="adminChatContent" column="adminchatcontent"/>
 		<id property="adminChatDate" column="adminchatdate"/>
+		<id property="adminChatRoomNo" column="adminChatRoomNo"/>
 	</resultMap>
 	
 	<resultMap type="com.hyundai.dutyfree.admin.vo.AdminMessage" id="adminMessageMap">
@@ -18,7 +19,7 @@
 	<!-- 1대1 채팅관련 -->
 	<!-- 채팅insert -->
 	<insert id="insertAdminChat">
- 		INSERT INTO ADMIN_CHAT VALUES(#{adminFirstUsid},#{adminSecondUsid},#{adminChatContent},#{adminChatDate})
+ 		INSERT INTO ADMIN_CHAT VALUES(#{adminFirstUsid},#{adminSecondUsid},#{adminChatContent},#{adminChatDate},#{adminChatRoomNo})
  	</insert>
  	
  	<!-- 이전채팅내역 불러오기 -->
@@ -41,6 +42,11 @@
  	<!-- 관리자가 채팅을 보낸 고객ID 리스트 조회 -->
 	<select id="secondUsidList" resultType="String">
  		SELECT ADMINSECONDUSID FROM ADMIN_CHAT WHERE ADMINFIRSTUSID='admin' GROUP BY ADMINSECONDUSID
+ 	</select>
+ 	
+ 	<!-- 관리자가 모든 채팅방ID 조회 -->
+	<select id="roomNoList" resultType="String">
+ 		SELECT ADMINCHATROOMNO FROM ADMIN_CHAT GROUP BY ADMINCHATROOMNO
  	</select>
  	
  	<!-- 관리자와 특정고객의 가장 최신 대화 조회-->

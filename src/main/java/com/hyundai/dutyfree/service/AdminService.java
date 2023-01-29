@@ -38,6 +38,9 @@ public interface AdminService {
 
 	//관리자가 채팅을 보낸 고객ID 리스트 조회 (수신자: 고객)
 	List<String> secondUsidList();
+	
+	//관리자에게 채팅신청한 고객ID 리스트 조회 (발신자: 고객)
+	List<String> roomNoList();
 
 	//관리자와 특정고객의 가장 최신 대화 조회
 	AdminMessage loadAdminMessage(HashMap<String, String> usidMap);

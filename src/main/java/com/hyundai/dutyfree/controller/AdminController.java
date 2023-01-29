@@ -58,25 +58,22 @@ public class AdminController {
 		String adminUsid = prin.getName();
 
 		List<String> totalUsidList = new ArrayList<>();
-		List<String> firstUsidList = new ArrayList<>();
-		List<String> secondUsidList = new ArrayList<>();
+		/*
+		 * List<String> firstUsidList = new ArrayList<>(); List<String> secondUsidList =
+		 * new ArrayList<>();
+		 * 
+		 * // 관리자에게 메세지 보낸사람 firstUsidList = service.firstUsidList(); // 관리자에게 메세지 받은사람
+		 * secondUsidList = service.secondUsidList();
+		 * 
+		 * // 관리자에게 메세지 보내거나 받은사람 중복없이 totalUsidList에 넣기 for (int i = 0; i <
+		 * firstUsidList.size(); i++) { totalUsidList.add(firstUsidList.get(i)); }
+		 * 
+		 * for (int i = 0; i < secondUsidList.size(); i++) { if
+		 * (!totalUsidList.contains(secondUsidList.get(i))) {
+		 * totalUsidList.add(secondUsidList.get(i)); } }
+		 */
 
-		// 관리자에게 메세지 보낸사람
-		firstUsidList = service.firstUsidList();
-		// 관리자에게 메세지 받은사람
-		secondUsidList = service.secondUsidList();
-
-		// 관리자에게 메세지 보내거나 받은사람 중복없이 totalUsidList에 넣기
-		for (int i = 0; i < firstUsidList.size(); i++) {
-			totalUsidList.add(firstUsidList.get(i));
-		}
-
-		for (int i = 0; i < secondUsidList.size(); i++) {
-			if (!totalUsidList.contains(secondUsidList.get(i))) {
-				totalUsidList.add(secondUsidList.get(i));
-			}
-		}
-
+		totalUsidList = service.roomNoList();
 		System.out.println(totalUsidList);
 
 		// 각 채팅방의 사용자아이디,프로필사진,닉네임,최근메세지,그시간을 담은am객체들의 리스트

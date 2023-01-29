@@ -67,14 +67,14 @@
 				<div id="chat-list" class="chat-list">
 
 					<!-- 처음시작 -->
-					<div id="OT8HrethHwsPFv60vWIq" class="chat-item is-ktalk"
+					<!-- <div id="OT8HrethHwsPFv60vWIq" class="chat-item is-ktalk"
 						style="visibility: visible;">
 						<div id="RmczOk1feOuFhOAUqzZg" class="bubble has-moving in"
 							style="max-height: 357px;">
 							<div class="inner">고객님, 안녕하세요. 무엇이 궁금하신가요?</div>
 						</div>
-						<!-- <div class="date">오후 8:43</div> -->
-					</div>
+						<div class="date">오후 8:43</div>
+					</div> -->
 					<!-- </div> -->
 				</div>
 			</div>
@@ -116,11 +116,12 @@
 		$(".btn-send").on("click", function(e) {
 			console.log("전송버튼");
 			let txt = $("#inp-chat").val();
-			var date = new Date();		
+			var date = new Date();
+			var adminChatRoomNo = '${memberInfo.mid}';
 	
 			if(txt!=""){
 				//로그인한사람(관리자)이 고객에게 보낸다
-				sendChat('${loginId}', '${memberInfo.mid}', txt, date);
+				sendChat('${loginId}', '${memberInfo.mid}', txt, date, adminChatRoomNo);
 				$('#inp-chat').val("");
 			}
 		});
@@ -129,6 +130,7 @@
 		adminsocket.onmessage = function(e) {
 			let data = JSON.parse(e.data);
 			let otherUsid = "${memberInfo.mid}";	//상대방(고객아이디)
+			let otherName = "${memberInfo.mname}";
 			console.log("이채팅방고객Id: "+otherUsid);
 			//이전메세지보내기 불러오기
 			if(data.prev != null){
@@ -158,6 +160,7 @@
 	 				//발신인==이채팅방고객, 수신인==관리자 (고객이 보낸 메세지이면- 내가받음) 
 	 	         	if(v['adminFirstUsid'] == otherUsid && v['adminSecondUsid']=='${adminInfo.mid}'){
 	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">`;
+	 	         			template += `<span class="name"> `+otherUsid+`(`+otherName+`)</span>`;
 	 	         			template +=		`<div class="bubble has-moving in" style="max-height: 2468px;">`;
 	 	         			template += 		`<div class="inner">` +v['adminChatContent'] +`</div>`;
 	 	         			template +=		`</div>`;
@@ -182,8 +185,9 @@
 				}
 				//내가받았으면
 				else if(data.adminSecondUsid=='${adminInfo.mid}' && data.adminFirstUsid==otherUsid){
-					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
-	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
+					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">`;
+						template += `<span class="name"> `+otherUsid+`(`+otherName+`)</span>`;
+						template +=   `<div class="bubble has-moving in" style="max-height: 2468px;">
 	 	                   <div class="inner">`
 	 	                   +data.adminChatContent
 	 	                   +`</div></div>`;
@@ -197,18 +201,19 @@
 	
 	//메세지 전송 함수
 	function sendChat(adminFirstUsid, adminSecondUsid, adminChatContent,
-			adminChatDate) {
+			adminChatDate,adminChatRoomNo) {
 		console.log("senChat함수실행");
 		adminsocket.send(JSON.stringify(new AdminChat(adminFirstUsid,
-				adminSecondUsid, adminChatContent, adminChatDate)));
+				adminSecondUsid, adminChatContent, adminChatDate,adminChatRoomNo)));
 	};
 	
 	function AdminChat(adminFirstUsid, adminSecondUsid, adminChatContent,
-			adminChatDate) {
+			adminChatDate,adminChatRoomNo) {
 		this.adminFirstUsid = adminFirstUsid;
 		this.adminSecondUsid = adminSecondUsid;
 		this.adminChatContent = adminChatContent;
 		this.adminChatDate = adminChatDate;
+		this.adminChatRoomNo = adminChatRoomNo;
 	
 	};
 

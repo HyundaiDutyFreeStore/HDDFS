@@ -1528,10 +1528,9 @@
 						<li class="item_04">
 							<a href="#" onclick="window.open('/chat/start','FAQ','width=500,height=500,location=no,status=no,scrollbars=yes');"><strong>고객<br>센터
 							</strong></a></li>
-						<li class="item_05"><!-- <a
+						<li class="item_05"><a
 							href="https://www.hddfs.com/store/kr/dm/main.do?MG=KR_PC_GNB_HDDFS"
-							target="_blank"> -->
-							<a href="#" onclick="window.open('/chat/customerChat?adminId=admin&myId=${mid}','일대일채팅','width=500,height=500,location=no,status=no,scrollbars=yes');">
+							target="_blank">
 							<strong>공식<br>사이트
 							</strong></a></li>
 						<li class="language ko"><a href="javascript:" class="ko"><strong>언어<br>설정
