@@ -206,6 +206,9 @@
 					}else if($('#psptNo').val()==''){
 						alert('여권번호를 입력해주세요.');
 						return false;
+					}else if($('#psptNo').val().length!=9){
+						alert('여권번호형식이 맞지 않습니다.');
+						return false;
 					}else if($('#mPsptexdit').val()==''){
 						alert('여권기간만료일을 입력해주세요.');
 						return false;

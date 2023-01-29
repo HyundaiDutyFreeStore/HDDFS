@@ -1,6 +1,8 @@
 
 package com.hyundai.dutyfree.controller;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hyundai.dutyfree.auth.SNSLogin;
 import com.hyundai.dutyfree.auth.SnsValue;
 import com.hyundai.dutyfree.security.CustomUserDetailsService;
+import com.hyundai.dutyfree.service.CouponService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.vo.MemberVO;
 
@@ -60,6 +63,9 @@ public class AuthController {
 	
 	@Autowired
 	private SnsValue googleSns;
+	
+	@Autowired
+	private CouponService couponservice;
 
 	//소셜로그인 콜백처리 (소셜로그인에서 성공적으로 콜백이 왔을 때 해당 회원이 없으면 가입시키고, 있으면 그 아이디로 로그인시키기)
 		@RequestMapping(value = "/auth/{snsService}/callback", method = {RequestMethod.GET, RequestMethod.POST  })
@@ -98,6 +104,14 @@ public class AuthController {
 			if (cnt == 0) {
 				System.out.println("존재하지 않는 사용자");
 				memberservice.memberJoin(snsUser); // 가입하기
+				
+				java.util.Date nowdate = new java.util.Date();
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String date=simpleDateFormat.format(nowdate);
+				//회원가입시 쿠폰을 등록
+				couponservice.MemberInsertCoupon(snsUser.getMid(), "SAV20230129",date);
+				couponservice.MemberInsertCoupon(snsUser.getMid(), "DIS20230129",date);
+				
 				System.out.println("가입완료");
 			}
 			

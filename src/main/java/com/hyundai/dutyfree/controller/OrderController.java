@@ -148,8 +148,8 @@ public class OrderController {
 
 		member.setMid(prin.getName());
 		System.out.println("mhpoint:"+Integer.parseInt(request.getParameter("mhpoint")));
-		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint")));
-		member.setMtotal(Double.parseDouble(request.getParameter("total_bill_dollar_text")));
+		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint"))-Integer.parseInt(request.getParameter("used_mhpoint")));
+		member.setMtotal(Double.parseDouble(request.getParameter("total_bill_dollar")));
 			
 		
 
@@ -394,8 +394,15 @@ public class OrderController {
 	
 	@RequestMapping("/cancelorder")
 	@ResponseBody
-	public String cancelorder(String oid) {
+	public String cancelorder(String oid,double order_dollar, Principal prin) throws Exception {
+		
 		OrderListVO olv=orderservice.getorderlist(oid);
+		
+		MemberVO member= new MemberVO();
+		member.setMid(prin.getName());
+		member.setMhpoint(-1*(olv.getOhpoint()));
+		member.setMtotal(-1*order_dollar);
+		memberservice.updateMhpoint(member);
 		
 		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
 		for(OrderItemVO oi : oiv) {

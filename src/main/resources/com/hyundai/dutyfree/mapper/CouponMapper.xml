@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.hyundai.dutyfree.mapper.CouponMapper">
+ 	
+ <insert id="MemberInsertCoupon">
+ insert into COUPON values('cou'|| TO_CHAR(sysdate,'YYYYMMDDHH24MISS'),#{mid},add_months(TO_DATE(#{date},'YYYY-MM-DD'),1),#{eid},'ENABLED');
+ </insert>
+ 
+ <select id="GetEventInfo" resultType="com.hyundai.dutyfree.vo.EventVO">
+ select * from event where eid=#{eid}
+ </select>
+ 
+ <select id="GetCouponInfo" resultType="com.hyundai.dutyfree.vo.CouponVO">
+ select * from coupon where mid=#{mid}
+ </select>
+
+ </mapper>
+  
+  

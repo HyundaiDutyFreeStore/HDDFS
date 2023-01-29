@@ -160,7 +160,6 @@
 								</div>
 							</div>
 						</li>
-						<!-- E: 2022-08-26 쇼핑백 추가-->
 
 						<li id="settInfoTit" class="cat_tit">
 							<div class="title">
@@ -388,66 +387,6 @@
 			</div>
 		</section>
 	</article>
-
-	<input type="hidden" name="smsRcvYn" /> <input type="hidden"
-		name="befSettWaySaveYn" /> <input type="hidden" name="dpatInfoSavYn" />
-	<input type="hidden" value="0" name="mbshIosdClsCd" /> <input
-		type="hidden" value="380" name="totalGoosDcKrw" /> <input
-		type="hidden" value="0.3" name="totalGoosDcUsd" /> <input
-		type="hidden" value="1" name="totalGoosUsd" /> <input type="hidden"
-		value="0.7" name="totalSettUsd" /> <input type="hidden" value="1267"
-		name="totalGoosKrw" /> <input type="hidden" value="887"
-		name="totalSettKrw" /> <input type="hidden" value="0"
-		name="totalSetGoosDcPricKrw" /> <input type="hidden"
-		id="sumFinaPmptDcCupDcAmtTest" value="0"> <input type="hidden"
-		id="totalSettKrwTest" value="887"> <input type="hidden"
-		value="887" name="settPrrgAmt" /><input type="hidden" value="887"
-		name="settPrrgAmtTmp" /><input type="hidden" value="0.7"
-		name="settPrrgUsd" /><input type="hidden" value="0"
-		name="totalCupUseLmtUsd" /><input type="hidden" value=""
-		name="hpoinOccpAucaNo" /> <input type="hidden" value="0"
-		class="svmtAmt" /> <input type="hidden" value="0" class="moblSvmtAmt" />
-
-	<input type="hidden" value="0" class="evntSvmtAmt" /> <input
-		type="hidden" value="0" class="branSvmtAmt" /> <input type="hidden"
-		name="ptnsSvmtSeqList" value="" class="ptnsSvmtSeqList" /> <input
-		type="hidden" name="ptnsSvmtAmt" value="0" class="ptnsSvmtAmt" /> <input
-		type="hidden" value="N" id="ptnsSvmtCalcCheck" /> <input
-		type="hidden" value="0" name="settWaySvmtAmt" /> <input type="hidden"
-		id="settWaySvmtSeq" name="settWaySvmtSeq" value="0"> <input
-		type="hidden" value="0" name="pmptDcAmt" /> <input type="hidden"
-		value="0" name="ptnrPmptDcAmt" /> <input type="hidden" value=""
-		name="ptnrPmptDcEvtSeq" /> <input type="hidden" value=""
-		name="ptnrPmptDcCompTypeCd" /> <input type="hidden" value=""
-		name="ptnrPmptDcLvlInfoCd" /> <input type="hidden" value=""
-		name="ptnrPmptDcCardNum" /> <input type="hidden" value=""
-		name="ptnrPmptDcBirth" /> <input type="hidden" value="0.2"
-		name="hpoinSavRat" /> <input type="hidden" value="0"
-		name="hpoinSimpSavRat" /> <input type="hidden" value="887"
-		name="svmtUseMaxAmt" /> <input type="hidden" value="887"
-		name="svmtUseMaxAmtTmp" /> <input type="hidden" value="0"
-		name="pay_data_pmptUseSvmtAmt" /><input type="hidden"
-		name="settWayCd" id="settWayCd" value="001" /> <input type="hidden"
-		name="hdCardMPointYn" id="chkMpoint" /> <input type="hidden"
-		name="cardCd" id="cardCd" /> <input type="hidden"
-		name="virtAcntBnkCd" id="virtAcntBnkCd" /> <input type="hidden"
-		name="istmMonsCnt" id="istmMonsCnt" /> <input type="hidden"
-		name="rateYn" /> <input type="hidden" name="svacOwrNm" id="svacOwrNm" />
-
-	<input type="hidden" name="hpoinPsbAmt" id="hpoinPsbAmt" value="" /> <input
-		type="hidden" name="hpoinPlsAmt" id="hpoinPlsAmt" /> <input
-		type="hidden" name="hpoinPlsCupNo" id="hpoinPlsCupNo" /> <input
-		type="hidden" value="" name="trdrClsCd" /> <input type="hidden"
-		id="mbshSvmtAmt" value="10000" /> <input type="hidden"
-		id="mbshEvntSvmtAmt" value="0" /> <input type="hidden"
-		id="mbshBranSvmtAmt" value="0" /> <input type="hidden"
-		id="mbshPtnsSvmtAmt" value="0" /> <input type="hidden"
-		id="mbshSettSvmtAmt" value="0" /> <input type="hidden" value=""
-		id="tempCashRcptTable" /> <input type="hidden" value=""
-		name="ovseSettWayCd" /> <input type="hidden"
-		value="0.2 테라피 에어 마스크 달팽이" name="goosNm2" /> <input type="hidden"
-		value="0.2 테라피 에어 마스크 달팽이" name="goosNm" /> <input type="hidden"
-		value="" name="memberNum" />
 
 	<!-- 약관 동의 팝업 -->
 	<div id="hpay_layer_popup" class="hpay_term_pop"
@@ -1246,15 +1185,16 @@ function tab_change(el){
 	
 	function enrollsavings(e){
 		console.log($("input[name='svmtAmt']").val());
+		var mhpoint=(parseFloat("${member.mhpoint}"));
+		if($("input[name='svmtAmt']").val()>mhpoint){
+			alert('적립금이 부족합니다.')
+			return false;
+		}
 		if(e.keyCode==13){
-			//mhpoint 값보다 입력한 값이 더 큰지 확인
-			var mhpoint=(parseFloat("${member.mhpoint}")*parseFloat("${KRW_WON}")).toFixed(0);
-			if(mhpoint<parseInt($("input[name='svmtAmt']").val())){
-			alert('적립금이 부족합니다.');
-			}else{
+
 			$("input[name='svmtAmtInput']").val($("input[name='svmtAmt']").val());
 			$('.mhpoint').text(priceComma(mhpoint-parseInt($("input[name='svmtAmt']").val())));
-			$('input[name="mhpoint"]').val((parseFloat("${member.mhpoint}")-parseInt($("input[name='svmtAmt']").val())/parseFloat("${KRW_WON}")).toFixed(2));
+			$('input[name="mhpoint"]').val((parseFloat("${member.mhpoint}")-parseInt($("input[name='svmtAmt']").val())).toFixed(2));
 			$('.exceptmhpoint').text($("input[name='svmtAmt']").val());
 		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0))+ "원");
 		$('input[name="totalDcKrw"]').val((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0));
@@ -1277,7 +1217,6 @@ function tab_change(el){
 		$('input[name="totalSettUsd"]').val((total_bill_dollar-totalDcUsd).toFixed(2));
 			}
 		}
-	}
 	$(document).ready(function() {
 		// 다이얼로그 초기화
 		$("#seller_information").dialog({
@@ -1362,21 +1301,31 @@ function tab_change(el){
 	
 	
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
-	
+	var isallchecked=false;
 	function allUseSvmtClick(){
 		var won_totalSettKrw=((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0);
-		var mhpoint=(parseFloat("${member.mhpoint}")*parseFloat("${KRW_WON}")).toFixed(0);
-		if(won_totalSettKrw-mhpoint<0){
-			$("input[name='svmtAmtInput']").val(won_totalSettKrw);
-			$("input[name='svmtAmt']").val(priceComma(won_totalSettKrw));
-			$('.mhpoint').text(priceComma(mhpoint-won_totalSettKrw));
-			$('input[name="mhpoint"]').val(((mhpoint-won_totalSettKrw)/parseFloat("${KRW_WON}")).toFixed(2));
+		var mhpoint=(parseFloat("${member.mhpoint}")).toFixed(0);
+		if(isallchecked){
+			$('.mhpoint').text($("input[name='svmtAmt']").val());
+			$('input[name="mhpoint"]').val($("input[name='svmtAmtInput']").val());
+			$("input[name='svmtAmt']").val("0");
+			$("input[name='svmtAmtInput']").val(0);
+			isallchecked=false;
 		}else{
-			$("input[name='svmtAmtInput']").val(mhpoint);
-			$("input[name='svmtAmt']").val(priceComma(mhpoint));
-			$('input[name="mhpoint"]').val(0);
-			$('.mhpoint').text(0);
+			if(won_totalSettKrw-mhpoint<0){
+				$("input[name='svmtAmtInput']").val(won_totalSettKrw);
+				$("input[name='svmtAmt']").val(priceComma(won_totalSettKrw));
+				$('.mhpoint').text(priceComma(mhpoint-won_totalSettKrw));
+				$('input[name="mhpoint"]').val(((mhpoint-won_totalSettKrw)/parseFloat("${KRW_WON}")).toFixed(2));
+			}else{
+				$("input[name='svmtAmtInput']").val(mhpoint);
+				$("input[name='svmtAmt']").val(priceComma(mhpoint));
+				$('input[name="mhpoint"]').val(0);
+				$('.mhpoint').text("0");
+			}
+			isallchecked=true;
 		}
+		
 		
 		
 
@@ -1411,14 +1360,21 @@ function tab_change(el){
 
 	
 	function orderexec(){
+		if(!$('#chkAgree').is(':checked')){
+			alert("주문내역확인 동의를 체크해주세요.");
+			return false;
+		}
 		showpopup();
 		
 		var mhpoint =(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*(parseFloat("${mhdiscount}")/100)).toFixed(0);
+		var used_mhpoint=0;
 		if($('input[name="svmtAmtInput"]').val()!=''){
-			mhpoint =parseFloat($('input[name="svmtAmtInput"]').val()).toFixed(2);
+			used_mhpoint =parseFloat($('input[name="svmtAmtInput"]').val()).toFixed(0);
+			mhpoint =(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))-used_mhpoint)*(parseFloat("${mhdiscount}")/100)).toFixed(0);
 		}
 		
 		var total_bill_dollar_text=parseInt($('input[name="wontotalSettKrw"]').val());
+		var total_bill_dollar=parseFloat($('input[name="totalSettUsd"]').val());
 		console.log(total_bill_dollar_text);
 		
 		
@@ -1431,7 +1387,9 @@ function tab_change(el){
 				olvoelnum:"${orderlist.oelnum}",
 				mid:"${mid}",
 				total_bill_dollar_text:total_bill_dollar_text,
-				mhpoint : mhpoint
+				total_bill_dollar:total_bill_dollar,
+				mhpoint : mhpoint,
+				used_mhpoint: used_mhpoint
 		};
 		
 		
