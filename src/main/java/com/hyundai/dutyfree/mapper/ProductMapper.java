@@ -39,4 +39,7 @@ public interface ProductMapper {
 	
 	//상품디테일
 	public ProductVO productdetail(String pcode);
+	
+	//관리자 상품목록
+	public List<ProductVO> getList2();
 }

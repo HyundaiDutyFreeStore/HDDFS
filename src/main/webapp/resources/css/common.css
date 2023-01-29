@@ -408,7 +408,7 @@ legend, caption, .hide {display:block; line-height:0; color:transparent !importa
 #smartchat .btn-link span {overflow:hidden; display:inline-block; width:100%; white-space:nowrap; word-wrap:normal; vertical-align:top; line-height:38px; text-overflow:ellipsis;}
 #smartchat .btn-link:before,
 #smartchat .btn-link:after {content:''; display:inline-block;}
-#smartchat .btn-link:before {position:absolute; left:8px; top:50%; margin-top:-10px; width:20px; height:20px; background-image:url('../images/smartTalk/ico_link.png');}
+#smartchat .btn-link:before {position:absolute; left:8px; top:50%; margin-top:-10px; width:20px; height:20px; background-image:url('../images/ico_link.png');}
 #smartchat .btn-link:after {position:absolute; right:10px; top:50%; width:8px; height:8px; border-top:1px solid #a8a8a8; margin-top:-4px; border-right:1px solid #a8a8a8; -webkit-transform:rotate(45deg); transform:rotate(45deg);}
 #smartchat .btn-link:hover,
 #smartchat .btn-link:focus,
@@ -452,7 +452,7 @@ legend, caption, .hide {display:block; line-height:0; color:transparent !importa
 #smartchat .btn-link.is-cquit:hover:after,
 #smartchat .btn-link.is-cquit:focus:after,
 #smartchat .btn-link.is-cquit:active:after {border-color:#ff66ff;}
-#smartchat .btn-link.is-node:before {background-image:url('../images/smartTalk/ico_link_node.png');}
+#smartchat .btn-link.is-node:before {background-image:url('../images/ico_link_node.png');}
 #smartchat .btn-link.is-script {padding-left:15px;}
 #smartchat .btn-link.is-script:before {display:none;}
 #smartchat .btn-link.is-chat:before {background-image:url('../images/smartTalk/ico_link_chat.png');}
@@ -698,7 +698,7 @@ legend, caption, .hide {display:block; line-height:0; color:transparent !importa
 #smartchat .chat-item .date {clear:both; display:block; padding-top:6px; font-size:11px; color:#9b9b9b; letter-spacing:-.5px;}
 
 #smartchat .chat-item.is-ktalk {padding:0 0 0 22px; text-align:left;}
-#smartchat .chat-item.is-ktalk .name {font-size:0; line-height:0;}
+#smartchat .chat-item.is-ktalk .name {font-size:10; line-height:0;}
 #smartchat .chat-item.is-ktalk .name:after {content:''; display:inline-block; width:48px; height:48px; background-image:url('../images/smartTalk/ico_chatbot.png');}
 #smartchat .chat-item.is-ktalk .name.cs:after {background-image: url('../images/smartTalk/ico_cs.png');}
 #smartchat .chat-item.is-ktalk .bubble {float:left; border-top-left-radius:0;}

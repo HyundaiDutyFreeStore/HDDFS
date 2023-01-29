@@ -30,6 +30,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<script type="text/javascript" src="date.js"></script>
 </head>
 
 <c:set var="path" value="${pageContext.request.contextPath }" />
@@ -116,11 +117,12 @@
 		$(".btn-send").on("click", function(e) {
 			console.log("전송버튼");
 			let txt = $("#inp-chat").val();
-			var date = new Date();		
+			var date = new Date();
+			var adminChatRoomNo = '${loginId}';
 	
 			if(txt!=""){
 				//로그인한사람(고객)이 관리자에게 보낸다
-				sendChat('${loginId}', '${adminInfo.mid}', txt, date);
+				sendChat('${loginId}', '${adminInfo.mid}', txt, date,adminChatRoomNo);
 				$('#inp-chat').val("");
 			}
 		});
@@ -128,6 +130,8 @@
 		//메세지 오면
 		adminsocket.onmessage = function(e) {
 			let data = JSON.parse(e.data);
+			let otherUsid = "관리자";
+			
 			//이전메세지보내기 불러오기
 			if(data.prev != null){
 				console.log("data.prev: "+data.prev[0].adminChatContent);
@@ -137,20 +141,24 @@
 				});
 				//지금까지 대화내용 다시 띄워준다
 				$.each(allChatList,function(i,v){
-					console.log("v:"+v['adminChatContent']);
+					console.log("v:"+v['adminChatDate']);
+					/* var date = v['adminChatDate']; */
+					var dateInfo =formatDate(v['adminChatDate']);
+					console.log("형식변환: "+formatDate(v['adminChatDate']));
 					
 					//발신인==나, 수신인==관리자 (내가보낸메세지이면)
 	 				if(v['adminFirstUsid']=='${myInfo.mid}'){ 
-	 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;"><div class="inner">`+ v['adminChatContent'] +`</div></div></div>`;
+	 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;"><div class="inner">`+ v['adminChatContent'] +`</div></div>`;
+	 					template += `<div class="date">`+dateInfo+`</div></div>`;
 	 					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 	 				} 
 	 				//발신인==관리자, 수신인==나 (관리자가 보낸 메세지이면- 내가받음)  
 	 	         	if(v['adminSecondUsid']=='${myInfo.mid}'){
-	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
-	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
-	 	                   <div class="inner">`
-	 	                   +v['adminChatContent']
-	 	                   +`</div>`;
+	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">`;
+	 	         			template += `<span class="name"> `+otherUsid+`</span>`;
+	 	         			template += `<div class="bubble has-moving in" style="max-height: 2468px;">`;
+	 	         			template += `<div class="inner">`+v['adminChatContent']+`</div></div>`;
+	 	                	template += `<div class="date">`+dateInfo+`</div></div>`
 	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);		
 					}
 				});
@@ -164,17 +172,18 @@
 				//내가보냈으면
 				if(data.adminFirstUsid=='${myInfo.mid}'){
 					var template = `<div class="chat-item is-customer"><div class="bubble has-moving in" style="max-height: 105px;">
- 			            <div class="inner">`+ data.adminChatContent +`</div></div></div>`;
+ 			            <div class="inner">`+ data.adminChatContent +`</div></div>`;
+ 			        template += `<div class="date">`+ formatDate(data.adminChatDate)+`</div></div>`;
  					document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				}
 				//내가받았으면
 				else if(data.adminSecondUsid=='${myInfo.mid}'){
-					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
-	 	                   <div class="bubble has-moving in" style="max-height: 2468px;">
-	 	                   <div class="inner">`
-	 	                   +data.adminChatContent
-	 	                   +`</div>`;
-	 	         		document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
+					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">`;
+						template += `<span class="name"> `+otherUsid+`</span>`;
+						template += `<div class="bubble has-moving in" style="max-height: 2468px;">`;
+						template += `<div class="inner">` +data.adminChatContent +`</div></div>`;
+	 	            	template += `<div class="date">`+formatDate(data.adminChatDate)+`</div></div>`
+	 	         	document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 				
 				}
 			}
@@ -183,18 +192,19 @@
 	
 	//메세지 전송 함수
 	function sendChat(adminFirstUsid, adminSecondUsid, adminChatContent,
-			adminChatDate) {
-		console.log("senChat함수실행");
+			adminChatDate,adminChatRoomNo) {
+		console.log("senChat함수실행 roomNo: "+adminChatRoomNo);
 		adminsocket.send(JSON.stringify(new AdminChat(adminFirstUsid,
-				adminSecondUsid, adminChatContent, adminChatDate)));
+				adminSecondUsid, adminChatContent, adminChatDate,adminChatRoomNo)));
 	};
 	
 	function AdminChat(adminFirstUsid, adminSecondUsid, adminChatContent,
-			adminChatDate) {
+			adminChatDate,adminChatRoomNo) {
 		this.adminFirstUsid = adminFirstUsid;
 		this.adminSecondUsid = adminSecondUsid;
 		this.adminChatContent = adminChatContent;
 		this.adminChatDate = adminChatDate;
+		this.adminChatRoomNo = adminChatRoomNo;
 	
 	};
 
@@ -210,6 +220,43 @@
             }, 300);
         }, 100);
     }
+	
+  //시간 형식 바꾸기
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        	hour = '' +d.getHours();
+        	minute = '' +d.getMinutes();
+        	second = '' +d.getSeconds();
+        	
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+        console.log("hour의 길이: "+hour.length);
+        if (hour.length < 2)
+        	hour = '0' + hour;
+        if (minute.length < 2)
+        	minute = '0'+minute;
+        if (second.length < 2)
+        	second = '0'+second;
+        
+
+        return [year, month, day].join('-') +" "+ [hour, minute, second].join(':');
+    }
+	
+ 	// 현재시간 반환 (ex; 오전 6:25)
+    function getCurrentTime() {
+        var currentTime = moment().format('A h:mm');
+
+        currentTime = currentTime.replace(/AM/gi, '오전');
+        currentTime = currentTime.replace(/PM/gi, '오후');
+
+        return currentTime;
+    };
 	
 	
 </script>
