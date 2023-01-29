@@ -13,7 +13,7 @@ import com.hyundai.dutyfree.vo.EventVO;
 public class CouponServiceImpl implements CouponService {
 
 	@Autowired
-	private CouponMapper couponmapper;
+	private CouponMapper couponmapper;//
 	@Override
 	public void MemberInsertCoupon(String mid,String eid,String date) {
 		// TODO Auto-generated method stub
