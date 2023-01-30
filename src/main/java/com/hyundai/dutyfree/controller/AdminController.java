@@ -9,28 +9,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hyundai.dutyfree.admin.vo.AdminChat;
 import com.hyundai.dutyfree.admin.vo.AdminMessage;
 import com.hyundai.dutyfree.service.AdminService;
+import com.hyundai.dutyfree.service.ChartService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
+import com.hyundai.dutyfree.vo.ChartCategoryVO;
+import com.hyundai.dutyfree.vo.ChartDailyVO;
+import com.hyundai.dutyfree.vo.ChartMemberVO;
+import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
+import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
 /**
  * AdminController
- * 
- * @author 김가희
+ *
+ * @author 김가희, 김찬중
  * @since 01.26
- * 
+ *
  *        <pre>
- * 수정일                 수정자                              수정내용
- * ----------  ---------------  ---------------------------
- * 2023.01.26    김가희                        최초 생성
- *        
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.26 	  김가희 				최초 생성
+ * 2023.01.30	  김찬중			    chart.js 생성
+ *        </pre>
  */
 @Log4j
 @Controller
@@ -41,33 +52,47 @@ public class AdminController {
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private ProductService prodService;
-	
-	//메인으로 이동(임시2)
-	@RequestMapping("/admin/index")
-	public void goMain2() {
-			
+
+	@Autowired
+	private OrderService orderService;
+
+	@Autowired
+	private ChartService chartService;
+
+	/*
+	 * //메인으로 이동(임시2)
+	 * 
+	 * @RequestMapping("/admin/index") public void goMain2() {
+	 * 
+	 * }
+	 */
+
+	// 주문목록 리스트 보기
+	@RequestMapping("/admin/orderList")
+	public void orderList(Model model) {
+		List<OrderListVO> list = orderService.getList();
+		// log.info("adminController에서 prodlist: "+list);
+		model.addAttribute("orderList", list);
 	}
-	
-	//상품목록 리스트 보기
+
+	// 상품목록 리스트 보기
 	@RequestMapping("/admin/prodList")
-	public void prodList(Model model){
+	public void prodList(Criteria cri, Model model) {
 		List<ProductVO> list = prodService.getList2();
-		log.info("adminController에서 prodlist: "+list);
+		// log.info("adminController에서 prodlist: "+list);
 		model.addAttribute("prodList", list);
 	}
-	
-	//1대1 실시간 상담
-	
+
 	// 1:1 채팅방 목록 보기
 	@RequestMapping("/admin/adminChatRoom")
 	public void adminChat(Model model, Principal prin) throws Exception {
 
 		String adminUsid = prin.getName();
 
-		List<String> totalUsidList = new ArrayList<>();
+		List<AdminChat> totalUsidList = new ArrayList<>();
 		/*
 		 * List<String> firstUsidList = new ArrayList<>(); List<String> secondUsidList =
 		 * new ArrayList<>();
@@ -96,7 +121,7 @@ public class AdminController {
 			MemberVO member = new MemberVO();
 			HashMap<String, String> usidMap = new HashMap<>();
 
-			String memberUsid = totalUsidList.get(i);
+			String memberUsid = totalUsidList.get(i).getAdminChatRoomNo();
 			am.setMid(memberUsid);
 			member.setMid(memberUsid);
 
@@ -127,9 +152,10 @@ public class AdminController {
 		System.out.println("멤버인포리스트:" + memberInfoList);
 	}
 
-	//관리자 1대1 실시간상담 입장
+	// 관리자 1대1 실시간상담 입장
 	@RequestMapping("/admin/adminChat") // 1
-	public void adminChat(@RequestParam("memberUsid") String memberUsid,@RequestParam("adminUsid") String adminUsid, Model model) throws Exception {
+	public void adminChat(@RequestParam("memberUsid") String memberUsid, @RequestParam("adminUsid") String adminUsid,
+			Model model) throws Exception {
 		// member와 admin의 정보 가져오기
 		MemberVO adminInfo = new MemberVO();
 		adminInfo = memberService.read(adminUsid);
@@ -141,4 +167,47 @@ public class AdminController {
 		model.addAttribute("adminInfo", adminInfo);
 	}
 
+	@RequestMapping("/admin/index")
+	public void forChart(Model model) throws Exception {
+		List<ChartMemberVO> cntMember = chartService.cntMember();
+		int cntm = 0;
+		int cntw = 0;
+		int cnta = 0;
+
+		for (int i = 0; i < cntMember.size(); i++) {
+			switch (cntMember.get(i).getSex()) {
+			case "F":
+			case "female":
+			case "여성":
+				cntw += cntMember.get(i).getMcnt();
+				break;
+			case "M":
+			case "male":
+			case "남성":
+				cntm += cntMember.get(i).getMcnt();
+				break;
+			default:
+				cnta += cntMember.get(i).getMcnt();
+				break;
+			}
+		}
+
+		model.addAttribute("cntm", cntm);
+		model.addAttribute("cntw", cntw);
+		model.addAttribute("cnta", cnta);
+	}
+
+	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)
+	public @ResponseBody List<ChartDailyVO> dailyTotal(Model model) {
+		List<ChartDailyVO> dailyTotal = chartService.dailyTotal();
+		model.addAttribute("dailyTotal", dailyTotal);
+		return dailyTotal;
+	}
+
+	@RequestMapping(value = "/admin/index/categoryTotal", method = RequestMethod.GET)
+	public @ResponseBody List<ChartCategoryVO> categoryTotal(Model model) {
+		List<ChartCategoryVO> categoryTotal = chartService.categoryTotal();
+		model.addAttribute("categoryTotal", categoryTotal);
+		return categoryTotal;
+	}
 }

@@ -62,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	//관리자가 모든 채팅방ID 조회 
 	@Override
-	public List<String> roomNoList() {
+	public List<AdminChat> roomNoList() {
 		return mapper.roomNoList();
 	}
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -26,7 +26,8 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/admin/css/sb-admin-2.min.css" rel="stylesheet">
-
+<link href="/resources/admin/vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
 </head>
 
 <body id="page-top">

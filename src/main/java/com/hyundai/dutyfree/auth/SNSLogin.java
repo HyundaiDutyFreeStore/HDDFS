@@ -111,7 +111,7 @@ public class SNSLogin {
 			member.setMname(rootNode.get("name").asText());
 			member.setMemail(rootNode.get("email").asText());
 			member.setMphone("");
-			member.setMgender("");
+			member.setMgender("anon");
 			/*
 			 * JsonNode nameNode = rootNode.path("name"); String uname =
 			 * nameNode.get("familyName").asText() + nameNode.get("givenName").asText();
