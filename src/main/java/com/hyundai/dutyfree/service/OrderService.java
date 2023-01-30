@@ -31,7 +31,7 @@ public interface OrderService {
 	
 	public void Inserorderitem(String pcode, int oamount,String oid);
 	
-	public void Insertorderlist(String oid,String mid,int ohpoint,String ostatus,String odeptdate,String oplnum,String oelnum, String oplace );
+	public void Insertorderlist(String oid,String mid,int ohpoint,String ostatus,String odeptdate,String oplnum,String oelnum, String oplace ,float total_dollar);
 	
 	public void updateTotalandMhpoint(String mid,int mhpoint,int mtotal);
 	

@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void Insertorderlist(String oid, String mid, int ohpoint, String ostatus, String odeptdate, String oplnum,
-			String oelnum, String oplace) {
+			String oelnum, String oplace,float total_dollar) {
 		OrderListVO olv = new OrderListVO();
 		olv.setOid(oid);
 		olv.setMid(mid);
@@ -68,6 +68,7 @@ public class OrderServiceImpl implements OrderService {
 		olv.setOplnum(oplnum);
 		olv.setOelnum(oelnum);
 		olv.setOplace(oplace);
+		olv.setOrdertotalprice(total_dollar);
 		mapper.Insertorderlist(olv);
 		// TODO Auto-generated method stub
 

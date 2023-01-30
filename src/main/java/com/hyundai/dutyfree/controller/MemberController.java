@@ -206,12 +206,26 @@ public class MemberController {
 		// 회원가입 쿼리 실행
 		memberservice.memberJoin(member);
 		
-		java.util.Date nowdate = new java.util.Date();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String date=simpleDateFormat.format(nowdate);
+		java.util.Date date = new java.util.Date();
+		
+		java.util.Date savdate = new java.util.Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String cid = "COUSAV" + simpleDateFormat.format(savdate);
+		simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+		String datestr = simpleDateFormat.format(date);
+		
 		//회원가입시 쿠폰을 등록
-		couponservice.MemberInsertCoupon(member.getMid(), "SAV20230129",date);
-		couponservice.MemberInsertCoupon(member.getMid(), "DIS20230129",date);
+		couponservice.MemberInsertCoupon(cid,member.getMid(), "SAV20230129",datestr);
+		EventVO event=couponservice.GetEventInfo("SAV20230129");
+		member.setMhpoint(event.getEsale());
+		member.setMtotal(0);
+		memberservice.updateMhpoint(member);
+		
+		java.util.Date disdate = new java.util.Date();
+		simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
+		cid = "COUDIS" +simpleDateFormat.format(disdate);
+		
+		couponservice.MemberInsertCoupon(cid,member.getMid(), "DIS20230129",datestr);
 		
 		model.addAttribute("couponaccess", "coupon");
 		
@@ -307,9 +321,14 @@ public class MemberController {
 			}
 			
 			List<CouponVO> couponlist=couponservice.GetCouponInfo(prin.getName());
+			int coupon_count=0;
 			for(CouponVO coupon: couponlist) {
 				coupon.setEvent(couponservice.GetEventInfo(coupon.getEid()));
+				if(coupon.getCenabled().equals("ENABLED")) {
+					coupon_count++;
+				}
 			}
+		  model.addAttribute("coupon_count", coupon_count);
 		  model.addAttribute("couponlist",couponlist);
 		  model.addAttribute("align", align);
 		  model.addAttribute("orderlists", orderlists);
@@ -320,24 +339,6 @@ public class MemberController {
 		  memberservice.myPage(String.valueOf(mvo.getMhpoint())));
 		 
 }
-	@GetMapping("/Mypage_coupon")
-	public void Mypage_coupon(Model model,Principal prin) throws Exception {
-		
-		MemberVO mvo = memberservice.read(prin.getName());
-		
-		if(orderservice.PassportConsist(prin.getName())==null) {
-			model.addAttribute("passport", null);
-		}else {
-			model.addAttribute("passport", orderservice.PassportConsist(prin.getName()));
-		}
-		  model.addAttribute("member",mvo);
-		  model.addAttribute("mid", memberservice.myPage(mvo.getMid()));
-		  model.addAttribute("mname", memberservice.myPage(mvo.getMname()));
-		  model.addAttribute("mgrade", memberservice.myPage(mvo.getMid()));
-		  model.addAttribute("mhpoint",
-		  memberservice.myPage(String.valueOf(mvo.getMhpoint())));
-	}
-
 	/*
 	 * @GetMapping("/logout") public String logout(HttpServletRequest request,
 	 * HttpServletResponse response, HttpSession session) throws IOException {

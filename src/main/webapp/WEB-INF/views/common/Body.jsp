@@ -2,10 +2,9 @@
 	pageEncoding="UTF-8"%>
 
 		<main id="container"> <script type="text/javascript">
-				if(${couponaccess eq 'coupon' }){
-					alert("회원가입을 축하드립니다. 쿠폰이 지급되었습니다.");
-				}
-		
+		if(${couponaccess eq 'coupon' }){
+			alert("회원가입을 축하드립니다. 쿠폰이 지급되었습니다.");
+		}
                 var lgcpBuyMbshGrpCd = '';
                 var mbshGrpNm = '';
                 var introType = "S";

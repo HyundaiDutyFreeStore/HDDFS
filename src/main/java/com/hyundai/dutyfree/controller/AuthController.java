@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hyundai.dutyfree.auth.SNSLogin;
 import com.hyundai.dutyfree.auth.SnsValue;
 import com.hyundai.dutyfree.security.CustomUserDetailsService;
 import com.hyundai.dutyfree.service.CouponService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.vo.EventVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 
 import lombok.extern.log4j.Log4j;
@@ -70,7 +72,7 @@ public class AuthController {
 	//소셜로그인 콜백처리 (소셜로그인에서 성공적으로 콜백이 왔을 때 해당 회원이 없으면 가입시키고, 있으면 그 아이디로 로그인시키기)
 		@RequestMapping(value = "/auth/{snsService}/callback", method = {RequestMethod.GET, RequestMethod.POST  })
 		public String snsLoginCallback(@PathVariable String snsService, Model model, @RequestParam String code,
-				HttpSession session) throws Exception {
+				HttpSession session,RedirectAttributes ra) throws Exception {
 			System.out.println("콜백시 code="+code);
 			log.info("snsLoginCallback: service: "+snsService);
 			SnsValue sns = null;
@@ -105,12 +107,29 @@ public class AuthController {
 				System.out.println("존재하지 않는 사용자");
 				memberservice.memberJoin(snsUser); // 가입하기
 				
-				java.util.Date nowdate = new java.util.Date();
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String date=simpleDateFormat.format(nowdate);
+				MemberVO member=memberservice.read(snsUser.getMid());
+				java.util.Date date = new java.util.Date();
+				
+				java.util.Date savdate = new java.util.Date();
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				String cid = "COUSAV" + simpleDateFormat.format(savdate);
+				simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+				String datestr = simpleDateFormat.format(date);
+				
 				//회원가입시 쿠폰을 등록
-				couponservice.MemberInsertCoupon(snsUser.getMid(), "SAV20230129",date);
-				couponservice.MemberInsertCoupon(snsUser.getMid(), "DIS20230129",date);
+				couponservice.MemberInsertCoupon(cid,member.getMid(), "SAV20230129",datestr);
+				EventVO event=couponservice.GetEventInfo("SAV20230129");
+				member.setMhpoint(event.getEsale());
+				member.setMtotal(0);
+				memberservice.updateMhpoint(member);
+				
+				java.util.Date disdate = new java.util.Date();
+				simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
+				cid = "COUDIS"+simpleDateFormat.format(disdate);
+				
+				couponservice.MemberInsertCoupon(cid,snsUser.getMid(), "DIS20230129",datestr);
+				
+				ra.addFlashAttribute("couponaccess", "coupon");
 				
 				System.out.println("가입완료");
 			}

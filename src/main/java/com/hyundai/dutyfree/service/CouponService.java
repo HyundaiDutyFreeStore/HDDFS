@@ -9,7 +9,7 @@ import com.hyundai.dutyfree.vo.EventVO;
 
 public interface CouponService {
 	
-	public void MemberInsertCoupon(String mid,String eid,String date);
+	public void MemberInsertCoupon(String cid,String mid,String eid,String date);
 	
 	public EventVO GetEventInfo(String eid);
 	

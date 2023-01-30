@@ -5,7 +5,7 @@
  <mapper namespace="com.hyundai.dutyfree.mapper.CouponMapper">
  	
  <insert id="MemberInsertCoupon">
- insert into COUPON values('cou'|| TO_CHAR(sysdate,'YYYYMMDDHH24MISS'),#{mid},add_months(TO_DATE(#{date},'YYYY-MM-DD'),1),#{eid},'ENABLED');
+ insert into COUPON values(#{cid},#{mid},add_months(TO_DATE(#{date},'YYYY-MM-DD'),1),#{eid},#{cenabled},null)
  </insert>
  
  <select id="GetEventInfo" resultType="com.hyundai.dutyfree.vo.EventVO">
