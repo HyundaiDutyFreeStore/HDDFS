@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
 		olv.setOdeptdate(odeptdate);
 		olv.setOplnum(oplnum);
 		olv.setOelnum(oelnum);
-		olv.setOplace(oplace);
+		olv.setOdept(oplace);
 		olv.setOtotal(total_dollar);
 		mapper.Insertorderlist(olv);
 		// TODO Auto-generated method stub

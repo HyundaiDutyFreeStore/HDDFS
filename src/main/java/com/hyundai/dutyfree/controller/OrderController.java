@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,8 +81,14 @@ public class OrderController {
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
 	@ResponseBody
-	public String orderexec(HttpServletRequest request, Model model, Principal prin) throws Exception {
-
+	public String orderexec(HttpServletRequest request, Model model, Principal prin,HttpSession session) throws Exception {
+		session.setAttribute("total_bill_dollar_text",request.getParameter("total_bill_dollar_text") );
+		session.setAttribute("total_bill_won_text",request.getParameter("total_bill_won_text") );
+		session.setAttribute("totalDcUsd",request.getParameter("totalDcUsd") );
+		session.setAttribute("totalDcKrw",request.getParameter("totalDcKrw") );
+		session.setAttribute("totalSettUsd",request.getParameter("totalSettUsd") );
+		session.setAttribute("wontotalSettKrw",request.getParameter("wontotalSettKrw") );
+		
 		List<OrderItemVO> orderitemlist = new ArrayList<OrderItemVO>();
 		System.out.println(request.getParameter("orderitemlists"));
 		String[] split1 = request.getParameter("orderitemlists").split("OrderItemVO");
@@ -198,7 +205,7 @@ public class OrderController {
 
 		olv.setOdeptdate(date);
 		olv.setOelnum(ugntComuMophNo);
-		olv.setOplace(orderDpatPlacCd);
+		olv.setOdept(orderDpatPlacCd);
 		
 		List<CouponVO> couponlist=couponservice.GetCouponInfo(prin.getName());
 		List<CouponVO> order_couponlist=new ArrayList<>();
@@ -383,7 +390,15 @@ public class OrderController {
 	
 	@RequestMapping("/cancelorder")
 	@ResponseBody
-	public String cancelorder(String oid,double order_dollar, Principal prin) throws Exception {
+	public String cancelorder(String oid,double order_dollar, Principal prin,HttpSession session) throws Exception {
+		
+		//메일에 보낼 값들을 세션에서 제거
+		session.removeAttribute("total_bill_dollar_text");
+		session.removeAttribute("total_bill_won_text");
+		session.removeAttribute("totalDcUsd");
+		session.removeAttribute("totalDcKrw");
+		session.removeAttribute("totalSettUsd");
+		session.removeAttribute("wontotalSettKrw");
 		
 		OrderListVO olv=orderservice.getorderlist(oid);
 		

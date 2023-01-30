@@ -28,7 +28,7 @@ public class OrderListVO {
 	private String odeptdate;
 	private String oplnum;
 	private String oelnum;
-	private String oplace;
+	private String odept;
 	private List<OrderItemVO> orderitemlist;
 	private float ototal;
 	private float ordertotaldisprice;
