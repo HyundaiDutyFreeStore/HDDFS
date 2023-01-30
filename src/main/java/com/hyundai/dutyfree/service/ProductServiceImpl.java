@@ -71,5 +71,10 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.getList2();
 	}
 
+	@Override
+	public int getTotal2() {
+		return mapper.getTotal2();
+	}
+
 	
 }

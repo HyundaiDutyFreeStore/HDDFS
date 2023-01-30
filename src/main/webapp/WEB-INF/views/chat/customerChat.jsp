@@ -107,6 +107,8 @@
 
 	<script>
 	const adminsocket = new SockJS('http://localhost:8080/adminsocket');
+	//const adminsocket = new SockJS('http://192.168.0.24:8080/adminsocket');
+	//const adminsocket = new WebSocket('ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/adminsocket');
 	adminsocket.onopen = function() {
 		console.log("소켓열림");
 		adminsocket.send("memberConnected");
@@ -115,6 +117,7 @@
 	//새로운 채팅이 보내지면
 	//전송 버튼 누르는 이벤트
 		$(".btn-send").on("click", function(e) {
+			//console.log("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/adminsocket");
 			console.log("전송버튼");
 			let txt = $("#inp-chat").val();
 			var date = new Date();

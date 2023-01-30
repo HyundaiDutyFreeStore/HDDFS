@@ -10,13 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.hyundai.dutyfree.admin.vo.AdminChat;
 import com.hyundai.dutyfree.admin.vo.AdminMessage;
 import com.hyundai.dutyfree.service.AdminService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.ProductService;
+import com.hyundai.dutyfree.vo.CategoryVO;
+import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
@@ -53,9 +56,10 @@ public class AdminController {
 	
 	//상품목록 리스트 보기
 	@RequestMapping("/admin/prodList")
-	public void prodList(Model model){
+	public void prodList(Criteria cri, Model model){
+		
 		List<ProductVO> list = prodService.getList2();
-		log.info("adminController에서 prodlist: "+list);
+		//log.info("adminController에서 prodlist: "+list);
 		model.addAttribute("prodList", list);
 	}
 	
@@ -67,7 +71,7 @@ public class AdminController {
 
 		String adminUsid = prin.getName();
 
-		List<String> totalUsidList = new ArrayList<>();
+		List<AdminChat> totalUsidList = new ArrayList<>();
 		/*
 		 * List<String> firstUsidList = new ArrayList<>(); List<String> secondUsidList =
 		 * new ArrayList<>();
@@ -96,7 +100,7 @@ public class AdminController {
 			MemberVO member = new MemberVO();
 			HashMap<String, String> usidMap = new HashMap<>();
 
-			String memberUsid = totalUsidList.get(i);
+			String memberUsid = totalUsidList.get(i).getAdminChatRoomNo();
 			am.setMid(memberUsid);
 			member.setMid(memberUsid);
 
