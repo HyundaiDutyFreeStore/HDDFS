@@ -76,5 +76,15 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.getTotal2();
 	}
 
+	@Override
+	public void deleteProd(String pid) {
+		mapper.deleteProd(pid);
+	}
+	
+	@Override
+	public void updateProd(ProductVO prod) {
+		mapper.updateProd(prod);
+	}
+
 	
 }
