@@ -152,4 +152,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderListVO> getList() {
 		return mapper.getList();
 	}
+
+	@Override
+	public String getOrderMid(String oid) {
+		return mapper.getOrderMid(oid);
+	}
 }

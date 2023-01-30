@@ -17,5 +17,5 @@ import lombok.Data;
 @Data
 public class ChartDailyVO {
 	private String odate; // 날짜
-	private double dailytotal;// 일매출합계
+	private double total;// 일매출합계
 }
