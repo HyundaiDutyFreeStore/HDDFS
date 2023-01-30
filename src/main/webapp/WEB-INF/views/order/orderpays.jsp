@@ -37,25 +37,30 @@
 							<div class="title">
 								<h4>쿠폰할인</h4>
 								<em id="dispCupDcTotalAmt" class="pirce">(${coupon_count }</em><em
-									class="sale">장)</em> <a href="javascript:void(0);" class="btn">자세히보기</a>
+									class="sale">장)</em> 
+									<c:if test="${coupon_count ne 0}">
+									<a href="javascript:void(0);" class="btn">자세히보기</a>
+									</c:if>
 							</div>
+							<c:if test="${coupon_count ne 0}">
 							<div class="coupon_list accordion_box">
 							<c:forEach var="coupon" items="${order_couponlist}">
 								<div class="enter_amount whether_use_points">
 										<strong> ${coupon.event.ename }</strong>
 										<ul class="chk">
 			                                    <li>
-			                                        <input type="radio" name="pmptUseSvmtUseYn" id="pmptUseSvmtUse_Y" value="Y"  checked="checked">
-			                                        <label for="pmptUseSvmtUse_Y">사용 안함</label>
+			                                        <input type="radio" name="pmptUseSvmtUseYn" id="${coupon.cid }_N" value="N">
+			                                        <label for="${coupon.cid }_N">사용 안함</label>
 			                                    </li>
 			                                    <li>
-			                                        <input type="radio" name="pmptUseSvmtUseYn" id="pmptUseSvmtUse_N" value="N">
-			                                        <label for="pmptUseSvmtUse_N">사용</label>
+			                                        <input type="radio" name="pmptUseSvmtUseYn" id="${coupon.cid }" value="${coupon.event.esale }" >
+			                                        <label for="${coupon.cid }">사용</label>
 			                                    </li>
 			                            </ul>
 								</div>
 								</c:forEach>
 							</div>
+						</c:if>
 						</li>
 
 						<li id="cardInfoTit" style="display: none;">
@@ -323,7 +328,9 @@
 								</li>
 								<li><span>적립금 할인</span> <em>원</em><em class="exceptmhpoint">0</em>
 								</li>
-								<li><span>쿠폰 할인</span> <em>원</em><em class="coupondiscount">0</em>
+								<li><span>쿠폰 할인</span> <em>원</em>
+								<input type="hidden" name="coupondiscount"/>
+								<em class="coupondiscount">0</em>
 								</li>
 							</ul></li>
 						<li id="chagDcEvtInfoDl"><strong>
@@ -1165,8 +1172,9 @@ function tab_change(el){
 	function enrollsavings(e){
 		console.log($("input[name='svmtAmt']").val());
 		var mhpoint=(parseFloat("${member.mhpoint}"));
-		if($("input[name='svmtAmt']").val()>mhpoint){
-			alert('적립금이 부족합니다.')
+		if(parseFloat($("input[name='svmtAmt']").val())>mhpoint){
+			alert('적립금이 부족합니다.');
+			$("input[name='svmtAmt']").val("");
 			return false;
 		}
 		if(e.keyCode==13){
@@ -1260,13 +1268,16 @@ function tab_change(el){
 	
 	pay_cancel.addEventListener("click", function () { 
 		
+		var order_dollar=$('input[name="totalSettUsd"]').val();
+		
 		const Data={
-				oid: oid
+				oid: oid,
+				order_dollar:order_dollar
 		};
 		$.ajax({
 			method:"post",
 			data : Data,
-			url : "/order/deleteorder",
+			url : "/order/cancelorder",
 			success : function(data){
 			if(data=='yes'){
 				$('#settInfoLayerPopupmodal').hide();
@@ -1287,7 +1298,7 @@ function tab_change(el){
 		if(isallchecked){
 			$('.mhpoint').text($("input[name='svmtAmt']").val());
 			$('input[name="mhpoint"]').val($("input[name='svmtAmtInput']").val());
-			$("input[name='svmtAmt']").val("0");
+			$("input[name='svmtAmt']").val("");
 			$("input[name='svmtAmtInput']").val(0);
 			isallchecked=false;
 		}else{
@@ -1304,10 +1315,7 @@ function tab_change(el){
 			}
 			isallchecked=true;
 		}
-		
-		
-		
-
+	
 		$('.exceptmhpoint').text($("input[name='svmtAmt']").val());
 		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0))+ "원");
 		$('input[name="totalDcKrw"]').val((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0));
@@ -1330,6 +1338,57 @@ function tab_change(el){
 		$('input[name="totalSettUsd"]').val((total_bill_dollar-totalDcUsd).toFixed(2));
 	}
 	
+	var cid="";
+	$("input[name='pmptUseSvmtUseYn']").on('click', function() {
+		
+		 cid=$(this).attr("id");
+		
+		var totalprice=parseInt($('input[name="totalDcKrw"]').val());
+		var totaldollarprice=parseFloat($('input[name="totalDcUsd"]').val()).toFixed(2);
+		if($(this).val()!='N'){
+				var discountwonprice=($('input[name="total_bill_won"]').val()*($(this).val()/100)).toFixed(0);
+				var discountdollarprice=($('input[name="total_bill_dollar"]').val()*($(this).val()/100)).toFixed(2);
+			    var won_result=totalprice+parseInt(discountwonprice);
+			    var dollar_result=(parseFloat(totaldollarprice)+parseFloat(discountdollarprice)).toFixed(2);
+			    $('input[name="coupondiscount"]').val(parseInt(discountwonprice));
+			 	$('.coupondiscount').text(priceComma(discountwonprice));
+			 	$('input[name="totalDcKrw"]').val(won_result);
+			 	$('.totalDcKrw').text(priceComma(won_result)+"원");
+			 	$('input[name="totalDcUsd"]').val(dollar_result);
+			 	$('.totalDcUsd').text("$"+priceComma(dollar_result));
+			 	var totaldollarpay=($('input[name="total_bill_dollar"]').val()-$('input[name="totalDcUsd"]').val()).toFixed(2);
+			 	var totalwonpay=$('input[name="total_bill_won"]').val()-$('input[name="totalDcKrw"]').val();
+			 	$('input[name="totalSettUsd"]').val(totaldollarpay);
+			 	$('.totalSettUsd').text("$"+priceComma(totaldollarpay));
+			 	$('input[name="wontotalSettKrw"]').val(totalwonpay);
+			 	$('.won.totalSettKrw').text(priceComma(totalwonpay)+"원");
+			 	
+			 	
+				
+		}else{
+			 
+			 var discountwonprice= $('input[name="coupondiscount"]').val();
+			 var discountdollarprice=(parseFloat(discountwonprice)/parseFloat("${KRW_WON}")).toFixed(2);
+			 var dollar_result=(totaldollarprice-discountdollarprice).toFixed(2);
+			 var won_result=totalprice-parseInt(discountwonprice);
+			 $('input[name="coupondiscount"]').val("0");
+		 	 $('.coupondiscount').text("0");
+		 	 $('input[name="totalDcKrw"]').val(won_result);
+		 	 $('.totalDcKrw').text(priceComma(won_result)+"원");
+		 	 $('input[name="totalDcUsd"]').val(dollar_result);
+		 	 $('.totalDcUsd').text("$"+priceComma(dollar_result));
+		 	 var totaldollarpay=(parseFloat($('input[name="totalSettUsd"]').val())+parseFloat(discountdollarprice)).toFixed(2);
+		 	 var totalwonpay=(parseInt($('input[name="wontotalSettKrw"]').val())+parseInt(discountwonprice)).toFixed(0);
+		 	 $('input[name="totalSettUsd"]').val(totaldollarpay);
+		 	 $('.totalSettUsd').text("$"+priceComma(totaldollarpay));
+		 	 $('input[name="wontotalSettKrw"]').val(totalwonpay);
+		 	 $('.won.totalSettKrw').text(priceComma(totalwonpay)+"원");
+			
+		}
+	   // 체크된 Radio 버튼의 값을 가져옵니다.
+	    
+	});
+	
 /* 	if($("input[name='svmtAmt']").val()!=''){
 		console.log('exceptmhpoint');
 		$('.exceptmhpoint').text($("input[name='svmtAmt']").val());
@@ -1339,6 +1398,7 @@ function tab_change(el){
 
 	
 	function orderexec(){
+		
 		if(!$('#chkAgree').is(':checked')){
 			alert("주문내역확인 동의를 체크해주세요.");
 			return false;
@@ -1368,7 +1428,8 @@ function tab_change(el){
 				total_bill_dollar_text:total_bill_dollar_text,
 				total_bill_dollar:total_bill_dollar,
 				mhpoint : mhpoint,
-				used_mhpoint: used_mhpoint
+				used_mhpoint: used_mhpoint,
+				cid:cid
 		};
 		
 		
@@ -1438,7 +1499,7 @@ function tab_change(el){
 		}
 
     });  
-
+	
 </script>
 
 <%@ include file="../common/Footer.jsp" %>

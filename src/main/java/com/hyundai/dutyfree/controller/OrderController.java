@@ -127,7 +127,12 @@ public class OrderController {
 
 			ordertotalstock += order.getOamount();
 		}
-
+		
+		if(!request.getParameter("cid").equals("")) {
+			couponservice.UpdateCouponOid(oid, request.getParameter("cid"));
+			couponservice.UpdateCenabled("NOTENABLED", request.getParameter("cid"));
+		}
+		
 		member.setMid(prin.getName());
 		System.out.println("mhpoint:"+Integer.parseInt(request.getParameter("mhpoint")));
 		member.setMhpoint(Integer.parseInt(request.getParameter("mhpoint"))-Integer.parseInt(request.getParameter("used_mhpoint")));
@@ -375,17 +380,6 @@ public class OrderController {
 
 	}
 	
-	@RequestMapping("/deleteorder")
-	@ResponseBody
-	public String deleteorder(String oid) {
-		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
-		for(OrderItemVO oi : oiv) {
-			ProductVO product=productservice.productdetail(oi.getPcode());
-			cartservice.redproductcnt(product.getPcode(), product.getPstock()+oi.getOamount(), product.getPsel()-oi.getOamount());
-		}
-		orderservice.deleteorder(oid);
-		return "yes";
-	}
 	
 	@RequestMapping("/cancelorder")
 	@ResponseBody
@@ -400,10 +394,22 @@ public class OrderController {
 		memberservice.updateMhpoint(member);
 		
 		List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
+		
 		for(OrderItemVO oi : oiv) {
 			ProductVO product=productservice.productdetail(oi.getPcode());
 			cartservice.redproductcnt(product.getPcode(), product.getPstock()+oi.getOamount(), product.getPsel()-oi.getOamount());
 		}
+		List<CouponVO>couponlist=couponservice.GetCouponInfo(prin.getName());
+		for(CouponVO coupon : couponlist) {
+			if(coupon.getOid()==null) continue;
+			if(coupon.getOid().equals(oid)) {
+				String cid=coupon.getCid();
+				couponservice.UpdateCouponOid("", cid);
+				couponservice.UpdateCenabled("ENABLED", cid);
+			}
+		}
+
+		
 		orderservice.Updateostatus("pay_cancel", oid);
 		return "yes";
 	}
