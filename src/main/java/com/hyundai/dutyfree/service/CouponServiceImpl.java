@@ -17,7 +17,7 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public void MemberInsertCoupon(String cid,String mid,String eid,String date) {
 		// TODO Auto-generated method stub
-		if(eid.substring(0, 2).equals("SAV")) {
+		if(eid.substring(0, 3).equals("SAV")) {
 			couponmapper.MemberInsertCoupon(cid,mid, eid,date,"NOTENABLED");
 		}else {
 			couponmapper.MemberInsertCoupon(cid,mid, eid,date,"ENABLED");

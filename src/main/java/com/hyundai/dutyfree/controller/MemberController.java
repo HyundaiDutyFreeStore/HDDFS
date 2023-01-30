@@ -217,8 +217,8 @@ public class MemberController {
 		//회원가입시 쿠폰을 등록
 		couponservice.MemberInsertCoupon(cid,member.getMid(), "SAV20230129",datestr);
 		EventVO event=couponservice.GetEventInfo("SAV20230129");
-		member.setMhpoint(0);
-		member.setMtotal(event.getEsale());
+		member.setMhpoint(event.getEsale());
+		member.setMtotal(0);
 		memberservice.updateMhpoint(member);
 		
 		java.util.Date disdate = new java.util.Date();
