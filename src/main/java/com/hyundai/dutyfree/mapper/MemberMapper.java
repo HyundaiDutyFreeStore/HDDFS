@@ -17,17 +17,17 @@ import com.hyundai.dutyfree.vo.MemberVO;
  */
 
 public interface MemberMapper {
-	//시큐리티
+	// 시큐리티
 	public MemberVO read(String mid);
-	
+
 	public MemberVO selectMember(MemberVO member);
-	
+
 	// 회원가입
 	public void memberJoin(MemberVO member);
 
 	// 아이디 중복 검사
 	public int idCheck(String mid);
-	
+
 	// 메일 중복 검사
 	public int mailChk(String mail);
 
@@ -36,15 +36,14 @@ public interface MemberMapper {
 
 	// 마이페이지
 	public MemberVO myPage(String mid);
-	
-	//아이디 찾기
-	public MemberVO findID(MemberVO member);
-	
-	// 회원탈퇴
-    public void deleteMember(String mid);
-    
-    // 회원정보수정
-    public void updateMhpoint(MemberVO member);
 
-    
+	// 아이디 찾기
+	public MemberVO findID(MemberVO member);
+
+	// 회원탈퇴
+	public void deleteMember(String mid);
+
+	// 회원정보수정
+	public void updateMhpoint(MemberVO member);
+
 }
