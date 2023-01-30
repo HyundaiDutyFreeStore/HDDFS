@@ -197,6 +197,15 @@
 		p.pcode=c.pcode and
 		p.pcode=#{pcode}
 	</select>
+	
+	<delete id="deleteProd">
+		delete from product where pcode=#{pid}
+	</delete>
+	
+	<update id="updateProd">
+		update product set pprice=#{pprice}, pdiscount=#{pdiscount}, pstock=#{pstock}
+		where pcode=#{pcode}
+	</update>
 
 
 </mapper>

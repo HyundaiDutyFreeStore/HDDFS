@@ -147,5 +147,10 @@
 		) o join member on member.mid = o.mid
 		]]>
 	</select>
+	
+	<select id="getList"
+		resultType="com.hyundai.dutyfree.vo.OrderListVO">
+		select * from orderlist order by odate desc
+	</select>
 </mapper>
   

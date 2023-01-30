@@ -25,6 +25,8 @@ import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
+
+import lombok.extern.log4j.Log4j;
 /**
  * ProductController
  * 
@@ -40,6 +42,7 @@ import com.hyundai.dutyfree.vo.ProductVO;
  * 2023.01.15    김가희                        상품검색
  *        
  */
+@Log4j
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -222,5 +225,29 @@ public class ProductController {
 
 		return "/product/SearchResult";
 	}
+	
+	@ResponseBody
+    @GetMapping(value="/delete")
+    public void productDelete(@RequestParam("pcode") String pid) {
+        System.out.println("ProductController에 delete들어옴");
+        log.info("ProductController -> productDelete");
+        service.deleteProd(pid);
+        log.info("삭제완료");
+    }
+	
+	@ResponseBody
+    @GetMapping(value="/update")
+    public void productUpdate(@RequestParam("pcode") String pcode, @RequestParam("pprice") String pprice ,@RequestParam("pdiscount") int pdiscount, @RequestParam("pstock") int pstock) {
+       System.out.println("ProductController에 update들어옴");
+       float pprice2 = Float.parseFloat(pprice);
+       ProductVO prod = new ProductVO();
+       prod.setPcode(pcode);
+       prod.setPprice(pprice2);
+       prod.setPdiscount(pdiscount);
+       prod.setPstock(pstock);
+       service.updateProd(prod);
+       //System.out.println("가격: "+pprice2);
+       
+    }
 
 }

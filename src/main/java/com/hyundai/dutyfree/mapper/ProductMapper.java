@@ -45,4 +45,10 @@ public interface ProductMapper {
 	
 	//관리자 상품총개수
 	public int getTotal2();
+	
+	//관리자 상품삭제
+    public void deleteProd(String pid);
+    
+    //관리자 상품수정
+    public void updateProd(ProductVO prod);
 }

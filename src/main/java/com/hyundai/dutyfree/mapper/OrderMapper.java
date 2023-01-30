@@ -64,4 +64,7 @@ public interface OrderMapper {
 
 	// 상품을 찾아가지 않은 고객
 	public List<OrderMemberVO> FailMember();
+	
+	//관리자용 주문목록 조회
+	public List<OrderListVO> getList();
 }

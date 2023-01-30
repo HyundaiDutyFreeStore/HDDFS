@@ -18,12 +18,15 @@ import com.hyundai.dutyfree.admin.vo.AdminMessage;
 import com.hyundai.dutyfree.service.AdminService;
 import com.hyundai.dutyfree.service.ChartService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.ChartCategoryVO;
 import com.hyundai.dutyfree.vo.ChartDailyVO;
 import com.hyundai.dutyfree.vo.ChartMemberVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
+import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
@@ -54,18 +57,34 @@ public class AdminController {
 	private ProductService prodService;
 
 	@Autowired
+	private OrderService orderService;
+
+	@Autowired
 	private ChartService chartService;
+
+	/*
+	 * //메인으로 이동(임시2)
+	 * 
+	 * @RequestMapping("/admin/index") public void goMain2() {
+	 * 
+	 * }
+	 */
+
+	// 주문목록 리스트 보기
+	@RequestMapping("/admin/orderList")
+	public void orderList(Model model) {
+		List<OrderListVO> list = orderService.getList();
+		// log.info("adminController에서 prodlist: "+list);
+		model.addAttribute("orderList", list);
+	}
 
 	// 상품목록 리스트 보기
 	@RequestMapping("/admin/prodList")
 	public void prodList(Criteria cri, Model model) {
-
 		List<ProductVO> list = prodService.getList2();
 		// log.info("adminController에서 prodlist: "+list);
 		model.addAttribute("prodList", list);
 	}
-
-	// 1대1 실시간 상담
 
 	// 1:1 채팅방 목록 보기
 	@RequestMapping("/admin/adminChatRoom")

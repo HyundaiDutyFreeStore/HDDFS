@@ -147,4 +147,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderMemberVO> FailMember(){
 		return mapper.FailMember();
 	}
+
+	@Override
+	public List<OrderListVO> getList() {
+		return mapper.getList();
+	}
 }
