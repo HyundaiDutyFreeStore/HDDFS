@@ -98,6 +98,10 @@
 					<i class="fas fa-fw fa-table"></i> <span>상품목록</span>
 			</a></li>
 			
+			<li class="nav-item"><a class="nav-link" href="/admin/orderList">
+					<i class="fas fa-fw fa-table"></i> <span>주문목록</span>
+			</a></li>
+			
 			<li class="nav-item"><a class="nav-link" href="/admin/adminChatRoom">
 					<i class="fas fa-fw fa-table"></i> <span>채팅목록</span>
 			</a></li>

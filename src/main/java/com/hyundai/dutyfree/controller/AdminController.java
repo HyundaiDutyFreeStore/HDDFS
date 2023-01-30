@@ -15,10 +15,12 @@ import com.hyundai.dutyfree.admin.vo.AdminChat;
 import com.hyundai.dutyfree.admin.vo.AdminMessage;
 import com.hyundai.dutyfree.service.AdminService;
 import com.hyundai.dutyfree.service.MemberService;
+import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
@@ -48,6 +50,9 @@ public class AdminController {
 	@Autowired
 	private ProductService prodService;
 	
+	@Autowired
+	private OrderService orderService;
+	
 	//메인으로 이동(임시2)
 	@RequestMapping("/admin/index")
 	public void goMain2() {
@@ -61,6 +66,14 @@ public class AdminController {
 		List<ProductVO> list = prodService.getList2();
 		//log.info("adminController에서 prodlist: "+list);
 		model.addAttribute("prodList", list);
+	}
+	
+	//주문목록 리스트 보기
+	@RequestMapping("/admin/orderList")
+	public void orderList(Model model){
+		List<OrderListVO> list = orderService.getList();
+		//log.info("adminController에서 prodlist: "+list);
+		model.addAttribute("orderList", list);
 	}
 	
 	//1대1 실시간 상담
