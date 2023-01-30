@@ -37,5 +37,8 @@ public interface ProductService {
 	
 	//관리자 상품목록
 	public List<ProductVO> getList2();
+	
+	//관리자 상품총개수
+	public int getTotal2();
 
 }

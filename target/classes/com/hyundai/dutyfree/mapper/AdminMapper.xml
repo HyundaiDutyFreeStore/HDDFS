@@ -45,8 +45,9 @@
  	</select>
  	
  	<!-- 관리자가 모든 채팅방ID 조회 -->
-	<select id="roomNoList" resultType="String">
- 		SELECT ADMINCHATROOMNO FROM ADMIN_CHAT GROUP BY ADMINCHATROOMNO
+	<select id="roomNoList" resultType="List"
+		resultMap="adminChatMap">
+ 		SELECT ADMINCHATROOMNO,max(adminchatdate) FROM ADMIN_CHAT GROUP BY ADMINCHATROOMNO ORDER BY 2 desc
  	</select>
  	
  	<!-- 관리자와 특정고객의 가장 최신 대화 조회-->

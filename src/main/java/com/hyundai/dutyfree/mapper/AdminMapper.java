@@ -31,7 +31,7 @@ public interface AdminMapper {
 	
 	public List<String> secondUsidList();
 	
-	public List<String> roomNoList();
+	public List<AdminChat> roomNoList();
 	
 	public AdminMessage loadAdminMessage(HashMap<String, String> usidMap);
 }
