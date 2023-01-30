@@ -1,54 +1,33 @@
 package com.hyundai.dutyfree.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import net.sf.*;
-import net.sf.json.JSON;
-import net.sf.json.JSONArray;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageConfig;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.hyundai.dutyfree.service.CartService;
+import com.hyundai.dutyfree.service.CouponService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CartVO;
+import com.hyundai.dutyfree.vo.CouponVO;
+import com.hyundai.dutyfree.vo.EventVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemListVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
@@ -94,6 +73,9 @@ public class OrderController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private CouponService couponservice;
 
 	// 주문한 물품을 결제
 	@PostMapping("/postorderpays")
@@ -193,7 +175,7 @@ public class OrderController {
 		if (orderitemlist.size() > 1) {
 			orderName += " 외" + (orderitemlist.size() - 1) + "개";
 		}
-
+		
 		String orderDpatPlacCd = request.getParameter("orderDpatPlacCd");
 		String oplnum = request.getParameter("openNm");
 		String odeptdate = request.getParameter("odeptdate");
@@ -212,7 +194,20 @@ public class OrderController {
 		olv.setOdeptdate(date);
 		olv.setOelnum(ugntComuMophNo);
 		olv.setOplace(orderDpatPlacCd);
-
+		
+		List<CouponVO> couponlist=couponservice.GetCouponInfo(prin.getName());
+		List<CouponVO> order_couponlist=new ArrayList<>();
+		int coupon_count=0;
+		for(CouponVO coupon: couponlist) {
+			if(coupon.getCenabled().equals("ENABLED")) {
+				coupon_count++;
+				EventVO event=couponservice.GetEventInfo(coupon.getEid());
+				coupon.setEvent(event);
+				order_couponlist.add(coupon);
+			}
+		}
+		model.addAttribute("coupon_count", coupon_count);
+		model.addAttribute("order_couponlist", order_couponlist);
 		model.addAttribute("member", member);
 		model.addAttribute("cartprice", cartprice);
 		model.addAttribute("cartdisprice", cartdisprice);

@@ -9,7 +9,7 @@ import com.hyundai.dutyfree.vo.EventVO;
 
 public interface CouponMapper {
 
-	public void MemberInsertCoupon(@Param("mid")String mid, @Param("eid")String eid,@Param("date") String date);
+	public void MemberInsertCoupon(@Param("cid") String cid,@Param("mid") String mid, @Param("eid") String eid,@Param("date") String date,@Param("cenabled") String cenabled);
 	
 	public EventVO GetEventInfo(@Param("eid")String eid);
 	

@@ -36,8 +36,8 @@
 						<li>
 							<div class="title">
 								<h4>쿠폰할인</h4>
-								<em>$</em><em id="dispCupDcTotalAmt" class="pirce">0</em><em
-									class="sale">할인</em> <a href="javascript:void(0);" class="btn">자세히보기</a>
+								<em id="dispCupDcTotalAmt" class="pirce">(${coupon_count }</em><em
+									class="sale">장)</em> <a href="javascript:void(0);" class="btn">자세히보기</a>
 							</div>
 							<div class="coupon_list accordion_box">
 								<div class="coupon_select">
@@ -51,25 +51,6 @@
 														<li>상품쿠폰으로 할인하여 구매할 수 있습니다.</li>
 														<li>상품쿠폰과 중복해서 사용할 수 있는 더블쿠폰이 있습니다.</li>
 														<li>단, 상품 또는 브랜드별로 사용할수 있는 쿠폰의 최대한도는 차이가 있을 수 있습니다.</li>
-													</ul>
-													<button type="button" class="close" onclick="return false;">닫기</button>
-												</div>
-											</div>
-										</strong>
-										<p>사용할 수 있는 쿠폰이 없습니다.</p>
-									</div>
-								</div>
-								<div class="coupon_select">
-									<div class="box">
-										<strong> 장바구니쿠폰 (3 장)
-											<div class="square_tooltip">
-												<a href="javascript:void(0);" class="btn">도움말</a>
-												<div class="tooltip">
-													<p class="ti">장바구니쿠폰 안내</p>
-													<ul class="dot_list_new">
-														<li>장바구니 쿠폰으로 할인하여 구매할 수 있습니다.</li>
-														<li>장바구니 쿠폰과 중복해서 사용할 수 있는 더블쿠폰이 있습니다.</li>
-														<li>단, 브랜드별로 사용할수 있는 쿠폰의 최대한도는 차이가 있을 수 있습니다.</li>
 													</ul>
 													<button type="button" class="close" onclick="return false;">닫기</button>
 												</div>
