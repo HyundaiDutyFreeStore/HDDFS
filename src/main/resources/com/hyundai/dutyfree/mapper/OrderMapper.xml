@@ -152,5 +152,10 @@
 		resultType="com.hyundai.dutyfree.vo.OrderListVO">
 		select * from orderlist order by odate desc
 	</select>
+	
+	<select id="getOrderMid"
+		resultType="String">
+		select mid from orderlist where oid=#{oid}
+	</select>
 </mapper>
   
