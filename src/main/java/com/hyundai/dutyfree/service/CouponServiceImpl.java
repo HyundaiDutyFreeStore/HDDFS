@@ -15,9 +15,14 @@ public class CouponServiceImpl implements CouponService {
 	@Autowired
 	private CouponMapper couponmapper;
 	@Override
-	public void MemberInsertCoupon(String mid,String eid,String date) {
+	public void MemberInsertCoupon(String cid,String mid,String eid,String date) {
 		// TODO Auto-generated method stub
-		couponmapper.MemberInsertCoupon(mid, eid,date);
+		if(eid.substring(0, 2).equals("SAV")) {
+			couponmapper.MemberInsertCoupon(cid,mid, eid,date,"NOTENABLED");
+		}else {
+			couponmapper.MemberInsertCoupon(cid,mid, eid,date,"ENABLED");
+		}
+		
 		
 	}
 	@Override

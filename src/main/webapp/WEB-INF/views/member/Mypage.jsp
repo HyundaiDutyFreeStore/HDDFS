@@ -45,7 +45,7 @@
 					<a href="/member/Mypage_coupon">
 						<dt>쿠폰</dt>
 						<dd>
-							<strong>0</strong>장
+							<strong>${coupon_count }</strong>장
 						</dd>
 					</a>
 				</dl>
@@ -559,7 +559,7 @@
 					</c:if>
 				</form>
 			</div>
-			<div>
+			<div id="coupon_list">
         	<form id="cupForm" name="cupForm" method="post"> 
 				<script> 
 $(document).ready(function(){
@@ -806,7 +806,7 @@ function isValidDate(d) {
                         <td>사용가능</td>
                         </c:if>
                         <c:if test="${coupon.cenabled eq 'NOTENABLED' }">
-                        <td>사용불가능</td>
+                        <td><strong style="color: red;">사용 불가능</strong></td>
                         </c:if>
                         </tr>
                        </c:forEach>
