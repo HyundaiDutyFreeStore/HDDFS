@@ -2,7 +2,9 @@ package com.hyundai.dutyfree.service;
 
 import java.util.List;
 
-import com.hyundai.dutyfree.vo.ChartVO;
+import com.hyundai.dutyfree.vo.ChartCategoryVO;
+import com.hyundai.dutyfree.vo.ChartDailyVO;
+import com.hyundai.dutyfree.vo.ChartMemberVO;
 
 /**
  * ChartService
@@ -19,11 +21,11 @@ import com.hyundai.dutyfree.vo.ChartVO;
 public interface ChartService {
 
 	// 회원 수 불러오기
-	List<ChartVO> cntMember();
+	List<ChartMemberVO> cntMember();
 
 	// 일일 매출 불러오기
-	List<ChartVO> dailyTotal();
+	List<ChartDailyVO> dailyTotal();
 
 	// 판매 카테고리 종합
-	List<ChartVO> categoryTotal();
+	List<ChartCategoryVO> categoryTotal();
 }

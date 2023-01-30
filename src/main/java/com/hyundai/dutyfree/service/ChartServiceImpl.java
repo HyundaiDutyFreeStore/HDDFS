@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.ChartMapper;
-import com.hyundai.dutyfree.vo.ChartVO;
+import com.hyundai.dutyfree.vo.ChartCategoryVO;
+import com.hyundai.dutyfree.vo.ChartDailyVO;
+import com.hyundai.dutyfree.vo.ChartMemberVO;
 
 /**
  * ChartServiceImpl
@@ -29,19 +31,19 @@ public class ChartServiceImpl implements ChartService {
 
 	// 회원 수 불러오기
 	@Override
-	public List<ChartVO> cntMember() {
+	public List<ChartMemberVO> cntMember() {
 		return mapper.cntMember();
 	}
 
 	// 일일 매출 불러오기
 	@Override
-	public List<ChartVO> dailyTotal() {
+	public List<ChartDailyVO> dailyTotal() {
 		return mapper.dailyTotal();
 	}
 
 	// 판매 카테고리 종합
 	@Override
-	public List<ChartVO> categoryTotal() {
+	public List<ChartCategoryVO> categoryTotal() {
 		return mapper.categoryTotal();
 	}
 }
