@@ -5,7 +5,7 @@
 <mapper namespace="com.hyundai.dutyfree.mapper.ChartMapper">
 
 	<select id="cntMember"
-		resultType="com.hyundai.dutyfree.vo.ChartVO">
+		resultType="com.hyundai.dutyfree.vo.ChartMemberVO">
 		select mgender as sex, count(*) as mcnt
 		FROM member
 		group by
@@ -13,7 +13,7 @@
 		order by 1
 	</select>
 	<select id="dailyTotal"
-		resultType="com.hyundai.dutyfree.vo.ChartVO">
+		resultType="com.hyundai.dutyfree.vo.ChartDailyVO">
 		<![CDATA[
 		select to_char(odate, 'yymmdd') as odate, sum(ototal) as
 		dailytotal from orderlist
@@ -24,7 +24,7 @@
 		]]>
 	</select>
 	<select id="categoryTotal"
-		resultType="com.hyundai.dutyfree.vo.ChartVO">
+		resultType="com.hyundai.dutyfree.vo.ChartCategoryVO">
 		select c.clarge as cat, count(*) as ccnt
 		from orderitem o
 		join category c
