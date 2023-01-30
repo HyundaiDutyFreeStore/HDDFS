@@ -14,4 +14,8 @@ public interface CouponService {
 	public EventVO GetEventInfo(String eid);
 	
 	public List<CouponVO> GetCouponInfo(String mid);
+	
+	public void UpdateCouponOid(String oid, String cid);
+	
+	public void UpdateCenabled(String cenabled,String cid);
 }

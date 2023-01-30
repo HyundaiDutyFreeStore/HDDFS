@@ -290,13 +290,7 @@ public class MemberController {
 					ProductVO product=productservice.productdetail(orderitem.getPcode());
 					orderitem.setProduct(product);
 					orderlist.setOrderitemlist(orderitemlist);
-					orderprice += (product.getPprice() * orderitem.getOamount());
-					cartdisprice += (orderprice * (1 - ((float) product.getPdiscount() / 100))) * orderitem.getOamount();
-					orderdis += product.getPprice() * ((float) product.getPdiscount() / 100) * orderitem.getOamount();
 				}
-			  
-				orderlist.setOrdertotalprice(orderprice);
-				orderlist.setOrdertotaldisprice(orderdis);
 				
 				//주문상태에 따라 한글로 바꿈
 				if(orderlist.getOstatus().equals("delivery_complete")) {

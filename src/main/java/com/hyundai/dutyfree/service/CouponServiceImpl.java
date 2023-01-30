@@ -35,6 +35,15 @@ public class CouponServiceImpl implements CouponService {
 		return couponmapper.GetCouponInfo(mid);
 	}
 	
-	
+	@Override
+	public void UpdateCouponOid(String oid, String cid) {
+		couponmapper.UpdateCouponOid(oid, cid);
+		
+	}
+	@Override
+	public void UpdateCenabled(String cenabled, String cid) {
+		couponmapper.UpdateCenabled(cenabled, cid);
+		
+	}
 
 }

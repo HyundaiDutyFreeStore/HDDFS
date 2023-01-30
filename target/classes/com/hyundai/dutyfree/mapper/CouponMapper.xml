@@ -15,6 +15,14 @@
  <select id="GetCouponInfo" resultType="com.hyundai.dutyfree.vo.CouponVO">
  select * from coupon where mid=#{mid}
  </select>
+ 
+ <update id="UpdateCouponOid">
+ 	update coupon set oid=#{oid} where cid=#{cid}
+ </update>
+ 
+  <update id="UpdateCenabled">
+ 	update coupon set cenabled=#{cenabled} where cid=#{cid}
+ </update>
 
  </mapper>
   

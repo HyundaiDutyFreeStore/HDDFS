@@ -23,7 +23,7 @@
 	<insert id="Insertorderlist">
 		insert into orderlist
 		values(#{oid},#{mid},sysdate,#{ohpoint},#{ostatus},to_date(#{odeptdate},'YYYY-MM-DD
-		HH24:MI'),#{oplnum},#{oelnum},#{oplace},'null',#{ordertotalprice})
+		HH24:MI'),#{oplnum},#{oelnum},#{oplace},'null',#{ototal})
 	</insert>
 
 	<update id="UpdateorderPaymentKey">

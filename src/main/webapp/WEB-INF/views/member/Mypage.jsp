@@ -380,8 +380,8 @@
 			                                        </c:if>
 			                                        </c:forEach>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
-			                                        <p class="dollar">$ <fmt:formatNumber value="${orderlist.ordertotalprice-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
-			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
+			                                        <p class="dollar">$ <fmt:formatNumber value="${orderlist.ototal-orderlist.ototal}" pattern="#,##0.##" /></p>
+			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ototal-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
 			                                        </td>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                    	<c:choose>
@@ -504,14 +504,14 @@
 			                                        </c:if>
 			                                        </c:forEach>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
-			                                        <p class="dollar">$<fmt:formatNumber value="${orderlist.ordertotalprice-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
-			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ordertotalprice-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
+			                                        <p class="dollar">$<fmt:formatNumber value="${orderlist.ototal-orderlist.ordertotaldisprice}" pattern="#,##0.##" /></p>
+			                                        <p class="k_won"><span><fmt:formatNumber value="${(orderlist.ototal-orderlist.ordertotaldisprice)*KRW_WON}" pattern="#,##0" />원</span></p>
 			                                        </td>
 			                                        <td rowspan="${orderlist.orderitemlist.size()}">
 			                                       	<c:choose>
 			                                       	<c:when test="${orderlist.ostatus eq '결제완료' }">
 			                                    	<strong>${orderlist.ostatus }</strong><br/><br/>
-			                                    	<a href="javascript:payCancel('${orderlist.opaymentkey }','${orderlist.oid }','${orderlist.ordertotalprice-orderlist.ordertotaldisprice}');">결제취소</a>
+			                                    	<a href="javascript:payCancel('${orderlist.opaymentkey }','${orderlist.oid }','${orderlist.ototal-orderlist.ordertotaldisprice}');">결제취소</a>
 			                                    	</c:when>
 			                                    	<c:when test="${orderlist.ostatus eq '결제취소' }">
 			                                    	<strong style="color: red;">${orderlist.ostatus }</strong>
@@ -559,7 +559,7 @@
 					</c:if>
 				</form>
 			</div>
-			<div id="coupon_list">
+			<div id="coupon_list" style="display: none;">
         	<form id="cupForm" name="cupForm" method="post"> 
 				<script> 
 $(document).ready(function(){
@@ -909,7 +909,7 @@ function isValidDate(d) {
 				error : function(){
 		    	}
 			});
-	       
+			
 		}else{
 			return false;
 		} 
