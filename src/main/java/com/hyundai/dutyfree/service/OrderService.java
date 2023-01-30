@@ -59,4 +59,7 @@ public interface OrderService {
 	
 	//관리자용 주문목록 조회
 	public List<OrderListVO> getList();
+	
+	//관리자용 주문고객 조회
+	public String getOrderMid(String oid);
 }

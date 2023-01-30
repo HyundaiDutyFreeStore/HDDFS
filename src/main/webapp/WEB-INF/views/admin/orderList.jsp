@@ -97,7 +97,9 @@
 											<span class="badge badge-success w-75 py-2">인도완료</span>
 										</c:if>
 										<c:if test="${order.ostatus eq 'fail_delivery'}">
-											<span class="badge bg-danger text-light w-75 py-2">미인도</span>
+											<a onclick="orderCancel('${order.oid}','${order.ototal}','${order.opaymentkey}');">
+												<span class="badge bg-danger text-light w-75 py-2">미인도</span>
+											</a>
 										</c:if>
 										</td>
 										<td><fmt:formatDate value="${order.odate}"
@@ -150,7 +152,54 @@
 <script src="/resources/admin/js/demo/datatables-demo.js"></script>
 
 <script>
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	$(document).ajaxSend(function (e, xhr, options) {
+    	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+  	});
 	
+	function orderCancel(oid,ototal,opaymentkey){
+		console.log("결제취소함소 들어옴 oid: "+oid);
+		//console.log(typeOf(ototal));
+		if (confirm("주문번호: "+oid+"해당 주문을 취소하시겠습니까?") == true) {
+			const Data={
+					oid: oid,
+					order_dollar:ototal
+			};
+			$.ajax({
+				method:"post",
+				data : Data,
+				url : "/order/cancelorder",
+				success : function(data){
+					console.log("ajax다녀옴");
+				 	if(data=='yes'){
+				 		console.log("결제Key: "+opaymentkey)
+						tossPayCancel(opaymentkey,oid);
+					} 
+				},
+				error : function(){
+		    	}
+			});
+		}
+	}
+	
+	function tossPayCancel(paymentKey,oid){
+		 var paymentData = {
+		            orderId : oid,
+		            paymentKey: paymentKey
+		        };
+		        $.ajax({
+		        	method:"post",
+		        	data: paymentData,
+		        	url : "/pay/cancelSuccess",
+		        	success : function(data){
+		        		alert("결제가 취소되었습니다");
+		        		console.log("결제취소완");
+		        	},
+		        	error : function(){
+		    		}
+		        });
+	}
 </script>
 
 </body>
