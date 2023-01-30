@@ -20,7 +20,9 @@ import com.hyundai.dutyfree.service.ChartService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
 import com.hyundai.dutyfree.service.ProductService;
-import com.hyundai.dutyfree.vo.ChartVO;
+import com.hyundai.dutyfree.vo.ChartCategoryVO;
+import com.hyundai.dutyfree.vo.ChartDailyVO;
+import com.hyundai.dutyfree.vo.ChartMemberVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
@@ -28,17 +30,18 @@ import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
-
 /**
  * AdminController
- * 
- * @author 김가희
+ *
+ * @author 김가희, 김찬중
  * @since 01.26
- * 
+ *
  *        <pre>
- *        수정일 수정자 수정내용 ---------- --------------- ---------------------------
- *        2023.01.26 김가희 최초 생성
- * 
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.26 	  김가희 				최초 생성
+ * 2023.01.30	  김찬중			    chart.js 생성
+ *        </pre>
  */
 @Log4j
 @Controller
@@ -75,9 +78,9 @@ public class AdminController {
 		model.addAttribute("orderList", list);
 	}
 
+	// 상품목록 리스트 보기
 	@RequestMapping("/admin/prodList")
 	public void prodList(Criteria cri, Model model) {
-
 		List<ProductVO> list = prodService.getList2();
 		// log.info("adminController에서 prodlist: "+list);
 		model.addAttribute("prodList", list);
@@ -166,7 +169,7 @@ public class AdminController {
 
 	@RequestMapping("/admin/index")
 	public void forChart(Model model) throws Exception {
-		List<ChartVO> cntMember = chartService.cntMember();
+		List<ChartMemberVO> cntMember = chartService.cntMember();
 		int cntm = 0;
 		int cntw = 0;
 		int cnta = 0;
@@ -195,15 +198,15 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)
-	public @ResponseBody List<ChartVO> dailyTotal(Model model) {
-		List<ChartVO> dailyTotal = chartService.dailyTotal();
+	public @ResponseBody List<ChartDailyVO> dailyTotal(Model model) {
+		List<ChartDailyVO> dailyTotal = chartService.dailyTotal();
 		model.addAttribute("dailyTotal", dailyTotal);
 		return dailyTotal;
 	}
 
 	@RequestMapping(value = "/admin/index/categoryTotal", method = RequestMethod.GET)
-	public @ResponseBody List<ChartVO> categoryTotal(Model model) {
-		List<ChartVO> categoryTotal = chartService.categoryTotal();
+	public @ResponseBody List<ChartCategoryVO> categoryTotal(Model model) {
+		List<ChartCategoryVO> categoryTotal = chartService.categoryTotal();
 		model.addAttribute("categoryTotal", categoryTotal);
 		return categoryTotal;
 	}

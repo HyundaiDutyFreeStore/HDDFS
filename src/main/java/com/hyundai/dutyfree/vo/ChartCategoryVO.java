@@ -15,11 +15,7 @@ import lombok.Data;
  *        </pre>
  */
 @Data
-public class ChartVO {
-	private String sex; // 성별
-	private int mcnt; // 회원 수
-	private String odate; // 날짜
-	private double dailytotal;// 일매출합계
+public class ChartCategoryVO {
 	private String cat; // 카테고리
 	private int ccnt; // 카테고리 당 판매 수
 }
