@@ -15,11 +15,11 @@
 	<select id="dailyTotal"
 		resultType="com.hyundai.dutyfree.vo.ChartDailyVO">
 		<![CDATA[
-		select to_char(odate, 'yymmdd') as odate, sum(ototal) as
-		dailytotal from orderlist
+		select to_char(odate, 'yy/mm/dd') as odate, sum(ototal) as
+		total from orderlist
 		where to_char(odate, 'yymmdd') >=
-		TO_CHAR(current_date-7,'YYYYMMDD')
-		group by to_char(odate, 'yymmdd')
+		TO_CHAR(current_date-7,'yy/mm/dd')
+		group by to_char(odate, 'yy/mm/dd')
 		order by 1
 		]]>
 	</select>
