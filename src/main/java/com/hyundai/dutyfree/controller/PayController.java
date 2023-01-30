@@ -3,6 +3,7 @@ package com.hyundai.dutyfree.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -12,8 +13,10 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
+import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -46,9 +49,15 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.hyundai.dutyfree.service.CartService;
 import com.hyundai.dutyfree.service.MemberService;
 import com.hyundai.dutyfree.service.OrderService;
+import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderItemVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
+import com.hyundai.dutyfree.vo.PassportVO;
+import com.hyundai.dutyfree.vo.ProductVO;
+
+import oracle.jdbc.diagnostics.DemultiplexingLogHandler;
 
 /**
  * PayController
@@ -82,6 +91,9 @@ public class PayController {
 
 	@Autowired
 	private CartService cartservice;
+	
+	@Autowired
+	private ProductService productservice;
 
 	LocalDateTime  now = LocalDateTime .now();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -105,12 +117,19 @@ public class PayController {
 
 	@RequestMapping("/{id}/success")
 	public String confirmPayment(@RequestParam String paymentKey, @RequestParam String orderId,
-			@RequestParam Long amount, Model model, HttpServletRequest requests, Principal prin) throws Exception {
-
+			@RequestParam Long amount,Model model, HttpServletRequest requests, HttpSession session,Principal prin) throws Exception {
 		System.out.println(paymentKey);
 
 		HttpHeaders headers = new HttpHeaders();
-
+		Double KRW_WON = (Double) session.getAttribute("KRW_WON");
+		String total_bill_dollar_text=(String)session.getAttribute("total_bill_dollar_text");
+		System.out.println(total_bill_dollar_text);
+		String total_bill_won_text=(String)session.getAttribute("total_bill_won_text");
+		String totalDcUsd=(String)session.getAttribute("totalDcUsd");
+		String totalDcKrw=(String)session.getAttribute("totalDcKrw");
+		String totalSettUsd=(String)session.getAttribute("totalSettUsd");
+		String wontotalSettKrw=(String)session.getAttribute("wontotalSettKrw");
+		
 		// --header 'Authorization: Basic
 		// dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==' \
 		headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
@@ -130,9 +149,9 @@ public class PayController {
 		ResponseEntity<JsonNode> responseEntity = restTemplate
 				.postForEntity("https://api.tosspayments.com/v1/payments/confirm", request, JsonNode.class);
 		// + paymentKey
-
+		OrderListVO olv=orderservice.getorderlist(orderId);
+		List<OrderItemVO> orderitemlist = orderservice.getOrderitemlist(orderId);
 		if (responseEntity.getStatusCode() == HttpStatus.OK) {
-			List<OrderItemVO> orderitemlist = orderservice.getOrderitemlist(orderId);
 			for (OrderItemVO order : orderitemlist) {
 				CartVO cart = new CartVO();
 				cart.setPcode(order.getPcode());
@@ -187,6 +206,37 @@ public class PayController {
 			ImageIO.write(bufferedImage, "png", temp);
 			/* 이메일 보내기 */
 			MemberVO member = memberservice.read(prin.getName());
+			PassportVO memberpassport=orderservice.PassportConsist(prin.getName());
+			if(olv.getOdept().equals("ICNT1")) {
+				olv.setOdept("인천공항 T1");
+			}else if(olv.getOdept().equals("ICNT2")) {
+				olv.setOdept("인천공항 T2");
+			}else {
+				olv.setOdept("김포공항");
+			}
+			
+			for(OrderItemVO oiv:orderitemlist) {
+				ProductVO product=productservice.productdetail(oiv.getPcode());
+				oiv.setProduct(product);
+			}
+			DecimalFormat formatter=new DecimalFormat("###,###");
+			DecimalFormat formatters=new DecimalFormat("###,###.##");
+			String orderlist="";
+			for(OrderItemVO oiv: orderitemlist) {
+				System.out.println(oiv.getProduct().getPprice()*(oiv.getProduct().getPdiscount()*0.01));
+			}
+			for(OrderItemVO oiv: orderitemlist) { 
+				orderlist+=("<div style=\"border-top:1px solid #e6e6e6;overflow:hidden;padding:30px 0\">\n" 
+				+ "                    <div style=\"float:left;width:160px;margin-right:24px\"><img src="+oiv.getProduct().getImg1() +"alt=\"0.2 테라피 에어 마스크 달팽이\" title=\"0.2 테라피 에어 마스크 달팽이\" style=\"border:none;vertical-align:top;width:160px;height:160px\" loading=\"lazy\"></div>\n"
+				+ "                    <div style=\"overflow:hidden;padding-right:30px\">\n"
+				+ "                        <p style=\"padding:0;margin:0;font-size:14px;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em;font-weight:bold\">"+oiv.getProduct().getPbrand()+"</p>\n"
+				+ "                        <p style=\"padding:0;margin:7px 0 0 0;font-size:14px;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em;font-weight:bold\">"+oiv.getProduct().getPname()+"</p>\n"
+				+ "                        <div style=\"margin-top:10px\">\n"
+				+ "                            <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"float:left;width:170px;font-size:14px;line-height:30px;color:#333;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">판매금액</dt><dd style=\"overflow:hidden;line-height:30px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\"><span style=\"text-decoration:line-through;color:#666;font-size:16px;\">"+"$"+String.valueOf(formatters.format(oiv.getProduct().getPprice()))+"</span><strong style=\"color:#c51315;font-size:18px;margin-left:5px\">"+"$"+String.valueOf(formatters.format(oiv.getProduct().getPprice()*(1-oiv.getProduct().getPdiscount()*0.01)))+"</strong><span style=\"color:#999;font-size:13px;margin-left:5px\"> ("+String.valueOf(formatters.format(oiv.getProduct().getPprice()*(1-oiv.getProduct().getPdiscount()*0.01)*KRW_WON))+"원)</span></dd></dl>\n"
+				+ "                            <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"float:left;width:170px;font-size:14px;line-height:30px;color:#333;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">수량</dt><dd style=\"overflow:hidden;line-height:30px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em;font-size:13px;color:#333\">"+oiv.getOamount()+"</dd></dl>\n"
+				+ "                            <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"float:left;width:170px;font-size:14px;line-height:30px;color:#333;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">구매금액</dt><dd style=\"overflow:hidden;line-height:30px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\"><strong style=\"color:#c51315;font-size:18px;\">"+"$"+String.valueOf(formatters.format(oiv.getOamount()*oiv.getProduct().getPprice()*(1-oiv.getProduct().getPdiscount()*0.01)))+"</strong><span style=\"color:#999;font-size:13px;margin-left:5px\"> ("+String.valueOf(formatters.format(oiv.getOamount()*oiv.getProduct().getPprice()*(1-oiv.getProduct().getPdiscount()*0.01)*KRW_WON))+"원)</span></dd></dl>\n"
+				+ "                        </div>\n" + "                    </div>\n" + "                </div>\n");
+								}
 			String setFrom = "hdite1284@naver.com";
 			String toMail = member.getMemail();
 			String title = "주문 QR 이메일 입니다.";
@@ -211,33 +261,20 @@ public class PayController {
 					+ formatedNow
 					+ "</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">성명</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"
 					+ member.getMname()
-					+ "</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">국적</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">한국</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">여권번호</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">M86941399</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">생년월일</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">1997-02-03</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">출국일시</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">2023-01-1211:05</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">출국장소</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">인천공항</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">편명</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">XJ701</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\"></th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\"></td></tr></tbody>\n"
+					+ "</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">국적</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"+memberpassport.getNationality()+"</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">여권번호</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"+memberpassport.getPassportno()+"</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">생년월일</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"+memberpassport.getPbirth()+"</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">출국일시</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"+olv.getOdeptdate()+"</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">출국장소</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"+olv.getOdept()+"</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">편명</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">"+olv.getOplnum()+"</td><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\"></th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\"></td></tr></tbody>\n"
 					+ "                </table>\n"
 					+ "                <p style=\"padding:0;margin:37px 0 8px 0;color:#333;font-size:20px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">결제 정보</p>\n"
 					+ "                <table style=\"width:638px;table-layout:fixed;border-spacing:0;border-top:1px solid #e5e5e5\">\n"
 					+ "                    <colgroup><col style=\"width:120px\"><col style=\"width:auto\"></colgroup>\n"
-					+ "                    <tbody><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">상품금액</th><td style=\"padding:14px 20px;font-size:13px;text-align:right;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\"><strong style=\"margin-right:5px;color:#333;font-size:22px\">＄5</strong>(6,234원)</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">할인금액</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                <p style=\"padding:0 0 10px 0;margin:0;font-size:13px;text-align:right;font-weight:normal;color:#999;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\"><strong style=\"margin-right:5px;color:#c51315;font-size:22px\">＄1.5</strong>(1,871원)</p>                                \n"
-					+ "                                <dl style=\"overflow:hidden;padding:0;margin:4px 0 0 0\"><dt style=\"padding:0;margin:0;float:left;width:65%;color:#666;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\">· 인터넷회원할인(비과세)</dt><dd style=\"padding:0;margin:0;overflow:hidden;text-align:right;color:#666;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\">- 1,871원</dd></dl>\n"
-					+ "                                </td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">적립금액</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                </td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">결제수단</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"padding:0;margin:0;float:left;width:65%;color:#666;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\">· 카카오페이\n"
-					+ "					                                (페이머니)\n"
-					+ "					                            </dt><dd style=\"padding:0;margin:0;overflow:hidden;text-align:right;color:#666;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\">4,363원</dd></dl>\n"
-					+ "		                                </td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">결제상태</th><td style=\"padding:14px 20px;font-size:13px;text-align:right;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">결제완료</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">최종결제금액</th><td style=\"padding:18px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                <p style=\"padding:0;margin:0;font-size:13px;text-align:right;font-weight:normal;color:#999;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\"><strong style=\"margin-right:5px;color:#c51315;font-size:30px\">＄3.5</strong>(4,363원)</p>\n"
+					+ "                    <tbody><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">상품금액</th><td style=\"padding:14px 20px;font-size:13px;text-align:right;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\"><strong style=\"margin-right:5px;color:#333;font-size:22px\">"+total_bill_dollar_text+"</strong>("+total_bill_won_text+")</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">할인금액</th><td style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
+					+ "                                <p style=\"padding:0 0 10px 0;margin:0;font-size:13px;text-align:right;font-weight:normal;color:#999;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\"><strong style=\"margin-right:5px;color:#c51315;font-size:22px\">"+totalDcUsd+"</strong>("+totalDcKrw+")</p>                                \n"
+					+ "                                <dl style=\"overflow:hidden;padding:0;margin:4px 0 0 0\"></dl>\n"
+					+ "                                </td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">적립금액</th><td style=\"padding:14px 20px;font-size:13px;text-align:right;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
+					+ ""+                                formatter.format(olv.getOhpoint())+"원</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">결제상태</th><td style=\"padding:14px 20px;font-size:13px;text-align:right;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">결제완료</td></tr><tr><th colspan=\"1\" rowspan=\"1\" scope=\"row\" style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">최종결제금액</th><td style=\"padding:18px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
+					+ "                                <p style=\"padding:0;margin:0;font-size:13px;text-align:right;font-weight:normal;color:#999;line-height:18px;font-family:'Noto Sans KR', '맑은 고딕', 'Dotum'\"><strong style=\"margin-right:5px;color:#c51315;font-size:30px\">"+totalSettUsd+"</strong>("+wontotalSettKrw+")</p>\n"
 					+ "                            </td></tr></tbody>\n" + "                </table>\n"
 					+ "                <p style=\"padding:0;margin:37px 0 8px 0;color:#333;font-size:20px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">상품 정보</p>\n"
-					+ "                <div style=\"border-top:1px solid #e6e6e6;overflow:hidden;padding:30px 0\">\n"
-					+ "                    <div style=\"float:left;width:160px;margin-right:24px\"><img src=\"https://cdn.hddfs.com/files/goos/6026/20221116/f60924f7.jpg?sf=webp&amp;RS=160X160\" alt=\"0.2 테라피 에어 마스크 달팽이\" title=\"0.2 테라피 에어 마스크 달팽이\" style=\"border:none;vertical-align:top;width:160px;height:160px\" loading=\"lazy\"></div>\n"
-					+ "                    <div style=\"overflow:hidden;padding-right:30px\">\n"
-					+ "                        <p style=\"padding:0;margin:0;font-size:14px;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em;font-weight:bold\">에뛰드</p>\n"
-					+ "                        <p style=\"padding:0;margin:7px 0 0 0;font-size:14px;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em;font-weight:bold\">0.2 테라피 에어 마스크 달팽이</p>\n"
-					+ "                        <div style=\"margin-top:10px\">\n"
-					+ "                            <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"float:left;width:170px;font-size:14px;line-height:30px;color:#333;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">판매금액</dt><dd style=\"overflow:hidden;line-height:30px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\"><span style=\"text-decoration:line-through;color:#666;font-size:16px;\">＄1</span><strong style=\"color:#c51315;font-size:18px;margin-left:5px\">＄0.7</strong></dd></dl>\n"
-					+ "                            <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"float:left;width:170px;font-size:14px;line-height:30px;color:#333;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">수량</dt><dd style=\"overflow:hidden;line-height:30px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em;font-size:13px;color:#333\">5</dd></dl>\n"
-					+ "                            <dl style=\"overflow:hidden;padding:0;margin:0\"><dt style=\"float:left;width:170px;font-size:14px;line-height:30px;color:#333;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">구매금액</dt><dd style=\"overflow:hidden;line-height:30px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\"><strong style=\"color:#c51315;font-size:18px;\">＄3.5</strong><span style=\"color:#999;font-size:13px;margin-left:5px\"> (4,363원)</span></dd></dl>\n"
-					+ "                        </div>\n" + "                    </div>\n" + "                </div>\n"
+					+ orderlist
 					+ "                <div style=\"margin-top:40px;padding:20px;border:1px solid #e5e5e5\">\n"
 					+ "                    <p style=\"padding:0;margin:0;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">유의사항</p>\n"
 					+ "                    <ul style=\"list-style:none;padding:10px 0 0 0;margin:0\"><li style=\"padding:0;margin:0;font-size:13px;text-align:left;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">· 매장 판매분으로 인해, 입금완료 이후라도 입금 시점에 따라 재고부족으로 자동취소 될 수 있습니다.</li><li style=\"padding:0;margin:5px 0 0 0;font-size:13px;text-align:left;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">· 가상계좌의 입금가능 기한은 주문 당일 23:54분까지이며, 미 입금 시 자동으로 취소됩니다.</li><li style=\"padding:0;margin:5px 0 0 0;font-size:13px;text-align:left;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">· 입금 후 자동 취소된 주문의 경우 에스크로 절차로 인해 환불기간이 3~5일 정도 더 소요될 수 있습니다.</li><li style=\"padding:0;margin:5px 0 0 0;font-size:13px;text-align:left;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">· 등록된 환불계좌가 없는 경우, 예치금으로 환불 처리됩니다. (추후 출금 가능)</li><li style=\"padding:0;margin:5px 0 0 0;font-size:13px;text-align:left;font-weight:normal;color:#999;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">· 다음의 경우 출국 시 공항에서 상품 수령이 불가능 하오니 반드시 확인해 주시기 바랍니다.\n"
@@ -266,6 +303,13 @@ public class PayController {
 					+ "        </div>\n" + "        </div>\n"
 					+ " <div style=\"display:none\"><img width=\"0\" height=\"0\" src=\"https://tms.hddfs.com/TMS/tracking?TV9JRD0yMjcyODM4N182OTMxMDE4&amp;U1RZUEU9QVVUTw==&amp;p_id=20230111_7&amp;m_id=22728387_6931018&amp;s_tp=AUTO&amp;TElTVF9UQUJMRT1UTVNfQVVUT19TRU5EX0xJU1RfMDE=&amp;UE9TVF9JRD0yMDIzMDExMV83&amp;U0VSVkVSX0lEPTAx&amp;VEM9MjAyMzAxMTg=&amp;S0lORD1P\" loading=\"lazy\"></div>\n"
 					+ "</div></div></div></div>";
+			
+			session.removeAttribute("total_bill_dollar_text");
+			session.removeAttribute("total_bill_won_text");
+			session.removeAttribute("totalDcUsd");
+			session.removeAttribute("totalDcKrw");
+			session.removeAttribute("totalSettUsd");
+			session.removeAttribute("wontotalSettKrw");
 
 			try {
 				MimeMessage message = mailSender.createMimeMessage();

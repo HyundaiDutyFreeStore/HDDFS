@@ -950,13 +950,13 @@ $(document).ready(function(){
                    <tr>
                        <th>출국장소</th>
                        <c:choose>
-                       <c:when test="${ orderlist.oplace eq 'ICNT1'}">
+                       <c:when test="${ orderlist.odept eq 'ICNT1'}">
                        <td>인천공항 T1</td>
                        </c:when>
-                       <c:when test="${ orderlist.oplace eq 'ICNT2'}">
+                       <c:when test="${ orderlist.odept eq 'ICNT2'}">
                        <td>인천공항 T2</td>
                        </c:when>
-                       <c:when test="${ orderlist.oplace eq 'GMP'}">
+                       <c:when test="${ orderlist.odept eq 'GMP'}">
                        <td>김포공항</td>
                        </c:when>
                        </c:choose>
@@ -1293,12 +1293,13 @@ function tab_change(el){
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
 	var isallchecked=false;
 	function allUseSvmtClick(){
-		var won_totalSettKrw=((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0);
+		var won_totalSettKrw=($('input[name="totalDcKrw"]')).toFixed(0);
 		var mhpoint=(parseFloat("${member.mhpoint}")).toFixed(0);
 		if(isallchecked){
+			$('input[name="totalDcKrw"]').val(parseInt($('input[name="totalDcKrw"]').val())-parseInt($('input[name="svmtAmtInput"]').val()));
 			$('.mhpoint').text($("input[name='svmtAmt']").val());
 			$('input[name="mhpoint"]').val($("input[name='svmtAmtInput']").val());
-			$("input[name='svmtAmt']").val("");
+			$("input[name='svmtAmt']").val("0");
 			$("input[name='svmtAmtInput']").val(0);
 			isallchecked=false;
 		}else{
@@ -1307,20 +1308,22 @@ function tab_change(el){
 				$("input[name='svmtAmt']").val(priceComma(won_totalSettKrw));
 				$('.mhpoint').text(priceComma(mhpoint-won_totalSettKrw));
 				$('input[name="mhpoint"]').val(((mhpoint-won_totalSettKrw)/parseFloat("${KRW_WON}")).toFixed(2));
+				$('input[name="totalDcKrw"]').val(parseInt($('input[name="svmtAmtInput"]').val())+parseInt($('input[name="totalDcKrw"]').val()));
 			}else{
 				$("input[name='svmtAmtInput']").val(mhpoint);
 				$("input[name='svmtAmt']").val(priceComma(mhpoint));
 				$('input[name="mhpoint"]').val(0);
 				$('.mhpoint').text("0");
+				$('input[name="totalDcKrw"]').val(parseInt($('input[name="svmtAmtInput"]').val())+parseInt($('input[name="totalDcKrw"]').val()));
 			}
 			isallchecked=true;
 		}
 	
 		$('.exceptmhpoint').text($("input[name='svmtAmt']").val());
-		$('.totalDcKrw').text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0))+ "원");
-		$('input[name="totalDcKrw"]').val((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0));
-		$('.totalDcUsd').text("$"+((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0)/parseFloat("${KRW_WON}")).toFixed(2));
-		$('input[name="totalDcUsd"]').val(((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")+parseFloat($("input[name='svmtAmtInput']").val())).toFixed(0)/parseFloat("${KRW_WON}")).toFixed(2));
+		$('.totalDcKrw').text(priceComma(parseInt($("input[name='totalDcKrw']").val()))+"원");
+		$('input[name="totalDcUsd"]').val((parseFloat($('input[name="totalDcKrw"]').val())/parseFloat("${KRW_WON}")).toFixed(2));
+		$('.totalDcUsd').text("$"+priceComma(parseFloat($('input[name="totalDcUsd"]').val()).toFixed(2)));
+		
 		
 		var total_bill_won=parseInt($('input[name="total_bill_won"]').val());
 		console.log(total_bill_won);
@@ -1422,13 +1425,19 @@ function tab_change(el){
 				orderitemlists: "${orderitemlist}",
 				olvodeptdate : "${orderlist.odeptdate}",
 				olvoplnum : "${orderlist.oplnum}",
-				olvoplace : "${orderlist.oplace}",
+				olvoplace : "${orderlist.odept}",
 				olvoelnum:"${orderlist.oelnum}",
 				mid:"${mid}",
 				total_bill_dollar_text:total_bill_dollar_text,
 				total_bill_dollar:total_bill_dollar,
 				mhpoint : mhpoint,
 				used_mhpoint: used_mhpoint,
+				total_bill_dollar_text:$('.total_bill_dollar_text').text(),
+				total_bill_won_text:$('.total_bill_won_text').text(),
+				totalDcUsd:$('.totalDcUsd').text(),
+				totalDcKrw: $('.totalDcKrw').text(),
+				totalSettUsd: $('.totalSettUsd').text(),
+				wontotalSettKrw: $('.won.totalSettKrw').text(),
 				cid:cid
 		};
 		
@@ -1453,6 +1462,8 @@ function tab_change(el){
 }
 	
 	pay_button.addEventListener("click", function (){ 
+
+		
 		var total_bill_dollar_text=parseInt($('input[name="wontotalSettKrw"]').val());
 		//간편결제인지 확인
 		var confpayment=$('.item.settSvmt.simpSett_003_3.active').attr('data-settwaynm');
@@ -1499,6 +1510,7 @@ function tab_change(el){
 		}
 
     });  
+	
 	
 </script>
 
