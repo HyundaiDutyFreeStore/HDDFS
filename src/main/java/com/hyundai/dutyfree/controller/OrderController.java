@@ -116,7 +116,7 @@ public class OrderController {
 		String oid = "OR" + simpleDateFormat.format(nowdate);
 		orderservice.Insertorderlist(oid, prin.getName(), Integer.parseInt(request.getParameter("mhpoint")), "pay_complete",
 				request.getParameter("olvodeptdate"), request.getParameter("olvoplnum"),
-				request.getParameter("olvoelnum"), request.getParameter("olvoplace"));
+				request.getParameter("olvoelnum"), request.getParameter("olvoplace"),Float.parseFloat(request.getParameter("total_bill_dollar")));
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			orderservice.Inserorderitem(order.getPcode(), order.getOamount(), oid);

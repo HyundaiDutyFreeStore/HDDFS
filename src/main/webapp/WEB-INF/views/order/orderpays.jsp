@@ -40,25 +40,21 @@
 									class="sale">장)</em> <a href="javascript:void(0);" class="btn">자세히보기</a>
 							</div>
 							<div class="coupon_list accordion_box">
-								<div class="coupon_select">
-									<div class="box">
-										<strong> 상품쿠폰 (0 장)
-											<div class="square_tooltip">
-												<a href="javascript:void(0);" class="btn">도움말</a>
-												<div class="tooltip">
-													<p class="ti">상품쿠폰 안내</p>
-													<ul class="dot_list_new">
-														<li>상품쿠폰으로 할인하여 구매할 수 있습니다.</li>
-														<li>상품쿠폰과 중복해서 사용할 수 있는 더블쿠폰이 있습니다.</li>
-														<li>단, 상품 또는 브랜드별로 사용할수 있는 쿠폰의 최대한도는 차이가 있을 수 있습니다.</li>
-													</ul>
-													<button type="button" class="close" onclick="return false;">닫기</button>
-												</div>
-											</div>
-										</strong>
-										<p>사용할 수 있는 쿠폰이 없습니다.</p>
-									</div>
+							<c:forEach var="coupon" items="${order_couponlist}">
+								<div class="enter_amount whether_use_points">
+										<strong> ${coupon.event.ename }</strong>
+										<ul class="chk">
+			                                    <li>
+			                                        <input type="radio" name="pmptUseSvmtUseYn" id="pmptUseSvmtUse_Y" value="Y"  checked="checked">
+			                                        <label for="pmptUseSvmtUse_Y">사용 안함</label>
+			                                    </li>
+			                                    <li>
+			                                        <input type="radio" name="pmptUseSvmtUseYn" id="pmptUseSvmtUse_N" value="N">
+			                                        <label for="pmptUseSvmtUse_N">사용</label>
+			                                    </li>
+			                            </ul>
 								</div>
+								</c:forEach>
 							</div>
 						</li>
 
@@ -326,6 +322,8 @@
 								<li><span>상품할인</span> <em>원</em><em class="exceptDc dcInfo">380</em>
 								</li>
 								<li><span>적립금 할인</span> <em>원</em><em class="exceptmhpoint">0</em>
+								</li>
+								<li><span>쿠폰 할인</span> <em>원</em><em class="coupondiscount">0</em>
 								</li>
 							</ul></li>
 						<li id="chagDcEvtInfoDl"><strong>
