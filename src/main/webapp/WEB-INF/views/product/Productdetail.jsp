@@ -392,7 +392,8 @@ let count = parseInt($(".counts").val());
                         <a href="javascript:void(0);"class="buynow" onclick="cartBuy();">바로구매</a>
                         </c:when>
                         <c:otherwise>
-                        <a href="#" onclick="preventClick(event);"class="buynow">품절되었습니다</a>
+                        <a href="#" 
+                        	onclick="window.open('/alarm/register?pcode=${product.pcode}','alarm','width=662,height=698,location=no,status=no,scrollbars=yes');"class="buynow"><img src="/resources/images/alarm.png">재입고알림</a>
                         </c:otherwise>
                         </c:choose>
 						  </div>
