@@ -405,9 +405,9 @@ public class OrderController {
 		String mid;
 		//관리자가 결제취소할때
 		if(prin.getName().equals("admin")) {
-			System.out.println("관리자에서 주문취소하려고함");
 			System.out.println("총금액: "+order_dollar);
 			mid = orderservice.getOrderMid(oid);
+			System.out.println("관리자에서 주문취소하려고함 mid: "+mid);
 			
 			member.setMid(mid);
 			member.setMhpoint(-1*(olv.getOhpoint()));
