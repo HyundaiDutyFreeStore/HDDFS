@@ -1526,7 +1526,7 @@
 						<li class="item_03"><a rel="nosublink" href="/member/Mypage"><strong>마이<br>현대
 							</strong></a></li>
 						<li class="item_04">
-							<a href="#" onclick="window.open('/chat/start','FAQ','width=500,height=500,location=no,status=no,scrollbars=yes');"><strong>고객<br>센터
+							<a href="#" onclick="window.open('/chat/start','FAQ','width=500,height=550,location=no,status=no,scrollbars=yes');"><strong>고객<br>센터
 							</strong></a></li>
 						<li class="item_05"><a
 							href="https://www.hddfs.com/store/kr/dm/main.do?MG=KR_PC_GNB_HDDFS"

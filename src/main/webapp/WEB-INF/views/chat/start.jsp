@@ -27,6 +27,8 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/smartTalk.css" />
+<link href="https://ssl.pstatic.net/sstatic/keypage/outside/scui/airport_condition/css/cs_airport_condition_211012.css"
+    rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
@@ -62,9 +64,13 @@
 						<!-- <p>다른 고객님들이 자주 이용하는 메뉴입니다.</p> -->
 						<div class="inner">
 							<ul>
-								<li title="내주문 보기"><a
-									href="javascript:requestAnswer('면세한도 안내')"><span
+								<li title="상품수령 안내"><a
+									href="javascript:requestAnswer('상품수령 안내')"><span
 										class="img"><img src="/resources/images/shopping.png"
+											alt=""></span><span class="txt">상품수령 안내</span></a></li>
+								<li title="면세한도 안내"><a
+									href="javascript:requestAnswer('면세한도 안내')"><span
+										class="img"><img src="/resources/images/limit.png"
 											alt=""></span><span class="txt">면세한도 안내</span></a></li>
 								<li title="취소/반품/교환"><a
 									href="javascript:requestAnswer('기내반입금지물품')"><span
@@ -75,7 +81,7 @@
 											src="/resources/images/gps.png" alt=""></span><span
 										class="txt">인도장 안내</span></a></li>
 								<li title="시간당 고객수 확인"><a
-									href="javascript:requestAnswer('시간당 고객수 확인')"><span
+									href="javascript:customCnt()"><span
 										class="img"><img src="/resources/images/crowd.png" alt=""></span><span
 										class="txt">시간당 고객수 확인</span></a></li>
 								<li title="1대1 실시간 문의"><a
@@ -142,10 +148,14 @@
 					<!-- <p>다른 고객님들이 자주 이용하는 메뉴입니다.</p> -->
 					<div class="inner">
 						<ul>
+							<li title="상품수령 안내"><a
+								href="javascript:requestAnswer('상품수령 안내')"><span
+								class="img"><img src="/resources/images/shopping.png"
+								alt=""></span><span class="txt">상품수령 안내</span></a></li>
 							<li title="내주문 보기"><a
 								href="javascript:requestAnswer('면세한도 안내')"><span
 									class="img"><img
-										src="/resources/images/shopping.png"
+										src="/resources/images/limit.png"
 										alt=""></span><span class="txt">면세한도 안내</span></a></li>
 							<li title="취소/반품/교환"><a
 								href="javascript:requestAnswer('기내반입금지물품')"><span
@@ -157,7 +167,7 @@
 										src="/resources/images/gps.png"
 										alt=""></span><span class="txt">인도장 안내</span></a></li>
 							<li title="시간당 고객수 확인"><a
-								href="javascript:requestAnswer('시간당 고객수 확인')"><span class="img"><img
+								href="javascript:customCnt()"><span class="img"><img
 										src="/resources/images/crowd.png"
 										alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
 							<li title="1대1 실시간 문의"><a
@@ -198,7 +208,7 @@
 
 	                * 당일 16:00 이후 접수 건은 다음날 09:00 이후 답변
 	                * 주말 또는 공휴일 제외             </div><br>`;
-			template += ` <button type="button" class="btn-link"onclick="window.open('/chat/customerChat?adminId=admin&myId=${mid}','chat','width=500,height=500,location=no,status=no,scrollbars=yes');">
+			template += ` <button type="button" class="btn-link"onclick="window.open('/chat/customerChat?adminId=admin&myId=${mid}','chat','width=500,height=550,location=no,status=no,scrollbars=yes');">
                     		<span>1대1 실시간 문의 하러 가기</span> 
                 		</button></div></div>`;
 			document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
@@ -210,6 +220,11 @@
 			clickMenu(menu);
 			//답변 출력해주기
 			var faqAnswer="";
+			if(menu=='상품수령 안내'){
+				faqAnswer=`▶출국당일 주문시 이메일로 발송된 QR코드, 여권, 탑승권을 지참하시고 상품 인도장에서 구매하신 본인이 상품을 수령하시기 바랍니다.
+					▶출국당일 인도장이 혼잡할 수 있사오니 고객센터의 혼잡도 예측 서비스를 이용하시면 보다 편리한 인도를 받으실 수 있습니다.
+					▶주문 시 비행기편명과 시간을 정확히 입력하셔야 상품수령 가능합니다.`;
+			}
 			if(menu=='면세한도 안내'){
 				faqAnswer=`▶한국에서 해외로 출국 시 구매한도액 제한 없음
 					▶단 해외에서 한국으로 입국 시 1인당 면세 금액 미화 $800 제한(해외구매 포함)`;
@@ -337,7 +352,8 @@
 			scrollDown();
 		}
 		
-		 function customCnt(ter) {
+		 function customCnt() {
+			 clickMenu("시간당 인도장 예상 고객수 확인하기");
 			 console.log("날짜구하기");
 			 console.log(new Date());
 			 var today = new Date();
@@ -354,31 +370,36 @@
 				datomorrow = getFormatDate(datomorrow);
 				
 				console.log("today : "+	today);
+				console.log("today 연 : "+	today.substring(0,4));
+				console.log("today 월 : "+	today.substring(4,6));
+				console.log("today 일 : "+	today.substring(6,8));
+								
 				console.log("tomorrow : "+ tomorrow);
 				console.log("datomorrow : "+datomorrow);
-				var txt = ter+" 인도장<br> 조회할 날짜를 선택하세요";
+				var txt = "주문내역을 통해 예상한 수치입니다.<br> 조회할 날짜를 선택하세요.";
 				var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
 	                <div class="bubble has-moving in" style="max-height: 2468px;">
 	                <div class="inner">`
 	                + txt
 	                +`</div>`;
-				template += ` <button type="button" class="btn-link is-node"
-                    onclick="customCnt2('`+ter+`','`+today+`')">
-                    <span>`+today+`</span> 
+				template += ` <button type="button" class="btn-link"
+                    onclick="window.open('/chat/customerCnt?date=`+today+`','chat','width=500,height=400,location=no,status=no,scrollbars=yes');">
+                    <span>`+today.substring(0,4)+"년 "+today.substring(4,6)+"월 "+today.substring(6,8)+"일"+`</span> 
                 </button>`;
-                template += ` <button type="button" class="btn-link is-node"
-                    onclick="customCnt2('`+ter+`','`+tomorrow+`')">
-                    <span>`+tomorrow+`</span> 
+                template += ` <button type="button" class="btn-link"
+                	 onclick="window.open('/chat/customerCnt?date=`+tomorrow+`','chat','width=500,height=400,location=no,status=no,scrollbars=yes');">
+                    <span>`+tomorrow.substring(0,4)+"년 "+tomorrow.substring(4,6)+"월 "+tomorrow.substring(6,8)+"일"+`</span> 
                 </button>`;
-                template += ` <button type="button" class="btn-link is-node"
-                    onclick="customCnt2('`+ter+`','`+datomorrow+`')">
-                    <span>`+datomorrow+`</span> 
+                template += ` <button type="button" class="btn-link"
+                	 onclick="window.open('/chat/customerCnt?date=`+datomorrow+`','chat','width=500,height=400,location=no,status=no,scrollbars=yes');">
+                	 <span>`+datomorrow.substring(0,4)+"년 "+datomorrow.substring(4,6)+"월 "+datomorrow.substring(6,8)+"일"+`</span> 
                 </button>`;
 				document.querySelector('.chat-list').insertAdjacentHTML('beforeend', template);
 		        scrollDown();
 		 }
+		 
 		
-		//인도장의 시간당 고객수 띄우기
+		/* //인도장의 시간당 고객수 띄우기
 		 function customCnt2(ter,date) {
 			 console.log(date+" - "+ter+" 시간당 고객수 띄우기");
 			 clickMenu(ter+"인도장 시간대 별  고객수");
@@ -402,7 +423,7 @@
 							console.log(hours+" : "+count);
 							answer += hours+"시 : "+count+" 명<br>";
 							/* let tmp = data.i;
-							console.log(i+"시: "+tmp); */
+							console.log(i+"시: "+tmp); 
 						}
 						 var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
 				                <div class="bubble has-moving in" style="max-height: 2468px;">
@@ -414,7 +435,7 @@
 						 scrollDown();
 					}
 				});
-		 }
+		 } */
 		
 		//로그인 체크 함수
 		function loginChk(){
