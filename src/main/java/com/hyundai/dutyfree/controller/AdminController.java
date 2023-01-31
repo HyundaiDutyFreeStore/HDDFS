@@ -26,10 +26,10 @@ import com.hyundai.dutyfree.vo.ChartMemberVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
-import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
+
 /**
  * AdminController
  *
@@ -170,10 +170,11 @@ public class AdminController {
 	@RequestMapping("/admin/index")
 	public void forChart(Model model) throws Exception {
 		List<ChartMemberVO> cntMember = chartService.cntMember();
-		int cntm = 0;
-		int cntw = 0;
-		int cnta = 0;
-
+		List<ChartDailyVO> cntTotal = chartService.dailyTotal();
+		float cntm = 0;
+		float cntw = 0;
+		float cnta = 0;
+		float total = 0;
 		for (int i = 0; i < cntMember.size(); i++) {
 			switch (cntMember.get(i).getSex()) {
 			case "F":
@@ -191,10 +192,19 @@ public class AdminController {
 				break;
 			}
 		}
-
-		model.addAttribute("cntm", cntm);
-		model.addAttribute("cntw", cntw);
-		model.addAttribute("cnta", cnta);
+		total = cntm + cntw + cnta;
+		double todaysales = 0;
+		double weeklysales = 0;
+		for(int i=0;i<cntTotal.size();i++) {
+			todaysales = cntTotal.get(i).getTotal();
+			weeklysales += todaysales;
+		}
+		model.addAttribute("cntm", Math.round(cntm/total*100));
+		model.addAttribute("cntw", Math.round(cntw/total*100));
+		model.addAttribute("cnta", Math.round(cnta/total*100));
+		model.addAttribute("cnttotal", (int)total);
+		model.addAttribute("todaysales", Math.round(todaysales));
+		model.addAttribute("weeklysales", Math.round(weeklysales));
 	}
 
 	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)

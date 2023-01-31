@@ -10214,6 +10214,30 @@ supports ((position:-webkit-sticky ) or (position:sticky )){ .
 .text-primary {
 	color: #4e73df !important
 }
+.text-bag {
+	color: #08306B !important
+}
+.text-makeup {
+	color: #08519C !important
+}
+.text-skincare {
+	color: #2171B5 !important
+}
+.text-sport {
+	color: #6BAED6 !important
+}
+.text-food {
+	color: #9ECAE1 !important
+}
+.text-electronic {
+	color: #C6DBEF !important
+}
+.text-fasion {
+	color: #DEEBF7 !important
+}
+.text-pufume {
+	color: #F9F9F9 !important
+}
 
 a.text-primary:focus, a.text-primary:hover {
 	color: #224abe !important

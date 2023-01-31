@@ -103,7 +103,7 @@
 										</c:if>
 										</td>
 										<td><fmt:formatDate value="${order.odate}"
-												pattern="yyyy-MM-dd hh:mm:ss" /></td>
+												pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									</tr>
 								</c:forEach>
 							</tbody>
