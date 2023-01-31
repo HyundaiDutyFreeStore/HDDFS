@@ -17,15 +17,12 @@
 					<p class="join_etxt">항상 행복과 감동을 주는 현대백화점인터넷면세점이 되겠습니다.</p>
 				</div>
 
-				<!-- 20201208 추가: 전시 일정 : ~ 12/15(화) -->
 				<div id="banner" class="ban_col mgtm" style="display: none;">
 					<img
 						src="https://cdn.hddfs.com/front/images/KO/member/join_complete_ban03.jpg"
 						alt="지금 로그인 하시면 신규가입 및 회원등급별 푸짐한 혜택을 받으실 수 있습니다."
 						title="지금 로그인 하시면 신규가입 및 회원등급별 푸짐한 혜택을 받으실 수 있습니다.">
-					<!-- 2019-03-29 배너 추가 -->
 				</div>
-				<!-- 20201208 추가: 전시 일정 : 12/16(수) ~ 1/5 -->
 				<div id="evnt_banner" class="ban_col mgtm type2"
 					style="display: none;">
 					<a
@@ -48,23 +45,4 @@
 	</section>
 </div>
 </main>
-<!-- // container -->
-<script type="text/javascript">
-	function sellerInfo() {
-		$("#seller_information").dialog("open");
-	}
-	$(document).ready(function() {
-		// 다이얼로그 초기화
-		$("#seller_information").dialog({
-			autoOpen : false,
-			resizable : false,
-			width : 400,
-			maxHeight : 340,
-			modal : true
-		});
-	});
-	function moveToMain() {
-		location.href = ctx_shop + '/dm/main.do';
-	}
-</script>
 <%@ include file="../common/Footer.jsp"%>

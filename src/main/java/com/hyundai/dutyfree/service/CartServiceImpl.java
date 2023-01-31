@@ -21,7 +21,8 @@ import com.hyundai.dutyfree.vo.ProductVO;
  * 수정일                 수정자                              수정내용
  * ----------  ---------------  ---------------------------
  * 2023.01.11    박진수                        최초 생성
- * 2023.01.13    박진수                        서비스 구현
+ * 2023.01.13    박진수                        CartServiceImpl 완료
+ * 2023.01.14    박진수                        상품의 재고량을 수정 추가
  *        </pre>
  */
 @Service
@@ -33,6 +34,7 @@ public class CartServiceImpl implements CartService {
 		this.cartmapper=cartmapper;
 	}
 	
+	//장바구니에 등록
 	@Override
 	public void insertCart(CartVO cart) {
 		System.out.println(cart.getCartregdate());
@@ -41,7 +43,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 
-
+	//상품의 재고량을 수정
 	@Override
 	public void redproductcnt(String pcode, int pstock,int psel) {
 		ProductVO product=cartmapper.prodinfo(pcode);
@@ -51,12 +53,14 @@ public class CartServiceImpl implements CartService {
 		
 	}
 
+	//장바구니에 상품이 존재여부
 	@Override
 	public int Cartitemconsist(CartVO cart) {
 
 		return cartmapper.Cartitemconsist(cart);
 	}
-
+	
+	//장바구니의 목록을 조회
 	@Override
 	public List<CartVO> getCartList(String mid,String align) {
 		// TODO Auto-generated method stub
@@ -71,12 +75,14 @@ public class CartServiceImpl implements CartService {
 		}
 	}
 
+	//장바구니에 담은 상품 개수 수정
 	@Override
 	public void UpdateCartstock(CartVO cart) {
 		// TODO Auto-generated method stub
 		cartmapper.UpdateCartstock(cart);
 	}
 
+	//장바구니 상품 삭제
 	@Override
 	public void deleteCart(CartVO cart) {
 		cartmapper.deleteCart(cart);

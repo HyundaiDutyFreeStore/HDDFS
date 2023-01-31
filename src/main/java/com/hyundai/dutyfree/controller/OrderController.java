@@ -52,6 +52,7 @@ import lombok.extern.log4j.Log4j;
  * 2023.01.17    박진수                        여권정보페이지 로드 및 여권정보 등록
  * 2023.01.18    박진수                        출국정보 페이지 로드 및 출국정보 등록
  * 2023.01.19    박진수                        지불페이지 로드 및 결제 구현
+ * 2023.01.22    박진수                        주문 취소 구현
  *        </pre>
  */
 @Controller
@@ -318,7 +319,7 @@ public class OrderController {
 		model.addAttribute("cartcounttotal", request.getParameter("cartcounttotal"));
 	}
 
-	//
+	//여권정보 조회
 	@PostMapping("/PassportConsist")
 	public String PassportConsist(HttpServletRequest request) {
 
@@ -387,7 +388,7 @@ public class OrderController {
 
 	}
 	
-	
+	//주문을 취소한다.
 	@RequestMapping("/cancelorder")
 	@ResponseBody
 	public String cancelorder(String oid,double order_dollar, Principal prin,HttpSession session) throws Exception {
