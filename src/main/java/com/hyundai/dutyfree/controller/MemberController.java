@@ -322,6 +322,21 @@ public class MemberController {
 					coupon_count++;
 				}
 			}
+		  String grade="";
+		  //구입가격에 따른 등급 표시 적용
+		  if(mvo.getMtotal()>=5000) {
+			  grade="v++grade.png";
+		  }else if(mvo.getMtotal()>=3000) {
+			  grade="v_grade.png";
+		  }else if(mvo.getMtotal()>=1000) {
+			  grade="p_grade.png";
+		  }else if(mvo.getMtotal()>=500) {
+			  grade="F_grade.png";
+		  }else {
+			  grade="H_grade.png";
+		  }
+		  
+		  model.addAttribute("grade", grade);
 		  model.addAttribute("coupon_count", coupon_count);
 		  model.addAttribute("couponlist",couponlist);
 		  model.addAttribute("align", align);

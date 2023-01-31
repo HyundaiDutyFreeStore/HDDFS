@@ -55,11 +55,9 @@
 					</dd>
 				</dl>
 				<dl style="height: 110px;">
-					<dt>오프라인 선불카드</dt>
+					<dt>등급</dt>
 					<dd>
-						<a class="link_txt_point ty_s"
-							onclick="location.href='//www.hddfs.com/shop/mm/myInfo/inptMbshPwd.do?type=pspt';">여권정보
-							등록</a>
+					<img alt="" src="/resources/images/${grade }" style="width: 40px; position: relative; left: 1.9px; bottom: 9px;"/>
 					</dd>
 				</dl>
 				<dl style="height: 110px;">

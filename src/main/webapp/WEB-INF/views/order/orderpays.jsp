@@ -373,511 +373,15 @@
 			</div>
 		</section>
 	</article>
-
-	<!-- 약관 동의 팝업 -->
-	<div id="hpay_layer_popup" class="hpay_term_pop"
-		title="H.Point Pay 서비스 약관"></div>
-
-	<div id="geneSvmtLayerPopup" class="evplus_pop" title="사용가능 일반적립금"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap" id="mbshSvmtList"></div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type1 mid bg_black"
-					onclick="plusSvmtLayerPopupClose('gene'); return false;">확인</a>
-			</ul>
-		</div>
-	</div>
-
-	<div id="evntSvmtLayerPopup" class="evplus_pop" title="사용가능 이벤트플러스 적립금"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap" id="mbshEvntSvmtList"></div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type1 mid bg_black"
-					onclick="plusSvmtLayerPopupClose('evnt'); return false;">확인</a>
-			</ul>
-		</div>
-	</div>
-
-	<div id="branSvmtLayerPopup" class="brplus_pop" title="사용가능 브랜드플러스 적립금"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap" id="mbshBranSvmtList"></div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type1 mid bg_black"
-					onclick="plusSvmtLayerPopupClose('bran'); return false;">확인</a>
-			</ul>
-		</div>
-	</div>
-
-	<div id="ptnsSvmtLayerPopup" class="partnerplus_pop" title="제휴플러스 적립금"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap">
-				<div class="loading transparent" id="ptnsSvmtLayerPopupLoading"
-					style="display: none;">
-					<div class="loading_img">
-						<img
-							src="https://cdn.hddfs.com/front/images/KO/common/loading_apng.png"
-							alt="loading">
-					</div>
-				</div>
-				<div class="total_point" id="mbshPtnsSvmtListPoint"></div>
-				<div class="point_couwrap">
-					<ul id="mbshPtnsSvmtList"></ul>
-				</div>
-			</div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type1 mid bg_black" onclick="ptnsPlsSvmtAppl();">확인</a></li>
-			</ul>
-		</div>
-	</div>
-
-	<div id="settSvmtLayerPopup" class="payplus_pop" title="결제 플러스 적립금"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap">
-				<div class="allchk">
-					<span class="chk"> <input type="radio" name="settWaySvmtSeq"
-						id="settWaySvmtSeq0" checked value="" cardId="" dispSettWayCd=""
-						settWaySvmtAmt="0"> <label for="settWaySvmtSeq0">사용안함</label>
-					</span>
-				</div>
-				<div class="point_couwrap">
-					<input type="hidden" id="settWaySvmtSeqApplTmp" value="">
-					<ul id="mbshSettSvmtList">
-					</ul>
-				</div>
-			</div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type1 mid bg_black" onclick="settPlsSvmtAppl();">확인</a></li>
-			</ul>
-		</div>
-	</div>
-
-	<div id="goosCupLayerPopup" class="cou_pop" title="상품쿠폰 할인"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap">
-				<div class="loading transparent" id="orderLoading"
-					style="display: none;">
-					<div class="loading_img">
-						<img
-							src="https://cdn.hddfs.com/front/images/KO/common/loading_apng.png"
-							alt="loading">
-					</div>
-				</div>
-			</div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type2 mid bg_black" style="cursor: pointer;"
-					onclick="setChoiGoosCupChk();">확인</a></li>
-			</ul>
-		</div>
-	</div>
-	<div id="cartCupLayerPopup" class="cart_pop" title="장바구니쿠폰 할인"
-		style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap">
-				<div class="loading transparent" id="cartCupLayerPopupLoading"
-					style="display: none;">
-					<div class="loading_img">
-						<img
-							src="https://cdn.hddfs.com/front/images/KO/common/loading_apng.png"
-							alt="loading">
-					</div>
-				</div>
-				<div class="item_coupon">
-					<div class="couponlist">
-						<div>
-							<p class="fztit13">장바구니쿠폰</p>
-							<span class="input_de"> <select name="geneMbshCupSeq"
-								data-cupseq="" class="choiCartCup">
-									<option value="">쿠폰선택</option>
-							</select>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<ul class="btn_group">
-				<li><a href="javascript:void(0);"
-					class="btnde_type2 mid bg_black" onclick="choiCartCup();">확인</a></li>
-			</ul>
-		</div>
-	</div>
-
-	<div id="simpRsvgPoinIssuLayerPopup" class="applypoint_pop"
-		title="간편적립포인트 발급신청" style="display: none;">
-		<div class="layer_popup">
-			<div class="popupcont_wrap point_pop">
-				<p>간편적립포인트 신규발급 신청에 동의 하시고 구매하시면 구매포인트가 간편적립포인트로 적립됩니다. (H.Point
-					적립과 동일)</p>
-				<ul class="dot_terms">
-					<li>포인트 적립은 면세점 인도 완료 후 지급되며 간편적립 가입 이후 주문 건부터 적용됩니다.</li>
-					<li>포인트의 유효기간은 적립일로부터 30일간 유효합니다.</li>
-					<li>유효기간 만료된 포인트는 사용이 불가합니다.</li>
-					<li>간편적립포인트의 사용은 통합회원으로 전환 시 가능하며 통합회원으로 전환 시 보유한 간편적립포인트는 모두
-						H.Point로 전환됩니다.</li>
-				</ul>
-				<div class="chk">
-					<input type="checkbox" name="orderSimpRsvgPoinAgrYn"
-						id="orderSimpRsvgPoinAgrYn"> <label
-						for="orderSimpRsvgPoinAgrYn"><strong>간편적립포인트 발급
-							신청에</strong> 동의합니다.</label>
-				</div>
-				<ul class="btn_group">
-					<li><a href="javascript:void(0);" class="btnde_type1 mid"
-						onclick="simpRsvgPoinIssuLayerPopup('close');">취소</a></li>
-					<li><a href="javascript:void(0);"
-						class="btnde_type1 mid bg_black"
-						onclick="simpRsvgPoinIssuLayerPopup('agree');">확인</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div id="settInfoLayerPopup" class="bankbook_pop"></div>
-
-	<div id="orcomplete_pop" class="orcomplete_pop"></div>
-
-	<div id="failed_pop" class="failed_pop"></div>
-
-	<div id="layer_popup" class="pop_quantity" title="SMS 인증"></div>
-
-	<div id="ptnrPmptLayerPopup" class="" title=""></div>
-
-	<div id="settCardListLayerPopup" class="card_pop" title="카드 선택하기"></div>
-
-	<div id="koreanAirSkyPassLayerPopup" class="koreaair_pop"
-		title="대한항공 스카이패스 회원 인증" style="display: none;">
-
-		<div class="layer_popup">
-			<div class="popupcont_wrap membership_pop">
-				<div class="form_list">
-					<ul>
-						<li>
-							<p class="fztit13">회원번호 (12자리 숫자)</p>
-							<div class="membership_numbox">
-								<span class="input_de"> <input id="skyPassMemberNum"
-									maxlength="12" name="skyPassMemberNum" type="text">
-								</span>
-							</div>
-						</li>
-						<li>
-							<p class="fztit13">영문성명 (대문자)</p>
-							<div class="membership_numbox">
-								<div class="cols2">
-									<input id="skyPassMemberEngLstNm" type="text" class="numb"
-										placeholder="Last name (성)" value="YOU" readonly>
-								</div>
-								<div class="cols2">
-									<input id="skyPassMemberEngFstNm" type="text" class="numb"
-										placeholder="First name (이름)" value="HYESEUNG" readonly>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<ul class="dot_terms">
-					<li>대한항공 스카이패스 마일리지 적립을 위해 개인정보 수집/이용 동의 및 제 3자 제공 동의가 필요합니다.</li>
-					<li>대한항공 스카이패스 마일리지 적립을 위한 스카이패스 회원번호 및 영문성명은 대한항공 홈페이지에서 확인하실
-						수 있습니다.</li>
-					<li><a href="https://www.koreanair.com/kr/ko" target="_blank"
-						class="link_membership">(대한항공 바로가기)</a></li>
-				</ul>
-
-				<ul class="terms_item">
-					<li>
-						<div class="terms_title">
-							<span class="chk"> <input type="checkbox" name=""
-								id="air01"> <label for="air01"><strong>[필수]
-										개인정보 수집 이용에</strong> 동의합니다.</label>
-							</span>
-							<div class="terms_toggle">
-								<a href="javascript:void(0);">내용보기</a>
-							</div>
-						</div>
-						<div class="terms_cont">
-							<div>
-								수집/이용 목적 : 대한항공 스카이패스 마일리지 적립 및 CS응대<br> 수집/이용 항목 : 스카이패스
-								회원번호, 영문성명<br> 보유 및 이용기간 : <strong class="f_size02">회원
-									탈퇴 시 까지</strong> <br>
-								<br> 고객님께서는 개인정보 수집/이용에 동의 거부 권리가 있으며 동의 거부 시 대한항공 스카이패스
-								마일리지 적립이 제한됩니다.
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="terms_title">
-							<span class="chk"> <input type="checkbox" name=""
-								id="air02"> <label for="air02"><strong>[필수]
-										개인정보 제3자 제공에</strong> 동의합니다.</label>
-							</span>
-							<div class="terms_toggle">
-								<a href="javascript:void(0);">내용보기</a>
-							</div>
-						</div>
-						<div class="terms_cont">
-							<div>
-								제공 받는자 : <strong class="f_size02">㈜대한항공</strong><br> 제공 목적
-								: <strong class="f_size02">대한항공 마일리지 적립</strong><br> 제공 항목
-								: 스카이패스 회원번호, 영문성명<br> 보유 및 이용기간 : <strong class="f_size02">회원
-									탈퇴 시 까지</strong><br>
-								<br> 고객님께서는 개인정보 제 3자 제공 동의 거부 권리가 있으며 동의 거부 시 대한항공 스카이패스
-								마일리지 적립이 제한됩니다.
-							</div>
-						</div>
-					</li>
-				</ul>
-				<ul class="btn_group">
-					<li><a href="javascript:void(0);" id="koreanAirClose"
-						class="btnde_type1 mid bg_black">취소</a></li>
-					<li><a href="javascript:void(0);" id="koreanAirSearch"
-						class="btnde_type1 mid">적용하기</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!--e 리뉴얼 대한항공 스카이패스 회원 인증 -->
 </form>
-
 
 <iframe id=MPIFRAME name=MPIFRAME style="display: none"></iframe>
-<div style="display: none">
-	<form name=Visa3d target="MPIFRAME" method=post>
-		<input type="text" name=pan size="19" maxlength="19" value="">
-		<input type="text" name=expiry size="6" maxlength="6" value="4912">
-		<input type="text" name=purchase_amount size="20" maxlength="20"
-			value=""> <input type="text" name=amount size="20"
-			maxlength="20" value=""> <input type="text" name=description
-			size="80" maxlength="80" value="none"> <input type="text"
-			name=currency size="3" maxlength="3" value="410"> <input
-			type="text" name=recur_frequency size="4" maxlength="4" value="">
-		<input type="text" name=recur_expiry size="8" maxlength="8" value="">
-		<input type="text" name=installments size="4" maxlength="4" value="">
-		<input type="text" name=device_category size="20" maxlength="20"
-			value="0"> <input type="text" name="name" size="20"
-			value="%C7%F6%B4%EB%B9%E9%C8%AD%C1%A1%B8%E9%BC%BC%C1%A1"> <input
-			type="text" name="url" size="20" value="https://www.hddfs.com/shop">
-		<input type="text" name="country" size="20" value="410"> <input
-			type="password" name="dummy" value=""> <input type="text"
-			name="returnUrl"
-			value="https://www.hddfs.com/shop/or/order/mpiReturn.do"> <input
-			type="text" name=cardcode value=""> <input type="text"
-			name="merInfo" value="DPT0Q21075"> <input type="text"
-			name="bizNo" value="8508800325"> <input type="text"
-			name="instType" value="1"> <input type="hidden"
-			name="sspayInfo" value=""> <input type="hidden"
-			name="goodname" value="0.2 테라피 에어 마스크 달팽이"> <input
-			type="hidden" name="PgId" value="K0036">
-	</form>
-</div>
-
-<div style="display: none">
-	<form name=KSMpiAuthForm method=post action="" onSubmit="">
-		<input type=hidden name="expdt" value=""> <input type=hidden
-			name="idnum" value=""> <input type=hidden name="goodname"
-			value="goodName"> <input type=hidden name="amount" value="">
-		<input type=hidden name="currencytype" value="410"> <input
-			type=hidden name="expyear" value="2049"> <input type=hidden
-			name="expmon" value="12"> <input type=hidden name="termID"
-			value="DPT0Q21075"> <input type=hidden name="gubun"
-			value="1130"> <input type=hidden name="installment">
-		<input type=hidden name="rateYn"> <input type=hidden
-			name="issuerCode"> <input type="hidden" name="xid" value="">
-		<input type="hidden" name="eci" value=""> <input type="hidden"
-			name="cavv" value=""> <input type="hidden" name="cardno"
-			value=""> <input type="hidden" name="otc" value=""> <input
-			type="hidden" name="usepoint" value=""> <input type="hidden"
-			name="KVP_PGID" value=""> <input type="hidden"
-			name="KVP_CARDCODE" value=""> <input type="hidden"
-			name="KVP_SESSIONKEY" value=""> <input type="hidden"
-			name="KVP_ENCDATA" value=""> <input type="hidden"
-			name="certitype" value=""> <input type="hidden"
-			name="interest" value="">
-	</form>
-</div>
-</div>
-<div style="display: none">
-	<form name="ispForm" method=post>
-		<input type="text" name="KVP_PGID" value="K0036"> <input
-			type="text" name="KVP_GOODNAME" value="0.2 테라피 에어 마스크 달팽이" /> <input
-			type="text" name="KVP_CARDCOMPANY" value=""> <input
-			type="text" name="KVP_PRICE" value=""> <input type="text"
-			name="KVP_CURRENCY" value="WON"> <input type="text"
-			name=KVP_QUOTA_INF value=""> <input type="text"
-			name=KVP_NOINT_INF value=""> <input type="text"
-			name="KVP_NOINT" /> <input type="text" name="KVP_NOINT_FLAG" /> <input
-			type="text" name="KVP_QUOTA" value="" /> <input type="text"
-			name="KVP_OACERT_INF" /> <input type="text" name="KVP_BC_OACERT_INF" />
-		<input type="text" name="Kvp_NOINT_FLAG" /> <input type="text"
-			name="KVP_CARDCODE" /> <input type="text" name="VP_BC_ISSUERCODE" />
-		<input type="text" name="KVP_KB_SAVEPOINTREE" /> <input type="text"
-			name="KVP_WR_SAVEPOINT" /> <input type="text" name="VP_BC_SAVEPOINT" />
-		<input type="text" name="VP_RET_SAVEPOINT" /> <input type="text"
-			name="KVP_FIXPAYFLAG" /> <input type="text" name="KVP_MERCHANT_KB" />
-		<input type="text" name="VP_MERCHANT_ID" /> <input type="text"
-			name="VP_REQ_AUTH" value="FALSE" /> <input type="text"
-			name="KVP_CARD_PREFIX" /> <input type="text" name="KVP_IMGURL" /> <input
-			type="text" name="KVP_CONAME" /> <input type="text"
-			name="KVP_SESSIONKEY" /> <input type="text" name="KVP_ENCDATA" /> <input
-			type="text" name="KVP_RESERVED1" /> <input type="text"
-			name="KVP_RESERVED2" /> <input type="text" name="KVP_RESERVED3" />
-		<input type="text" name="KVP_PAYSET_FLAG" /> <input type="hidden"
-			name="KVP_USING_POINT" />
-	</form>
-</div>
-
-<div style="display: none">
-	<form class="form-horizontal" name="ovseForm" method="post"
-		action="https://www.hddfs.com/shop/or/order/ovseCreditCardRequest.do">
-		<input type="hidden" name="statusurl"
-			value="https://www.hddfs.com/shop/or/order/procOvseCreditCardCplt.do" />
-		<input type="hidden" name="returnurl"
-			value="https://www.hddfs.com/shop/or/order/ovseCreditCardResponse.do" />
-		<input type="hidden" name="mid" value="5DBD8A86B4"> <input
-			type="hidden" name="ref" value="demo20170418202020"> <input
-			type="hidden" name="ostype" value="P"> <input type="hidden"
-			name="displaytype" value="P"> <input type="hidden" name="cur"
-			value="USD"> <input type="hidden" name="amt" value="">
-		<input type="hidden" name="buyer" value=""> <input
-			type="hidden" name="email" value=""> <input type="hidden"
-			name="tel" value=""> <input type="hidden" name="lang"
-			value="KR"> <input type="hidden" name="paymethod" value="">
-		<input type="hidden" name="shop" value=""> <input
-			type="hidden" name="item_0_product" value="0.2 테라피 에어 마스크 달팽이">
-		<input type="hidden" name="item_0_quantity" value="1"> <input
-			type="hidden" name="item_0_unitPrice" value="">
-	</form>
-</div>
-
-<div style="display: none">
-	<form class="form-horizontal" name="payForm" method="post" action="">
-		<input type="text" name="CASH_GB" id="CASH_GB" size="30" value="MC">
-		<input type="text" name="Okurl" id="Okurl" size="50"
-			value="https://www.hddfs.com/shop/or/order/mobiliansReturn.do?hddfsSession=xwzcbXABj91d8IdmqHaeaHYtyascs26DhTj6y79mvTIIJ216baYP29HfeTg1PYgJ.b25saW5lX2RvbWFpbi9zZXJ2ZXJfZGZwa29fMg==">
-		<input type="text" name="MC_SVCID" id="MC_SVCID" size="30" value="">
-		<input type="text" name="Prdtnm" id="Prdtnm" size="30"
-			value="0.2 테라피 에어 마스크 달팽이"> <input type="text"
-			name="Prdtprice" id="Prdtprice" size="30" value=""> <input
-			type="text" name="Siteurl" id="Siteurl" size="30"
-			value="http://naver.com"> <input type="text" name="PAY_MODE"
-			id="PAY_MODE" size="30" value=""> <input type="text"
-			name="Tradeid" id="Tradeid" size="50" value=""> <input
-			type="text" name="LOGO_YN" id="LOGO_YN" size="30" value="N">
-		<input type="text" name="CALL_TYPE" id="CALL_TYPE" size="30" value="P">
-		<input type="text" name="MC_AUTHPAY" id="MC_AUTHPAY" size="30"
-			value="Y">
-	</form>
-</div>
-
-
-<div style="display: none">
-	<form name="kakaoPayform" id="kakaoPayform" method="post" action="">
-		<input type="hidden" name="cid" value="" /> <input type="hidden"
-			name="partnerOrderId" value="" /> <input type="hidden"
-			name="partnerUserId" value="" /> <input type="hidden"
-			name="itemName" value="0.2 테라피 에어 마스크 달팽이" /> <input type="hidden"
-			name="quantity" value="1" /> <input type="hidden" name="totalAmount"
-			value="887" /> <input type="hidden" name="taxFreeAmount" value="887" />
-		<input type="hidden" name="approvalUrl"
-			value="https://www.hddfs.com/shop/or/order/kakaoPaySuccess.do" /> <input
-			type="hidden" name="cancelUrl"
-			value="https://www.hddfs.com/shop/or/order/kakaoPayCanCel.do" /> <input
-			type="hidden" name="failUrl"
-			value="https://www.hddfs.com/shop/or/order/kakaoPayFail.do" /> <input
-			type="hidden" name="pgToken" value="" /> <input type="hidden"
-			name="tid" value="" />
-	</form>
-</div>
-
-
-<form name="smilepayForm" id="smilepayForm" action="" method="post"
-	accept-charset="">
-	<input type="hidden" name="requestUrl"
-		value="https://pg.cnspay.co.kr/pay/v2/approve" /> <input
-		type="hidden" name="Mid" value="hddfsco00m" /> <input type="hidden"
-		name="Moid" id="Moid" value="167338900480494107" /> <input
-		type="hidden" name="GoodsNm" value="0.2 테라피 에어 마스크 달팽이" /> <input
-		type="hidden" name="Amt" value="887" /> <input type="hidden"
-		name="SupplyAmt" value="887" /> <input type="hidden"
-		name="ServiceAmt" value="0" /> <input type="hidden" name="GoodsVat"
-		value="0" /> <input type="hidden" name="TaxationAmt" value="0" /> <input
-		type="hidden" name="Currency" value="KRW" /> <input type="hidden"
-		name="PointUseYn" value="Y" /> <input type="hidden" name="Etc1"
-		value="" /> <input type="hidden" name="Etc2" value="" /> <input
-		type="hidden" name="Etc3" value="" /> <input type="hidden"
-		name="UserKey" value="" maxlength="200" /> <input type="hidden"
-		name="SmileCash" value="0" /> <input type="hidden"
-		name="IsSmileAppInstalled" id="IsSmileAppInstalled" value="U"
-		readonly="readonly" style="background-color: #e2e2e2;" /> <input
-		type="hidden" name="CalledFromAppOrElse" value="WEB" /> <input
-		type="hidden" name="ShopAppIosScheme" placeholder="IOS APP 사용시 필수" />
-	<input type="hidden" name="ReturnUrl2" type="text"
-		value="https://www.hddfs.com/shop/or/order/smilepayApproveReturn2.do?hddfsSession=xwzcbXABj91d8IdmqHaeaHYtyascs26DhTj6y79mvTIIJ216baYP29HfeTg1PYgJ.b25saW5lX2RvbWFpbi9zZXJ2ZXJfZGZwa29fMg==" />
-	<input type="hidden" name="possiCard" value="" /> <input type="hidden"
-		name="itemType" value="1" /> <input type="hidden" name="PayMethod"
-		value="SMILEPAY" /> <input type="hidden" name="GoodsCnt" value="1" />
-	<input type="hidden" name="BuyerName" value="유혜승" /> <input
-		type="hidden" name="LogoURL" type="text"
-		value="https://pg.cnspay.co.kr" readonly="readonly"
-		style="background-color: #e2e2e2;" /> <input type="hidden"
-		name="requestDealApproveUrl" id="requestDealApproveUrl"
-		value="https://pg.cnspay.co.kr/smile/v2/createTxnId"
-		readonly="readonly" style="background-color: #e2e2e2;" /> <input
-		type="hidden" name="EncodeKey"
-		value="/MbPBwqUTsnv5DCLikoH8ildWyCZ+uDoCiO+x5fp9abPLngj2hA1ZZShdNDQ/yLpAqpvH2zaqMZ3Ff6TWj9t6A==" />
-	<input type="hidden" name="merchantEncKey" value="/MbPBwqUTsnv5DCL"
-		style="background-color: #e2e2e2;" /> <input type="hidden"
-		name="merchantHashKey" value="AicQKBlKQjOl6kKk"
-		style="background-color: #e2e2e2;" /> <input type="hidden"
-		name="UsePopup" value="true" />
-
-	<div id="txnContents">
-		<input id="ResultCode" name="ResultCode" type="hidden" value="" /> <input
-			id="ResultMsg" name="ResultMsg" type="hidden" value="" /> <input
-			id="TxnId" name="TxnId" type="hidden" value="" /> <input id="PrDt"
-			name="PrDt" type="hidden" value="" /> <input id="TlsVer"
-			name="TlsVer" type="hidden" value="" />
-	</div>
-	<div id="dlpContents">
-		<input name="GoodsName" type="hidden" value="" /> <input
-			name="SpuSignToken" type="hidden" value="" /> <input
-			name="SmileCash" type="hidden" value="" /> <input name="Spu"
-			type="hidden" value="" /> <input name="Tid" type="hidden" value="" />
-		<input name="AuthToken" type="hidden" value="" />
-	</div>
-
-</form>
-
-<div class='div_frame' id="smilePay_layer"></div>
-<iframe name="txnIdGetterFrame" id="txnIdGetterFrame" width="0px"
-	height="0px"
-	style="border-left-width: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px;"></iframe>
-<div style="display: none">
-	<form name="naverPayForm" id="naverPayForm" method="post" action="">
-		<input type="hidden" name="paymentId" value="" /> <input
-			type="hidden" name="detail" value="" />
-	</form>
 </div>
 <form id="orderexec" method="post" action="/order/postorderpays">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 
-<div style="display: none">
-	<form name="paycoForm" id="paycoForm" method="post" action="">
-		<input type="hidden" name="paymentCertifyToken" value="" /> \ <input
-			type="hidden" name="reserveOrderNo" value="" /> \ <input
-			type="hidden" name="totalPaymentAmt" value="" /> \ <input
-			type="hidden" name="sellerOrderReferenceKey" value="" /> \
-	</form>
-</div>
+
 <div id="Mask"></div>
 <div id="settInfoLayerPopupmodal" tabindex="-1" role="dialog" style="position: absolute; height: auto; width: 412px; top: 351.5px; left: 1000px; display: none;" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front event_type ui-draggable ui-resizable" aria-describedby="settInfoLayerPopup" aria-labelledby="ui-id-11">
 <div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle">
@@ -914,15 +418,9 @@ $(document).ready(function(){
                 }
             }
             
-            /* $("#settInfoLayerPopup").dialog("close"); */
-            
-            /* 
-                doSett(); */
-            
         } else if(type == "dpatproh") {
             $(".jeju_pop").dialog("close");
         } else {
-        	/* $("#settInfoLayerPopup").dialog("close"); */
         }
     });
     
@@ -986,153 +484,69 @@ $(document).ready(function(){
 
 </div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div>
 
-<div style="display: none">
-	<form name="hpayForm" id="hpayForm" method="post" action="">
-		<input type="hidden" id="hpayPaymentId" name="hpayPaymentId" value="" />
-		<input type="hidden" id="methodId" name="methodId" value="" /> <input
-			type="hidden" id="orderNo" name="orderNo" value="" /> <input
-			type="hidden" id="paymentKey" name="paymentKey" value="" /> <input
-			type="hidden" id="istmMonsCnt" name="istmMonsCnt" value="0" /> <input
-			type="hidden" id="orderName" name="orderName"
-			value="0.2 테라피 에어 마스크 달팽이" /> <input type="hidden"
-			id="totalOrderAmt" name="totalOrderAmt" value="887" /> <input
-			type="hidden" id="poinUseYn" name="poinUseYn" value="" />
-	</form>
-</div>
+
 
 <script>
-	$(function() {
-		$('.ui-widget-overlay').on('click', function() {
-			$('#dialog').dialog('close');
-		})
-		$(".accordion_box").hide()
-		$(".open .accordion_box").show();
-		$(".accordion .title .btn").on("click", function() {
-			if ($(this).parents(".accordion li").hasClass("open")) {
-				$(this).parents(".accordion li").removeClass("open");
-				$(this).parent().siblings().slideUp(200)
-			} else {
-				$(this).parents(".accordion li").addClass("open");
-				$(this).parent().siblings().slideDown(200)
-			}
-		});
-		$(".discount_list .details").hide()
-		$(".discount_list .btn").on("click", function() {
-			if ($(".discount_list").hasClass("open")) {
-				$(".discount_list").removeClass("open");
-				$(".discount_list .details").slideUp(200)
-			} else {
-				$(".discount_list").addClass("open");
-				$(".discount_list .details").slideDown(200)
-			}
-		});
-		// S: 2022-05-11 H.Point Pay 카드, 계좌 선택 추가
-		$(function() {
-			$(".payway_area_hpay .hpay_choose").on("click", function() {
-				if (!applSettFixInit()) {
-					return false;
-				}
-				setTimeout(function() {
-					paymentSettInfo();
-				}, 100);
-				var hpayBox = $(this).next(".hpay_box");
-				$(".hpay_box").removeClass("active");
-				hpayBox.addClass("active");
-			});
-		});
-		// E: 2022-05-11 H.Point Pay 카드, 계좌 선택 추가
-		if ("${mid ne null }") {
-			if ($("#fregInfoTit").length > 0) {
-				$("#fregInfoTit").addClass("open");
-				$(".gift_list").show();
-			}
-			$(".cont_item").hide();
-			$(".tab_square > li:first").addClass("ui-tabs-active").show();
-			$(".tab_square > li:first").parent().addClass("ui-tabs-active");
-			var strArray = $(".tab_square > li:first > a").prop('id')
-					.split('_');
-			var strId = '#' + strArray[1] + '_' + strArray[2];
-			if ("#rcnt_0" === strId) {
-				$("#payway_tab_01").show();
-			} else {
-				$(strId).show();
-			}
-			$("#settInfoTit").addClass("open");
-			$(".payment_method").show();
+
+$(function() {
+	$('.ui-widget-overlay').on('click', function() {
+		$('#dialog').dialog('close');
+	})
+	$(".accordion_box").hide()
+	$(".open .accordion_box").show();
+	
+	$(".accordion .title .btn").on("click", function() {
+		if ($(this).parents(".accordion li").hasClass("open")) {
+			$(this).parents(".accordion li").removeClass("open");
+			$(this).parent().siblings().slideUp(200)
 		} else {
-			$(".cont_item").hide();
-			$(".tab_square > li:first").addClass("ui-tabs-active").show();
-			$(".tab_square > li:first").parent().addClass("ui-tabs-active");
-			var strArray = $(".tab_square > li:first > a").prop('id')
-					.split('_');
-			var strId = '#' + strArray[1] + '_' + strArray[2];
+			$(this).parents(".accordion li").addClass("open");
+			$(this).parent().siblings().slideDown(200)
+		}
+	});
+	$(".discount_list .details").hide()
+	$(".discount_list .btn").on("click", function() {
+		if ($(".discount_list").hasClass("open")) {
+			$(".discount_list").removeClass("open");
+			$(".discount_list .details").slideUp(200)
+		} else {
+			$(".discount_list").addClass("open");
+			$(".discount_list .details").slideDown(200)
+		}
+	});
+
+	if ("${mid ne null }") {
+		if ($("#fregInfoTit").length > 0) {
+			$("#fregInfoTit").addClass("open");
+			$(".gift_list").show();
+		}
+		$(".cont_item").hide();
+		$(".tab_square > li:first").addClass("ui-tabs-active").show();
+		$(".tab_square > li:first").parent().addClass("ui-tabs-active");
+		var strArray = $(".tab_square > li:first > a").prop('id')
+				.split('_');
+		var strId = '#' + strArray[1] + '_' + strArray[2];
+		if ("#rcnt_0" === strId) {
+			$("#payway_tab_01").show();
+		} else {
 			$(strId).show();
 		}
-		if ($("#sbagUseYn").length > 0) {
-			$("#sbagUseYn > a:first").click();
-		}
-		if ("${mid ne null }") {
-			$(".payway-swiper")
-					.each(
-							function(index, element) {
-								var $this = $(this);
-								$this.addClass("instance-swipwe-" + index);
-								var ProductModuleSwiper = new Swiper(
-										".instance-swipwe-" + index,
-										{
-											slidesPerView : "auto",
-											slidesPerView : 1.5,
-											loop : false,
-											observer : true,
-											observeParents : true,
-											centeredSlides : true,
-											on : {
-												slideChange : function() {
-													setTimeout(
-															function() {
-																if (checkSettGrpDoma()[0] == "001") {
-																	getIstmMonsList(
-																			'',
-																			'001',
-																			'rcnt',
-																			'001',
-																			checkSettGrpDoma()[1]);
-																}
-															}, 100);
-												}
-											},
-										});
-							});
-		}
-		setTimeout(function() {
-		}, 100);
-		$(".loadProgBar").css("display", "none");
-	})
-	$(document).on("click", ".card_discount .chk input", function() {
-		if ($(this).is(":checked")) {
-			$(".card_discount li").removeClass("checked");
-			$(this).next().parent("li").addClass("checked");
-		}
-	});
-	$(document).on("click", ".easypayment .item", function() {
-		$(this).addClass("active").siblings().removeClass("active");
-	});
-	$(document)
-			.on(
-					"click",
-					".otherpayment .chk input[type='radio']",
-					function() {
-						if ($(this).is(":checked")) {
-							$(".otherpayment .item").removeClass("checked");
-							$(this).next().parent().parent(".item").addClass(
-									"checked");
-						}
-					});
+		$("#settInfoTit").addClass("open");
+		$(".payment_method").show();
+	}
+	
+})
+
+$(document).on("click", ".easypayment .item", function() {
+	$(this).addClass("active").siblings().removeClass("active");
+});
+
 </script> </main>
 <!-- // container -->
 <script src="https://js.tosspayments.com/v1/payment"></script>
 
 <script type="text/javascript">
+
 function tab_change(el){
 	$('#settGrpDoma_005_1').closest("li").removeClass('ui-tabs-active');
 	$('#settGrpDoma_001_2').closest("li").removeClass('ui-tabs-active');
@@ -1205,14 +619,6 @@ function tab_change(el){
 			}
 		}
 	$(document).ready(function() {
-		// 다이얼로그 초기화
-		$("#seller_information").dialog({
-			autoOpen : false,
-			resizable : false,
-			width : 400,
-			maxHeight : 340,
-			modal : true
-		});
 		
 		$('input[name="total_bill_dollar"]').val(parseFloat("${cartprice}").toFixed(2));
 		$('input[name="total_bill_won"]').val((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")).toFixed(0));
@@ -1233,10 +639,7 @@ function tab_change(el){
 		$('.totalRsvg').text("${mhdiscount}"+"%");
 		$("input[name='mhpoint']").val(parseFloat("${member.mhpoint}").toFixed(2));
 		$('.mhpoint').text(priceComma((parseFloat("${member.mhpoint}"))));
-		$(".exceptDc.dcInfo").text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")).toFixed(0)));
-		
-		
-		
+		$(".exceptDc.dcInfo").text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")).toFixed(0)));		
 	});
 	
 	jQuery.fn.center = function () {
@@ -1245,14 +648,11 @@ function tab_change(el){
 	    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
 	    return this;
 	}
+	
 	function showpopup(){
 		$("#settInfoLayerPopupmodal").show();
 		$("#settInfoLayerPopupmodal").center();
 		$("#Mask").show();
-	}
-	
-	function moveToMain() {
-		location.href = ctx_shop + '/dm/main.do';
 	}
 	
 	function priceComma(price) {
@@ -1293,7 +693,7 @@ function tab_change(el){
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
 	var isallchecked=false;
 	function allUseSvmtClick(){
-		var won_totalSettKrw=($('input[name="totalDcKrw"]')).toFixed(0);
+		var won_totalSettKrw=(parseFloat($('input[name="totalDcKrw"]').val())).toFixed(0);
 		var mhpoint=(parseFloat("${member.mhpoint}")).toFixed(0);
 		if(isallchecked){
 			$('input[name="totalDcKrw"]').val(parseInt($('input[name="totalDcKrw"]').val())-parseInt($('input[name="svmtAmtInput"]').val()));
@@ -1342,13 +742,15 @@ function tab_change(el){
 	}
 	
 	var cid="";
+	var isUsedChecked=false;
 	$("input[name='pmptUseSvmtUseYn']").on('click', function() {
 		
-		 cid=$(this).attr("id");
+		cid=$(this).attr("id");
 		
 		var totalprice=parseInt($('input[name="totalDcKrw"]').val());
 		var totaldollarprice=parseFloat($('input[name="totalDcUsd"]').val()).toFixed(2);
-		if($(this).val()!='N'){
+		
+		if($(this).val()!='N' && isUsedChecked==false){
 				var discountwonprice=($('input[name="total_bill_won"]').val()*($(this).val()/100)).toFixed(0);
 				var discountdollarprice=($('input[name="total_bill_dollar"]').val()*($(this).val()/100)).toFixed(2);
 			    var won_result=totalprice+parseInt(discountwonprice);
@@ -1365,10 +767,9 @@ function tab_change(el){
 			 	$('.totalSettUsd').text("$"+priceComma(totaldollarpay));
 			 	$('input[name="wontotalSettKrw"]').val(totalwonpay);
 			 	$('.won.totalSettKrw').text(priceComma(totalwonpay)+"원");
-			 	
-			 	
+			 	isUsedChecked=true;
 				
-		}else{
+		}else if($(this).val()=='N'){
 			 
 			 var discountwonprice= $('input[name="coupondiscount"]').val();
 			 var discountdollarprice=(parseFloat(discountwonprice)/parseFloat("${KRW_WON}")).toFixed(2);
@@ -1386,20 +787,11 @@ function tab_change(el){
 		 	 $('.totalSettUsd').text("$"+priceComma(totaldollarpay));
 		 	 $('input[name="wontotalSettKrw"]').val(totalwonpay);
 		 	 $('.won.totalSettKrw').text(priceComma(totalwonpay)+"원");
-			
+		 	 isUsedChecked=false;
 		}
-	   // 체크된 Radio 버튼의 값을 가져옵니다.
 	    
 	});
-	
-/* 	if($("input[name='svmtAmt']").val()!=''){
-		console.log('exceptmhpoint');
-		$('.exceptmhpoint').text($("input[name='svmtAmt']").val());
-	} */
-	
-	((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0)
-
-	
+		
 	function orderexec(){
 		
 		if(!$('#chkAgree').is(':checked')){

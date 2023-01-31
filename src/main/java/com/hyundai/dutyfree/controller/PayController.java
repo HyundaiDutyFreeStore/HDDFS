@@ -71,6 +71,8 @@ import oracle.jdbc.diagnostics.DemultiplexingLogHandler;
  * 2023.01.20    박진수                        최초 생성
  * 2023.01.20    박진수                        지불 구현
  * 2023.01.21    김찬중                        결제 완료 시 qr 코드 전송 구현
+ * 2023.01.25    박진수                        결제 취소
+ * 
  *        </pre>
  */
 @Controller
@@ -290,7 +292,7 @@ public class PayController {
 					+ "                        <dl style=\"float:left;width:30%;padding:0;margin:0\"><dt style=\"padding:0;margin:0;color:#333;font-size:13px;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">· 상담시간</dt><dd style=\"padding:0 0 0 10px;margin:3px 0 0 0;color:#666;font-size:13px;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">08:00~22:30</dd></dl>\n"
 					+ "                    </div>\n" + "                </div>\n"
 					+ "                <div style=\"margin-top:30px;text-align:center\">\n"
-					+ "                    <a href=\"https://localhost:8080/\" target=\"_blank\" style=\"display:inline-block;padding:18px 20px;min-:160px;font-size:16px;color:#fff;text-align:center;font-family:'나눔고딕', '맑은 고딕', 'dotum', 'applesdgothicneo';letter-spacing:-.05em;text-decoration:none;background-color:#c51315\" rel=\"noreferrer noopener\">현대백화점인터넷면세점</a>\n"
+					+ "                    <a href=\"http://localhost:8080\" target=\"_blank\" style=\"display:inline-block;padding:18px 20px;min-:160px;font-size:16px;color:#fff;text-align:center;font-family:'나눔고딕', '맑은 고딕', 'dotum', 'applesdgothicneo';letter-spacing:-.05em;text-decoration:none;background-color:#c51315\" rel=\"noreferrer noopener\">현대백화점인터넷면세점</a>\n"
 					+ "                </div>\n" + "            </div>\n" + "        </div>\n"
 					+ "        <div style=\"padding:30px;border:1px solid #e6e6e6;background-color:#fafafa\">\n"
 					+ "            <p style=\"padding:0;margin:0;color:#999;font-size:13px;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">본 메일은 발신전용으로 회신되지 않습니다. 궁금하신 사항은 [<a href=\"https://www.hddfs.com/shop/om/consmComm/main.do\" target=\"_blank\" style=\"color:#000\" rel=\"noreferrer noopener\">여기</a>]를 클릭하여 문의해 주시기 바랍니다.<br><span style=\"font-size:11px\">If you have questions, Please contact us by clicking <a href=\"https://www.hddfs.com/shop/om/consmComm/main.do\" target=\"_blank\" style=\"color:#000\" rel=\"noreferrer noopener\">here.</a></span></p>\n"

@@ -14,13 +14,14 @@ import com.hyundai.dutyfree.vo.ProductVO;
 /**
  * ProductServiceImpl
  * 
- * @author 김가희
+ * @author 김가희,박진수
  * @since 01.11
  * 
  *        
  * 수정일                 수정자                              수정내용
  * ----------  ---------------  ---------------------------
  * 2023.01.11    김가희                        최초 생성
+ * 2023.01.12    박진수                        상품 상세 조회 추가       
  *        
  */
 
@@ -61,6 +62,7 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.getSmallCategory(cmedium);
 	}
 	
+	//상품 상세 조회
 	@Override
 	public ProductVO productdetail(String pcode) {
 		return mapper.productdetail(pcode);
