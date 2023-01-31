@@ -108,7 +108,7 @@
 								</tr>
 							</tfoot>
 							<tbody>
-								<c:forEach items="${prodList}" var="prod">
+								<c:forEach items="${prodList}" var="prod" varStatus="vs">
 									<tr>
 										<td>${prod.pcode}</td>
 										<td>${prod.pbrand}</td>
@@ -119,7 +119,7 @@
 										<td>${prod.psel}</td>
 										<td><fmt:formatDate value="${prod.pregdate}"
 												pattern="yyyy-MM-dd" /></td>
-										<td><a href="javascript:modifyModal('${prod.pcode}','${prod.pbrand}','${prod.pname}','${prod.pprice}','${prod.pdiscount}','${prod.pstock}');"
+										<td><a href="javascript:modifyModal('${vs.index}','${prod.pcode}','${prod.pbrand}','${prod.pname}','${prod.pprice}','${prod.pdiscount}','${prod.pstock}');"
 											class="btn btn-info btn-circle btn-sm"> <i
 												class="fas fa-info-circle"></i>
 										</a> <a href="javascript:deleteProduct('${prod.pcode}');"
@@ -127,7 +127,7 @@
 												class="fas fa-trash"></i>
 										</a></td>
 									</tr>
-									<div class="modal fade" id="testModal" tabindex="-1"
+									<div class="modal fade" id="testModal${vs.index}" tabindex="-1"
 										role="dialog" aria-labelledby="exampleModalLabel"
 										aria-hidden="true">
 										<div class="modal-dialog" role="document">
@@ -139,7 +139,7 @@
 														<span aria-hidden="true">X</span>
 													</button>
 												</div>
-												<div class="modal-body">
+												<div class="modal-body" id="modal-body${vs.index}">
 														<div class="mb-3">
 															<label for="exampleInputEmail1" class="form-label">상품코드</label> 
 															<input type="text" class="form-control" id="pcode" readonly>
@@ -166,7 +166,7 @@
 														</div>
 												</div>
 												<div class="modal-footer">
-													<a class="btn" id="modalY" onclick="updateProd();">수정</a>
+													<a class="btn" id="modalY" onclick="updateProd('${vs.index}','${prod.pstock}');">수정</a>
 													<button class="btn" type="button" data-dismiss="modal">취소</button>
 												</div>
 											</div>
@@ -252,6 +252,12 @@
 <script src="/resources/admin/js/demo/datatables-demo.js"></script>
 
 <script>
+	const csrfHeaderName = "${_csrf.headerName}";
+	const csrfTokenValue = "${_csrf.token}";
+	$(document).ajaxSend(function (e, xhr, options) {
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	});
+	
 	//상품삭제
 	function deleteProduct(pcode) {
 		console.log("상품삭제함수");
@@ -271,7 +277,7 @@
 	}
 
 	//상품수정
-	function modifyModal(pcode,pbrand,pname,pprice,pdiscount,pstock) {
+	function modifyModal(mn,pcode,pbrand,pname,pprice,pdiscount,pstock) {
 		console.log(pcode+ "수정모달 띄우기");
 		 $(".modal-body #pcode").val(pcode);
 		 $(".modal-body #pbrand").val(pbrand);
@@ -279,22 +285,28 @@
 		 $(".modal-body #pprice").val(pprice);
 		 $(".modal-body #pdiscount").val(pdiscount);
 		 $(".modal-body #pstock").val(pstock);
-		$('#testModal').modal("show");
+		$('#testModal'+mn).modal("show");
 	}
 	
 	//상품수정 함수
-	function updateProd(){
-		var pcode = $(".modal-body #pcode").val();
-		var pprice = $(".modal-body #pprice").val();
-		var pdiscount = $(".modal-body #pdiscount").val();
-		var pstock = $(".modal-body #pstock").val();
+	function updateProd(mn,stock){
+		console.log("재고: "+stock);
+		
+		var pcode = $("#modal-body"+mn+" #pcode").val();
+		var pprice = $("#modal-body"+mn+" #pprice").val();
+		var pdiscount = $("#modal-body"+mn+" #pdiscount").val();
+		var pstock = $("#modal-body"+mn+" #pstock").val();
 		
 		console.log(pcode+ "상품수정 들어옴");
+		console.log("수정재고: "+pstock);
+		console.log("수정할인율: "+pdiscount);
 		//pprice = parseFloat(pprice);
+		stock = parseInt(stock);
 		pdiscount = parseInt(pdiscount);
 		pstock = parseInt(pstock);
 		
 		if (confirm("품번: "+pcode+"해당 상품을 수정하시겠습니까?") == true) {
+			
 			$.ajax({
 				url : "/product/update",
 				type : "get",
@@ -307,10 +319,28 @@
 				success : function() {
 					console.log("상품수정완료");
 					$('#testModal').modal("hide");
-					location.reload();
+					//location.reload();
 					//location.href = "/cart/cartList";
 				}
 			});
+			
+			if(stock==0){
+				console.log("수정전 재고 0");
+				if(pstock>0){
+					console.log("입고알림하자아");
+					$.ajax({
+						url : "/alarm/sendSms",
+						type : "post",
+						data : {
+							pcode : pcode
+						},
+						success : function() {
+							console.log("메세지전송완료");
+						}
+					});
+				}
+			}
+			location.reload();
 		}
 	}
 </script>
