@@ -421,3 +421,4 @@
 		openPopup('', 'cartGoosCdDetail', goosCd, '', '', '', '', '');
 	}
 </script> </main>
+<%@ include file="../common/Footer.jsp"%>
