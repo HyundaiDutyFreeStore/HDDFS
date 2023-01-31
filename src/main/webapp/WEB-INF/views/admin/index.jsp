@@ -43,7 +43,7 @@
 									<div
 										class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 										일매출</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800" id="totaldailysales">$${todaysales}</div>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -61,8 +61,8 @@
 								<div class="col mr-2">
 									<div
 										class="text-xs font-weight-bold text-success text-uppercase mb-1">
-										판매량</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+										주간매출</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">$${weeklysales}</div>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -83,14 +83,7 @@
 										회원 수</div>
 									<div class="row no-gutters align-items-center">
 										<div class="col-auto">
-											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-										</div>
-										<div class="col">
-											<div class="progress progress-sm mr-2">
-												<div class="progress-bar bg-info" role="progressbar"
-													style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-													aria-valuemax="100"></div>
-											</div>
+											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${cnttotal}명</div>
 										</div>
 									</div>
 								</div>
@@ -151,12 +144,22 @@
 								<canvas id="categoryTotalChart"></canvas>
 							</div>
 							<div class="mt-4 text-center small">
-								<span class="mr-2"> <i class="fas fa-circle text-primary"></i>
-									Direct
+								<span class="mr-2"> <i class="fas fa-circle text-bag"></i>
+									가방/지갑
 								</span> <span class="mr-2"> <i
-									class="fas fa-circle text-success"></i> Social
-								</span> <span class="mr-2"> <i class="fas fa-circle text-info"></i>
-									Referral
+									class="fas fa-circle text-makeup"></i> 메이크업
+								</span> <span class="mr-2"> <i class="fas fa-circle text-skincare"></i>
+									스킨케어
+								</span><span class="mr-2"> <i class="fas fa-circle text-sport"></i>
+									스포트/레저
+								</span> <br> <span class="mr-2"> <i
+									class="fas fa-circle text-food"></i> 식품
+								</span><span class="mr-2"> <i class="fas fa-circle text-electronic"></i>
+									전자리빙
+								</span><span class="mr-2"> <i class="fas fa-circle text-fasion"></i>
+									패션/잡화
+								</span><span class="mr-2"> <i class="fas fa-circle text-pufume"></i>
+									향수/헤어/바디
 								</span>
 							</div>
 						</div>
@@ -178,18 +181,26 @@
 						<div class="card-body">
 
 							<h4 class="small font-weight-bold">
-								Customer Database <span class="float-right">60%</span>
+								남성 <span class="float-right">${cntm}%</span>
 							</h4>
 							<div class="progress mb-4">
-								<div class="progress-bar" role="progressbar" style="width: 60%"
-									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar" role="progressbar" style="width: ${cntm}%"
+									aria-valuenow="${cntm}" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 							<h4 class="small font-weight-bold">
-								Payout Details <span class="float-right">80%</span>
+								여성 <span class="float-right">${cntw}%</span>
 							</h4>
 							<div class="progress mb-4">
-								<div class="progress-bar bg-info" role="progressbar"
-									style="width: 80%" aria-valuenow="80" aria-valuemin="0"
+								<div class="progress-bar bg-danger" role="progressbar"
+									style="width: ${cntw}%" aria-valuenow="${cntw}" aria-valuemin="0"
+									aria-valuemax="100"></div>
+							</div>
+							<h4 class="small font-weight-bold">
+								알수없음 <span class="float-right">${cnta}%</span>
+							</h4>
+							<div class="progress mb-4">
+								<div class="progress-bar bg-warning" role="progressbar"
+									style="width: ${cnta}%" aria-valuenow="${cnta}" aria-valuemin="0"
 									aria-valuemax="100"></div>
 							</div>
 						</div>
@@ -201,17 +212,14 @@
 					<!-- Illustrations -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+							<h6 class="m-0 font-weight-bold text-primary">CopyRight</h6>
 						</div>
 						<div class="card-body">
 							<p>
-								Add some quality, svg illustrations to your project courtesy of
-								<a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>,
-								a constantly updated collection of beautiful svg images that you
-								can use completely free and without attribution!
+								현대 IT&E 5기 현면하다 팀의 최종 프로젝트 인도부터 결제까지 편리한 면세점입니다. 팀의 <a target="_blank" rel="nofollow" href="https://colding97.atlassian.net/jira/">개발과정</a>과 
+								<a target="_blank" rel="nofollow" href="https://github.com/HyundaiDutyFreeStore/HDDFS">gitHub</a>가 궁금하시다면 저희 사이트를 방문해 주세요!
+								
 							</p>
-							<a target="_blank" rel="nofollow" href="https://undraw.co/">Browse
-								Illustrations on unDraw &rarr;</a>
 						</div>
 					</div>
 				</div>
@@ -250,7 +258,6 @@
 		});
 
 		function getDaily() {
-			console.log("getDaily");
 			let odateList = [];
 			let totalList = [];
 
@@ -267,7 +274,7 @@
 							for (let i = 0; i < data.length; i++) {
 								odateList.push(data[i].odate);
 								totalList.push(data[i].total);
-								console.log(data[i]);
+								totaldailysales += data[i].total;
 							}
 							new Chart(
 									document.getElementById("dailyTotalChart"),
@@ -345,7 +352,6 @@
 					})
 		}
 		function getCategory() {
-			console.log("getCategory");
 			let catList = [];
 			let ccntList = [];
 
@@ -361,7 +367,6 @@
 					for (let i = 0; i < data.length; i++) {
 						catList.push(data[i].cat);
 						ccntList.push(data[i].ccnt);
-						console.log(data[i]);
 					}
 					new Chart(document.getElementById("categoryTotalChart"), {
 						type : 'doughnut',
@@ -369,12 +374,12 @@
 							labels : catList, // X축 
 							datasets : [ {
 								data : ccntList,
-								backgroundColor : [ '#4e73df', '#1cc88a',
-										'#36b9cc', '#4e73df', '#1cc88a',
-										'#36b9cc', '#4e73df', '#1cc88a' ],
-								hoverBackgroundColor : [ '#2e59d9', '#17a673',
-										'#2c9faf', '#2e59d9', '#17a673',
-										'#2c9faf', '#2e59d9', '#17a673' ],
+								backgroundColor : [ '#08306B', '#08519C',
+										'#2171B5', '#6BAED6', '#9ECAE1',
+										'#C6DBEF', '#DEEBF7', '#F9F9F9' ],
+								hoverBackgroundColor : [ '#FCC5C0', '#FA9FB5',
+										'#F768A1', '#DD3497', '#AE017E',
+										'#7A0177', '#7A0177', '#49006A' ],
 								hoverBorderColor : "rgba(234, 236, 244, 1)",
 							} ]
 						},
@@ -383,7 +388,7 @@
 							tooltips : {
 								backgroundColor : "rgb(255,255,255)",
 								bodyFontColor : "#858796",
-								borderColor : '#dddfeb',
+								borderColor : '#FFFFFF',
 								borderWidth : 1,
 								xPadding : 15,
 								yPadding : 15,
