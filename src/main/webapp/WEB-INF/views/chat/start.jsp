@@ -27,8 +27,9 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/smartTalk.css" />
-<link href="https://ssl.pstatic.net/sstatic/keypage/outside/scui/airport_condition/css/cs_airport_condition_211012.css"
-    rel="stylesheet" type="text/css">
+<link
+	href="https://ssl.pstatic.net/sstatic/keypage/outside/scui/airport_condition/css/cs_airport_condition_211012.css"
+	rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
@@ -80,14 +81,12 @@
 									href="javascript:requestAnswer('인도장안내')"><span class="img"><img
 											src="/resources/images/gps.png" alt=""></span><span
 										class="txt">인도장 안내</span></a></li>
-								<li title="시간당 고객수 확인"><a
-									href="javascript:customCnt()"><span
-										class="img"><img src="/resources/images/crowd.png" alt=""></span><span
-										class="txt">시간당 고객수 확인</span></a></li>
-								<li title="1대1 실시간 문의"><a
-									href="javascript:chatStart()"><span
-										class="img"><img src="/resources/images/chatting.png" alt=""></span><span
-										class="txt">1대1 실시간 문의</span></a></li>
+								<li title="시간당 고객수 확인"><a href="javascript:customCnt()"><span
+										class="img"><img src="/resources/images/crowd.png"
+											alt=""></span><span class="txt">시간당 고객수 확인</span></a></li>
+								<li title="1대1 실시간 문의"><a href="javascript:chatStart()"><span
+										class="img"><img src="/resources/images/chatting.png"
+											alt=""></span><span class="txt">1대1 실시간 문의</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -337,7 +336,7 @@
 					console.log("ajax성공");
 					cnt = data.cnt;
 					console.log("현재인원수: "+cnt);
-					var confAnswer = "현재 인원수는 "+cnt+"명 입니다.";
+					var confAnswer = "현재 인원수는 "+cnt+"명<br> 예상 대기시간은 "+Math.floor(cnt/3)*3+"분 입니다.";
 					var template = `<div class="chat-item is-ktalk" style="visibility: visible;">
 		                <div class="bubble has-moving in" style="max-height: 2468px;">
 		                <div class="inner">`

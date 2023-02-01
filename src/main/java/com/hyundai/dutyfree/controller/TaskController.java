@@ -363,17 +363,15 @@ public class TaskController {
 					+ "                                            시간 / 명</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ confuse + "</td>\n" + "                                    </tr>\n" + "\n"
-					+ "<tr>\n" + 
-					"                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n" + 
-					"                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n" + 
-					"                                            실시간 대기자</th>\n" + 
-					"                                        <td\n" + 
-					"                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n" + 
-					"                                            "+ realTimeConfusion() +"명</td>\n" + 
-					"                                    </tr>"
-					+ "                                </tbody>\n" + "                            </table>" + terminal
-					+ Notice + mailFooter;
+					+ confuse + "</td>\n" + "                                    </tr>\n" + "\n" + "<tr>\n"
+					+ "                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n"
+					+ "                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
+					+ "                                            실시간 대기자</th>\n"
+					+ "                                        <td\n"
+					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
+					+ "                                            " + realTimeConfusion() + "명</td>\n"
+					+ "                                    </tr>" + "                                </tbody>\n"
+					+ "                            </table>" + terminal + Notice + mailFooter;
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
@@ -472,7 +470,8 @@ public class TaskController {
 					+ "                                            실시간 대기자</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ realTimeConfusion() + "명</td>\n" + "                                    </tr>\n" + "\n"
+					+ realTimeConfusion() + "명 예상 대기 시간은 " + Math.floor(realTimeConfusion() / 3) * 3 + "분 입니다.</td>\n"
+					+ "                                    </tr>\n" + "\n"
 					+ "                                </tbody>\n" + "                            </table>" + Notice
 					+ mailFooter;
 			try {
