@@ -44,39 +44,6 @@
 </head>
 
 <body>
-
-    <script>
-        //modal set
-        $("#hMallPop").dialog({
-            autoOpen: false,
-            resizable: false,
-            width: 480,
-            maxHeight: 630,
-            modal: true,
-            open: function () {
-                $('.ui-widget-overlay').bind('click', function () {
-                    $('#hMallPop').dialog('close');
-                })
-            }
-        });
-        $('#hMallPop').prev(".ui-dialog-titlebar").hide();
-
-        function modalClose() {
-            $('#hMallPop').dialog('close');
-        };
-
-        function modalOpen() {
-            // Hmall 로그인 팝업 (나중에 공통으로 이동 후 조건 변경)
-            if (!isLogin && getCookie("PTNR_CHL_GBN_KEY") == "00003107" && getCookie("hpointYn") ==
-                "Y") { // Hmall 인입 + 로그인 X + H.Point 회원
-                if (location.href.indexOf("evntDetail") != -1) { // 이벤트 상세(기본형) 진입 시
-                    $("#hMallPop").dialog("open");
-                }
-            }
-        }
-        setTimeout(modalOpen, 1500);
-    </script>
-
     <div class="pop_wrap">
         <h1 class="h1_type">재입고 알림신청 완료</h1>
         <div class="pop_content">
@@ -106,13 +73,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <th scope="row">알림기간</th>
-                            <td>
-                                2023-01-31
-                                ~
-                                2023-02-27</td>
-                        </tr> -->
                         <tr>
                             <th scope="row">휴대폰번호</th>
                             <td>
@@ -140,9 +100,6 @@
             <!-- S : 2017-08-17 modify -->
             <div class="basic_btn_box">
                 <button type="button" class="btn_basic1" onclick="javascript:self.close();">닫기</button>
-                <button type="button" class="btn_basic2"
-                    onclick="location.href='/member/Mypage'; window.close();">신청내역
-                    보기</button>
             </div>
             <!-- E : 2017-08-17 modify -->
         </div>
