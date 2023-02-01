@@ -130,7 +130,7 @@
 
 	<!-- 채팅 -->
 	<beans:bean id="adminHandler" class="com.hyundai.dutyfree.chat.AdminSocketHandler"></beans:bean>
-	<websocket:handlers>
+	<websocket:handlers allowed-origins="*">
 		<websocket:mapping handler="adminHandler" path="/adminsocket"/>
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>

@@ -22,6 +22,18 @@ import com.hyundai.dutyfree.vo.ProductVO;
 
 import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.api.Message;
+/**
+ * AuthController
+ * 
+ * @author 김가희
+ * @since 01.31
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.31   김가희                         최초 생성
+ * 
+ */
 
 @Log4j
 @Controller
@@ -34,6 +46,7 @@ public class AlarmController {
 	@Autowired
 	public ProductService prodService;
 
+	//알람신청페이지 이동
 	@GetMapping(value = "/register")
 	public void prodAlarm(@RequestParam("pcode") String pcode, Principal prin, Model model) throws Exception {
 		System.out.println(prin.getName() + "님이 상품" + pcode + " 에대해 재입고 알림을 신청");
@@ -41,12 +54,15 @@ public class AlarmController {
 		String mphone = "";
 		if (member.getMphone() != null) {
 			mphone = member.getMphone();
+			mphone = mphone.replaceAll("-", "");
+			log.info("입력되있는 mphone: "+mphone);
 		}
 		System.out.println(mphone);
 		model.addAttribute("mphone", mphone);
 		model.addAttribute("pcode", pcode);
 	}
 
+	//실제로 DB에 알람insert
 	@PostMapping(value = "/insert")
 	public void insertAlaram(@RequestParam("pcode") String pcode, @RequestParam("mophNo1") String mphone1,
 			@RequestParam("mophNo2") String mphone2, @RequestParam("mophNo3") String mphone3, Principal prin,
@@ -60,13 +76,14 @@ public class AlarmController {
 		model.addAttribute("mphone", mphone);
 	}
 
+	//재입고 알림 문자전송
 	@PostMapping(value = "/sendSms")
 	public void sendSms(@RequestParam("pcode") String pcode) throws Exception {
-		System.out.println("문자전송옴");
+		log.info("문자전송");
 
 		List<AlarmVO> list = alarmService.getAlarmList(pcode);
 		ProductVO prod = prodService.productdetail(pcode);
-		System.out.println(prod.getPname() + "상품에 대해 재입고 알람전송");
+		log.info(prod.getPname() + "상품에 대해 재입고 알람전송");
 
 		// 문자전송
 		String api_key = "NCSNHVRADOQEC6WK";
@@ -74,22 +91,19 @@ public class AlarmController {
 		Message coolsms = new Message(api_key, api_secret);
 
 		for (AlarmVO vo : list) {
-			System.out.println(vo.getMid() + " " + vo.getMphone());
+			log.info("알람전송-고객ID: "+vo.getMid()+" 고객전화번호: "+vo.getMphone());
 			HashMap<String, String> set = new HashMap<String, String>();
 			set.put("to", vo.getMphone()); // 수신번호
 			set.put("from", "01065433839"); // 발신번호
-			set.put("text", vo.getPcode()+" 상품 재입고 알림입니다."); // 문자내용
+			set.put("text", "[현대백화점 인터넷면세점]"+prod.getPname()+" 상품 재입고 알림입니다."); // 문자내용
 			set.put("type", "sms"); // 문자 타입
 			set.put("app_version", "test app 1.2");
-
-			System.out.println(set);
-
+			
+			//문자전송
 			JSONObject obj = (JSONObject) coolsms.send(set);
-			System.out.println(obj.toString());
+			log.info("문자내역: "+set);
 		}
 
-		
-		
 	}
 
 }
