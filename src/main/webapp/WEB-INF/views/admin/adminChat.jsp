@@ -105,7 +105,8 @@
 
 
 	<script>
-	const adminsocket = new SockJS('http://localhost:8080/adminsocket');
+	//const adminsocket = new SockJS('http://localhost:8080/adminsocket');
+	const adminsocket = new SockJS('/adminsocket');
 	//const adminsocket = new SockJS('http://192.168.0.24:8080/adminsocket');
 	adminsocket.onopen = function() {
 		console.log("소켓열림");

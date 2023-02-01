@@ -141,7 +141,7 @@
             <div class="basic_btn_box">
                 <button type="button" class="btn_basic1" onclick="javascript:self.close();">닫기</button>
                 <button type="button" class="btn_basic2"
-                    onclick="opener.location.href='https://www.hddfs.com/shop/mm/myOrder/listAginRecpNtc.do'; window.close();">신청내역
+                    onclick="location.href='/member/Mypage'; window.close();">신청내역
                     보기</button>
             </div>
             <!-- E : 2017-08-17 modify -->
