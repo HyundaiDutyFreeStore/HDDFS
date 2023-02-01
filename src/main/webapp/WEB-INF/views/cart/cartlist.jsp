@@ -13,9 +13,9 @@
 <section class="cart_wrap">
 <input type="hidden" id="checkedCartSeq" value=""> <input type="hidden" id="checkedCartSetId" value=""> <input type="hidden" id="buyNow" value=""><input type="hidden" id="buyNowSetGoosId" value=""><input type="hidden" id="chkPspt" value="0"> <input type="hidden" id="chkDpat" value="0"> <input type="hidden" id="buyNowType" value=""> <input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input type="hidden" id="adtAucaYn" value="N"> <ul class="title_tab">
 <li class="on" id="tabDpat">장바구니</li>
-<li>여권정보</li>
-<li>출국정보</li>
-<li>주문결제</li>
+<li style="color: black;">여권정보</li>
+<li style="color: black;">출국정보</li>
+<li style="color: black;">주문결제</li>
 </ul>
 <div class="cart_contens">
 <div class="cont_left" id="CART" style="display: block;">

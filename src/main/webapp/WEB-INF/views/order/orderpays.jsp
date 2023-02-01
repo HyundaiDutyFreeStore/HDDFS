@@ -25,9 +25,9 @@
 	<article id="content">
 		<section class="orderpayment_wrap">
 			<ul class="title_tab">
-				<li>장바구니</li>
-				<li>여권정보</li>
-				<li>출국정보</li>
+				<li style="color: black;">장바구니</li>
+				<li style="color: black;">여권정보</li>
+				<li style="color: black;">출국정보</li>
 				<li><strong class="on" id="tabOrder">주문결제</strong></li>
 			</ul>
 			<div class="payment_board">
