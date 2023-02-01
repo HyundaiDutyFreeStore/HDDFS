@@ -9,6 +9,7 @@ import com.hyundai.dutyfree.mapper.ChartMapper;
 import com.hyundai.dutyfree.vo.ChartCategoryVO;
 import com.hyundai.dutyfree.vo.ChartDailyVO;
 import com.hyundai.dutyfree.vo.ChartMemberVO;
+import com.hyundai.dutyfree.vo.ChartVisiterVO;
 
 /**
  * ChartServiceImpl
@@ -46,4 +47,9 @@ public class ChartServiceImpl implements ChartService {
 	public List<ChartCategoryVO> categoryTotal() {
 		return mapper.categoryTotal();
 	}
+	// 일일방문자수 종합
+	@Override
+	public List<ChartVisiterVO> cntTodayVisiter(){
+		return mapper.cntTodayVisiter();
+	};
 }

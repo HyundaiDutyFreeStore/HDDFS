@@ -25,6 +25,7 @@ import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.ChartCategoryVO;
 import com.hyundai.dutyfree.vo.ChartDailyVO;
 import com.hyundai.dutyfree.vo.ChartMemberVO;
+import com.hyundai.dutyfree.vo.ChartVisiterVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
@@ -177,6 +178,7 @@ public class AdminController {
 	public void forChart(Model model) throws Exception {
 		List<ChartMemberVO> cntMember = chartService.cntMember();
 		List<ChartDailyVO> cntTotal = chartService.dailyTotal();
+		List<ChartVisiterVO> cntVisiter = chartService.cntTodayVisiter();
 		float cntm = 0;
 		float cntw = 0;
 		float cnta = 0;
@@ -212,6 +214,7 @@ public class AdminController {
 		model.addAttribute("cnttotal", (int)total);
 		model.addAttribute("todaysales", Math.round(todaysales));
 		model.addAttribute("weeklysales", Math.round(weeklysales));
+		model.addAttribute("cntVisiter", cntVisiter.get(0).getVisitcnt());
 	}
 
 	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)
