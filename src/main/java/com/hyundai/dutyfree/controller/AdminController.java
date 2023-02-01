@@ -1,6 +1,8 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +63,10 @@ public class AdminController {
 
 	@Autowired
 	private ChartService chartService;
+	
+	LocalDateTime  now = LocalDateTime .now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
+	String formatedNow = now.format(formatter);
 
 	/*
 	 * //메인으로 이동(임시2)
@@ -196,8 +202,9 @@ public class AdminController {
 		double todaysales = 0;
 		double weeklysales = 0;
 		for(int i=0;i<cntTotal.size();i++) {
-			todaysales = cntTotal.get(i).getTotal();
-			weeklysales += todaysales;
+			if(cntTotal.get(i).getOdate().equals(formatedNow))
+				todaysales = cntTotal.get(i).getTotal();
+			weeklysales += cntTotal.get(i).getTotal();
 		}
 		model.addAttribute("cntm", Math.round(cntm/total*100));
 		model.addAttribute("cntw", Math.round(cntw/total*100));
