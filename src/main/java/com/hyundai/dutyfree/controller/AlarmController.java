@@ -41,6 +41,8 @@ public class AlarmController {
 		String mphone = "";
 		if (member.getMphone() != null) {
 			mphone = member.getMphone();
+			mphone = mphone.replaceAll("-", "");
+			log.info("입력되있는 mphone: "+mphone);
 		}
 		System.out.println(mphone);
 		model.addAttribute("mphone", mphone);
@@ -88,8 +90,6 @@ public class AlarmController {
 			System.out.println(obj.toString());
 		}
 
-		
-		
 	}
 
 }
