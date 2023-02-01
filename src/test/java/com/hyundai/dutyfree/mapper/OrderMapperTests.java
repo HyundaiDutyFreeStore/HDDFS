@@ -61,7 +61,7 @@ public class OrderMapperTests {
 		ordermapper.insertPassport(passport);
 	}
 	
-	//여권정보 조회 테스트
+	//여권정보 조회하는 테스트
 	@Test
 	public void PassportConsist() {
 			

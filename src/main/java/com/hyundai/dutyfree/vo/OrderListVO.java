@@ -30,7 +30,7 @@ public class OrderListVO {
 	private String oelnum;
 	private String odept;
 	private List<OrderItemVO> orderitemlist;
-	private float ototal;
+	private double ototal;
 	private float ordertotaldisprice;
 	private String opaymentkey;
 }

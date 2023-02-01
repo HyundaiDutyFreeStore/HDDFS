@@ -41,7 +41,7 @@ public interface OrderService {
 	public void Inserorderitem(String pcode, int oamount,String oid);
 	
 	//주문리스트 정보를 등록
-	public void Insertorderlist(String oid,String mid,int ohpoint,String ostatus,String odeptdate,String oplnum,String oelnum, String oplace ,float total_dollar);
+	public void Insertorderlist(String oid,String mid,int ohpoint,String ostatus,String odeptdate,String oplnum,String oelnum, String oplace ,double total_dollar);
 	
 	//회원의 적립금 및 포인트를 수정
 	public void updateTotalandMhpoint(String mid,int mhpoint,int mtotal);
