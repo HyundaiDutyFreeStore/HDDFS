@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
 	//주문리스트 정보를 등록
 	@Override
 	public void Insertorderlist(String oid, String mid, int ohpoint, String ostatus, String odeptdate, String oplnum,
-			String oelnum, String oplace,float total_dollar) {
+			String oelnum, String oplace,double total_dollar) {
 		OrderListVO olv = new OrderListVO();
 		olv.setOid(oid);
 		olv.setMid(mid);
