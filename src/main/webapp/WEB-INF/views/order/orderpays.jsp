@@ -586,10 +586,18 @@ function tab_change(el){
 	function enrollsavings(e){
 		console.log($("input[name='svmtAmt']").val());
 		var mhpoint=(parseFloat("${member.mhpoint}"));
-		if(parseFloat($("input[name='svmtAmt']").val())>mhpoint){
-			alert('적립금이 부족합니다.');
-			$("input[name='svmtAmt']").val("");
-			return false;
+		var won_totalSettKrw=(parseFloat($('input[name="wontotalSettKrw"]').val())).toFixed(0);
+		if(mhpoint>won_totalSettKrw){
+			if(parseFloat($("input[name='svmtAmt']").val())>won_totalSettKrw*0.1){
+				alert('적립금을 사용할 수 없습니다.');
+				return false;
+			}
+		}else{
+			if(parseFloat($("input[name='svmtAmt']").val())>mhpoint){
+				alert('적립금이 부족합니다.');
+				$("input[name='svmtAmt']").val("");
+				return false;
+			}
 		}
 		if(e.keyCode==13){
 
