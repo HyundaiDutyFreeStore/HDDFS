@@ -80,10 +80,10 @@
 								<div class="col mr-2">
 									<div
 										class="text-xs font-weight-bold text-info text-uppercase mb-1">총
-										회원 수</div>
+										회원 수 / 금일 방문자</div>
 									<div class="row no-gutters align-items-center">
 										<div class="col-auto">
-											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${cnttotal}명</div>
+											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${cnttotal}명 / ${cntVisiter}명</div>
 										</div>
 									</div>
 								</div>

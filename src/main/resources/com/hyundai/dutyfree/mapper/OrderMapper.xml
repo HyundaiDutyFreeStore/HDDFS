@@ -77,7 +77,7 @@
 		hours
 		FROM orderlist a
 		WHERE a.odeptdate BETWEEN to_date(#{odeptdate}, 'YYYYMMDD') AND to_date(#{odeptdate}, 'YYYYMMDD') +  0.99999 
-		AND a.odept=#{odept} AND a.ostatus in ('pay_complete', 'on_delivery', 'deliver_complete', 'fail_delivery')
+		AND a.odept=#{odept} AND a.ostatus in ('pay_complete', 'on_delivery', 'delivery_complete', 'fail_delivery')
 		GROUP BY
 		TO_CHAR ( a.odeptdate, 'HH24' )
 		) a
