@@ -1,6 +1,8 @@
 package com.hyundai.dutyfree.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,7 @@ import com.hyundai.dutyfree.service.ProductService;
 import com.hyundai.dutyfree.vo.ChartCategoryVO;
 import com.hyundai.dutyfree.vo.ChartDailyVO;
 import com.hyundai.dutyfree.vo.ChartMemberVO;
+import com.hyundai.dutyfree.vo.ChartVisiterVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
@@ -61,6 +64,10 @@ public class AdminController {
 
 	@Autowired
 	private ChartService chartService;
+	
+	LocalDateTime  now = LocalDateTime .now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
+	String formatedNow = now.format(formatter);
 
 	/*
 	 * //메인으로 이동(임시2)
@@ -171,6 +178,7 @@ public class AdminController {
 	public void forChart(Model model) throws Exception {
 		List<ChartMemberVO> cntMember = chartService.cntMember();
 		List<ChartDailyVO> cntTotal = chartService.dailyTotal();
+		List<ChartVisiterVO> cntVisiter = chartService.cntTodayVisiter();
 		float cntm = 0;
 		float cntw = 0;
 		float cnta = 0;
@@ -196,8 +204,9 @@ public class AdminController {
 		double todaysales = 0;
 		double weeklysales = 0;
 		for(int i=0;i<cntTotal.size();i++) {
-			todaysales = cntTotal.get(i).getTotal();
-			weeklysales += todaysales;
+			if(cntTotal.get(i).getOdate().equals(formatedNow))
+				todaysales = cntTotal.get(i).getTotal();
+			weeklysales += cntTotal.get(i).getTotal();
 		}
 		model.addAttribute("cntm", Math.round(cntm/total*100));
 		model.addAttribute("cntw", Math.round(cntw/total*100));
@@ -205,6 +214,7 @@ public class AdminController {
 		model.addAttribute("cnttotal", (int)total);
 		model.addAttribute("todaysales", Math.round(todaysales));
 		model.addAttribute("weeklysales", Math.round(weeklysales));
+		model.addAttribute("cntVisiter", cntVisiter.get(0).getVisitcnt());
 	}
 
 	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)

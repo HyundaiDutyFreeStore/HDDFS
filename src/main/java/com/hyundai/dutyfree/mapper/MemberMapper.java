@@ -45,5 +45,6 @@ public interface MemberMapper {
 
 	// 회원정보수정
 	public void updateMhpoint(MemberVO member);
-
+	// 회원마지막 접속 날짜 수정
+	public void lastlogindate(String mid);
 }

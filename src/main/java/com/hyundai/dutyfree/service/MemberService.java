@@ -44,6 +44,7 @@ public interface MemberService {
     
     public void updateMhpoint(MemberVO member) throws Exception;
 
-	
+    // 회원마지막 접속 날짜 수정
+ 	public void lastlogindate(String mid) throws Exception;
 
 }

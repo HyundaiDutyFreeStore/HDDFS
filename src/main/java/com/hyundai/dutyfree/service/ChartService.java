@@ -5,6 +5,7 @@ import java.util.List;
 import com.hyundai.dutyfree.vo.ChartCategoryVO;
 import com.hyundai.dutyfree.vo.ChartDailyVO;
 import com.hyundai.dutyfree.vo.ChartMemberVO;
+import com.hyundai.dutyfree.vo.ChartVisiterVO;
 
 /**
  * ChartService
@@ -28,4 +29,7 @@ public interface ChartService {
 
 	// 판매 카테고리 종합
 	List<ChartCategoryVO> categoryTotal();
+
+	// 일일방문자수 종합
+	List<ChartVisiterVO> cntTodayVisiter();
 }

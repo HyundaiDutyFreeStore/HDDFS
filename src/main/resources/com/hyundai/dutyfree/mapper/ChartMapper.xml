@@ -32,4 +32,9 @@
 		GROUP BY c.clarge
 		order by 1
 	</select>
+	<select id="cntTodayVisiter"
+		resultType="com.hyundai.dutyfree.vo.ChartVisiterVO">
+		select visitcnt
+		from visiter
+	</select>
 </mapper>
