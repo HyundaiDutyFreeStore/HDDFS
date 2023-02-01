@@ -22,8 +22,8 @@
 		<ul class="title_tab">
 			<li style="color: black">장바구니</li>
 			<li class="on" id="tabDpat">여권정보</li>
-			<li>출국정보</li>
-			<li>주문결제</li>
+			<li style="color: black">출국정보</li>
+			<li style="color: black">주문결제</li>
 		</ul>
 		<div class="cart_contens">
 			<div class="cont_left" id="CART" style="display: none;">
