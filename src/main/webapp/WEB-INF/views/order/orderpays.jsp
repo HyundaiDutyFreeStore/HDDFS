@@ -693,21 +693,21 @@ function tab_change(el){
 	const tossPayments = TossPayments("test_ck_ADpexMgkW36gbJ2kyzpVGbR5ozO0");
 	var isallchecked=false;
 	function allUseSvmtClick(){
-		var won_totalSettKrw=(parseFloat($('input[name="totalDcKrw"]').val())).toFixed(0);
+		var won_totalSettKrw=(parseFloat($('input[name="wontotalSettKrw"]').val())).toFixed(0);
 		var mhpoint=(parseFloat("${member.mhpoint}")).toFixed(0);
 		if(isallchecked){
 			$('input[name="totalDcKrw"]').val(parseInt($('input[name="totalDcKrw"]').val())-parseInt($('input[name="svmtAmtInput"]').val()));
-			$('.mhpoint').text($("input[name='svmtAmt']").val());
-			$('input[name="mhpoint"]').val($("input[name='svmtAmtInput']").val());
+			$('.mhpoint').text(priceComma(parseInt($('input[name="mhpoint"]').val())+parseInt($("input[name='svmtAmtInput']").val())));
+			$('input[name="mhpoint"]').val(parseInt($('input[name="mhpoint"]').val())+parseInt($("input[name='svmtAmtInput']").val()));
 			$("input[name='svmtAmt']").val("0");
 			$("input[name='svmtAmtInput']").val(0);
 			isallchecked=false;
 		}else{
 			if(won_totalSettKrw-mhpoint<0){
-				$("input[name='svmtAmtInput']").val(won_totalSettKrw);
-				$("input[name='svmtAmt']").val(priceComma(won_totalSettKrw));
-				$('.mhpoint').text(priceComma(mhpoint-won_totalSettKrw));
-				$('input[name="mhpoint"]').val(((mhpoint-won_totalSettKrw)/parseFloat("${KRW_WON}")).toFixed(2));
+				$("input[name='svmtAmtInput']").val((won_totalSettKrw*0.1).toFixed(0));
+				$("input[name='svmtAmt']").val(priceComma($("input[name='svmtAmtInput']").val()));
+				$('input[name="mhpoint"]').val((mhpoint-parseInt($("input[name='svmtAmtInput']").val())));
+				$('.mhpoint').text(priceComma($('input[name="mhpoint"]').val()));
 				$('input[name="totalDcKrw"]').val(parseInt($('input[name="svmtAmtInput"]').val())+parseInt($('input[name="totalDcKrw"]').val()));
 			}else{
 				$("input[name='svmtAmtInput']").val(mhpoint);
