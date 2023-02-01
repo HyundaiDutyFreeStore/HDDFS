@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Tables</title>
+<title>현대백화점인터넷면세점 관리자페이지</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -39,14 +39,14 @@
 	<div id="content">
 
 		<!-- Topbar -->
-		<%@ include file="./common/topbar.jsp"%>
+		<%-- <%@ include file="./common/topbar.jsp"%> --%>
 
 		<!-- Begin Page Content -->
 		<div class="container-fluid">
 
 
 			<!-- Page Heading -->
-			<h1 class="h3 mb-2 text-gray-800">상품목록</h1>
+			<h1 class="h3 mb-2 text-gray-800"><br>상품목록</h1>
 			<!-- <p class="mb-4">
 				DataTables is a third party plugin that is used to generate the demo
 				table below. For more information about DataTables, please visit the
@@ -214,8 +214,6 @@
 		</div>
 	</div>
 </div>
-
-
 <!-- /.container-fluid -->
 
 <!-- End of Main Content -->
