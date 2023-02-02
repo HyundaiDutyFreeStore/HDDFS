@@ -26,7 +26,7 @@ import com.hyundai.dutyfree.vo.ExchangerateVO;
 import lombok.AllArgsConstructor;
 
 /**
- * MemberController
+ * HomeController
  *
  * @author 김찬중
  * @since 01.19

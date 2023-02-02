@@ -21,7 +21,5 @@ public class AdminChat {
 	private String adminSecondUsid;	//수신인
 	private String adminChatContent;	//내용
 	private Date adminChatDate;	//발신시간
-	private String adminChatRoomNo; //roomNo
-	//private String adminChatFile;
-	//private String adminChatSenderNickname;
+	private String adminChatRoomNo; //채팅방no(고객ID)
 }

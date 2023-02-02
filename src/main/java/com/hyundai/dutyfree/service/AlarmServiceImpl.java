@@ -7,7 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.hyundai.dutyfree.mapper.AlarmMapper;
 import com.hyundai.dutyfree.vo.AlarmVO;
-
+/**
+ * AlarmServiceImpl
+ * 
+ * @author 김가희
+ * @since 01.31
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.31   김가희                         최초 생성
+ * 
+ */
 
 @Service
 public class AlarmServiceImpl implements AlarmService{

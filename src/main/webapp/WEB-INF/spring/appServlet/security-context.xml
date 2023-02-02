@@ -15,7 +15,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
  *       
  *  수정일                 수정자                            수정내용
  * 
- * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.09	  김찬중			       비밀번호 암호화
  * 2023.01.17    김가희                            시큐리티적용
  * 
  -->
@@ -31,6 +31,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 		<security:intercept-url pattern="/member/Mypage/**" access="hasRole('ROLE_MEMBER')" />
 		<security:intercept-url pattern="/order/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/chat/customerChat" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/alarm/**" access="hasRole('ROLE_MEMBER')" />
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<security:form-login login-page="/member/login"
 			login-processing-url="/member/login"

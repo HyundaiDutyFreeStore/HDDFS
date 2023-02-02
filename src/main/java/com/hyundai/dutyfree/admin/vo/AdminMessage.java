@@ -18,10 +18,10 @@ import lombok.Data;
 @Data
 public class AdminMessage {
 	
-	private String mid;
-	private String mname;
-	private Date time;
-	private String latestMsg;
+	private String mid;	//고객ID
+	private String mname;	//고객이름
+	private Date time;	//메세지 작성시간
+	private String latestMsg;	//마지막메세지
 	private String latestDateStr;
 	
 }

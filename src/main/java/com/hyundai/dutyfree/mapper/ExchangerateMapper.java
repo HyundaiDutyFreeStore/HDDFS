@@ -3,7 +3,7 @@ package com.hyundai.dutyfree.mapper;
 import com.hyundai.dutyfree.vo.ExchangerateVO;
 
 /**
- * MemberMapper
+ * ExchangerateMapper
  * 
  * @author 김찬중
  * @since 01.09

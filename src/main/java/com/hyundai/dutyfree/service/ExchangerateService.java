@@ -3,7 +3,7 @@ package com.hyundai.dutyfree.service;
 import com.hyundai.dutyfree.vo.ExchangerateVO;
 
 /**
- * MemberService
+ * ExchangerateService
  *
  * @author 김찬중
  * @since 01.12
