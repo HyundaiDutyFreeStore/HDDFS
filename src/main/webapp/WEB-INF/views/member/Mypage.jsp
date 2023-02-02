@@ -435,21 +435,6 @@
 									<div class="sorting_wrap myhd"">
 										<span class="txt_total">총 <strong>${orderlistsize }</strong>개
 										</span>
-										<div class="sort_r">
-											<select name="billStat" id="billStat1">
-												<option value="">전체</option>
-												<option value="010">입금대기</option>
-												<option value="020">주문완료</option>
-												<option value="030^040">상품준비중</option>
-												<option value="050">인도대기</option>
-												<option value="065">인도완료</option>
-												<option value="060">미인도</option>
-												<option value="080">취소신청</option>
-												<option value="070">반품신청</option>
-												<option value="100">취소완료</option>
-												<option value="090">반품완료</option>
-											</select>
-										</div>
 									</div>
 									<div class="list_table01">
 										<table>
