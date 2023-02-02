@@ -31,8 +31,6 @@ import com.hyundai.dutyfree.vo.MemberVO;
 import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
-import lombok.extern.log4j.Log4j;
-
 /**
  * AdminController
  *
@@ -40,13 +38,12 @@ import lombok.extern.log4j.Log4j;
  * @since 01.26
  *
  *        <pre>
- * 수정일                 수정자                          수정내용
+ * 수정일                 수정자                          	수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.26 	  김가희 				최초 생성
  * 2023.01.30	  김찬중			    chart.js 생성
  *        </pre>
  */
-@Log4j
 @Controller
 public class AdminController {
 
@@ -69,19 +66,10 @@ public class AdminController {
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
 	String formatedNow = now.format(formatter);
 
-	/*
-	 * //메인으로 이동(임시2)
-	 * 
-	 * @RequestMapping("/admin/index") public void goMain2() {
-	 * 
-	 * }
-	 */
-
 	// 주문목록 리스트 보기
 	@RequestMapping("/admin/orderList")
 	public void orderList(Model model) {
 		List<OrderListVO> list = orderService.getList();
-		// log.info("adminController에서 prodlist: "+list);
 		model.addAttribute("orderList", list);
 	}
 
@@ -100,20 +88,6 @@ public class AdminController {
 		String adminUsid = prin.getName();
 
 		List<AdminChat> totalUsidList = new ArrayList<>();
-		/*
-		 * List<String> firstUsidList = new ArrayList<>(); List<String> secondUsidList =
-		 * new ArrayList<>();
-		 * 
-		 * // 관리자에게 메세지 보낸사람 firstUsidList = service.firstUsidList(); // 관리자에게 메세지 받은사람
-		 * secondUsidList = service.secondUsidList();
-		 * 
-		 * // 관리자에게 메세지 보내거나 받은사람 중복없이 totalUsidList에 넣기 for (int i = 0; i <
-		 * firstUsidList.size(); i++) { totalUsidList.add(firstUsidList.get(i)); }
-		 * 
-		 * for (int i = 0; i < secondUsidList.size(); i++) { if
-		 * (!totalUsidList.contains(secondUsidList.get(i))) {
-		 * totalUsidList.add(secondUsidList.get(i)); } }
-		 */
 
 		totalUsidList = service.roomNoList();
 		System.out.println(totalUsidList);

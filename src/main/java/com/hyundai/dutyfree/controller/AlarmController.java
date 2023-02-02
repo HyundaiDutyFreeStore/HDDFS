@@ -23,7 +23,7 @@ import com.hyundai.dutyfree.vo.ProductVO;
 import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.api.Message;
 /**
- * AuthController
+ * AlarmController
  * 
  * @author 김가희
  * @since 01.31

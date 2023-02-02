@@ -18,26 +18,12 @@ import com.hyundai.dutyfree.admin.vo.AdminMessage;
  *        
  */
 public interface AdminService {
-
-	// List<String> chatList();
-
-	//List<AdminChat> selectAdminInChat();
-	
-	
-	
-	//1대1 실시간 상담 관련
 	
 	//이전 채팅내역 불러오기
 	List<AdminChat> prevChat(String mid);
 
 	//채팅insert
 	void insertAdminChat(AdminChat ac);
-
-	//관리자에게 채팅신청한 고객ID 리스트 조회 (발신자: 고객)
-	List<String> firstUsidList();
-
-	//관리자가 채팅을 보낸 고객ID 리스트 조회 (수신자: 고객)
-	List<String> secondUsidList();
 	
 	//관리자에게 채팅신청한 고객ID 리스트 조회 (발신자: 고객)
 	List<AdminChat> roomNoList();

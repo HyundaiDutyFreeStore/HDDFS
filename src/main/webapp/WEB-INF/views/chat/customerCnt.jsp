@@ -3,9 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link href="https://ssl.pstatic.net/sstatic/keypage/outside/scui/airport_condition/css/cs_airport_condition_211012.css"
     rel="stylesheet" type="text/css">
-<script>
-console.log("${cnt}");
-</script>
+<script
+	src="https://cdn.hddfs.com/front/js/KO/jquery-1.12.4.min.js?ver=18"></script>
 <%-- <div>
 <ul>
 <c:forEach items="${cnt}" var="hour" begin="0" end="1">
@@ -65,7 +64,13 @@ console.log("${cnt}");
                                 <th scope="row" class="txt_l"> 오전 <span class="num">0</span>시 </th>
                             	<c:forEach items="${cnt}" var="hour" begin="0" end="0">
 									<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    	<td><span class="number_of_cust">${i}</span>명</td>
+                                    	<td>
+                                    	<span class="step1">
+                                    	${i}
+                                    	</span>
+                                    	명
+                                    	</td>
+                                    	</font>
 									</c:forEach>
 								</c:forEach>
                                 </tr>
@@ -73,7 +78,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">1</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="1" end="1">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -81,7 +86,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">2</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="2" end="2">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -89,7 +94,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">3</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="3" end="3">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -97,7 +102,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">4</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="4" end="4">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -105,7 +110,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">5</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="5" end="5">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -113,7 +118,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">6</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="6" end="6">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -121,7 +126,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">7</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="7" end="7">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -129,7 +134,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">8</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="8" end="8">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -137,7 +142,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">9</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="9" end="9">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -145,7 +150,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">10</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="10" end="10">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -153,7 +158,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오전 <span class="num">11</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="11" end="11">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -161,7 +166,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">12</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="12" end="12">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -169,7 +174,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">1</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="13" end="13">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -177,7 +182,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">2</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="14" end="14">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -185,7 +190,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">3</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="15" end="15">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -193,7 +198,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">4</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="16" end="16">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -201,7 +206,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">5</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="17" end="17">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -209,7 +214,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">6</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="18" end="18">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -217,7 +222,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">7</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="19" end="19">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -225,7 +230,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">8</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="20" end="20">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -233,7 +238,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">9</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="21" end="21">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -241,7 +246,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">10</span>시 </th>
                                     <c:forEach items="${cnt}" var="hour" begin="22" end="22">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -249,7 +254,7 @@ console.log("${cnt}");
                                     <th scope="row" class="txt_l"> 오후 <span class="num">11</span>시 </th>
                                      <c:forEach items="${cnt}" var="hour" begin="23" end="23">
 										<c:forEach items="${hour}" var="i" begin="0" end="2">
-                                    		<td><span class="number_of_cust">${i}</span>명</td>
+                                    		<td><span class="step1">${i}</span>명</td>
 										</c:forEach>
 									</c:forEach>
                                 </tr>
@@ -260,20 +265,19 @@ console.log("${cnt}");
 
                 <div class="legend_area">
                     <p class="info"><a nocr=""
-                            onclick="goOtherTCR(this, 'a=nco_xw9*1.stan&amp;r=1&amp;i=8816765e_0000009EC2A0');return false;"
-                            href="javascript:;" class="info_link">기준시간당 승객수<span class="ico_info _trigger"></span></a>
+                        onclick="popup();return false;"
+                         class="layer_close _close">기준시간당 승객수<span class="ico_info _trigger"></span></a>
                     </p>
                     <ul style="list-style:none;">
-                        <li><span class="number_of_cust"><em>파란색</em>원활</span></li>
+                        <li><span class="step1"><em>파란색</em>원활</span></li>
                         <li><span class="step3"><em>노란색</em>적정</span></li>
                         <li><span class="step5"><em>빨간색</em>혼잡</span></li>
                     </ul>
                 </div>
-            </div>
-            <div class="airport_popup _popup" style="display:none">
+                <div class="airport_popup _popup" id="airport_popup _popup" style="display:none">
                 <div class="pop_header"> <strong>혼잡도 기준</strong> <a nocr=""
                         onclick="goOtherTCR(this, 'a=nco_xw9*1.pcl&amp;r=1&amp;i=8816765e_0000009EC2A0');return false;"
-                        href="javascript:;" class="layer_close _close"><span class="blind">닫기</span></a>
+                        href="javascript:;" class="layer_close _close"></a>
                 </div>
                 <div class="pop_content">
                     <ul>
@@ -289,11 +293,19 @@ console.log("${cnt}");
                     </ul>
                 </div>
             </div>
+            </div>
+            
         </div>
 
     </div>
 </div>
 
+<script>
+function popup(){
+	console.log("누름");
+	$('#airport_popup _popup').css('display', 'block');
+}
+</script>
 <!-- <script>
     $( document ).ready(function() {
     let span_text = document.querySelectorAll('number_of_cust');

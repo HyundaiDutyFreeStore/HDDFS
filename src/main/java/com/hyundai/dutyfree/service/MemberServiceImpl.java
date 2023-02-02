@@ -8,14 +8,16 @@ import com.hyundai.dutyfree.vo.MemberVO;
 
 /**
  * MemberServiceImpl
- * 
+ *
  * @author 김찬중, 김가희
  * @since 01.12
  *
  *        <pre>
- *        수정일 수정자 수정내용 ---------- --------------- ---------------------------
- *        2023.01.12 김찬중 최초 생성 2023.01.17 김가희 시큐리티적용
- * 
+ * 수정일                 수정자                         수정내용
+ * ----------  ---------------    ---------------------------
+ * 2023.01.12	 김찬중				최초 생성
+ * 2023.01.17    김가희                            시큐리티적용
+ *        </pre>
  */
 @Service
 public class MemberServiceImpl implements MemberService {
