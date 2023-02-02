@@ -41,11 +41,7 @@ public class TaskController {
 	private OrderService orderservice;
 	@Autowired
 	private PedestrianService pedestrianservice;
-	
-	LocalDateTime  now = LocalDateTime .now();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-	String formatedNow = now.format(formatter);
-	
+
 	public int realTimeConfusion() {
 		String path = "C:/resources";
 		String path_in = path + "/analyzeReport/loginside.csv";
@@ -264,7 +260,10 @@ public class TaskController {
 
 	@Scheduled(fixedDelay = 59999)
 	public void mailSender() {
-		System.out.println("Spring Scheduler 작동"+formatedNow);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		String formatedNow = now.format(formatter);
+		System.out.println("Spring Scheduler 작동 " + formatedNow);
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddHH");
 		/* 이메일 보내기 */
 		List<OrderMemberVO> customer3h = orderservice.OrderMemberCheck();
