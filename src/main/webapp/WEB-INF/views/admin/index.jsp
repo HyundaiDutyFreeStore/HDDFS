@@ -195,14 +195,14 @@
 									style="width: ${cntw}%" aria-valuenow="${cntw}" aria-valuemin="0"
 									aria-valuemax="100"></div>
 							</div>
-							<h4 class="small font-weight-bold">
+							<%-- <h4 class="small font-weight-bold">
 								알수없음 <span class="float-right">${cnta}%</span>
 							</h4>
 							<div class="progress mb-4">
 								<div class="progress-bar bg-warning" role="progressbar"
 									style="width: ${cnta}%" aria-valuenow="${cnta}" aria-valuemin="0"
 									aria-valuemax="100"></div>
-							</div>
+							</div> --%>
 						</div>
 					</div>
 				</div>
