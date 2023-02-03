@@ -59,7 +59,7 @@ public class CartServiceImpl implements CartService {
 	
 	//장바구니의 목록을 조회
 	@Override
-	public List<CartVO> getCartList(String mid,String align) {
+	public List<CartVO> getCartList(String mid,String align,double KRW_WON) {
 		// TODO Auto-generated method stub
 		HashMap<String,String> listMap = new HashMap<>();
 		listMap.put("mid", mid);
@@ -68,7 +68,7 @@ public class CartServiceImpl implements CartService {
 		if(align.equals("lput")||align.equals("fput")) {
 			return cartmapper.getCartListregDate(listMap);
 		}else {
-			return cartmapper.getCartListprice(listMap);
+			return cartmapper.getCartListprice(mid,align,KRW_WON);
 		}
 	}
 
