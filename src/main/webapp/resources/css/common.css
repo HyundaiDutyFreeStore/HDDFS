@@ -17,7 +17,7 @@ th, td {border-collapse:collapse;}
 caption {height:0; overflow:hidden; opacity:0; filter:alpha(opacity=0);}
 hr {border:0; border-top:1px solid #ccc; margin:40px 0;}
 em, u, cite, i, abbr {font-style:normal; text-decoration:none;}
-strong, b {font-weight:normal;}
+strong, b {font-weight:bold;}
 a {color:rgb(16, 79, 252); outline-offset:1px;}
 button {border:0 none; cursor:pointer; background-color:transparent; color:#666;}
 input, textarea, select {box-sizing:border-box; font-size:14px;}
