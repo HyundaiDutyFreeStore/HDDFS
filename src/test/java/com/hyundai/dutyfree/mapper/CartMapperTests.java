@@ -60,40 +60,38 @@ public class CartMapperTests {
 	}
 
 	// 장바구니에 물품을 등록
-	/*
-	 * @Test public void insertCartTests() { CartVO cart=new CartVO();
-	 * cart.setCartno(101); Date now = new Date
-	 * 
-	 * DateFormat dateFomatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	 * 
-	 * String dateTime = "-";
-	 * 
-	 * if (date != null) { dateTime = dateFomatter.format(date.getTime()); }
-	 * 
-	 * System.out.println(dateTime);
-	 * 
-	 * cart.setCartregdate(cartregdate); cart.setCartstock(100);
-	 * cart.setMid("test1"); cart.setPcode("105261200055"); }
-	 */
+	@Test 
+	public void insertCartTests() { 
+	  CartVO cart=new CartVO();
+	  cart.setMid("test1");
+	  cart.setCartstock(100);
+	  cart.setPcode("105261200055"); 
+	  cartmapper.insertCart(cart);
+	}
+	 
 
 	// 상품의 재고량을 1감소
 	@Test
 	public void redproductcnt() {
 		ProductVO product=new ProductVO();
-		
+		product.setPcode("105261200055");
+		product.setPstock(100);
+		product.setPsel(10);
+		cartmapper.redproductcnt(product);
 	}
 
 	// 상품의 정보를 가져온다.
 	@Test
-	public void prodinfo(String pcode) {
-
+	public void prodinfoTests() {
+		ProductVO product=cartmapper.prodinfo("105261200055");
+		System.out.println(product.toString());
 	}
 
-	// 장바구니안에 상품이 존재하는지 확인
-	@Test
-	public void Cartitemconsist(CartVO cart) {
-
-	}
+	/*
+	 * // 장바구니안에 상품이 존재하는지 확인
+	 * 
+	 * @Test public void Cartitemconsist() { cartmapper.Cartitemconsist(cart) }
+	 */
 
 	// 장바구니의 수량 업데이트
 	@Test
