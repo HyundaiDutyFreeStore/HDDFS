@@ -23,7 +23,7 @@ public interface CartService {
 	public void insertCart(CartVO cart);
 	
 	//장바구니의 목록을 조회
-	public List<CartVO> getCartList(String mid,String align);
+	public List<CartVO> getCartList(String mid,String align,double KRW_WON);
 	
 	//상품의 재고량을 수정
 	public void redproductcnt(String pcode, int pstock,int psel);

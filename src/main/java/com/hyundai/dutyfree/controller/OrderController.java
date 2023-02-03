@@ -83,6 +83,8 @@ public class OrderController {
 	@PostMapping("/postorderpays")
 	@ResponseBody
 	public String orderexec(HttpServletRequest request, Model model, Principal prin,HttpSession session) throws Exception {
+		
+		//주문목록을 전송하기 위해 세션에 주문 정보를 등록
 		session.setAttribute("total_bill_dollar_text",request.getParameter("total_bill_dollar_text") );
 		session.setAttribute("total_bill_won_text",request.getParameter("total_bill_won_text") );
 		session.setAttribute("totalDcUsd",request.getParameter("totalDcUsd") );
@@ -90,8 +92,9 @@ public class OrderController {
 		session.setAttribute("totalSettUsd",request.getParameter("totalSettUsd") );
 		session.setAttribute("wontotalSettKrw",request.getParameter("wontotalSettKrw") );
 		
+		//주문 리스트에 대한 정보를 추출
 		List<OrderItemVO> orderitemlist = new ArrayList<OrderItemVO>();
-		System.out.println(request.getParameter("orderitemlists"));
+		
 		String[] split1 = request.getParameter("orderitemlists").split("OrderItemVO");
 		for (int i = 0; i < split1.length; i++) {
 			if (split1[i].equals("[")) {
@@ -106,8 +109,6 @@ public class OrderController {
 			String oamount = split2[1].substring(9);
 			orderitem.setPcode(pcode);
 			orderitem.setOamount(Integer.parseInt(oamount));
-			System.out.println(split2[0].substring(7));
-			System.out.println(split2[1].substring(9));
 			orderitemlist.add(orderitem);
 		}
 
@@ -116,7 +117,8 @@ public class OrderController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
+		//받은 주문 리스트의 정보를 저장
 		MemberVO member = memberservice.read(prin.getName());
 		int ordertotalstock = 0;
 		java.util.Date nowdate = new java.util.Date();
@@ -136,6 +138,7 @@ public class OrderController {
 			ordertotalstock += order.getOamount();
 		}
 		
+		//결제하면서 사용한 쿠폰 조회 후 사용가능 여부 수정
 		if(!request.getParameter("cid").equals("")) {
 			couponservice.UpdateCouponOid(oid, request.getParameter("cid"));
 			couponservice.UpdateCenabled("NOTENABLED", request.getParameter("cid"));
@@ -211,6 +214,7 @@ public class OrderController {
 		List<CouponVO> couponlist=couponservice.GetCouponInfo(prin.getName());
 		List<CouponVO> order_couponlist=new ArrayList<>();
 		int coupon_count=0;
+		//사용가능한 쿠폰 조회
 		for(CouponVO coupon: couponlist) {
 			if(coupon.getCenabled().equals("ENABLED")) {
 				coupon_count++;
@@ -235,7 +239,7 @@ public class OrderController {
 		return "/order/orderpays";
 	}
 
-	// 출국정보를 가져온다.
+	// 출국정보를 조회
 	@GetMapping("/DepartureInfo")
 	public void DepartureInfo(HttpServletRequest request, OrderItemListVO orderitemlists, Model model, Principal prin)
 			throws Exception {
@@ -245,7 +249,8 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-
+		
+		//주문 가격을 가져옴
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -272,6 +277,8 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
+		
+		//주문 가격을 가져옴
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -301,7 +308,8 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-
+		
+		//주문 가격을 가져옴
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -346,7 +354,8 @@ public class OrderController {
 		float cartdisprice = 0;
 		float cartdis = 0;
 		int cartstock = 0;
-
+		
+		//주문 가격을 가져옴
 		for (OrderItemVO order : orderitemlist) {
 			ProductVO product = productservice.productdetail(order.getPcode());
 			cartprice += (product.getPprice() * order.getOamount());
@@ -361,7 +370,8 @@ public class OrderController {
 		model.addAttribute("cartstock", cartstock);
 		model.addAttribute("orderitemlist", orderitemlist);
 		model.addAttribute("mhdiscount", request.getParameter("mhdiscount"));
-
+		
+		//여권 정보 등록
 		passport.setMid(request.getParameter("mId"));
 		passport.setPassportno(request.getParameter("mPsptno"));
 		passport.setSurname(request.getParameter("mLastname"));

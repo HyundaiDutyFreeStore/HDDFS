@@ -4,16 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.hyundai.dutyfree.mapper.CartMapper">
  	<select id="getCartListprice"
-		resultType="com.hyundai.dutyfree.vo.CartVO" parameterType="HashMap">
+		resultType="com.hyundai.dutyfree.vo.CartVO">
 		select c.cartno,c.cartstock,c.cartregdate,c.mid,c.pcode
 		from cart c, product p
 		where c.pcode=p.pcode
 		and mid=#{mid}
 		<if test="align =='hprice'">
-		order by (p.pprice*(1-(p.pdiscount/100))*1267*c.cartstock) desc
+		order by (p.pprice*(1-(p.pdiscount/100))*#{KRW_WON}*c.cartstock) desc
 		</if>
 		<if test="align =='lprice'">
-		order by (p.pprice*(1-(p.pdiscount/100))*1267*c.cartstock)
+		order by (p.pprice*(1-(p.pdiscount/100))*#{KRW_WON}*c.cartstock)
 		</if>
 		<if test="align =='brand'">
 		order by p.pbrand

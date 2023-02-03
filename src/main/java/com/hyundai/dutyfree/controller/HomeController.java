@@ -84,7 +84,6 @@ public class HomeController {
 			double EUR = Math.round(KRW / Float.valueOf(eurstr.replace(",", "")) * 100) / 100.0;
 			double CNY = Math.round(KRW / arr.get(6).getAsJsonObject().get("deal_bas_r").getAsFloat() * 100) / 100.0;
 			double JPY = Math.round(KRW / arr.get(12).getAsJsonObject().get("deal_bas_r").getAsFloat() * 10000) / 100.0;
-			//System.out.println("CNY : " + CNY + ", JPY : " + JPY + ", KRW : " + KRW + ", EUR : " + EUR);
 			String[] country = { "KRW", "EUR", "CNY", "JPY" };
 			double[] money = { KRW, EUR, CNY, JPY };
 
@@ -100,7 +99,6 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//System.out.println(erservice.getExchangerate("KRW"));
 		session.setAttribute("KRW_WON", erservice.getExchangerate("KRW"));
 		return "Index";
 	}
