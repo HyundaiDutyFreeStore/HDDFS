@@ -13,7 +13,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
-import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -57,8 +56,6 @@ import com.hyundai.dutyfree.vo.OrderListVO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
-import oracle.jdbc.diagnostics.DemultiplexingLogHandler;
-
 /**
  * PayController
  * 
@@ -70,7 +67,8 @@ import oracle.jdbc.diagnostics.DemultiplexingLogHandler;
  * ----------  ---------------  ---------------------------
  * 2023.01.20    박진수                        최초 생성
  * 2023.01.20    박진수                        지불 구현
- * 2023.01.21    김찬중                        결제 완료 시 qr 코드 전송 구현
+ * 2023.01.21    김찬중                        결제 완료 시 smtp를 이용 주문정보 전송 구현
+ * 2023.01.22    김찬중                        QR코드 첨부하여 이메일 전송
  * 2023.01.25    박진수                        결제 취소
  * 
  *        </pre>

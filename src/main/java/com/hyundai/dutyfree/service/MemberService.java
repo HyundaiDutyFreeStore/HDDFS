@@ -16,32 +16,37 @@ import com.hyundai.dutyfree.vo.MemberVO;
  *        </pre>
  */
 public interface MemberService {
-	
-	public MemberVO read(String mid)throws Exception;
+	// 시큐리티
+	public MemberVO read(String mid) throws Exception;
 
-    public MemberVO selectMember(MemberVO member) throws Exception;
+	// 아이디 중복 검사
+	public MemberVO selectMember(MemberVO member) throws Exception;
 
-    public void memberJoin(MemberVO member) throws Exception;
+	// 회원가입
+	public void memberJoin(MemberVO member) throws Exception;
 
-    // 아이디 중복 검사
-    public int idCheck(String mid) throws Exception;
-    
-    // 메일 중복 검사
-    public int mailCheck(String mail) throws Exception;
+	// 아이디 중복 검사
+	public int idCheck(String mid) throws Exception;
 
-    // 로그인
-    public MemberVO memberLogin(MemberVO member) throws Exception;
-  
-    public MemberVO myPage(String mid) throws Exception;
+	// 메일 중복 검사
+	public int mailCheck(String mail) throws Exception;
 
-   //아이디 찾기
-    public MemberVO findID(MemberVO member) throws Exception;
-    
-    public void deleteMember(String mid) throws Exception;
-    
-    public void updateMhpoint(MemberVO member) throws Exception;
+	// 로그인
+	public MemberVO memberLogin(MemberVO member) throws Exception;
 
-    // 회원마지막 접속 날짜 수정
- 	public void lastlogindate(String mid) throws Exception;
+	// 마이페이지
+	public MemberVO myPage(String mid) throws Exception;
+
+	// 아이디 찾기
+	public MemberVO findID(MemberVO member) throws Exception;
+
+	// 회원 탈퇴
+	public void deleteMember(String mid) throws Exception;
+
+	// 포인트 적립
+	public void updateMhpoint(MemberVO member) throws Exception;
+
+	// 회원마지막 접속 날짜 수정
+	public void lastlogindate(String mid) throws Exception;
 
 }

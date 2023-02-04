@@ -16,8 +16,9 @@ import com.hyundai.dutyfree.vo.ExchangerateVO;
  */
 public interface ExchangerateService {
     
+	//환률 업데이트
     public void updateExchangerate(ExchangerateVO Exchangerate) throws Exception;
-    
+    //국가 선택
     public double getExchangerate(String mcountry);
 
 }

@@ -2,22 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--  
-/**
- * PickupMapper
- * 
- * @author 김민규
- * @since 01.20
- * 
- * <pre>
- * 수정일                 수정자                 수정내용
- * 2023.01.20     김민규                 최초 생성
- * 2023.01.23	    김민규			 주문목록 조회, 인도완료
- * 2023.01.30	    김민규			 주문목록 조회 출력 컬럼 변경, 인도완료  OSTATUS 변경
- * 2023.01.31	   김민규			 액티비티와 VO 구성 변경으로 인한 변경
- * </pre>
- */
- -->
+
 <mapper namespace="com.hyundai.dutyfree.mapper.PickupMapper">
 
 <select id="PickupList" resultType="com.hyundai.dutyfree.vo.PickupListVO" parameterType="String">

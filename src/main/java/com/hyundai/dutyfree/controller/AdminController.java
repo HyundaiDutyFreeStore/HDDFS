@@ -41,7 +41,7 @@ import com.hyundai.dutyfree.vo.ProductVO;
  * 수정일                 수정자                          	수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.26 	  김가희 				최초 생성
- * 2023.01.30	  김찬중			    chart.js 생성
+ * 2023.01.30	  김찬중			        관리자 마무리
  *        </pre>
  */
 @Controller
@@ -62,6 +62,7 @@ public class AdminController {
 	@Autowired
 	private ChartService chartService;
 
+	// 현재 시간 가져오기
 	LocalDateTime now = LocalDateTime.now();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
 	String formatedNow = now.format(formatter);
@@ -148,6 +149,7 @@ public class AdminController {
 		model.addAttribute("adminInfo", adminInfo);
 	}
 
+	// 관리자 메인 페이지 각종 chart
 	@RequestMapping("/admin/index")
 	public void forChart(Model model) throws Exception {
 		List<ChartMemberVO> cntMember = chartService.cntMember();
@@ -191,13 +193,15 @@ public class AdminController {
 		model.addAttribute("cntVisiter", cntVisiter.get(0).getVisitcnt());
 	}
 
+	//일일 매출
 	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)
 	public @ResponseBody List<ChartDailyVO> dailyTotal(Model model) {
 		List<ChartDailyVO> dailyTotal = chartService.dailyTotal();
 		model.addAttribute("dailyTotal", dailyTotal);
 		return dailyTotal;
 	}
-
+	
+	//카테고리별 매출
 	@RequestMapping(value = "/admin/index/categoryTotal", method = RequestMethod.GET)
 	public @ResponseBody List<ChartCategoryVO> categoryTotal(Model model) {
 		List<ChartCategoryVO> categoryTotal = chartService.categoryTotal();

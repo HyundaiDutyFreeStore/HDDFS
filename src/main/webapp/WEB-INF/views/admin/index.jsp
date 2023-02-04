@@ -195,14 +195,14 @@
 									style="width: ${cntw}%" aria-valuenow="${cntw}" aria-valuemin="0"
 									aria-valuemax="100"></div>
 							</div>
-							<h4 class="small font-weight-bold">
+							<%-- <h4 class="small font-weight-bold">
 								알수없음 <span class="float-right">${cnta}%</span>
 							</h4>
 							<div class="progress mb-4">
 								<div class="progress-bar bg-warning" role="progressbar"
 									style="width: ${cnta}%" aria-valuenow="${cnta}" aria-valuemin="0"
 									aria-valuemax="100"></div>
-							</div>
+							</div> --%>
 						</div>
 					</div>
 				</div>
@@ -216,7 +216,7 @@
 						</div>
 						<div class="card-body">
 							<p>
-								현대 IT&E 5기 현면하다 팀의 최종 프로젝트 인도부터 결제까지 편리한 면세점입니다. 팀의 <a target="_blank" rel="nofollow" href="https://colding97.atlassian.net/jira/">개발과정</a>과 
+								현대 IT&E 5기 현면하다 팀의 최종 프로젝트 결제부터 인도까지 편리한 면세점입니다. 팀의 <a target="_blank" rel="nofollow" href="https://colding97.atlassian.net/jira/">개발과정</a>과 
 								<a target="_blank" rel="nofollow" href="https://github.com/HyundaiDutyFreeStore/HDDFS">gitHub</a>가 궁금하시다면 저희 사이트를 방문해 주세요!
 								
 							</p>

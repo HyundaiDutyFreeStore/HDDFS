@@ -85,5 +85,16 @@ public class MemberMapperTests {
 //		couponMapper.getCouponCount(mid);
 //		System.out.println(couponMapper.getCouponCount(mid));
 //	}
+	
+	//회원의 포인트의 구매금액을 수정하는 테스트
+	@Test
+	public void updateMhpointTests() {
+		MemberVO member=new MemberVO();
+		member.setMhpoint(10000);
+		member.setMtotal(10000);
+		member.setMid("test1");
+		membermapper.updateMhpoint(member);
+		System.out.println("포인트와 구매금액 수정");
+	}
 
 }
