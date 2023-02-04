@@ -318,8 +318,7 @@
 										$('#totalGoosUsdinput').attr('value',"${cartprice}");
 										$('#totalDcUsdinput').attr('value',"${cartdis}");
 										$('#cartstockinput').attr('value',"${cartstock}");
-										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
-										$('.totalRsvg').text("${mhdiscount}"+"%");
+										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*parseFloat("${mhdiscount}")/100).toFixed(0))+"원");										$('.totalRsvg').text("${mhdiscount}"+"%");
 									});
 
 					function priceComma(price) {
