@@ -19,10 +19,6 @@ import com.hyundai.dutyfree.admin.vo.AdminMessage;
  */
 public interface AdminMapper {
 	
-	//1대1 실시간 채팅
-	
-	/* public List<AdminChat> selectAdminInChat(); */
-	
 	public List<AdminChat> prevChat(String mid);
 
 	public void insertAdminChat(AdminChat ac);

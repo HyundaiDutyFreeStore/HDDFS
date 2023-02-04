@@ -116,7 +116,8 @@ public class PayController {
 	}
 
 	private final String SECRET_KEY = "test_sk_aBX7zk2yd8yyqBAeQLQ8x9POLqKQ";
-
+	
+	//주문 결제 정보가 성공적으로 전송이 됬을 떼 수행
 	@RequestMapping("/{id}/success")
 	public String confirmPayment(@RequestParam String paymentKey, @RequestParam String orderId,
 			@RequestParam Long amount,Model model, HttpServletRequest requests, HttpSession session,Principal prin) throws Exception {
@@ -132,11 +133,8 @@ public class PayController {
 		String totalSettUsd=(String)session.getAttribute("totalSettUsd");
 		String wontotalSettKrw=(String)session.getAttribute("wontotalSettKrw");
 		
-		// --header 'Authorization: Basic
-		// dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==' \
 		headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
 
-		// --header 'Content-Type: application/json' \
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		Map<String, String> payloadMap = new HashMap<String, String>();
@@ -146,11 +144,9 @@ public class PayController {
 
 		HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
 
-		// --data
-		// '{"paymentKey":"7VNlVA_WPvooPLexBAmSx","amount":15000,"orderId":"nlsN6te-juOMMQgUU5iAM"}'
 		ResponseEntity<JsonNode> responseEntity = restTemplate
 				.postForEntity("https://api.tosspayments.com/v1/payments/confirm", request, JsonNode.class);
-		// + paymentKey
+
 		OrderListVO olv=orderservice.getorderlist(orderId);
 		List<OrderItemVO> orderitemlist = orderservice.getOrderitemlist(orderId);
 		if (responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -159,12 +155,14 @@ public class PayController {
 				cart.setPcode(order.getPcode());
 				cart.setMid(prin.getName());
 
-				// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제 if
+				// 주문한 상품목록이 장바구니에 저장된 경우 장바구니에 있는 상품을 삭제
 				if (cartservice.Cartitemconsist(cart) == 1) {
 					cartservice.deleteCart(cart);
 				}
 
 			}
+			
+			//취소를 하기 위해 PAYMENT 키를 주문 리스트 테이블에 저장
 			orderservice.UpdateorderPaymentKey(paymentKey, orderId);
 
 			JsonNode successNode = responseEntity.getBody();
@@ -336,25 +334,25 @@ public class PayController {
 			return "fail";
 		}
 	}
-
+	
+	//결제 정보가 잘못 들어가면 수행
 	@RequestMapping("/{id}/fail")
 	public String failPayment(@RequestParam String message, @RequestParam String code, Model model) {
 		model.addAttribute("message", message);
 		model.addAttribute("code", code);
 		return "fail";
 	}
-
+	
+	
+	//결제 취소를 수행
 	@RequestMapping("/cancelSuccess")
 	@ResponseBody
 	public String cancelSuccess(HttpServletRequest requests, Model model) throws JsonProcessingException {
 
 		HttpHeaders headers = new HttpHeaders();
 
-		// --header 'Authorization: Basic
-		// dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==' \
 		headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
 
-		// --header 'Content-Type: application/json' \
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		Map<String, String> payloadMap = new HashMap<String, String>();
@@ -362,9 +360,6 @@ public class PayController {
 		payloadMap.put("cancelReason", "취소해!");
 
 		HttpEntity<String> request = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
-
-		// --data
-		// '{"paymentKey":"7VNlVA_WPvooPLexBAmSx","amount":15000,"orderId":"nlsN6te-juOMMQgUU5iAM"}'
 
 		ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
 				"https://api.tosspayments.com/v1/payments/" + requests.getParameter("paymentKey") + "/cancel", request,
@@ -379,12 +374,13 @@ public class PayController {
 		return result;
 
 	}
-
+	
+	//가상 계좌를 수행시 필요
 	@RequestMapping("/virtual-account/callback")
 	@ResponseStatus(HttpStatus.OK)
 	public void handleVirtualAccountCallback(@RequestBody CallbackPayload payload) {
 		if (payload.getStatus().equals("DONE")) {
-			// handle deposit result
+			
 		}
 	}
 

@@ -3,10 +3,10 @@ package com.hyundai.dutyfree.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.ProductVO;
-
-
 
 /**
  * CartMapper
@@ -25,7 +25,7 @@ import com.hyundai.dutyfree.vo.ProductVO;
 public interface CartMapper {
 	
 	//장바구니 목록을 조회
-	public List<CartVO> getCartListprice(HashMap<String, String> listMap);
+	public List<CartVO> getCartListprice(@Param("mid")String mid ,@Param("align")String align,@Param("KRW_WON") double KRW_WON);
 	
 	public List<CartVO> getCartListregDate(HashMap<String, String> listMap);
 	

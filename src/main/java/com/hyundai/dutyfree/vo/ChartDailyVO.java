@@ -3,7 +3,7 @@ package com.hyundai.dutyfree.vo;
 import lombok.Data;
 
 /**
- * ChartVO
+ * ChartDailyVO
  * 
  * @author 김찬중
  * @since 01.30

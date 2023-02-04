@@ -53,7 +53,8 @@ import lombok.extern.log4j.Log4j;
  * 2023.01.17    김가희                            시큐리티적용
  * 2023.01.19    김가희                            소셜로그인(네이버)추가
  * 2023.01.20    김가희                            소셜로그인(카카오)추가
- * 2023.01.22         박진수			  마이페이지 주문목록 보여지게 설정	
+ * 2023.01.22        박진수			       마이페이지 주문목록 보여지게 설정	
+ * 2023.01.25    김가희                            소셜로그인(구글)추가
  */
 
 @Controller
@@ -265,9 +266,10 @@ public class MemberController {
 	public void myPage(HttpServletRequest request, Model model,String align, Principal prin) throws Exception {
 		// 시큐리티에서 mid받아오기
 		String mid = prin.getName();
-		log.info("마이페이지 접속 mid: " + mid);
 		MemberVO mvo = memberservice.read(mid);
 		model.addAttribute("member", mvo);
+		
+		//주문 내역 정렬기준을 지정
 		if(align==null) {
 			align="odate";
 		}else {
@@ -275,7 +277,8 @@ public class MemberController {
 		}
 		
 		List<OrderListVO> orderlists=orderservice.getorderlistBymid(prin.getName(),align);
-	
+		
+		//주문내역이 있다면 수행
 		if(orderlists!=null) {
 			
 			
@@ -308,12 +311,15 @@ public class MemberController {
 			
 				model.addAttribute("orderlistsize", orderlists.size());
 			}
+		
+			//여권 등록에 따라 여권정보 표시
 			if(orderservice.PassportConsist(prin.getName())==null) {
 				model.addAttribute("passport", null);
 			}else {
 				model.addAttribute("passport", orderservice.PassportConsist(prin.getName()));
 			}
 			
+			//회원에 대한 쿠폰 목록을 조회
 			List<CouponVO> couponlist=couponservice.GetCouponInfo(prin.getName());
 			int coupon_count=0;
 			for(CouponVO coupon: couponlist) {
@@ -323,6 +329,7 @@ public class MemberController {
 				}
 			}
 		  String grade="";
+		  
 		  //구입가격에 따른 등급 표시 적용
 		  if(mvo.getMtotal()>=5000) {
 			  grade="v++grade.png";

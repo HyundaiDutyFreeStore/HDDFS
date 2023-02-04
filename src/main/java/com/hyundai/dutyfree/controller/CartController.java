@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,9 +63,10 @@ public class CartController {
 
 	// 장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
-	public void cartlist(String align, Model model,Principal prin) throws Exception {
+	public void cartlist(String align, Model model,Principal prin,HttpSession session) throws Exception {
 		String mid = prin.getName();
-		List<CartVO> cartlist = cartservice.getCartList(mid,align);
+		double KRW_WON=(double)session.getAttribute("KRW_WON");
+		List<CartVO> cartlist = cartservice.getCartList(mid,align,KRW_WON);
 		List<CartVOforJSP> cartjsplist = new ArrayList<CartVOforJSP>();
 		PassportVO passport=orderservice.PassportConsist(mid);
 		for (CartVO c : cartlist) {
@@ -116,7 +118,6 @@ public class CartController {
 	public String insertCart(HttpServletRequest request, CartVO cart,Principal prin) throws Exception {
 
 		cart.setCartstock(Integer.parseInt(request.getParameter("cartstock")));
-		//cart.setMid(request.getParameter("mid"));
 		cart.setMid(prin.getName());
 		cart.setPcode(request.getParameter("pcode"));
 
