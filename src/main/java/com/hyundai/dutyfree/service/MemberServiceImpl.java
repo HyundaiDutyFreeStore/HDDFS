@@ -24,17 +24,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	MemberMapper memberMapper;
-
+	// 시큐리티
 	@Override
 	public MemberVO read(String mid) throws Exception {
 		return memberMapper.read(mid);
 	}
-
+	// 회원가입
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
 		memberMapper.memberJoin(member);
 	}
-
+	// 아이디 중복 검사
 	@Override
 	public MemberVO selectMember(MemberVO member) throws Exception {
 		return memberMapper.selectMember(member);
@@ -45,12 +45,12 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO memberLogin(MemberVO member) throws Exception {
 		return memberMapper.memberLogin(member);
 	}
-
+	// 아이디 중복 검사
 	@Override
 	public int idCheck(String mid) throws Exception {
 		return memberMapper.idCheck(mid);
 	}
-
+	// 마이페이지
 	@Override
 	public MemberVO myPage(String mid) throws Exception {
 		return memberMapper.myPage(mid);
@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setMtotal(mem.getMtotal() + member.getMtotal());
 		memberMapper.updateMhpoint(member);
 	}
-
+	// 메일 중복 검사
 	@Override
 	public int mailCheck(String mail) throws Exception {
 		return memberMapper.mailChk(mail);

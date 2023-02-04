@@ -4,17 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.dutyfree.mapper.MemberMapper">
 	<!-- 시큐리티를 위해 -->
-	<select id="read"
-		resultType="com.hyundai.dutyfree.vo.MemberVO">
+	<select id="read" resultType="com.hyundai.dutyfree.vo.MemberVO">
 		select *
 		from member
-		where mid= #{mid}
+		where mid=
+		#{mid}
 	</select>
-	
+
 	<select id="selectMember"
 		resultType="com.hyundai.dutyfree.vo.MemberVO">
 		select mid from member
 	</select>
+	<!-- 회원가입 -->
 	<insert id="memberJoin">
 		insert into member values(#{mid}, #{mpassword},
 		#{memail}, #{mphone},#{mname},
@@ -27,7 +28,7 @@
 		where mid = #{mid}
 
 	</select>
-	
+
 	<!-- 메일 중복검사 -->
 	<select id="mailChk" resultType="int">
 
@@ -35,17 +36,17 @@
 		where memail = #{mail}
 
 	</select>
-	
+	<!-- 로그인 -->
 	<select id="memberLogin"
 		resultType="com.hyundai.dutyfree.vo.MemberVO">
 		select * from member where mid=#{mid}
 	</select>
-
+	<!-- 마이페이지 -->
 	<select id="myPage"
 		resultType="com.hyundai.dutyfree.vo.MemberVO">
 		select * from member where mid=#{mid}
 	</select>
-
+	<!-- 아이디 찾기 -->
 	<select id="findID"
 		resultType="com.hyundai.dutyfree.vo.MemberVO">
 		select * from member where mname=#{mname} and
@@ -63,11 +64,12 @@
 	<delete id="deleteMember">
 		delete from member where mid = #{mid}
 	</delete>
-	
+
 	<!-- 회원 정보 수정 -->
 	<update id="lastlogindate">
 		update member set
 		mlastlogin=current_date
-		where mid = #{mid}
+		where mid =
+		#{mid}
 	</update>
 </mapper>

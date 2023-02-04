@@ -47,9 +47,10 @@ public class ChartServiceImpl implements ChartService {
 	public List<ChartCategoryVO> categoryTotal() {
 		return mapper.categoryTotal();
 	}
+
 	// 일일방문자수 종합
 	@Override
-	public List<ChartVisiterVO> cntTodayVisiter(){
+	public List<ChartVisiterVO> cntTodayVisiter() {
 		return mapper.cntTodayVisiter();
 	};
 }

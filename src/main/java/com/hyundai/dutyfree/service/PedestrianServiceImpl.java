@@ -26,7 +26,7 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 
 @Service
 public class PedestrianServiceImpl implements PedestrianService {
-
+	// 혼잡도 측정
 	@Override
 	public List<PedestrianVO> readCsv(String filename) {
 		List<PedestrianVO> data = null;

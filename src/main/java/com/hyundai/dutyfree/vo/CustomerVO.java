@@ -17,6 +17,6 @@ import lombok.Data;
 
 @Data
 public class CustomerVO {
-	private int count;
-	private int hours;
+	private int count; // 고객수
+	private int hours; // 시간당
 }

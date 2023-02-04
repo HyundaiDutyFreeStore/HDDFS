@@ -30,6 +30,9 @@ import com.hyundai.dutyfree.vo.PedestrianVO;
  * 수정일                 수정자                              수정내용
  * ----------  ---------------  ---------------------------
  * 2023.01.26    김찬중                        최초 생성
+ * 2023.01.27    김찬중                        비행기 출발 3시간, 30분 전 인도장 안내 메일 전송
+ * 2023.01.27    김찬중                        미인도 안내 메일 전송
+ * 2023.01.27    김찬중                        인도장 및 혼잡도 안내 메일 전송
  *        </pre>
  */
 @Controller
@@ -41,7 +44,7 @@ public class TaskController {
 	private OrderService orderservice;
 	@Autowired
 	private PedestrianService pedestrianservice;
-
+	//실시간 혼잡도 측정
 	public int realTimeConfusion() {
 		String path = "C:/resources";
 		String path_in = path + "/analyzeReport/loginside.csv";
@@ -257,7 +260,7 @@ public class TaskController {
 			+ "                                    </dl>\n" + "                                </div>\n"
 			+ "                            </div>";
 	String terminal = "";
-
+	//1분마다 작동하는 스케쥴러
 	@Scheduled(fixedDelay = 59999)
 	public void mailSender() {
 		LocalDateTime now = LocalDateTime.now();
@@ -265,7 +268,7 @@ public class TaskController {
 		String formatedNow = now.format(formatter);
 		System.out.println("Spring Scheduler 작동 " + formatedNow);
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddHH");
-		/* 이메일 보내기 */
+		/* 출발 3시간 남은 고객에게 이메일 보내기 */
 		List<OrderMemberVO> customer3h = orderservice.OrderMemberCheck();
 		for (int i = 0; i < customer3h.size(); i++) {
 			List<CustomerVO> LastMember = orderservice.LastMember(customer3h.get(i).getOdept(),
@@ -293,7 +296,7 @@ public class TaskController {
 				terminal = GMP;
 				break;
 			}
-
+			//이메일 양식
 			String setFrom = "hdite1284@naver.com";
 			String toMail = customer3h.get(i).getMemail();
 			String title = customer3h.get(i).getMname() + "님 인도장 안내입니다.";
@@ -391,6 +394,7 @@ public class TaskController {
 				e.printStackTrace();
 			}
 		}
+		//비행기 출발 30분 전 미인도 고객에게 메일 보내기
 		List<OrderMemberVO> customer30m = orderservice.LastHalfMember();
 		for (int i = 0; i < customer30m.size(); i++) {
 			List<CustomerVO> LastMember = orderservice.LastMember(customer30m.get(i).getOdept(),
@@ -493,6 +497,7 @@ public class TaskController {
 				e.printStackTrace();
 			}
 		}
+		//비행기 출발 후 미인도 고객에게 메일 보내기
 		List<OrderMemberVO> customerfail = orderservice.FailMember();
 		for (int i = 0; i < customerfail.size(); i++) {
 			String setFrom = "hdite1284@naver.com";
