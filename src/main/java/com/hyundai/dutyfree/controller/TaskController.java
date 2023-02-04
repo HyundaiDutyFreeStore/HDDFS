@@ -41,11 +41,7 @@ public class TaskController {
 	private OrderService orderservice;
 	@Autowired
 	private PedestrianService pedestrianservice;
-	
-	LocalDateTime  now = LocalDateTime .now();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-	String formatedNow = now.format(formatter);
-	
+
 	public int realTimeConfusion() {
 		String path = "C:/resources";
 		String path_in = path + "/analyzeReport/loginside.csv";
@@ -264,7 +260,10 @@ public class TaskController {
 
 	@Scheduled(fixedDelay = 59999)
 	public void mailSender() {
-		System.out.println("Spring Scheduler 작동"+formatedNow);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		String formatedNow = now.format(formatter);
+		System.out.println("Spring Scheduler 작동 " + formatedNow);
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddHH");
 		/* 이메일 보내기 */
 		List<OrderMemberVO> customer3h = orderservice.OrderMemberCheck();
@@ -375,7 +374,8 @@ public class TaskController {
 					+ "                                            실시간 대기자</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                            " + realTimeConfusion() + "명</td>\n"
+					+ "                                            " + realTimeConfusion() + "명 예상 대기 시간은 "
+					+ (int) Math.floor(realTimeConfusion() / 3) * 3 + "분 입니다."
 					+ "                                    </tr>" + "                                </tbody>\n"
 					+ "                            </table>" + terminal + Notice + mailFooter;
 			try {
@@ -410,8 +410,8 @@ public class TaskController {
 					+ "                            면세품 인도 안내</p>\n" + "                        <p\n"
 					+ "                            style=\"padding:0;margin:25px 0 0 0;color:#666;text-align:center;font-size:14px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">\n"
 					+ "                            <span style=\"color:#333;font-size:18px\">"
-					+ customer3h.get(i).getMname() + "</span> 고객님 안녕하세요.<br>현대백화점인터넷면세점을 이용해주셔서\n"
-					+ "                            감사합니다.<br>고객님께서 주문하신 면세품 인도 시간이 30분 남았습니다. <br> 인도장과 혼잡도를 확인하시어 여정 출발 전 면세품 인도를 해주시기 바랍니다.\n"
+					+ customer30m.get(i).getMname()
+					+ "</span> 고객님 안녕하세요.<br>현대백화점인터넷면세점을 이용해주셔서 감사합니다.<br>고객님께서 주문하신 면세품 인도 시간이 30분 남았습니다. <br> 인도장과 혼잡도를 확인하시어 여정 출발 전 면세품 인도를 해주시기 바랍니다.\n"
 					+ "                        </p>\n" + "                        <div style=\"padding:0 30px\">\n"
 					+ "                            <p\n"
 					+ "                                style=\"padding:0;margin:37px 0 8px 0;color:#333;font-size:20px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">\n"
@@ -435,14 +435,14 @@ public class TaskController {
 					+ "                                            출국일시</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                            " + customer3h.get(i).getOdeptdate() + "</td>\n"
+					+ "                                            " + customer30m.get(i).getMname() + "</td>\n"
 					+ "                                    </tr>\n" + "                                    <tr>\n"
 					+ "                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n"
 					+ "                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
 					+ "                                            성명</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                            " + customer3h.get(i).getMname() + "</td>\n"
+					+ "                                            " + customer30m.get(i).getMname() + "</td>\n"
 					+ "                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n"
 					+ "                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
 					+ "                                            국적</th>\n"
@@ -455,7 +455,7 @@ public class TaskController {
 					+ "                                            출국장소</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ customer3h.get(i).getOdept() + "</td>\n"
+					+ customer30m.get(i).getOdept() + "</td>\n"
 					+ "                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n"
 					+ "                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
 					+ "                                        </th>\n"
@@ -476,8 +476,8 @@ public class TaskController {
 					+ "                                            실시간 대기자</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ realTimeConfusion() + "명 예상 대기 시간은 " + Math.floor(realTimeConfusion() / 3) * 3 + "분 입니다.</td>\n"
-					+ "                                    </tr>\n" + "\n"
+					+ realTimeConfusion() + "명 예상 대기 시간은 " + (int) Math.floor(realTimeConfusion() / 3) * 3
+					+ "분 입니다.</td>\n" + "                                    </tr>\n" + "\n"
 					+ "                                </tbody>\n" + "                            </table>" + Notice
 					+ mailFooter;
 			try {
@@ -503,8 +503,8 @@ public class TaskController {
 					+ "                            미인도 안내</p>\n" + "                        <p\n"
 					+ "                            style=\"padding:0;margin:25px 0 0 0;color:#666;text-align:center;font-size:14px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">\n"
 					+ "                            <span style=\"color:#333;font-size:18px\">"
-					+ customer3h.get(i).getMname() + "</span> 고객님 안녕하세요.<br>현대백화점인터넷면세점을 이용해주셔서\n"
-					+ "                            감사합니다.<br>고객님께서 주문하신 면세품 인도 시간이 30분 남았습니다. <br> 인도장과 혼잡도를 확인하시어 여정 출발 전 면세품 인도를 해주시기 바랍니다.\n"
+					+ customerfail.get(i).getMname() + "</span> 고객님 안녕하세요.<br>현대백화점인터넷면세점을 이용해주셔서\n"
+					+ "                            감사합니다.<br>고객님께서 주문하신 면세품 인도 시간이 지나 미인도 처리 되었습니다. <br> 환불 처리는 고객센터를 통해 문의 부탁드립니다.\n"
 					+ "                        </p>\n" + "                        <div style=\"padding:0 30px\">\n"
 					+ "                            <p\n"
 					+ "                                style=\"padding:0;margin:37px 0 8px 0;color:#333;font-size:20px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">\n"
@@ -528,14 +528,14 @@ public class TaskController {
 					+ "                                            출국일시</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                            " + customer3h.get(i).getOdeptdate() + "</td>\n"
+					+ "                                            " + customerfail.get(i).getOdeptdate() + "</td>\n"
 					+ "                                    </tr>\n" + "                                    <tr>\n"
 					+ "                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n"
 					+ "                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
 					+ "                                            성명</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:left;font-weight:normal;color:#666;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                            " + customer3h.get(i).getMname() + "</td>\n"
+					+ "                                            " + customerfail.get(i).getMname() + "</td>\n"
 					+ "                                        <th colspan=\"1\" rowspan=\"1\" scope=\"row\"\n"
 					+ "                                            style=\"padding:0 0 0 0px;font-size:13px;text-align:center;line-height:18px;font-weight:normal;color:#666;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';background-color:#f9f9f9;border-bottom:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
 					+ "                                            국적</th>\n"
