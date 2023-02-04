@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hyundai.dutyfree.vo.CartVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
+import lombok.extern.log4j.Log4j;
+
 /**
  * CartMapperTests
  * 
@@ -29,13 +31,13 @@ import com.hyundai.dutyfree.vo.ProductVO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "file:src/main/webapp/WEB-INF/spring/root-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/appServlet/security-context.xml" })
+@Log4j
 public class CartMapperTests {
 
 	@Autowired
 	private CartMapper cartmapper;
 
-	// 장바구니 목록을 조회
-
+	// 장바구니 목록을 가격 기준으로 정렬하는 테스트
 	@Test
 	public void getCartListpriceTests() { 
 		HashMap<String, String> listMap = new HashMap<>();
@@ -44,10 +46,11 @@ public class CartMapperTests {
 		double KRW_WON=1267.0;
 		List<CartVO> cartlist=cartmapper.getCartListprice(mid, align, KRW_WON);
 		for(CartVO cart:cartlist) {
-			System.out.println(cart.toString());
+			log.info(cart.toString());
 		}
 	}
-
+	
+	//장바구니 리스트를 출국일 기준으로 정렬하는 테스트
 	@Test
 	public void getCartListregDate() {
 		HashMap<String, String> listMap = new HashMap<>();
@@ -55,11 +58,11 @@ public class CartMapperTests {
 		listMap.put("align","lput");
 		List<CartVO> cartlist=cartmapper.getCartListregDate(listMap);
 		for(CartVO cart:cartlist) {
-			System.out.println(cart.toString());
+			log.info(cart.toString());
 		}
 	}
 
-	// 장바구니에 물품을 등록
+	// 장바구니에 물품을 등록하는 테스트
 	@Test 
 	public void insertCartTests() { 
 	  CartVO cart=new CartVO();
@@ -67,41 +70,64 @@ public class CartMapperTests {
 	  cart.setCartstock(100);
 	  cart.setPcode("105261200055"); 
 	  cartmapper.insertCart(cart);
+	  log.info("장바구니 상품 등록 수행!");
 	}
 	 
 
-	// 상품의 재고량을 1감소
+	// 상품의 재고량을 1 감소하는 테스트
 	@Test
-	public void redproductcnt() {
+	public void redproductcntTests() {
 		ProductVO product=new ProductVO();
 		product.setPcode("105261200055");
 		product.setPstock(100);
 		product.setPsel(10);
 		cartmapper.redproductcnt(product);
+		log.info("상품 재고량 감소!");
 	}
 
-	// 상품의 정보를 가져온다.
+	// 상품의 정보를 가져오는 테스트
 	@Test
 	public void prodinfoTests() {
 		ProductVO product=cartmapper.prodinfo("105261200055");
-		System.out.println(product.toString());
+		log.info(product.toString());
 	}
 
-	/*
-	 * // 장바구니안에 상품이 존재하는지 확인
-	 * 
-	 * @Test public void Cartitemconsist() { cartmapper.Cartitemconsist(cart) }
-	 */
+	
+	// 장바구니안의 상품이 존재하는지 확인하는 테스트
+	@Test 
+	public void CartitemconsistTests() { 
+		String pcode="565660300014";
+		String mid="2635533884";
+		CartVO cart=new CartVO();
+		cart.setPcode(pcode);
+		cart.setMid(mid);
+		log.info(cartmapper.Cartitemconsist(cart));
+		}
+	 
 
-	// 장바구니의 수량 업데이트
+	// 장바구니의 수량 업데이트 테스트
 	@Test
-	public void UpdateCartstock(CartVO cart) {
-
+	public void UpdateCartstockTests() {
+		String pcode="565660300014";
+		String mid="2635533884";
+		CartVO cart=new CartVO();
+		cart.setPcode(pcode);
+		cart.setMid(mid);
+		cartmapper.UpdateCartstock(cart);
+		log.info("장바구니 수량 업데이트 수행!");
 	}
 
-	// 장바구니 삭제
+	// 장바구니 삭제 테스트
+	@Test
 	public void deleteCart(CartVO cart) {
-
+		String pcode="565660300014";
+		String mid="2635533884";
+		CartVO carts=new CartVO();
+		carts.setPcode(pcode);
+		carts.setMid(mid);
+		cartmapper.deleteCart(carts);
+		log.info("장바구니 식제 수행!");
+		
 	}
 
 }
