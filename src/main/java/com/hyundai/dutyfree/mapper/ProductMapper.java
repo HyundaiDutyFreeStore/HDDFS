@@ -21,7 +21,7 @@ import com.hyundai.dutyfree.vo.ProductVO;
  * 2023.01.12    김가희                        페이징 처리 추가
  * 2023.01.14    김가희                        상품필터링 추가
  * 2023.01.15    김가희                        상품검색 추가
- * 2023.01.16 	  박진수			  싱품상세 추가
+ * 2023.01.16 	  박진수			     싱품상세 추가
  *        
  */
 public interface ProductMapper {

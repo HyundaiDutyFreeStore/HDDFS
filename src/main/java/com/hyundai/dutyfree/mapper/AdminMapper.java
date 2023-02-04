@@ -23,10 +23,6 @@ public interface AdminMapper {
 
 	public void insertAdminChat(AdminChat ac);
 	
-	public List<String> firstUsidList();
-	
-	public List<String> secondUsidList();
-	
 	public List<AdminChat> roomNoList();
 	
 	public AdminMessage loadAdminMessage(HashMap<String, String> usidMap);

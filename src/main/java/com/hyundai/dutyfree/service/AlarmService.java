@@ -16,7 +16,12 @@ import com.hyundai.dutyfree.vo.AlarmVO;
  * 
  */
 public interface AlarmService {
+	//알람 insert
 	public void insertAlarm(String pcode, String mid, String mphone);
 	
+	//알람리스트 조회
 	public List<AlarmVO> getAlarmList(String pcode);
+	
+	//알람중복체크
+	public int alarmChk(String pcode, String mid);
 }

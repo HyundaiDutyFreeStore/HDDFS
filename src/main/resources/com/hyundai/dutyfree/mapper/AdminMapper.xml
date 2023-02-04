@@ -28,21 +28,6 @@
 		SELECT * FROM ADMIN_CHAT WHERE adminfirstusid=#{mid} OR adminsecondusid=#{mid}
 		ORDER BY ADMINCHATDATE ASC
 	</select>
-
-	<!-- <select id="selectAdminInChat" resultType="List"
-		resultMap="adminChatMap">
-		SELECT * FROM ADMIN_CHAT ORDER BY ADMINCHATDATE ASC
-	</select> -->
-	
-	<!-- 관리자에게 채팅신청한 고객ID 리스트 조회 -->
-	<select id="firstUsidList" resultType="String">
- 		SELECT ADMINFIRSTUSID FROM ADMIN_CHAT WHERE ADMINSECONDUSID='admin' GROUP BY ADMINFIRSTUSID
- 	</select>
- 	
- 	<!-- 관리자가 채팅을 보낸 고객ID 리스트 조회 -->
-	<select id="secondUsidList" resultType="String">
- 		SELECT ADMINSECONDUSID FROM ADMIN_CHAT WHERE ADMINFIRSTUSID='admin' GROUP BY ADMINSECONDUSID
- 	</select>
  	
  	<!-- 관리자가 모든 채팅방ID 조회 -->
 	<select id="roomNoList" resultType="List"

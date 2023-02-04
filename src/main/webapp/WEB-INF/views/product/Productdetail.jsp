@@ -601,5 +601,22 @@ function updateCart(){
 	function moveToMain(){
 		location.href = ctx_shop + '/dm/main.do';
 	}
+	
+	function goAlarm(pcode){
+		$.ajax({
+			type :"POST",
+		    data : Data,
+		    url : "/alarm/chk",
+		    success : function(data){
+		    	if(data === 'yes'){
+		    		window.open('/alarm/register?pcode='+pcode,'alarm','width=662,height=698,location=no,status=no,scrollbars=yes');
+		    	}else{
+		    		alert("이미 신청한 알람입니다.");
+		    		return false;
+		    	}
+		    }
+		}
+		
+	}
 </script>
 <%@ include file="/WEB-INF/views/common/Footer.jsp"%>
