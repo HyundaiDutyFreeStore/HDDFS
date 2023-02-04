@@ -35,4 +35,9 @@ public class AlarmServiceImpl implements AlarmService{
 		return mapper.getAlarmList(pcode);
 	}
 
+	@Override
+	public int alarmChk(String pcode, String mid) {
+		return mapper.alarmChk(pcode, mid);
+	}
+
 }

@@ -39,6 +39,7 @@ public class ProductMapperTests {
 	
 	private String oid = "OR20230122203318";
 	
+	//상품 목록 조회 테스트
 	@Test
 	public void getListTest() {
 		Criteria cri = new Criteria();
@@ -50,6 +51,8 @@ public class ProductMapperTests {
 		list.forEach( i -> log.info(i));
 	}
 	
+	
+	//상품 총 개수 조회 테스트
 	@Test
 	public void getTotalTest() {
 		Criteria cri = new Criteria();
@@ -61,6 +64,7 @@ public class ProductMapperTests {
 		log.info("상품총개수: "+cnt);
 	}
 	
+	//대분류에 따른 중분류 목록  조회 테스트
 	@Test
 	public void getMedCategoryTest() {
 		String clarge = "스킨케어";
@@ -68,6 +72,7 @@ public class ProductMapperTests {
 		medList.forEach(i->log.info(i));
 	}
 	
+	//중분류에 따른 소분류 목록 조회 테스트
 	@Test
 	public void getSmallCategoryTest() {
 		String cmedium = "마스크팩";
@@ -75,6 +80,7 @@ public class ProductMapperTests {
 		smallList.forEach(i->log.info(i));
 	}
 	
+	//상품상세 조회 테스트
 	@Test
 	public void productDetailTest() {
 		String pcode = "563811207664";

@@ -80,7 +80,7 @@
 													<div class="col mr-2">
 														<div
 															class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-															고객ID: ${memberInfoList.mid} <br> (고객명 :
+															고객ID:${memberInfoList.mid} <br> (고객명 :
 															${memberInfoList.mname})
 														</div>
 														<div class="h5 mb-0 font-weight-bold text-gray-800">${memberInfoList.latestMsg}</div>

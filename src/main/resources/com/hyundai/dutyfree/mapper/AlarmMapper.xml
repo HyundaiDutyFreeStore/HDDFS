@@ -10,4 +10,8 @@
  	<select id="getAlarmList" resultType="com.hyundai.dutyfree.vo.AlarmVO">
  		select * from alarm where pcode=#{pcode}
  	</select>
+ 	
+ 	<select id="alarmChk" resultType="Integer">
+ 		select count(*) from alarm where pcode=#{pcode} and mid=#{mid}
+ 	</select>
 </mapper>
