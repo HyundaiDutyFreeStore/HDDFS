@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.dutyfree.mapper.ChartMapper">
-
+	<!-- 가입 된 성별 비율 -->
 	<select id="cntMember"
 		resultType="com.hyundai.dutyfree.vo.ChartMemberVO">
 		select mgender as sex, count(*) as mcnt
@@ -12,6 +12,7 @@
 		mgender
 		order by 1
 	</select>
+	<!-- 일일 매출 -->
 	<select id="dailyTotal"
 		resultType="com.hyundai.dutyfree.vo.ChartDailyVO">
 		<![CDATA[
@@ -23,6 +24,7 @@
 		order by 1
 		]]>
 	</select>
+	<!-- 카테고리당 판매 비율 -->
 	<select id="categoryTotal"
 		resultType="com.hyundai.dutyfree.vo.ChartCategoryVO">
 		select c.clarge as cat, count(*) as ccnt
@@ -32,6 +34,7 @@
 		GROUP BY c.clarge
 		order by 1
 	</select>
+	<!-- 일일 방문자 -->
 	<select id="cntTodayVisiter"
 		resultType="com.hyundai.dutyfree.vo.ChartVisiterVO">
 		select visitcnt

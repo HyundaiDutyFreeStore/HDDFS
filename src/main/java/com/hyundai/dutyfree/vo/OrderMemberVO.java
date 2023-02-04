@@ -19,9 +19,9 @@ import lombok.Data;
 
 @Data
 public class OrderMemberVO {
-	private String mname;
-	private String memail;
-	private String oid;
-	private String odept;
-	private Date odeptdate;
+	private String mname; // 고객이름
+	private String memail; // 고객 이메일
+	private String oid; // 주문번호
+	private String odept; // 인도장
+	private Date odeptdate; // 비행기 출발 시간
 }

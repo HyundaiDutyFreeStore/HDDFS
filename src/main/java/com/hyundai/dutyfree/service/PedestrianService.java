@@ -17,6 +17,6 @@ import com.hyundai.dutyfree.vo.PedestrianVO;
  *        </pre>
  */
 public interface PedestrianService {
-
+	// 혼잡도 측정
 	public List<PedestrianVO> readCsv(String filename);
 }

@@ -18,7 +18,6 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +48,7 @@ import lombok.extern.log4j.Log4j;
  * 수정일                 수정자                          수정내용
  * ----------  ---------------      ---------------------------
  * 2023.01.09	  김찬중			       최초생성
- * 2023.01.11	  김찬중			       회원가입 완료
+ * 2023.01.11	  김찬중			    MemberController 완료
  * 2023.01.17    김가희                            시큐리티적용
  * 2023.01.19    김가희                            소셜로그인(네이버)추가
  * 2023.01.20    김가희                            소셜로그인(카카오)추가
@@ -280,7 +279,6 @@ public class MemberController {
 		
 		//주문내역이 있다면 수행
 		if(orderlists!=null) {
-			
 			
 			
 			for(OrderListVO orderlist: orderlists) {
