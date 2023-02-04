@@ -7,7 +7,7 @@
 ------------------------------ */
 /* body {background-color:#e9ebf0;} */
 #smartchat {/*min-height:100%; inner hmtl 병합 */ height:100%; background-color: rgba(245,246,249); color:#000; font-family:'맑은 고딕','Malgun Gothic','돋움',Dotum,'Apple SD Gothic Neo',sans-serif; font-size:14px; line-height:1.5; letter-spacing:-0.05em; margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased;
-    -webkit-text-size-adjust:none; -moz-osx-font-smoothing:grayscale; -webkit-overflow-scrolling:touch; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; /* 개발자 추가 */overscroll-behavior: contain;/* -webkit-tap-highlight-color:rgba(0, 0, 0, 0); -webkit-tap-highlight-color:transparent; 201016 삭제 */} /* html, body */ 
+    -webkit-text-size-adjust:none; -moz-osx-font-smoothing:grayscale; -webkit-overflow-scrolling:touch; -khtml-user-select:text; -moz-user-select:text; -ms-user-select:text; user-select:text; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; /* 개발자 추가 */overscroll-behavior: contain;/* -webkit-tap-highlight-color:rgba(0, 0, 0, 0); -webkit-tap-highlight-color:transparent; 201016 삭제 */} /* html, body */ 
 #smartchat .wrapper {height:100%;}
 #smartchat .header {position:relative; left:0; top:0; z-index:2; width:100%; height:51px; border:none;}
 #smartchat .container {height:calc(100% - 119px); margin:0;}

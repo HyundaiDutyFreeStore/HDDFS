@@ -162,7 +162,7 @@
 	 				//발신인==이채팅방고객, 수신인==관리자 (고객이 보낸 메세지이면- 내가받음) 
 	 	         	if(v['adminFirstUsid'] == otherUsid && v['adminSecondUsid']=='${adminInfo.mid}'){
 	 	         		var template = `<div class="chat-item is-ktalk" style="visibility: visible;">`;
-	 	         			template += `<span class="name"> `+otherUsid+`(`+otherName+`)</span>`;
+	 	         			template += `<div class="name"> `+otherUsid+`(`+otherName+`)</div>`;
 	 	         			template +=		`<div class="bubble has-moving in" style="max-height: 2468px;">`;
 	 	         			template += 		`<div class="inner">` +v['adminChatContent'] +`</div>`;
 	 	         			template +=		`</div>`;
