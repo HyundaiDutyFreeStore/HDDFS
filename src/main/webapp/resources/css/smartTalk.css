@@ -1,0 +1,374 @@
+@charset "utf-8"; 
+@import url('./swiper.css'); /* swiper */
+@import url('./common.css'); /* ktalk 공통 스타일 */
+
+
+/* layout 
+------------------------------ */
+/* body {background-color:#e9ebf0;} */
+#smartchat {/*min-height:100%; inner hmtl 병합 */ height:100%; background-color: rgba(245,246,249); color:#000; font-family:'맑은 고딕','Malgun Gothic','돋움',Dotum,'Apple SD Gothic Neo',sans-serif; font-size:14px; line-height:1.5; letter-spacing:-0.05em; margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:none; -moz-osx-font-smoothing:grayscale; -webkit-overflow-scrolling:touch; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; /* 개발자 추가 */overscroll-behavior: contain;/* -webkit-tap-highlight-color:rgba(0, 0, 0, 0); -webkit-tap-highlight-color:transparent; 201016 삭제 */} /* html, body */ 
+#smartchat .wrapper {height:100%;}
+#smartchat .header {position:relative; left:0; top:0; z-index:2; width:100%; height:51px; border:none;}
+#smartchat .container {height:calc(100% - 119px); margin:0;}
+#smartchat .contents {overflow-x:hidden; overflow-y:auto; position:relative; z-index:1; height:100%; padding:0;}
+#smartchat .contents:after {content:''; display: block; height:20px;}
+#smartchat .chat-wrap {position:fixed; left:0; right:0; bottom:0; z-index:2; width:100% ; height:68px; border:none; border-radius:0; }
+
+
+/* header */
+#smartchat .header-inner {background:transparent;}
+#smartchat .header-inner h1 {position:relative; padding:0 20px; line-height:51px; text-align:center; background-size:85px auto;}
+#smartchat .header-inner h1 .logo {overflow:hidden; display:inline-block; vertical-align:bottom; width:calc(100% - 60px); height:51px; color:#000; font-size:18px; font-weight:500; line-height: 51px; letter-spacing:-1px;  text-overflow:ellipsis; white-space: nowrap;} /* 201202 텍스트로 변경 */
+/* .header-inner h1 .logo {animation-name:logo; animation-duration:5s; animation-iteration-count:infinite; animation-timing-function:cubic-bezier(.13, .10, .07, .95); animation-fill-mode:forwards;} */
+#smartchat .header-inner .btn-alarm {overflow:hidden; position:absolute; right:20px; /*left:calc(50% + 54px);*/ top:15.5px;} 
+#smartchat .header-inner .btn-alarm.in:after {content:''; position:absolute; right:0; top:0; display: inline-block; width:4px; height:4px; background-color:#ff4352; border-radius:50%; text-indent:-999em;}
+#smartchat .header-inner .btn-login {position:absolute; left:20px; top:16px; display:inline-block; width:20px; height:20px; background-image:url('../images/smartTalk/ico_login.png');}
+#smartchat .header-inner .btn-login.logged-in {width:22px; height:22px; background-image:url('../images/smartTalk/ico_logged.png');}
+#smartchat .header-inner .btn-close {position:absolute; right:20px; top:16px; display:none; width:20px; height:20px; background-image:url('../images/smartTalk/ico_close.png');}
+#smartchat .btn-alarm {display:inline-block; width:20px; height:20px; background-image:url('../images/smartTalk/ico_alarm.png');}
+#smartchat .btn-alarm.in,
+#smartchat .btn-alarm:hover,
+#smartchat .btn-alarm:focus {animation:tada .75s linear;}
+#smartchat .btn-alarm em {vertical-align:middle; margin-top:10px; overflow:visible !important;}
+
+
+/* 고객님 반갑습니다 */
+#smartchat .hello-wrap {position:relative; z-index:3; width:100%;}
+#smartchat .hello-inner {position:fixed; left:40px; top:44px; z-index:3;}
+#smartchat .hello-wrap p {position:relative; display:inline-block; vertical-align:top; /* max-width:75%; */ min-width:120px; margin:0; padding:10px 12px; border-radius:9px; border-top-left-radius:0; background-color:#fff; box-shadow:0 3px 6px 0 rgba(0, 0, 0, .04); -webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.04);-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.04); color:#000;}
+#smartchat .hello-wrap p:before {content:''; display:block; position:absolute; left:0; top:-3px; width:9px; height:3px; background-image: url('../images/smartTalk/bg_bubble_ktalk.png');}
+#smartchat .hello-wrap p span {display:inline-block; vertical-align:top;}
+#smartchat .hello-wrap p .ico-grade {margin:0 2px 0 0; vertical-align: top;}
+
+
+/* .chat-wrap */
+/* #smartchat .chat-wrap .chat-forms {position:relative; height:100%;} */
+#smartchat .chat-wrap .chat-forms {position:absolute; top:8px; left:22px; right:22px; z-index:2; width:calc(100% - 44px); height:50px; border:1px solid #d3d7e0; border-radius:9px; background-color:#fff;}
+#smartchat .chat-wrap .chat-forms:focus-within {border:1px solid #98a1b3; } /* 20220426 추가 */
+#smartchat .chat-wrap .chat-forms .btn-tips {display:inline-block; vertical-align:top; width:40px; height:100%; padding-top:14px; text-align:center;}
+#smartchat .chat-wrap .chat-forms .btn-tips:before {content:''; display:inline-block; width:20px; height:20px; background-image:url('../images/smartTalk/btn_tips.png'); background-position: 2px center;}
+#smartchat .chat-wrap .chat-forms #addons.btn-tips:before {background-image:url('../images/smartTalk/btn_addons.png');}
+#smartchat .chat-wrap .chat-forms .inp-chat {display:inline-block; width:calc(100% - 86px); height:44px; line-height:44px; background: #fff; border:none; color:#000; margin-top:2px;margin-bottom:2px;padding:0; vertical-align:top;}
+#smartchat .chat-wrap .chat-forms .inp-chat::placeholder {vertical-align:top; line-height:44px;color:#B8B8B8;}
+#smartchat .chat-wrap .chat-forms .inp-chat::-webkit-input-placeholder {vertical-align:top; line-height:44px;color:#B8B8B8;}
+#smartchat .chat-wrap .chat-forms .inp-chat::-ms-input-placeholder {vertical-align:top; line-height:44px;color:#B8B8B8;}
+#smartchat .chat-wrap .chat-forms .inp-chat:-ms-input-placeholder {vertical-align:top; line-height:44px;color:#B8B8B8 !important;}
+#smartchat .chat-wrap .chat-forms .btn-send {position:absolute; right:12px; top:13px; display:inline-block; vertical-align:middle; width:22px; height:22px; background:url('../images/btn_send.png'); background-size:22px auto;} /* 201202 배경색 변경 */
+#smartchat .chat-wrap .chat-forms:focus-within .btn-send {background:url('../images/btn_send_active.png'); background-size:22px auto;} /* 20220415 추가 */
+#smartchat .chat-wrap .btn-del {position:absolute; right:10px; top:-40px; display:inline-block; vertical-align:middle; width:29px; height:29px; background-image:url('../images/smartTalk/btn_del.png');}
+#smartchat .chat-wrap .btn-gohome {position:absolute; right:20px; top:-44px; display:inline-block; vertical-align:middle; width:42px; height:42px; border-radius: 50%; background-image:url('../images/btn_gohome.png'); /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);-moz-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */}
+#smartchat .chat-wrap .btn-cquit {position:absolute; left:4px; top:10px; width:36px; height:32px; background-color:#fff; background-image:url('../images/smartTalk/ico_cquit.png');}
+/* .chat-wrap cs - 220308 추가 */
+#smartchat .chat-wrap .chat-forms.cs .btn-tips {width:12px;}
+#smartchat .chat-wrap .chat-forms.cs .btn-tips:before {display:none; }
+#smartchat .chat-wrap .chat-forms.cs .inp-chat {width:calc(100% - 48px);}
+
+
+/* 메인 페이지
+------------------------------ */
+/* 알람 노출 */
+.is-alarm-open #smartchat .header {z-index:4;}
+.is-alarm-open #smartchat .header .hello-wrap {display:none;}
+/* .is-alarm-open #smartchat .wrapper:after {top:50px;} */
+#smartchat .alarm-wrap {position:absolute; visibility:hidden; bottom:0; left:0; right:0; }
+#smartchat .alarm-wrap.on {visibility:visible; z-index:20;}
+#smartchat .alarm-wrap.on .alarm-inner {height:auto;} 
+#smartchat .alarm-wrap .alarm-inner {position:relative; height:0; padding:50px 0 10px 20px; background-color:#fff; border-radius: 20px 20px 0 0;}
+#smartchat .alarm-wrap.in .alarm-list {overflow-y:auto;}
+#smartchat .alarm-wrap .alarm-list {overflow:hidden; height:0; transition:height .3s;}
+#smartchat .alarm-wrap .alarm-list li:first-child .alarm-item {border-top:none; padding-top:0;}
+#smartchat .alarm-wrap .alarm-item {padding:20px 0; margin-right:20px; border-top:1px solid #ddd;}
+#smartchat .alarm-wrap .alarm-item .title {font-size:20px; font-weight:bold; color:#111;}
+#smartchat .alarm-wrap .alarm-item .desc {margin-top:10px;}
+/* #smartchat .alarm-wrap .alarm-item .desc .txt-info { overflow:hidden; max-height:65px;white-space:pre-line; } */
+#smartchat .alarm-wrap .alarm-item .date {margin-top:20px; color:#000;}
+#smartchat .alarm-wrap .alarm-item .date em {color:#280ABE;}
+#smartchat .alarm-wrap .actions {position:absolute; width:calc(100% - 44px); top:0; margin:0; padding:0; }
+#smartchat .alarm-wrap .actions .btn-more {position:relative; width:100%; height:40px; line-height:24px; background-color:#fff;}
+#smartchat .alarm-wrap .actions .btn-more:after {content:''; display:inline-block; vertical-align:top; margin-top:7px; width:17px; height:17px; background-image:url('../images/smartTalk/btn_alarm_toggle.png'); transition:transform .3s;}
+#smartchat .alarm-wrap .actions .btn-more.in:after {-webkit-transform:rotate(-180deg); transform:rotate(-180deg);} /* 201021 prefix 추가 */
+#smartchat .alarm-wrap .btn-close {position:absolute; width:40px; height:40px; right:6px; top:8px; color:#fff; }
+/* .alarm-wrap .btn-close:after {content:''; display:inline-block; width:10px; height:10px; margin:12px 0 0 5px; vertical-align:top; background-image:url('../images/smartTalk/btn_close_alarm.png');} */
+#smartchat .alarm-wrap .btn-close:after {content:''; display:inline-block; position:absolute; right:13px; top:13px; width:14px; height:14px; background-image:url('../images/smartTalk/btn_close_alarm.png');}
+#smartchat .alarm-wrap .btn-close span {line-height:32px; display:none;}
+
+
+/* modal : 시스템 장애 */
+#smartchat .md-error {text-align:center;}
+#smartchat .md-error .title {width: fit-content; display:table; font-size:18px; font-weight:700; color:#111; box-shadow: none; margin-left: auto; margin-right: auto;} /* box-shadow: inset 0 -8px 0 #c8f03e; 20220503 수정 */
+#smartchat .md-error .title:before {content:''; display:block; width:80px; height:70px; margin:8px auto 20px; background-image:url('../images/smartTalk/ico_sys_error.png');}
+#smartchat .md-error p.txt-info {margin-top:10px; line-height:1.6;}
+#smartchat .md-error .msg-box {margin-top:10px;}
+/* 
+.md-system-error .ui-modalclose {position:absolute; right:0px; bottom:-33px; color:#fff; font-weight:500;}
+.md-system-error .ui-modalclose:after {content:''; display:inline-block; width:10px; height:10px; margin:3px 0 0 5px; background-image:url('../images/smartTalk/btn_close_alarm.png');} */
+
+
+/* 인트로
+------------------------------ */
+#smartchat .intro-wrap {min-width:360px; width:100%; margin:0 auto; transition:all .3s;}
+#smartchat .intro-character { overflow:hidden; padding:22px;}
+#smartchat .intro-character p {font-size:24px; text-align:center; font-weight:700;line-height: 33px; white-space:pre-line;} /* 201202 줄바꿈 처리 / 20220103  */
+#smartchat .intro-character .name {display:inline-block; box-shadow:inset 0 -10px 0 #ffbab2;}
+#smartchat .intro-character strong {font-weight:600;}
+#smartchat .intro-character .characters {position:relative; display:block; width:288px; margin:40px auto 0; text-align:center;}
+/* .intro-character .characters span.kori,
+.intro-character .characters span.tori {position:relative; display:block; float:left; margin:0 -3px;}
+.intro-character .characters span.kori img,
+.intro-character .characters span.tori img {width:86px;} */
+/* .intro-character .characters span.kori:before,
+.intro-character .characters span.tori:before {content:''; display:block; position:absolute; width:38px; height:22px; box-shadow:3px 3px 5px #0000000D; border-radius:5px; background-color:#fff; font-size:10px; line-height:20px;}
+.intro-character .characters span.kori:before,
+.intro-character .characters span.tori:before {animation-name:intro; animation-duration:1s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-fill-mode:forwards;}
+.intro-character .characters span.kori:before {content:'Kori'; left:-38px; top:54px; border-top-right-radius:0;}
+.intro-character .characters span.tori:before {content:'Tori'; right:-45px; top:5px; border-bottom-left-radius:0; background-color:#4f4b4f; color:#fff; animation-delay:.3s;} */
+#smartchat .intro-character .characters .fare {display:block; /* width:161px; */ margin:0 auto;}
+#smartchat .intro-character .characters .shop {display:block; /* width:102px; */}
+#smartchat .intro-character .characters .flake {position:absolute; width:100%; height:100%;}
+#smartchat .intro-character .characters .flake.n1 {left:20px; top:40px;}
+#smartchat .intro-character .characters .flake.n2 {left:80px; top:0;}
+#smartchat .intro-character .characters .flake.n3 {left:0; top:-20px;}
+#smartchat .intro-character .characters .flake:before, 
+#smartchat .intro-character .characters .flake:after {content:''; position:absolute; top:0; display:inline-block; animation-name:introFlake, introFlake-fall; animation-duration:2s; animation-iteration-count:infinite; animation-timing-function:ease-in; animation-fill-mode:forwards;}
+#smartchat .intro-character .characters .flake:before {left:0; width:13px; height:10px; background-image:url('../images/smartTalk/img_charactor_shop_1.png');}
+#smartchat .intro-character .characters .flake:after  {left:-20px; width:11px; height:15px; background-image:url('../images/smartTalk/img_charactor_shop_2.png'); animation-delay:.5s;}
+#smartchat .intro-faq {margin:32px 0 0;}
+#smartchat .intro-faq p {font-size:14px;}
+#smartchat .intro-faq p:before {content:''; display: none; width:20px; height:20px; vertical-align:top; margin-right:3px; background-image:url('../images/smartTalk/ico_intro_txt.png');} /* display: inline-block; */
+#smartchat .intro-faq ul {padding-top:4px;}
+#smartchat .intro-faq li a {overflow:hidden; display:block; background-color:#fff; border-radius:9px; color:#000; box-shadow: 0 2px 5px 0 rgb(0 0 0 / 10%); -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 10%); -moz-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 10%);} /* 201103 접근성 수정 */
+#smartchat .intro-faq li a span {display:block;}
+#smartchat .intro-faq li a .img {width:40px; height:40px; margin:0 auto;}
+#smartchat .intro-faq li a .txt {font-size:13px; margin-top:20px; padding:0 10px; -webkit-transform:translateY(-50%); transform:translateY(-50%); white-space:pre-wrap;} /* 201021 prefix 추가 */
+
+#smartchat .intro-faq.is-basic {padding:0 22px;}
+#smartchat .intro-faq.is-basic ul {margin-left:-6px; margin-right:-6px;}
+#smartchat .intro-faq.is-basic ul:after {content:''; display:table; clear:both;}
+#smartchat .intro-faq.is-basic li {float:left; width:33.333%; padding:6px; text-align:center;}
+#smartchat .intro-faq.is-basic li a {min-width:85px; height:100px; padding:15px 0 0; box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 10%);}
+
+#smartchat .intro-faq.is-scrollr {padding:0;}
+#smartchat .intro-faq.is-scrollr p {padding-left:22px;}
+#smartchat .intro-faq.is-scrollr .swiper-container {clear:both; position:relative; z-index:1; margin:0 19px; padding:0 0 25px;}
+#smartchat .intro-faq.is-scrollr .swiper-slide {width:auto; height:100px; padding:0 3px; margin-top:6px; text-align:center;}
+#smartchat .intro-faq.is-scrollr .swiper-slide a {width:100%; height:100%; padding:15px 0 0;}
+#smartchat .intro-faq.is-scrollr .swiper-pagination {bottom:-6px;}
+
+#smartchat .intro-faq p.txt-fare:before {content:''; display: none; width:20px; height:20px; vertical-align:top; margin-right:3px; background-image:url('../images/smartTalk/ico_intro_txt2.png');} /* display: inline-block; */
+
+/* @media all and (max-width:320px) {
+    .intro-wrap {position:relative; left:-20px; top:-20px; transform:scale(0.9, 0.9); -ms-transform:scale(0.9, 0.9); -webkit-transform:scale(0.9, 0.9);}
+} */
+
+
+/* 질문팁 레이어
+------------------------------ */
+#smartchat .tips-wrap.on {visibility:visible; position:absolute; height:auto;}
+#smartchat .tips-wrap {visibility:hidden; position:fixed; width:calc(100% + 46px); height:0; left:-23px; right:-23x; bottom:-11px; z-index:10; transition:height 0.3s;}
+#smartchat .tips-wrap .tips-inner {padding:48px 24px 40px; background-color:#fff; border-radius: 20px 20px 0 0;}
+#smartchat .tips-inner ul {text-align:left;}
+#smartchat .tips-inner li {display:inline-block; margin:6px 4px; }
+#smartchat .btn-tip {overflow:hidden; position:relative; display:inline-block; max-width:350px; height:36px; padding:0 18px; font-size:13px; line-height:normal; text-decoration:none; transition:all 0.2s; font-weight:initial; cursor:pointer; text-align:center; border-radius:36px; background-color:#fff; border:1px solid #ddd; color:#000;}
+#smartchat .btn-tip span {line-height:33px;}
+#smartchat .btn-tip:hover,
+#smartchat .btn-tip:focus,
+#smartchat .btn-tip:active {border-color:#ff5340; color:#000;}
+#smartchat .btn-tip:before {content:'#'; margin-right:2px; vertical-align:top; line-height:33px; color:#ff5340;}
+#smartchat .btn-tip.is-recomm:before {content:'#추천'; color:#ee2200;}
+#smartchat .btn-tips-close {position:absolute; right:10px; top:12px; width:40px; height:40px; background-color:#fff; text-align:center;}
+#smartchat .btn-tips-close:before {content:''; display:inline-block; width:18px; height:18px; background-image:url('../images/smartTalk/btn_close_tips.png');}
+.is-tips-open #smartchat .header {z-index:1;}
+.is-tips-open #smartchat .wrapper:after {z-index:1;}
+
+#smartchat .btn-addon {overflow:hidden; position:relative; display:inline-block; width:70px; height:60px; padding:0 4px; font-size:13px; line-height:normal; text-decoration:none; transition:all 0.2s; font-weight:initial; cursor:pointer; text-align:center; color:#333;}
+#smartchat .btn-addon span {line-height:28px;}
+#smartchat .btn-addon:before {content:''; display:block; width:24px; height:24px; margin:0 auto;}
+#smartchat .btn-addon.photo:before {background-image:url('../images/smartTalk/ico_photo.png');}
+#smartchat .btn-addon.camera:before {background-image:url('../images/smartTalk/ico_camera.png');}
+#smartchat .btn-addon.cs-end:before {background-image:url('../images/smartTalk/ico_cs_end.png');}
+
+/* 자동완성
+------------------------------ */
+#smartchat .auto-complete-wrap {display:none; position:absolute; width:calc(100% + 2px); left:-1px; right: -1px; bottom: 49px; z-index:10;background-color:#fff; border: 1px solid #ccc; border-radius: 9px; }
+#smartchat .auto-complete-inner {overflow-y:auto; max-height:185px; padding:2px 20px; -webkit-overflow-scrolling:touch;}
+#smartchat .auto-complete-inner li {border-top:1px solid #eee;}
+#smartchat .auto-complete-inner li:first-child {border:none;}
+#smartchat .auto-complete-inner a {display:block; padding:12px 0; line-height: 21px;}
+.is-auto-open #smartchat .auto-complete-wrap {display:block;}
+.is-auto-open #smartchat .header {z-index:10;}
+.is-auto-open #smartchat .header .hello-wrap {display:none;}
+.is-auto-open #smartchat .wrapper:after {z-index:1}
+.is-auto-open #smartchat .chat-list {padding-bottom:164px;} /* 201022 수정 */
+
+
+/* 만족도조사
+------------------------------ */
+#smartchat .like-actions {margin-top:15px; text-align:right;}
+#smartchat .like-actions [class*="btn-"] {overflow:hidden; display:inline-block; width:40px; height:40px; border:1px solid #ddd; border-radius:6px; text-align:center;}
+#smartchat .like-actions [class*="in"],
+#smartchat .like-actions [class*="btn-"]:hover,
+#smartchat .like-actions [class*="btn-"]:focus,
+#smartchat .like-actions [class*="btn-"]:active {border-color:#ff5340;}
+#smartchat .like-actions .btn-like {width:38px; height:38px; background-image:url('../images/smartTalk/ico_like.png'); background-size:38px auto;}
+#smartchat .like-actions .btn-notlike {width:38px; height:38px; background-image:url('../images/smartTalk/ico_notlike.png'); background-size:38px auto;}
+#smartchat .like-actions .btn-like.in,
+#smartchat .like-actions .btn-like:hover,
+#smartchat .like-actions .btn-like:focus,
+#smartchat .like-actions .btn-notlike.in,
+#smartchat .like-actions .btn-notlike:hover,
+#smartchat .like-actions .btn-notlike:focus {background-position:left -38px;}
+#smartchat .like-actions [class*="btn-"] em {line-height:38px; width:38px; height:38px;} /* 201015 임의적용 */
+
+/* modal :만족도조사 의견 */
+#smartchat .md-satisfy-like .txt-stop {margin-top:5px; color:#ee2200;}
+#smartchat .md-satisfy-like .textarea {margin-top:15px;}
+
+/* modal :만족도조사(챗봇 종료시) */
+#smartchat .md-survey .question {color:#000;}
+#smartchat .md-survey .answer {position:relative; margin:12px -20px 0; padding:0 0 40px; text-align:center;}
+#smartchat .md-survey .answer :focus + label {outline:2px solid #ddd; border-radius: 6px;}
+#smartchat .md-survey .answer .radio-box {margin:0 -2px;}
+#smartchat .md-survey .s1 label {background-position:0 0;}
+#smartchat .md-survey .s2 label {background-position:-54px 0;}
+#smartchat .md-survey .s3 label {background-position:-108px 0;}
+#smartchat .md-survey .s4 label {background-position:-162px 0;}
+#smartchat .md-survey .s5 label {background-position:-216px 0;}
+#smartchat .md-survey .s1 :checked + label {background-position:0 -64px;}
+#smartchat .md-survey .s2 :checked + label {background-position:-54px -64px;}
+#smartchat .md-survey .s3 :checked + label {background-position:-108px -64px;}
+#smartchat .md-survey .s4 :checked + label {background-position:-162px -64px;}
+#smartchat .md-survey .s5 :checked + label {background-position:-216px -64px;}
+#smartchat .md-survey :checked + label em {left:50%; bottom:18px; margin-left:-40px; width:auto; width:80px; height:auto; line-height:18px; color:#0050FF; text-align:center; font-size:16px; text-indent:0;}
+#smartchat .md-survey .my-opinion {margin-top:15px;}
+
+#smartchat .radio-box {display:inline-block;}
+#smartchat .radio-box em {position:absolute; width:1px; height:1px; color:transparent; overflow:hidden;}
+#smartchat .radio-box label {overflow:hidden; display:inline-block; width:54px; height:64px; background-image:url('../images/smartTalk/ico_survey_emoticon.png'); background-size:270px auto;}
+
+
+/* 이벤트 참여
+------------------------------ */
+/* modal : 이벤트 응모 개인정보 동의 */
+#smartchat .md-event-agree .agree-check {margin-bottom:15px;}
+#smartchat .md-event-agree .msg-box {margin-top:15px;}
+
+/* modal : 이벤트 응모 완료 */
+#smartchat .md-event-complete {text-align:center;}
+#smartchat .md-event-complete .title {font-size:18px; font-weight:700; color:#000;}
+#smartchat .md-event-complete .title:after {content:''; display:block; width:80px; height:70px; margin:16px auto; background-image:url('../images/smartTalk/img_evt_complete.png');}
+#smartchat .md-event-complete .subject {font-size:16px; color:#000; font-weight:500;}
+#smartchat .md-event-complete .txt-info {margin-top:13px;}
+#smartchat .md-event-complete .actions {margin:20px 0 0;}
+#smartchat .md-event-complete .actions.col2 {margin:20px -5px 0;}
+#smartchat .md-event-complete .actions:after {content:''; display:table; clear:both;}
+#smartchat .md-event-complete .actions.col2 [class*="btn-"] {float:left; width:calc(50% - 10px); margin:0 5px;}
+#smartchat .md-event-complete .btn-submit, 
+#smartchat .md-event-complete .btn-cancel {height:50px; line-height:48px; font-weight:bold;}
+#smartchat .md-event-complete.is-already .title:after {background-image:url('../images/smartTalk/img_evt_already.png');}
+#smartchat .md-event-complete.is-cancel .title:after {background-image:url('../images/smartTalk/img_evt_cancel.png');}
+
+
+/* 부가서비스
+------------------------------ */
+/* modal : 부가서비스 신청 */
+#smartchat .md-extra-service .msg-box {margin-bottom:15px;}
+#smartchat .md-extra-service .list-dot {margin-top:15px; color:#000;}
+
+
+/* 마이페이지
+------------------------------ */
+/* modal : 유형선택 */
+#smartchat .md-contract-type .type-select li {margin:15px 0;}
+#smartchat .md-contract-type .type-select li:first-child {margin-top:0;}
+#smartchat .md-contract-type .type-select li:last-child {margin-bottom:5px;}
+#smartchat .md-contract-type .type-item p {margin:0 0 15px; font-weight:500;}
+#smartchat .md-contract-type .type-item .lb-radio {min-width:75px;}
+
+
+/* 미납
+------------------------------ */
+/* modal : 신용카드 납부예약 */
+/* .md-card-reservation .img-payment {width:221px; height:130px; margin:10px auto 20px; background-image:url('../../img/smartchat/img_payment.png'); animation-name:imgMoving; animation-duration:1.5s; animation-iteration-count:infinite; animation-timing-function:ease-in; animation-fill-mode:forwards;} */
+#smartchat .choose-price .lb-radio {display:block; margin:10px 0;}
+
+/* modal : 신용카드 결제 */
+#smartchat .md-pay-card {}
+#smartchat .inp-cardnum {margin:0 -2px;}
+#smartchat .inp-cardnum:after {content:''; display:table; clear:both;}
+#smartchat .inp-cardnum .inp-text {float:left; width:22%; width:calc(25% - 4px); margin:0 2px;}
+#smartchat .inp-validity {margin:0 -5px;}
+#smartchat .inp-validity:after {content:''; display:table; clear:both;}
+#smartchat .inp-validity .inp-text {float:left; width:49%; width:calc(50% - 10px); margin:0 5px;}
+#smartchat .txt-pay {margin:5px 0 0; font-size:12px; color:#5b5b5b;}
+
+/* modal : 실시간계좌 납부예약 */
+#smartchat .md-account-reservation {}
+
+/* modal : 실시간계좌 결제 */
+#smartchat .md-pay-account {}
+
+
+/* 모바일 청구요금
+------------------------------ */
+/* modal : 상세조회 */
+#smartchat .md-charge-search .chat-forms {margin-bottom:0;}
+#smartchat .md-charge-search .choose-period {margin:0 -2px 10px;}
+#smartchat .md-charge-search .choose-period:after {content:''; display:table; clear:both;}
+#smartchat .md-charge-search .choose-period .btn-line {float:left; width:calc((65% / 3) - 6px); margin:0 3px;}
+#smartchat .md-charge-search .choose-period .btn-line:first-child {width:calc(35% - 6px);}
+#smartchat .md-charge-search .choose-period .btn-line.in {border-color:#5b5b5b; background-color:#5b5b5b; color:#fff;}
+
+
+/* confirm : 데이터 요금 발생 확인 */
+#smartchat .cf-data-charge {}
+#smartchat .cf-data-charge .title:before {content:''; display: block; width:64px; height:64px; margin:8px auto 20px; background-image:url('../images/smartTalk/img_data_charge.png');}
+
+
+/* 인증
+------------------------------ */
+/* 인증 후 화면전환 */
+#smartchat .md-certification {margin:0 0 0;}
+#smartchat .md-certification .subject:before {content:''; display:block; width:80px; height:80px; margin:8px auto 20px; background-image:url('../images/smartTalk/ico_certification.png');}
+#smartchat .md-certification .subject {font-size:22px; font-weight:bold; text-align:center; letter-spacing:-1.1px;}
+#smartchat .md-certification .desc p {margin-top:17px; text-align:center;}
+#smartchat .md-certification .desc p + p {margin:-5px 0 0;}
+#smartchat .md-certification .actions {margin-top:35px;}
+
+
+/* global scrollbar */
+#smartchat {
+    scrollbar-color: rgba(87,92,102,0.4) transparent;
+    scrollbar-width: thin;
+ }
+ /* width */
+ #smartchat ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+ }
+ /* Track */
+ #smartchat ::-webkit-scrollbar-track {
+    /* @include prefix(box-shadow, inset 0 0 6px rgba(0, 0, 0, 0.6)); */
+    border-radius: 6px;
+    background-color: transparent;
+ }
+ /* Track Corner */
+ #smartchat ::-webkit-scrollbar-corner {
+    background-color:  transparent;
+ }
+ /* Handle */
+ #smartchat ::-webkit-scrollbar-thumb {
+    background-color: rgba(87,92,102,0.4) !important; /* rgba(255,255,255, 0.13); */
+    border-radius: 6px;
+ }
+ /* Handle on hover */
+ #smartchat ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(87,92,102,0.6) !important; /* rgba(255,255,255, 0.25); */
+ }
+ 
+ /* For Internet Explorer */
+ #smartchat {
+    scrollbar-face-color: rgba(194,197,204,0.8) !important; /* rgba(255,255,255, 0.13); */
+    scrollbar-track-color: transparent;
+ }
+ /* global scrollbar */

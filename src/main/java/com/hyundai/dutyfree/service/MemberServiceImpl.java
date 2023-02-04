@@ -7,74 +7,84 @@ import com.hyundai.dutyfree.mapper.MemberMapper;
 import com.hyundai.dutyfree.vo.MemberVO;
 
 /**
- * MemberMepper
+ * MemberServiceImpl
  *
- * @author 김찬중, 이준석
- * @since 10.06
+ * @author 김찬중, 김가희
+ * @since 01.12
  *
  *        <pre>
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
- * 2022.10.05	  이준석			최초 생성
- * 2022.10.07	  김찬중			로그인 서비스 구현
+ * 2023.01.12	 김찬중				최초 생성
+ * 2023.01.17    김가희                            시큐리티적용
  *        </pre>
  */
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    @Autowired
-    MemberMapper memberMapper;
-    
-    @Override
-    public MemberVO read(String mid)throws Exception{
-    	return memberMapper.read(mid);
-    }
+	@Autowired
+	MemberMapper memberMapper;
 
-    @Override
-    public void memberJoin(MemberVO member) throws Exception {
-        memberMapper.memberJoin(member);
-    }
+	@Override
+	public MemberVO read(String mid) throws Exception {
+		return memberMapper.read(mid);
+	}
 
-    @Override
-    public MemberVO selectMember(MemberVO member) throws Exception {
-        return memberMapper.selectMember(member);
-    }
+	@Override
+	public void memberJoin(MemberVO member) throws Exception {
+		memberMapper.memberJoin(member);
+	}
 
-    // 로그인
-    @Override
-    public MemberVO memberLogin(MemberVO member) throws Exception {
-        return memberMapper.memberLogin(member);
-    }
+	@Override
+	public MemberVO selectMember(MemberVO member) throws Exception {
+		return memberMapper.selectMember(member);
+	}
 
-    @Override
-    public int idCheck(String mid) throws Exception {
-        return memberMapper.idCheck(mid);
-    }
+	// 로그인
+	@Override
+	public MemberVO memberLogin(MemberVO member) throws Exception {
+		return memberMapper.memberLogin(member);
+	}
 
-    @Override
-    public MemberVO myPage(String mid) throws Exception {
-        return memberMapper.myPage(mid);
-    }
+	@Override
+	public int idCheck(String mid) throws Exception {
+		return memberMapper.idCheck(mid);
+	}
 
-    // 아이디 찾기
-    @Override
-    public MemberVO findID(MemberVO member) throws Exception {
-        return memberMapper.findID(member);
-    }
+	@Override
+	public MemberVO myPage(String mid) throws Exception {
+		return memberMapper.myPage(mid);
+	}
 
-    // 아이디 삭제
-    @Override
-    public void deleteMember(String mid) throws Exception {
-        memberMapper.deleteMember(mid);
-    }
-    //회원정보 수정
-    @Override
-    public void updateMember(MemberVO member) throws Exception {
-        memberMapper.updateMember(member);
-    }
+	// 아이디 찾기
+	@Override
+	public MemberVO findID(MemberVO member) throws Exception {
+		return memberMapper.findID(member);
+	}
+
+	// 아이디 삭제
+	@Override
+	public void deleteMember(String mid) throws Exception {
+		memberMapper.deleteMember(mid);
+	}
+
+	// 회원정보 수정
+	@Override
+	public void updateMhpoint(MemberVO member) throws Exception {
+		MemberVO mem = memberMapper.read(member.getMid());
+		member.setMhpoint(mem.getMhpoint() + member.getMhpoint());
+		member.setMtotal(mem.getMtotal() + member.getMtotal());
+		memberMapper.updateMhpoint(member);
+	}
 
 	@Override
 	public int mailCheck(String mail) throws Exception {
 		return memberMapper.mailChk(mail);
+	}
+
+	// 회원마지막 접속 날짜 수정
+	@Override
+	public void lastlogindate(String mid) throws Exception {
+		memberMapper.lastlogindate(mid);
 	}
 }

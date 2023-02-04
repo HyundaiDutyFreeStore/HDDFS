@@ -13,6 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * SqlSessionTest
+ * 
+ * @author 김찬중
+ * @since 01.09
+ * 
+ *        <pre>
+ * 수정일                 수정자                         수정내용
+ * ----------  ---------------    ---------------------------
+ * 2023.01.09    김찬중                         최초 생성
+ *        </pre>
+ */
+
 //xml설정방식 사용 시
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)

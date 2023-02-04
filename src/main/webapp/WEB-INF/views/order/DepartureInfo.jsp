@@ -28,13 +28,10 @@
 		<input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input
 			type="hidden" id="adtAucaYn" value="N">
 		<ul class="title_tab">
-			<li><a href="javascript:void(0);"
-				onclick="goCartTab(&quot;CART&quot;);" class="" id="tabCart">장바구니</a></li>
-			<li><a href="javascript:void(0);"
-				onclick="goCartTab(&quot;PSPT&quot;);" class="" id="tabPspt">여권정보</a></li>
-			<li><a href="javascript:void(0);"
-				onclick="goCartTab(&quot;DPAT&quot;);" class="on" id="tabDpat">출국정보</a></li>
-			<li>주문결제</li>
+			<li style="color: black">장바구니</li>
+			<li style="color: black">여권정보</li>
+			<li class="on" id="tabDpat">출국정보</li>
+			<li style="color: black">주문결제</li>
 		</ul>
 		<div class="cart_contens">
 			<div class="cont_left" id="CART" style="display: none;">
@@ -60,6 +57,7 @@
 				<form name="form" id="sendDepartInfo" method="post">
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
+					<input type="hidden" id="mhdiscount" name="mhdiscount" value="${mhdiscount }"/>
 					<div class="passport_wrap">
 						<div class="form_wrap">
 							<div class="form_tit">
@@ -74,11 +72,12 @@
 								<li>
 									<p class="f_ti ico_compulsory">출국장소</p> <span class="input_de">
 										<select name="orderDpatPlacCd" class="required"
-										onchange="changeOrderDpatPlacCd(this.value)"
+										
 										id="orderDpatPlacCd" valmsg="출국장소를 선택해 주십시오.">
 											<option value="">선택</option>
-											<option value="ICN">인천공항</option>
-											<option value="KIM">김포공항</option>
+											<option value="ICNT1">인천공항 T1</option>
+											<option value="ICNT2">인천공항 T2</option>
+											<option value="GMP">김포공항</option>
 									</select>
 								</span>
 								</li>
@@ -93,7 +92,7 @@
 								<li>
 									<p class="f_ti ico_compulsory">출국일시</p> <span
 									class="input_de datepicker_box" id="dpatDtSpan"> <input
-										type="text" id="oarrdate" name="oarrdate" value=""
+										type="text" id="odeptdate" name="odeptdate" value=""
 										placeholder="YYYY-MM-DD"
 										src="https://cdn.hddfs.com/front/images/KO/common/ic_calendar.png" />
 
@@ -365,9 +364,10 @@
 											<option value="358">핀란드 (+358)</option>
 											<option value="36">헝가리 (+36)</option>
 									</select>
-								</span> <span class="input_de"><input type="number"
+								</span> <span class="input_de"><input type="text"
 										name="ugntComuMophNo" id="ugntComuMophNo"
-										placeholder="01012345678" placeholder="- 없이 입력" maxlength="11"></span>
+										placeholder="01012345678" placeholder="- 없이 입력" maxlength="11"
+										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"></span>
 								</li>
 							</ul>
 
@@ -456,34 +456,55 @@ $(document)
 			$(".totalGoosUsd")
 					.text("$"+ priceComma(parseFloat("${cartprice}").toFixed(2)));
 			$(".totalGoosKrw")
-					.text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+					.text(priceComma((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
 			$(".sale.totalDcUsd")
 					.text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
 			$(".sale.totalDcKrw")
-					.text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
-			$(".sumGoosQty").text("${cartstock}");
+					.text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
+			$(".sumGoosQty").text("${cartcounttotal}");
 			$(".payTotalSettUsd")
 					.text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
 			$(".payTotalSettKrw")
-					.text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+					.text(priceComma(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0))+ "원");
 			
 			$('#totalGoosUsdinput').attr('value',"${cartprice}");
 			$('#totalDcUsdinput').attr('value',"${cardis}");
 			$('#cartstockinput').attr('value',"${cartstock}");
+			$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*parseFloat("${mhdiscount}")/100).toFixed(0))+"원");
+			$('.totalRsvg').text("${mhdiscount}"+"%");
 		});
 
 function priceComma(price) {
-return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+function isvalueEmpty(){
+	if($('#orderDpatPlacCd').val()==''){
+		alert('출국장소를 입력해주새요.');
+		return false;
+	}else if($('#openNm').val()==''){
+		alert('편명을 입력해주세요.');
+		return false;
+	}else if($('#odeptdate').val()=='' || $('#dpatTmH').val()=='' || $('#dpatTmM').val()==''){
+		alert('출국일시를 입력해주세요.');
+		return false;
+	}else if($('#ugntComuMophNo').val()==''){
+		alert('긴급연락처를 입력하세요.');
+		return false;
+	}else{
+		return true;
+	}
+}
 function sendDepartInfo(){
+	var pass=isvalueEmpty();
+	
+	if(pass){
 	<%List<OrderItemVO> list = (List<OrderItemVO>) request.getAttribute("orderitemlist");
 
 			for (int i = 0; i < list.size(); i++) {%>
 	 var pcode=<%=list.get(i).getPcode()%>;
 	 var oamount=<%=list.get(i).getOamount()%>
 	 var index=<%=i%>;
-	 console.log(<%=list.get(i).getPcode()%>);
 	 
 	$('#sendDepartInfo').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
 	$('#sendDepartInfo').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
@@ -496,14 +517,15 @@ function sendDepartInfo(){
 	}
 	$('#sendDepartInfo').attr('action','/order/orderpays');
 	$('#sendDepartInfo').submit();
-}
+		}
+	}
 
 
 
 
 $(function() {
     //input을 datepicker로 선언
-    $("#oarrdate").datepicker({
+    $("#odeptdate").datepicker({
         dateFormat: 'yy-mm-dd' //달력 날짜 형태
         ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
         ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서

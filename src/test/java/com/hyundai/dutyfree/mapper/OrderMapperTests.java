@@ -1,5 +1,9 @@
 package com.hyundai.dutyfree.mapper;
 
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,82 +12,138 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hyundai.dutyfree.vo.MemberVO;
+import com.hyundai.dutyfree.vo.OrderItemVO;
+import com.hyundai.dutyfree.vo.OrderListVO;
+import com.hyundai.dutyfree.vo.PassportVO;
+
+import lombok.extern.log4j.Log4j;
 
 /**
- * MemberVO
+ * OrderMapperTests
  * 
- * @author 김찬중
- * @since 01.09
+ * @author 박진수
+ * @since 01.13
  * 
  *        <pre>
  * 수정일                 수정자                                  수정내용
  * ----------  ---------------    ---------------------------
- * 2023.01.09   박진수                               최초 생성
+ * 2023.01.13   박진수                               최초 생성
  *        </pre>
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml","file:src/main/webapp/WEB-INF/spring/appServlet/root-context.xml"})
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml","file:src/main/webapp/WEB-INF/spring/appServlet/security-context.xml" })
+@Log4j
 public class OrderMapperTests {
 
 	@Autowired
 	private MemberMapper membermapper; // MemberMapper.java 인터페이스 의존성 주입
-
-	@Autowired
-	private BCryptPasswordEncoder pwEncoder;
 	
-	// 회원가입 쿼리 테스트 메서드
-
+	@Autowired
+	private OrderMapper ordermapper;
+	
+	//여권등록 테스트
 	@Test
-	public void memberJoin() throws Exception {
-		MemberVO member = new MemberVO();
+	public void insertPassportTest() throws Exception {
+		PassportVO passport=new PassportVO();
+		
+		passport.setMid("test1");
+		passport.setPassportno("m12345678");
+		passport.setSurname("park");
+		passport.setGivenname("jinsu");
+		passport.setPgender("M");
+		Date DatemBirth = Date.valueOf("2023-01-31");
+		passport.setPbirth(DatemBirth);
+		passport.setNationality("한국");
+		Date DatemPsptexdit = Date.valueOf("2023-02-01");
+		passport.setExpirydate(DatemPsptexdit);
 
-		member.setMid("test3"); // 회원 id
-		member.setMpassword(pwEncoder.encode("test3")); // 회원 비밀번호
-		member.setMname("test3"); // 회원 이름
-		member.setMemail("test3"); // 회원 메일
-		member.setMphone("test3"); // 회원 전화번호
-		member.setMgender("male"); // 회원 성별
-
-		membermapper.memberJoin(member); // 쿼리 메서드 실행
+		ordermapper.insertPassport(passport);
 	}
+	
+	//여권정보 조회하는 테스트
+	@Test
+	public void PassportConsist() {
+			
+		System.out.println(ordermapper.PassportConsist("test1").toString());
+			
+	}
+	
+	//주문리스트의 상품을 등록 테스트
+	@Test
+	public void InserorderitemTest() {
+		OrderItemVO orderitem = new OrderItemVO();
+		orderitem.setPcode("102370300283");
+		orderitem.setOamount(1);
+		orderitem.setOid("OS12345678");
+		ordermapper.Insertorderitem(orderitem);
+	}
+	
+	//주문리스트 정보를 등록 테스트
+	@Test
+	public void InsertorderlistTest() {
+			OrderListVO olv = new OrderListVO();
+			olv.setOid("OS12345678");
+			olv.setMid("test1");
+			olv.setOhpoint(100);
+			olv.setOstatus("ENABLED");
+			olv.setOdeptdate("2023-05-23");
+			olv.setOplnum("미국");
+			olv.setOelnum("010-2366-5058");
+			olv.setOdept("한국");
+			olv.setOtotal(10000);
+			ordermapper.Insertorderlist(olv);
+		}
+	
+	//회원의 적립금 및 포인트를 수정 테스트
+	@Test
+	public void updateTotalandMhpointTest() {
+			MemberVO member = new MemberVO();
+			member.setMid("test1");
+			member.setMhpoint(10000);
+			member.setMtotal(10000);
+			ordermapper.updateTotalandMhpoint(member);
+	}
+	
+	//주문번호에 대한 주문리스트의 상품을 조회 테스트
+	@Test
+	public void getOrderitemlistTest(){
+		System.out.println(ordermapper.getOrderitemlist("OS12345678").toString());
+	}
+	
+	//상품을 담은 주문리스트를 조회 테스트
+	@Test
+	public void getorderlistTest(){
+		System.out.println(ordermapper.getorderlist("test1").toString());	
+	}
+	
+	//주문리스트를 정렬을 통해 조회 테스트
+	@Test
+	public void getorderlistBymidTest() {
+			HashMap<String, String> listMap = new HashMap<>();
+			listMap.put("mid", "test1");
+			listMap.put("align", "odeptdate");
+			System.out.println(ordermapper.getorderlistBymid(listMap).toString());
+	}
+	
+	//주문리스트를 삭제 테스트
+	@Test
+	public void deleteorderTest(String oid) {
+		 ordermapper.deleteorder("OS12345678");
+	}
+	
+	//주문리스트의 현재 상황을 수정 테스트
+	@Test
+	public void UpdateostatusTest() {
+			ordermapper.Updateostatus("ENABLED", "OS12345678");
 
-//	@Test
-//	public void memberLogin() throws Exception {
-////		올바른 회원정보를 입력하였을 때
-//		MemberVO member = new MemberVO();
-//		member.setMid("test1");
-//		member.setMpassword("test");
-//
-////		올바르지 않은 회원정보를 입력하였을 때
-//		member.setMid("wrong");
-//		member.setMpassword("wrong");
-//
-//		membermapper.memberLogin(member);
-//		System.out.println("로그인 Test : " + membermapper.memberLogin(member));
-//	}
-
-	// 아이디 중복검사
-//	@Test
-//	public void memberIdChk() throws Exception {
-//		String id = "test1"; // 존재하는 아이디
-//		String id2 = "test123"; // 존재하지 않는 아이디
-//		membermapper.idCheck(id);
-//		membermapper.idCheck(id2);
-//	}
-
-	// my 페이지 접속 검사
-//	@Test
-//	public void myPage() throws Exception {
-//		String id = "test1";
-//		membermapper.myPage(id);
-//	}
-
-//	@Test
-//	public void count() throws Exception{
-//		String mid= "test1";
-//		couponMapper.getCouponCount(mid);
-//		System.out.println(couponMapper.getCouponCount(mid));
-//	}
+	}
+	
+	//주문리스트에 대해 결제 코드를 저장
+	@Test
+	public void UpdateorderPaymentKeyTest() {
+			ordermapper.UpdateorderPaymentKey("pay1234567", "OS12345678");
+	}
+	
 
 }

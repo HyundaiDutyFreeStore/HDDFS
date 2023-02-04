@@ -1,10 +1,12 @@
-ㅓㅐ<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <!-- container -->
 <main id="container" class="container"> 
 <script type="text/javascript">
-	
+if(${couponaccess eq 'coupon' }){
+	alert("회원가입을 축하드립니다. 쿠폰이 지급되었습니다.");
+}
 </script>
 
 <div class="container">

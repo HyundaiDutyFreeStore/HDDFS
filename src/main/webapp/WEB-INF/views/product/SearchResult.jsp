@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!--  
+ * ProductList.jsp
+ * 
+ * @author 김가희
+ * @since 01.15
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.15    김가희                        최초 생성
+ *        
+-->
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <!-- 정렬방식 선택시 이동 -->
 <script>
@@ -15,6 +27,7 @@ function prodLoad(Purl,page){
 		data : {pageNum : page},
 		success: function(data){
 			console.log("ajax성공");
+			rate = data.rate;
 			order = data.order;
 			ppage = data.ppage;
 			prodCnt = data.total;
@@ -60,7 +73,7 @@ function prodLoad(Purl,page){
 				let img1 = product.img1;
 				
 				let ppriceDC = Math.round(pprice*(1-(pdiscount / 100) )*100) /100;	//세일가격 소수점2째자리까지 반올림
-				let pwon1 = Math.round(ppriceDC * 1267); //환율적용 원화가격
+				let pwon1 = Math.round(ppriceDC * rate); //환율적용 원화가격
 				let pwon2 = pwon1.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); //원화가격 콤마
 				//console.log("dc: "+pprice*(1-(pdiscount/100)));
 				
@@ -486,7 +499,7 @@ function goosSearchItemInit(reloadYn) {
 													value="${product.pprice*(1-(product.pdiscount/100))}"
 													pattern="#,##0.##" />
 											</strong> <span data-price="46886.0"> <fmt:formatNumber
-													value="${product.pprice*1267}" pattern="#,#00" /> <em>원</em></span>
+													value="${product.pprice*(1-(product.pdiscount/100))*KRW_WON}" pattern="#,#00" /> <em>원</em></span>
 										</p>
 										<div class="por_icons">
 											<span>세일</span>

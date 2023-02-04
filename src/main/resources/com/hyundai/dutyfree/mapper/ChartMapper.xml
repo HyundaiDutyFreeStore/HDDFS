@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.dutyfree.mapper.ChartMapper">
+
+	<select id="cntMember"
+		resultType="com.hyundai.dutyfree.vo.ChartMemberVO">
+		select mgender as sex, count(*) as mcnt
+		FROM member
+		group by
+		mgender
+		order by 1
+	</select>
+	<select id="dailyTotal"
+		resultType="com.hyundai.dutyfree.vo.ChartDailyVO">
+		<![CDATA[
+		select to_char(odate, 'yy/mm/dd') as odate, sum(ototal) as
+		total from orderlist
+		where to_char(odate, 'yymmdd') >=
+		TO_CHAR(current_date-7,'yy/mm/dd')
+		group by to_char(odate, 'yy/mm/dd')
+		order by 1
+		]]>
+	</select>
+	<select id="categoryTotal"
+		resultType="com.hyundai.dutyfree.vo.ChartCategoryVO">
+		select c.clarge as cat, count(*) as ccnt
+		from orderitem o
+		join category c
+		on o.pcode = c.pcode
+		GROUP BY c.clarge
+		order by 1
+	</select>
+	<select id="cntTodayVisiter"
+		resultType="com.hyundai.dutyfree.vo.ChartVisiterVO">
+		select visitcnt
+		from visiter
+	</select>
+</mapper>

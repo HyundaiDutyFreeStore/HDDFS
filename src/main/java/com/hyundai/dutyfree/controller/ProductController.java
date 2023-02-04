@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,24 @@ import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.PassportVO;
 import com.hyundai.dutyfree.vo.ProductVO;
 
+import lombok.extern.log4j.Log4j;
+/**
+ * ProductController
+ * 
+ * @author 김가희
+ * @since 01.11
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.11    김가희                        최초 생성
+ * 2023.01.12    김가희                        페이징 처리
+ * 2023.01.14    김가희                        상품필터링
+ * 2023.01.15    김가희                        상품검색
+ * 2023.01.16  	  박진수			  상품 상세
+ *        
+ */
+@Log4j
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -81,16 +101,17 @@ public class ProductController {
 	// 정렬,필터적용으로 상품목록 다시 띄우기
 	@ResponseBody
 	@GetMapping(value = "/filter", produces = "application/json; charset=UTF-8")
-	public String filterList(Criteria cri, CategoryVO cate) {
+	public String filterList(Criteria cri, CategoryVO cate, HttpSession session) {
 		System.out.println("filter에 들어옴");
 		System.out.println("cate: "+cate);
 		System.out.println("cri: "+cri);
 		//CategoryVO cate = new CategoryVO(clarge, cmedium, csmall);
 		//System.out.println(cate);
 		System.out.println("controller에서 cri값: " + cri);
-
+		System.out.println("controller에서 session: "+ session.getAttribute("KRW_WON"));
 		JSONObject jsonObj = new JSONObject();
-
+		//환율
+		jsonObj.put("rate", session.getAttribute("KRW_WON"));
 		// 정렬
 		jsonObj.put("order", cri.getOrder());
 		// 현재 페이지번호
@@ -128,21 +149,15 @@ public class ProductController {
 		return json;
 	}
 
-	// 상품디테일로 이동
+	// 상품상세페이지로 이동
 	@GetMapping("/Productdetail")
 	public String productdetail(@RequestParam("pcode") String pcode, Model model,Principal prin) throws Exception {
 		List<String> imglist = new ArrayList<String>();
-		ProductVO product = service.productdetail(pcode);
-		if(prin != null) {
-			PassportVO passport=orderservice.PassportConsist(prin.getName());
-			if(passport==null) {
-				model.addAttribute("userpassport", null);
-			}else {
-				model.addAttribute("userpassport", passport);
-			}
-		}
 		
-		System.out.println(product.toString());
+		//상품에 대한 상세 정보를 조회
+		ProductVO product = service.productdetail(pcode);
+		
+		//상품의 이미지 개수에 따라 이미지를 담음
 		if (product.getImg1() != null) {
 			imglist.add(product.getImg1());
 		}
@@ -158,13 +173,33 @@ public class ProductController {
 		if (product.getImg5() != null) {
 			imglist.add(product.getImg5());
 		}
-		for (int i = 0; i < imglist.size(); i++) {
-			System.out.println(imglist.get(i));
-		}
 		
+		double mhdiscount = 0;
+		//회원이 여권번호를 등록했울 경우 바로 구매시 출국정보로 이동하게 하게 함
+		if(prin != null) {
+			//회원 정보를 조회
+			MemberVO member=memberservice.read(prin.getName());
+			//회원이 구매한 금액에 따라 할인율 적용
+			if(member.getMtotal()>20000) {
+				mhdiscount=3;
+			}else if(member.getMtotal()>10000) {
+				mhdiscount=2;
+			}else {
+				mhdiscount=1;
+			}
+			
+			PassportVO passport=orderservice.PassportConsist(prin.getName());
+	         if(passport==null) {
+	            model.addAttribute("userpassport", null);
+	         }else {
+	            model.addAttribute("userpassport", passport);
+	         }
+	      }
 		
+		model.addAttribute("mhdiscount", mhdiscount);
 		model.addAttribute("product", product);
 		model.addAttribute("imglist", imglist);
+		
 		return "/product/Productdetail";
 	}
 
@@ -191,5 +226,29 @@ public class ProductController {
 
 		return "/product/SearchResult";
 	}
+	
+	@ResponseBody
+    @GetMapping(value="/delete")
+    public void productDelete(@RequestParam("pcode") String pid) {
+        System.out.println("ProductController에 delete들어옴");
+        log.info("ProductController -> productDelete");
+        service.deleteProd(pid);
+        log.info("삭제완료");
+    }
+	
+	@ResponseBody
+    @GetMapping(value="/update")
+    public void productUpdate(@RequestParam("pcode") String pcode, @RequestParam("pprice") String pprice ,@RequestParam("pdiscount") int pdiscount, @RequestParam("pstock") int pstock) {
+       System.out.println("ProductController에 update들어옴");
+       float pprice2 = Float.parseFloat(pprice);
+       ProductVO prod = new ProductVO();
+       prod.setPcode(pcode);
+       prod.setPprice(pprice2);
+       prod.setPdiscount(pdiscount);
+       prod.setPstock(pstock);
+       service.updateProd(prod);
+       //System.out.println("가격: "+pprice2);
+       
+    }
 
 }

@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!--
+/**
+ * login.jsp
+ *
+ * @author 김찬중, 김가희
+ * @since 01.09
+ *
+ *        <pre>
+ * 수정일                 수정자                          수정내용
+ * ----------  ---------------      ---------------------------
+ * 2023.01.09	  김찬중			       최초생성
+ * 2023.01.17    김가희                            시큐리티적용
+ * 2023.01.19    김가희                            소셜로그인(네이버)추가
+ * 2023.01.20    김가희                            소셜로그인(카카오)추가
+ *        
+-->
+
 <%@ include file="/WEB-INF/views/common/Header.jsp"%>
 <script type="text/javascript">
 	
@@ -66,7 +83,7 @@
 					</div>
 					<div class="join_row placeholder_wrap input" style="top: 7px;">
 						<input type="password" id="custPwd" name="mpassword"
-							placeholder="비밀번호" onkeypress="javascript:noSpaceEvnt(event);"
+							placeholder="비밀번호" onkeyup="f_enterLogin();"
 							maxlength="100" autocomplete="off">
 					</div>
 					<c:if test="${error eq 'yes'}">
@@ -75,11 +92,6 @@
 					</c:if>
 
 
-				</div>
-				<div class="dang_type" id="loginErr">
-					<%-- <c:if test="${error eq 'yes'}">
-					<p class="d_txt" id="login_warn" style="color: red">아이디와 비밀번호를 다시 한번 확인해주세요</p>
-				</c:if> --%>
 				</div>
 				<!-- <div class="id_save">
 					<span class="checkbox small"> <input type="checkbox"
@@ -92,10 +104,23 @@
 					<button type="button" class="btnlog" id="btnLgin1">로그인</button>
 				</div>
 			</form>
-
+			<p>
+			
 		</div>
 
 		<div class="chdiv">
+			<br><br>
+			<p>
+			<a href = "${naver_url}"><img src="/resources/images/naverlogin.png" alt="Naver" width="175px;" height="53px;"/></a>
+			&nbsp; &nbsp;
+			<a href = "${kakao_url}"><img src="/resources/images/kakaoLogin2.png" alt="kakao" width="175px;" height="53px;"/></a>
+			&nbsp; &nbsp;
+			<a href = "${google_url}"><img src="/resources/images/googleLogin6.png" alt="google" width="175px;" height="53px;"/></a>
+			</p>
+			<br>
+			<%-- <p>
+			
+			</p> --%>
 			<p>
 				<a href="/member/termsAgree" class="join">회원가입</a>
 			</p>

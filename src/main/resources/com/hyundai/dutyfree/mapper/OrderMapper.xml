@@ -3,23 +3,162 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyundai.dutyfree.mapper.OrderMapper">
-	<insert id="insertPassport" >
+	<insert id="insertPassport">
 		insert into Passport values
 		(#{mid},#{passportno},#{surname},#{givenname},
 		#{pgender},#{pbirth},#{expirydate},#{nationality})
-		
+
 	</insert>
-	
-	<select id="PassportConsist" resultType="com.hyundai.dutyfree.vo.PassportVO">
-	select * from passport where mid=#{mid} 
+
+	<select id="PassportConsist"
+		resultType="com.hyundai.dutyfree.vo.PassportVO">
+		select * from passport where mid=#{mid}
 	</select>
-	
+
 	<insert id="Insertorderitem">
-	insert into orderitem values(#{pcode},#{oamount},#{oid})
+		insert into orderitem
+		values(#{pcode},#{oamount},#{oid})
 	</insert>
-	
-	<insert id="Insertorderitemlist">
-	insert into orderlist values(#{oid},#{mid},#{odate},#{ohpoint},#{ostatus},to_date(#{oarrdate},'YYYY-MM-DD HH24:MI'),#{oplnum},#{oelnum},#{oplace})
+
+	<insert id="Insertorderlist">
+		insert into orderlist
+		values(#{oid},#{mid},sysdate,#{ohpoint},#{ostatus},to_date(#{odeptdate},'YYYY-MM-DD
+		HH24:MI'),#{oplnum},#{oelnum},#{odept},'null',#{ototal})
 	</insert>
+
+	<update id="UpdateorderPaymentKey">
+		update orderlist set opaymentkey=#{opaymentkey} where
+		oid=#{oid}
+	</update>
+	<select id="getorderlist"
+		resultType="com.hyundai.dutyfree.vo.OrderListVO">
+		select * from orderlist where oid=#{oid}
+	</select>
+
+	<update id='Updateostatus'>
+		update orderlist set ostatus=#{ostatus} where
+		oid=#{oid}
+	</update>
+
+	<select id="getorderlistBymid"
+		resultType="com.hyundai.dutyfree.vo.OrderListVO"
+		parameterType="HashMap">
+		select * from orderlist where mid=#{mid}
+		<if test="align =='odeptdate'">
+			order by odeptdate desc
+		</if>
+		<if test="align =='odate'">
+			order by odate desc
+		</if>
+
+	</select>
+
+	<update id="updateTotalandMhpoint">
+		update member set mhpoint=#{mhpoint},mtotal=#{mtotal}
+		where mid=#{mid}
+	</update>
+
+	<select id="getOrderitemlist"
+		resultType="com.hyundai.dutyfree.vo.OrderItemVO">
+		select * from orderitem where oid=#{oid}
+	</select>
+
+	<delete id="deleteorder">
+		delete from orderlist where oid=#{oid}
+	</delete>
+
+	<select id="getCustomerPerTime"
+		resultType="com.hyundai.dutyfree.vo.CustomerVO">
+		<![CDATA[
+		SELECT NVL ( count, 0 ) as count, b.hours as hours
+		FROM (
+		SELECT
+		COUNT(*) AS count , to_number(TO_CHAR ( a.odeptdate, 'HH24' )) AS
+		hours
+		FROM orderlist a
+		WHERE a.odeptdate BETWEEN to_date(#{odeptdate}, 'YYYYMMDD') AND to_date(#{odeptdate}, 'YYYYMMDD') +  0.99999 
+		AND a.odept=#{odept} AND a.ostatus in ('pay_complete', 'on_delivery', 'delivery_complete', 'fail_delivery')
+		GROUP BY
+		TO_CHAR ( a.odeptdate, 'HH24' )
+		) a
+		right join ( SELECT
+		to_number(TO_CHAR ( LEVEL ))-1 as hours FROM DUAL CONNECT
+		BY LEVEL <= 24
+		) b on a.hours = b.hours
+		order by 2 ]]>
+	</select>
+
+	<select id="OrderMemberCheck"
+		resultType="com.hyundai.dutyfree.vo.OrderMemberVO">
+		<![CDATA[
+		select member.mname, member.memail, o.odept, o.oid, o.odeptdate from
+		(select * 
+		from orderlist
+		where odeptdate <= CURRENT_DATE + 3/24 AND odeptdate >= CURRENT_DATE + 2/24 + 59/(24*60)
+		and not ostatus = 'pay_cancel'
+		) o join member on member.mid = o.mid
+		]]>
+	</select>
+
+	<select id="LastMember"
+		resultType="com.hyundai.dutyfree.vo.CustomerVO">
+		<![CDATA[
+		SELECT NVL ( a.count, 0 ) as count, b.hours as hours
+		FROM (
+		SELECT
+		COUNT(*) AS count , to_number(TO_CHAR ( odeptdate, 'HH24' )) AS
+		hours
+		FROM orderlist
+		WHERE odeptdate BETWEEN to_date(#{odeptdate}, 'YYMMDDHH24')- 3/24 AND to_date(#{odeptdate}, 'YYMMDDHH24')    
+		AND odept=#{odept} AND ostatus != 'pay_cancel'
+		GROUP BY
+		TO_CHAR ( odeptdate, 'HH24' )
+		) a
+		RIGHT join ( SELECT
+            to_char(to_char( CURRENT_DATE, 'HH24') + ROWNUM ) AS hours
+        FROM
+            dual
+        CONNECT BY
+            level <= 3
+		) b on a.hours = b.hours
+		order by 2
+		]]>
+	</select>
+
+	<select id="LastHalfMember"
+		resultType="com.hyundai.dutyfree.vo.OrderMemberVO">
+		<![CDATA[
+		select member.mname, member.memail, o.odept, o.oid, o.odeptdate from
+		(select * 
+		from orderlist
+		where odeptdate <= CURRENT_DATE + 30/(24*60) AND odeptdate >= CURRENT_DATE + 29/(24*60)
+		and ostatus in ('pay_complete', 'on_delivery')
+		) o join member on member.mid = o.mid
+		]]>
+	</select>
+
+	<select id="FailMember"
+		resultType="com.hyundai.dutyfree.vo.OrderMemberVO">
+		<![CDATA[
+		select member.mname, member.memail, o.odept, o.oid, o.odeptdate from
+		(select * 
+		from orderlist
+		where odeptdate <= CURRENT_DATE  AND odeptdate >= CURRENT_DATE - 1/(24*60)
+		and ostatus in ('pay_complete', 'on_delivery', 'fail_delivery')  
+		) o join member on member.mid = o.mid
+		]]>
+	</select>
+
+	<select id="getList"
+		resultType="com.hyundai.dutyfree.vo.OrderListVO">
+		select oid, mid, odate+9/24 as odate, ostatus, odeptdate,
+		opaymentkey, ototal
+		from orderlist order by odate desc
+	</select>
+
+	<select id="getOrderMid" resultType="String">
+		select mid from orderlist
+		where oid=#{oid}
+	</select>
 </mapper>
   

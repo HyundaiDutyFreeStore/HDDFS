@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.dutyfree.mapper.AdminMapper">
+	<resultMap type="com.hyundai.dutyfree.admin.vo.AdminChat" id="adminChatMap">
+		<id property="adminFirstUsid" column="adminfirstusid"/>
+		<id property="adminSecondUsid" column="adminsecondusid"/>
+		<id property="adminChatContent" column="adminchatcontent"/>
+		<id property="adminChatDate" column="adminchatdate"/>
+		<id property="adminChatRoomNo" column="adminChatRoomNo"/>
+	</resultMap>
+	
+	<resultMap type="com.hyundai.dutyfree.admin.vo.AdminMessage" id="adminMessageMap">
+		<id column="adminchatcontent" property="latestMsg"/>
+		<id column="adminchatdate" property="time"/>
+	</resultMap>
+	
+	<!-- 1대1 채팅관련 -->
+	<!-- 채팅insert -->
+	<insert id="insertAdminChat">
+ 		INSERT INTO ADMIN_CHAT VALUES(#{adminFirstUsid},#{adminSecondUsid},#{adminChatContent},#{adminChatDate},#{adminChatRoomNo})
+ 	</insert>
+ 	
+ 	<!-- 이전채팅내역 불러오기 -->
+ 	<select id="prevChat" resultType="List"
+		resultMap="adminChatMap">
+		SELECT * FROM ADMIN_CHAT WHERE adminfirstusid=#{mid} OR adminsecondusid=#{mid}
+		ORDER BY ADMINCHATDATE ASC
+	</select>
+
+	<!-- <select id="selectAdminInChat" resultType="List"
+		resultMap="adminChatMap">
+		SELECT * FROM ADMIN_CHAT ORDER BY ADMINCHATDATE ASC
+	</select> -->
+	
+	<!-- 관리자에게 채팅신청한 고객ID 리스트 조회 -->
+	<select id="firstUsidList" resultType="String">
+ 		SELECT ADMINFIRSTUSID FROM ADMIN_CHAT WHERE ADMINSECONDUSID='admin' GROUP BY ADMINFIRSTUSID
+ 	</select>
+ 	
+ 	<!-- 관리자가 채팅을 보낸 고객ID 리스트 조회 -->
+	<select id="secondUsidList" resultType="String">
+ 		SELECT ADMINSECONDUSID FROM ADMIN_CHAT WHERE ADMINFIRSTUSID='admin' GROUP BY ADMINSECONDUSID
+ 	</select>
+ 	
+ 	<!-- 관리자가 모든 채팅방ID 조회 -->
+	<select id="roomNoList" resultType="List"
+		resultMap="adminChatMap">
+ 		SELECT ADMINCHATROOMNO,max(adminchatdate) FROM ADMIN_CHAT GROUP BY ADMINCHATROOMNO ORDER BY 2 desc
+ 	</select>
+ 	
+ 	<!-- 관리자와 특정고객의 가장 최신 대화 조회-->
+ 	<select id="loadAdminMessage" resultMap="adminMessageMap">
+ 		SELECT ROWNUM, X.* FROM 
+      (SELECT Y.* FROM ADMIN_CHAT Y WHERE (ADMINFIRSTUSID=#{adminUsid} AND ADMINSECONDUSID=#{memberUsid}) 
+      OR (ADMINFIRSTUSID=#{memberUsid} AND ADMINSECONDUSID=#{adminUsid}) ORDER BY ADMINCHATDATE DESC) X WHERE ROWNUM=1
+ 	</select>
+</mapper>

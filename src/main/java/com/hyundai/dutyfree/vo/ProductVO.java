@@ -5,7 +5,18 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
-
+/**
+ * ProductVO
+ * 
+ * @author 김가희
+ * @since 01.11
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.11    김가희                        최초 생성
+ *        
+ */
 @Data
 public class ProductVO {
 	//상품품번

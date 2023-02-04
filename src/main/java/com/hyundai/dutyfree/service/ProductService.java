@@ -6,7 +6,18 @@ import com.hyundai.dutyfree.vo.CategoryVO;
 import com.hyundai.dutyfree.vo.Criteria;
 import com.hyundai.dutyfree.vo.PageDTO;
 import com.hyundai.dutyfree.vo.ProductVO;
-
+/**
+ * ProductService
+ * 
+ * @author 김가희,박진수
+ * @since 01.11
+ * 
+ *        
+ * 수정일                 수정자                              수정내용
+ * ----------  ---------------  ---------------------------
+ * 2023.01.11    김가희                        최초 생성
+ * 2023.01.12    박진수                        상품 상세 조회 추가     
+ */
 public interface ProductService {
 	
 	//상품목록 불러오기
@@ -21,7 +32,19 @@ public interface ProductService {
     //중분류 시 소분류 가져오기
     public List<String> getSmallCategory(String cmedium);
 
-	//상품 디테일
+	//상품 상세 조회
 	public ProductVO productdetail(String pcode);
+	
+	//관리자 상품목록
+	public List<ProductVO> getList2();
+	
+	//관리자 상품총개수
+	public int getTotal2();
+	
+	//관리자 상품삭제
+    public void deleteProd(String pid);
+    
+    //관리자 상품수정
+    public void updateProd(ProductVO prod);
 
 }

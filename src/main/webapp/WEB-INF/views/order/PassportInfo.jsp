@@ -20,13 +20,10 @@
 		<input type="hidden" id="buyNowOnlnGoosCdList" value=""> <input
 			type="hidden" id="adtAucaYn" value="N">
 		<ul class="title_tab">
-			<li><a href="javascript:void(0);" onclick="goCartTab('CART');"
-				class="" id="tabCart">장바구니</a></li>
-			<li><a href="javascript:void(0);" onclick="goCartTab('PSPT');"
-				class="on" id="tabPspt">여권정보</a></li>
-			<li><a href="javascript:void(0);" onclick="goCartTab('DPAT');"
-				class="" id="tabDpat">출국정보</a></li>
-			<li>주문결제</li>
+			<li style="color: black">장바구니</li>
+			<li class="on" id="tabDpat">여권정보</li>
+			<li style="color: black">출국정보</li>
+			<li style="color: black">주문결제</li>
 		</ul>
 		<div class="cart_contens">
 			<div class="cont_left" id="CART" style="display: none;">
@@ -90,6 +87,8 @@
 						action="/order/enrollPassport">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="hidden" id="mId" name="mId" value="${mid}" >
+						<input type="hidden" id="mhdiscount" name="mhdiscount" value="${mhdiscount }"/>
+						<input type="hidden" id="cartcounttotal" name="cartcounttotal" value="${cartcounttotal }"/>
 						<input type="hidden" id="totalGoosUsdinput" name="totalGoosUsdinput"value=""/>
 						<input type="hidden" id="totalDcUsdinput" name="totalDcUsdinput" value=""/>
 						<input type="hidden" id="cartstockinput" name="cartstockinput" value=""/>
@@ -119,6 +118,7 @@
 									<p class="f_ti">국적</p> <span class="input_de"><select
 										id="mNationality" name="mNationality">
 											<option value="">선택</option>
+											<option value="한국">한국</option>
 											<option value="미국">미국(미국내경유포함)</option>
 											<option value="캐나다">캐나다</option>
 											<option value="호주">호주</option>
@@ -189,6 +189,36 @@
 
 				<script type="text/javascript">
 				
+				
+				function isvalueEmpty(){
+					if($('#mBirth').val()==''){
+						alert('생년월일을 입력해주세요.');
+						return false;
+					}else if($('#mNationality').val()==''){
+						alert('국적을 입력해주세요.');
+						return false;
+					}else if($('#mbshEngLstnm').val()==''){
+						alert('성을 입력해주세요.');
+						return false;
+					}else if($('#mbshEngFstnm').val()==''){
+						alert('이름을 입력해주세요.');
+						return false;
+					}else if($('#psptNo').val()==''){
+						alert('여권번호를 입력해주세요.');
+						return false;
+					}else if($('#psptNo').val().length!=9){
+						alert('여권번호형식이 맞지 않습니다.');
+						return false;
+					}else if($('#mPsptexdit').val()==''){
+						alert('여권기간만료일을 입력해주세요.');
+						return false;
+					}else{
+						return true;
+					}
+					
+				}
+				
+				
 				function guidePspt() {
 					if ($("#guidePspt").hasClass("on")) {
 						$("#guidePspt").removeClass("on");
@@ -197,10 +227,12 @@
 					}
 				}
 				function savePassPort(){
+					var pass=isvalueEmpty();
+					if(pass){
 					 $("#mName").attr("disabled", false);
 					 $("#mGender").attr("disabled",false); 
-					 console.log($("#mName").is(":disabled"));
 					$("#enrollPassport").submit();
+					}
 				}
 				
 				$(function() {
@@ -250,6 +282,8 @@
 				    //초기값을 오늘 날짜로 설정해줘야 합니다.
 				    $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
 				});
+				
+				
 				</script>
 
 				<script type="text/javascript">
@@ -266,7 +300,6 @@
 										 var pcode=<%=list.get(i).getPcode() %>;
 										 var oamount=<%=list.get(i).getOamount() %>
 										 var index=<%=i%>;
-										 console.log(<%=list.get(i).getPcode() %>);
 										 
 										$('#enrollPassport').append('<input name="orderitem['+index+'].pcode" type="hidden" value="'+pcode +'">');
 										$('#enrollPassport').append('<input name="orderitem['+index+'].oamount" type="hidden" value="'+oamount+'">');
@@ -276,18 +309,17 @@
 										}
 										%>
 										$(".totalGoosUsd").text("$"+ priceComma(parseFloat("${cartprice}").toFixed(2)));
-										$(".totalGoosKrw").text(priceComma((parseFloat("${cartprice}") * 1267).toFixed(0))+ "원");
+										$(".totalGoosKrw").text(priceComma((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
 										$(".sale.totalDcUsd").text("$"+ priceComma(parseFloat("${cartdis}").toFixed(2)));
-										$(".sale.totalDcKrw").text(priceComma((parseFloat("${cartdis}") * 1267).toFixed(0))+ "원");
-										$(".sumGoosQty").text("${cartstock}");
+										$(".sale.totalDcKrw").text(priceComma((parseFloat("${cartdis}") * parseFloat("${KRW_WON}")).toFixed(0))+ "원");
+										$(".sumGoosQty").text("${cartcounttotal}");
 										$(".payTotalSettUsd").text("$"+ priceComma(((parseFloat("${cartprice}") - parseFloat("${cartdis}"))).toFixed(2)));
-										$(".payTotalSettKrw").text(priceComma(((parseFloat("${cartprice}") * 1267) - (parseFloat("${cartdis}") * 1267)).toFixed(0))+ "원");
+										$(".payTotalSettKrw").text(priceComma(((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}"))).toFixed(0))+ "원");
 										$('#totalGoosUsdinput').attr('value',"${cartprice}");
 										$('#totalDcUsdinput').attr('value',"${cartdis}");
 										$('#cartstockinput').attr('value',"${cartstock}");
-										
-										console.log("${orderitemlist}");
-										console.log("<%= request.getAttribute("orderitemlist") %>");
+										$('.totalRsvgDcKrw').text(priceComma((((parseFloat("${cartprice}") * parseFloat("${KRW_WON}")) - (parseFloat("${cartdis}") * parseFloat("${KRW_WON}")))*parseFloat("${mhdiscount}")).toFixed(0))+"원");
+										$('.totalRsvg').text("${mhdiscount}"+"%");
 									});
 
 					function priceComma(price) {
@@ -389,3 +421,4 @@
 		openPopup('', 'cartGoosCdDetail', goosCd, '', '', '', '', '');
 	}
 </script> </main>
+<%@ include file="../common/Footer.jsp"%>

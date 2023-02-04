@@ -296,6 +296,29 @@
 
 <!-- S: 2022-05-25 이지웰 메인팝업 추가 -->
 <style>
+#header .mainsearchinput2 {
+    width: 410px
+}
+
+/* 2021-06-11 : 사이즈 추가 */
+#header .mainsearchinput2 input {
+    background: #f2f4f7;
+    width: 100%;
+    height: 52px;
+    line-height: 52px;
+    border: 0;
+    box-sizing: border-box;
+    padding: 0 95px 0 20px;
+    border-radius: 50px;
+    transition: all .3s;
+    font-size: 16px;
+}
+
+/* 2021-06-11 : 폰트 사이즈 추가 */
+#header .mainsearchinput2 input[type="search"]::placeholder {
+    font-size: 17px;
+    color: #abb2be !important;
+}
 .main_popup2 {
 	display: none
 }
@@ -373,6 +396,19 @@
 	top: 50% !important;
 	left: 50% !important;
 	transform: translate(-50%, -50%) !important;
+}
+
+#Mask {
+  display: none;
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:#000;
+  opacity:.3; 
+  filter:alpha(opacity:30);
+  z-index: 150;
 }
 </style>
 
@@ -549,7 +585,7 @@
                                     }
                                     var result = data.result;
                                     $(".exchageRateTxt").html(
-                                        "$1 = " + result.krw +
+                                        "$1 = " + "${KRW}" +
                                         " 원</em>");
                                     /* 
                                     if(getCookie("currencyNtnlCd") =="KR"){
@@ -806,7 +842,7 @@
 					<fieldset class="searchfield">
 						<legend>통합검색</legend>
 
-						<div class="mainsearchinput">
+						<div class="mainsearchinput2">
 							<input type="search" class="text_search" name="keyword"
 								id="basicSearchTerm" maxlength="" value=""
 								placeholder="검색어를 입력해주세요" />
@@ -1489,12 +1525,17 @@
 							</strong></a></li> -->
 						<li class="item_03"><a rel="nosublink" href="/member/Mypage"><strong>마이<br>현대
 							</strong></a></li>
-						<li class="item_04"><a
-							href="https://www.hddfs.com/shop/om/consmComm/main.do?MG=KR_PC_GNB_CS"><strong>고객<br>센터
+						<li class="item_04">
+							<a href="#" onclick="window.open('/chat/start','FAQ','width=500,height=550,location=no,status=no,scrollbars=yes');"><strong>고객<br>센터
 							</strong></a></li>
-						<li class="item_05"><a
+						<!-- <li class="item_05"><a
 							href="https://www.hddfs.com/store/kr/dm/main.do?MG=KR_PC_GNB_HDDFS"
-							target="_blank"><strong>공식<br>사이트
+							target="_blank">
+							<strong>공식<br>사이트
+							</strong></a></li> -->
+						<li class="item_05"><a
+							href="#" onclick="window.open('/product/alarm','FAQ','width=662,height=698,location=no,status=no,scrollbars=yes');">
+							<strong>공식<br>사이트
 							</strong></a></li>
 						<li class="language ko"><a href="javascript:" class="ko"><strong>언어<br>설정
 							</strong></a>
@@ -1514,7 +1555,7 @@
 									class="ko">KRW</a> <a href="javascript:"
 									onclick="chgCurrencyInfo('CNY');" class="cn">CNY</a>
 							</div></li>
-						<li class="exchange_rate exchageRateTxt" id="Exchange"></li>
+						<li class="exchange_rate exchageRateTxts" id="Exchanges"> $1 = ${KRW_WON} 원 </li>
 					</ul>
 				</div>
 				<!-- 환율 -->
@@ -1538,7 +1579,7 @@
                                 const num = parseFloat(String(JSON.parse(result).result));
                                 const num2 = num.toFixed(1);
                                 const Exchange = document.getElementById("Exchange");
-                                Exchange.innerText = "1$ =" + String(num2) + " 원";
+                                /* Exchange.innerText = "1$ =" + String(num2) + " 원"; */
                                 console.log(result);
 
                             })

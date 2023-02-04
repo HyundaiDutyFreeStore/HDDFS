@@ -122,6 +122,23 @@
     	]]>
 
 	</select>
+	
+	<!-- 관리자 상품목록조회 -->
+	<select id="getList2"
+		resultType="com.hyundai.dutyfree.vo.ProductVO">
+		select *
+		from category c
+		join product p
+		on c.pcode = p.pcode
+		where c.clarge='패션/잡화' and c.cmedium='남성의류'
+	</select>
+	
+	<!-- 조건에 맞는 총 상품개수 -->
+	<select id="getTotal2" resultType="int">
+		select count(p.pcode)
+		from product p
+	</select>
+	
 
 	<!-- 조건에 맞는 총 상품개수 -->
 	<select id="getTotal" resultType="int" parameterType="HashMap">
@@ -180,6 +197,15 @@
 		p.pcode=c.pcode and
 		p.pcode=#{pcode}
 	</select>
+	
+	<delete id="deleteProd">
+		delete from product where pcode=#{pid}
+	</delete>
+	
+	<update id="updateProd">
+		update product set pprice=#{pprice}, pdiscount=#{pdiscount}, pstock=#{pstock}
+		where pcode=#{pcode}
+	</update>
 
 
 </mapper>
