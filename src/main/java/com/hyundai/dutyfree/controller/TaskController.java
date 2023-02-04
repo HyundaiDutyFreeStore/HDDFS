@@ -374,7 +374,8 @@ public class TaskController {
 					+ "                                            실시간 대기자</th>\n"
 					+ "                                        <td\n"
 					+ "                                            style=\"padding:14px 20px;font-size:13px;text-align:center;font-weight:normal;color:#333;line-height:18px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';border-bottom:1px solid #e5e5e5;border-left:1px solid #e5e5e5;letter-spacing:-.05em\">\n"
-					+ "                                            " + realTimeConfusion() + "명</td>\n"
+					+ "                                            " + realTimeConfusion() + "명 예상 대기 시간은 "
+					+ (int) Math.floor(realTimeConfusion() / 3) * 3 + "분 입니다."
 					+ "                                    </tr>" + "                                </tbody>\n"
 					+ "                            </table>" + terminal + Notice + mailFooter;
 			try {
@@ -503,7 +504,7 @@ public class TaskController {
 					+ "                            style=\"padding:0;margin:25px 0 0 0;color:#666;text-align:center;font-size:14px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">\n"
 					+ "                            <span style=\"color:#333;font-size:18px\">"
 					+ customerfail.get(i).getMname() + "</span> 고객님 안녕하세요.<br>현대백화점인터넷면세점을 이용해주셔서\n"
-					+ "                            감사합니다.<br>고객님께서 주문하신 면세품 인도 시간이 30분 남았습니다. <br> 인도장과 혼잡도를 확인하시어 여정 출발 전 면세품 인도를 해주시기 바랍니다.\n"
+					+ "                            감사합니다.<br>고객님께서 주문하신 면세품 인도 시간이 지나 미인도 처리 되었습니다. <br> 환불 처리는 고객센터를 통해 문의 부탁드립니다.\n"
 					+ "                        </p>\n" + "                        <div style=\"padding:0 30px\">\n"
 					+ "                            <p\n"
 					+ "                                style=\"padding:0;margin:37px 0 8px 0;color:#333;font-size:20px;line-height:20px;font-family:'나눔고딕', '맑은 고딕', 'Dotum', 'AppleSDGothicNeo';letter-spacing:-.05em\">\n"
