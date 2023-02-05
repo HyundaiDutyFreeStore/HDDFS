@@ -193,15 +193,15 @@ public class AdminController {
 		model.addAttribute("cntVisiter", cntVisiter.get(0).getVisitcnt());
 	}
 
-	//일일 매출
+	// 일일 매출
 	@RequestMapping(value = "/admin/index/dailyTotal", method = RequestMethod.GET)
 	public @ResponseBody List<ChartDailyVO> dailyTotal(Model model) {
 		List<ChartDailyVO> dailyTotal = chartService.dailyTotal();
 		model.addAttribute("dailyTotal", dailyTotal);
 		return dailyTotal;
 	}
-	
-	//카테고리별 매출
+
+	// 카테고리별 매출
 	@RequestMapping(value = "/admin/index/categoryTotal", method = RequestMethod.GET)
 	public @ResponseBody List<ChartCategoryVO> categoryTotal(Model model) {
 		List<ChartCategoryVO> categoryTotal = chartService.categoryTotal();
