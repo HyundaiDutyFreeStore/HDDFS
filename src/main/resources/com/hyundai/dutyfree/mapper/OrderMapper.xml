@@ -152,7 +152,7 @@
 	<select id="getList"
 		resultType="com.hyundai.dutyfree.vo.OrderListVO">
 		select oid, mid, odate+9/24 as odate, ostatus, odeptdate,
-		opaymentkey, ototal
+		opaymentkey, ototal, ODEPTDATE, OPLNUM, ODEPT
 		from orderlist order by odate desc
 	</select>
 

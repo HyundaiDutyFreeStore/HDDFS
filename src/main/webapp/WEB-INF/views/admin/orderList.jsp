@@ -66,6 +66,9 @@
 									<th>주문총금액</th>
 									<th>주문상태</th>
 									<th>주문일자</th>
+									<th>인도장</th>
+									<th>출국일자</th>
+									<th>편명</th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -75,6 +78,9 @@
 									<th>주문총금액</th>
 									<th>주문상태</th>
 									<th>주문일자</th>
+									<th>인도장</th>
+									<th>출국일자</th>
+									<th>편명</th>
 								</tr>
 							</tfoot>
 							<tbody>
@@ -104,6 +110,9 @@
 										</td>
 										<td><fmt:formatDate value="${order.odate}"
 												pattern="yyyy-MM-dd HH:mm:ss" /></td>
+										<td>${order.odept}</td>
+										<td>${order.odeptdate}</td>
+										<td>${order.oplnum}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
