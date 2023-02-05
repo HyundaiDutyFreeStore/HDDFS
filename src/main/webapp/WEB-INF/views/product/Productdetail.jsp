@@ -530,6 +530,7 @@ function updateCart(){
 
     
  function cartConsist(){
+	 console.log("들어옴");
 	 if (loginChk() == false) {
 			alert("로그인이 필요한 서비스입니다. 로그인해주세요");
 			location.href = "/member/login";
@@ -579,11 +580,6 @@ function updateCart(){
 		}
     	
     }
-
-
-
-    
-   	
   
 	function sellerInfo(){
 	    $("#seller_information").dialog("open");
@@ -601,5 +597,6 @@ function updateCart(){
 	function moveToMain(){
 		location.href = ctx_shop + '/dm/main.do';
 	}
+	
 </script>
 <%@ include file="/WEB-INF/views/common/Footer.jsp"%>

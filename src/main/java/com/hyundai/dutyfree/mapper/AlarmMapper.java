@@ -21,4 +21,6 @@ public interface AlarmMapper {
 	public void insertAlarm(@Param("pcode")String pcode, @Param("mid")String mid, @Param("mphone")String mphone);
 
 	public List<AlarmVO> getAlarmList(String pcode);
+	
+	public int alarmChk(String pcode, String mid);
 }
