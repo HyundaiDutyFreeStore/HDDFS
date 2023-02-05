@@ -143,8 +143,12 @@ public class AuthController {
 			securityContext.setAuthentication(authentication);
 			session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 			session.setAttribute("kakaoToken", accessToken);
+			
+			String prevPage = (String)session.getAttribute("prevPage");
+			prevPage = prevPage.substring(21);
+			log.info("소셜로그인 이전페이지: "+prevPage);
 
-			return "redirect:/";
+			return "redirect:"+prevPage;
 		}
 
 }
