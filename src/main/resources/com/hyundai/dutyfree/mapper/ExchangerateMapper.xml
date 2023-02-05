@@ -12,7 +12,7 @@
 		where mcountry = #{mcountry}
 	</update>
 	
-	
+	<!-- 환율 정보 조회 -->
 	<select id="getExchangerate" resultType="double">
 	select mmoney from exchangerate where mcountry=#{mcountry}
 	</select>

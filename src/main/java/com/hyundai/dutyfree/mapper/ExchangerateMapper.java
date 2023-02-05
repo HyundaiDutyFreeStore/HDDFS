@@ -5,13 +5,13 @@ import com.hyundai.dutyfree.vo.ExchangerateVO;
 /**
  * ExchangerateMapper
  * 
- * @author 김찬중
+ * @author 박진수
  * @since 01.09
  * 
  *        <pre>
  * 수정일                 수정자                         수정내용
  * ----------  ---------------    ---------------------------
- * 2023.01.09    김찬중                        최초 생성
+ * 2023.01.09    박진수                        최초 생성
  *        </pre>
  */
 

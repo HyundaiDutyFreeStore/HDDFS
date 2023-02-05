@@ -23,13 +23,18 @@ import com.hyundai.dutyfree.vo.EventVO;
  */
 public interface CouponMapper {
 
+	//회원의 쿠폰 등록
 	public void MemberInsertCoupon(@Param("cid") String cid,@Param("mid") String mid, @Param("eid") String eid,@Param("date") String date,@Param("cenabled") String cenabled);
 	
+	//쿠폰 이벤트의 정보를 조회
 	public EventVO GetEventInfo(@Param("eid")String eid);
 	
+	//쿠폰의 정보를 조회
 	public List<CouponVO> GetCouponInfo(String mid);
 
+	//쿠폰의 주문번호를 수정
 	public void UpdateCouponOid(@Param("oid")String oid, @Param("cid") String cid);
 	
+	//쿠폰의 사용여부를 수정
 	public void UpdateCenabled(@Param("cenabled") String cenabled,@Param("cid") String cid);
 }

@@ -24,9 +24,10 @@ import com.hyundai.dutyfree.vo.ProductVO;
  */
 public interface CartMapper {
 	
-	//장바구니 목록을 조회
+	//가격을 기준으로 한 장바구니 목록 정렬 
 	public List<CartVO> getCartListprice(@Param("mid")String mid ,@Param("align")String align,@Param("KRW_WON") double KRW_WON);
 	
+	//출국일을 기준으로 한 장바구니 목록 정렬 
 	public List<CartVO> getCartListregDate(HashMap<String, String> listMap);
 	
 	//장바구니에 물품을 등록

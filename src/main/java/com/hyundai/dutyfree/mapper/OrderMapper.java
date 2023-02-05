@@ -32,29 +32,41 @@ import com.hyundai.dutyfree.vo.PassportVO;
  *        </pre>
  */
 public interface OrderMapper {
+	
+	//여권을 등록
 	public void insertPassport(PassportVO passport);
-
+	
+	//여권이 존재하는 조회
 	public PassportVO PassportConsist(String mid);
-
+	
+	//주문리스트의 상품들을 등록
 	public void Insertorderitem(OrderItemVO orderitem);
-
+	
+	//주문리스트의 상품들을 등록
 	public void Insertorderlist(OrderListVO orderitemlist);
-
+	
+	//주문리스트를 조회
 	public OrderListVO getorderlist(String oid);
-
+	
+	//총액과 포인트를 수정
 	public void updateTotalandMhpoint(MemberVO member);
 
+	//주문리스트의 상품들을 조회
 	public List<OrderItemVO> getOrderitemlist(String oid);
-
+	
+	//회원 id를 통해 주문리스트를 조회
 	public List<OrderListVO> getorderlistBymid(HashMap<String, String> listmap);
-
+	
+	//주문 리스트를 삭제
 	public void deleteorder(String oid);
 
 	// 시간대 별 고객 수
 	public List<CustomerVO> getCustomerPerTime(@Param("odept") String odept, @Param("odeptdate") String odeptdate);
-
+	
+	//주문의 상태를 수정
 	public void Updateostatus(@Param("ostatus") String ostatus, @Param("oid") String oid);
-
+	
+	//주문의 지불키를 수정
 	public void UpdateorderPaymentKey(@Param("opaymentkey") String opaymentkey, @Param("oid") String oid);
 
 	// 인도장 이용 예정 고객
