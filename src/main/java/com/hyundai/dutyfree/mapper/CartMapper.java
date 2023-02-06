@@ -30,7 +30,7 @@ public interface CartMapper {
 	//출국일을 기준으로 한 장바구니 목록 정렬 
 	public List<CartVO> getCartListregDate(HashMap<String, String> listMap);
 	
-	//장바구니에 물품을 등록
+	//장바구니에 물품을  등록
 	public void insertCart(CartVO cart);
 	
 	//상품의 재고량을 1감소
