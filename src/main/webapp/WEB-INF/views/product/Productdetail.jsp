@@ -31,6 +31,11 @@ $(function() {
         $(".tab-style").css({top:(layerScroll)+"px"})
     })
 });
+
+if(${couponaccess eq 'coupon' }){
+	alert("회원가입을 축하드립니다. 쿠폰이 지급되었습니다.");
+}
+
 </script>
 <script src="https://cdn.hddfs.com/front/js/KO/product.js"></script>
 <script>
