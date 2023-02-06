@@ -13,7 +13,7 @@ where OID = #{OID}
 
 <select id="memberinfo" resultType="com.hyundai.dutyfree.vo.MemberInfoVO" parameterType="String">
 	SELECT MB.MNAME, MB.MEMAIL, MB.MPHONE, PP.PASSPORTNO, OL.OPLNUM, OL.OID, to_char(OL.odeptdate,'YYYY-MM-DD hh24:mi') as odeptdate, OL.OSTATUS, OL.ODEPT, OL. OELPHONE
-	FROM ORDERLIST OL JOIN MEMBER MB ON OL.MID = MB.MID JOIN PASSPORT PP ON MB.MID = PP.MID WHERE OL.OID = #{OID} AND OL.OSTATUS = 'on_delivery'
+	FROM ORDERLIST OL JOIN MEMBER MB ON OL.MID = MB.MID JOIN PASSPORT PP ON MB.MID = PP.MID WHERE OL.OID = #{OID} AND OL.OSTATUS in ('on_delivery','pay_complete')
 </select>
 
 <select id="PickupDetail" resultType="com.hyundai.dutyfree.vo.PickupDetailVO" parameterType="String">
