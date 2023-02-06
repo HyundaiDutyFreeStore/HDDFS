@@ -20,12 +20,12 @@
         <div class="_main_content">
             <div class="substance">
                 <div class="day_tap sub">
-                    <h4 class="blind">시간대별 예상 승객수</h4>
+                    <h4 class="blind">시간대별 예상 고객수</h4>
                 </div>
                 <div class="gate_detail _sub1_content">
                     <div class="th_scroll">
                         <table cellpadding="0" cellspacing="0">
-                            <caption class="blind">시간대별 예상 승객수</caption>
+                            <caption class="blind">시간대별 예상 고객수</caption>
                             <colgroup>
                                 <col style="width:110px">
                                 <col style="width:110px">
@@ -266,7 +266,7 @@
                 <div class="legend_area">
                     <p class="info"><a nocr=""
                         onclick="popup();return false;"
-                         class="layer_close _close">기준시간당 승객수<span class="ico_info _trigger"></span></a>
+                         class="layer_close _close">기준시간당 고객수<span class="ico_info _trigger"></span></a>
                     </p>
                     <ul style="list-style:none;">
                         <li><span class="step1"><em>파란색</em>원활</span></li>
