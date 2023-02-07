@@ -27,8 +27,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	<bean id="customUserDetailsService" class="com.hyundai.dutyfree.security.CustomUserDetailsService"/>
 	
 	<security:http>
-		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_MEMBER')" />
-		<security:intercept-url pattern="/member/Mypage/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/cart/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/member/Mypage/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/order/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/chat/customerChat" access="hasRole('ROLE_MEMBER')" />
 		<security:intercept-url pattern="/alarm/**" access="isAuthenticated()" />
