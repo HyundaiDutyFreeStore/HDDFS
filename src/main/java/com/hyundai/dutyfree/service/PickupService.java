@@ -28,4 +28,5 @@ public interface PickupService {
 	public PickupDetailVO PickupDetail(String pcode);
 	
 	public List<PickupCustomerVO> getCustomerPerTime();
+
 }
