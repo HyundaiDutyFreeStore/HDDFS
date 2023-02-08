@@ -2,26 +2,56 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--  
+/**
+ * PickupMapper
+ * 
+ * @author 김민규
+ * @since 01.20
+ * 
+ * <pre>
+ * 수정일                 수정자                 수정내용
+ * 2023.01.20     김민규                 최초 생성
+ * 2023.01.23	    김민규			 주문목록 조회, 인도완료
+ * 2023.01.30	    김민규			 주문목록 조회 출력 컬럼 변경, 인도완료  OSTATUS 변경
+ * 2023.01.31	    김민규			 액티비티와 VO 구성 변경으로 인한 변경
+ * 2023.02.02	    김민규			 금일 인도중 상태인 고객의 수를 시간별로 보여주는 기능
+ * </pre>
+ */
+ -->
 
 <mapper namespace="com.hyundai.dutyfree.mapper.PickupMapper">
 
+<!-- 주문목록 조회 -->
 <select id="PickupList" resultType="com.hyundai.dutyfree.vo.PickupListVO" parameterType="String">
 	Select PD.PCODE, PD.PBRAND, PD.PNAME ,oi.oamount,PI.IMG1 FROM PRODUCT PD 
 JOIN ORDERITEM OI ON PD.PCODE = OI.PCODE JOIN PRODUCTIMG PI ON PI.PCODE = PD.PCODE
 where OID = #{OID}
 </select>
 
+<!-- 인도완료 -->
+<update id="pickupcomplete" parameterType="String">
+		update ORDERLIST set
+		OSTATUS = 'delivery_complete'
+		where OID = #{OID}
+</update>
+
+
+<!-- 고객정보조회 -->
 <select id="memberinfo" resultType="com.hyundai.dutyfree.vo.MemberInfoVO" parameterType="String">
 	SELECT MB.MNAME, MB.MEMAIL, MB.MPHONE, PP.PASSPORTNO, OL.OPLNUM, OL.OID, to_char(OL.odeptdate,'YYYY-MM-DD hh24:mi') as odeptdate, OL.OSTATUS, OL.ODEPT, OL. OELPHONE
 	FROM ORDERLIST OL JOIN MEMBER MB ON OL.MID = MB.MID JOIN PASSPORT PP ON MB.MID = PP.MID WHERE OL.OID = #{OID} AND OL.OSTATUS in ('on_delivery','pay_complete')
 </select>
 
+<!-- 상품상세정보조회 -->
 <select id="PickupDetail" resultType="com.hyundai.dutyfree.vo.PickupDetailVO" parameterType="String">
 Select PD.PCODE,PD.PBRAND,PD.PNAME,ROUND(PD.PPRICE*(SELECT MMONEY FROM EXCHANGERATE WHERE MCOUNTRY = 'KRW')) AS PPRICE,PD.PSTOCK,TO_CHAR(PD.PREGDATE,'YYYY-MM-DD') AS PREGDATE,CG.CLARGE||'/'||CMEDIUM as category,PI.IMG1
 FROM PRODUCT PD JOIN CATEGORY CG ON PD.PCODE = CG.PCODE JOIN PRODUCTIMG PI ON PD.PCODE = PI.PCODE
 WHERE PD.PCODE = #{PCODE}
 </select>
 
+<!--  인도 예정인 고객의 수를 시간별로 보여주는 기능  -->
 <select id="getCustomerPerTime" resultType="com.hyundai.dutyfree.vo.PickupCustomerVO">
 		<![CDATA[
 		SELECT NVL ( count, 0 ) as count, b.hours as hours
@@ -41,13 +71,4 @@ WHERE PD.PCODE = #{PCODE}
 		) b on a.hours = b.hours
 		order by 2 ]]>
 	</select>
-
-
-<update id="pickupcomplete" parameterType="String">
-		update ORDERLIST set
-		OSTATUS = 'delivery_complete'
-		where OID = #{OID}
-</update>
-
-
 </mapper>
