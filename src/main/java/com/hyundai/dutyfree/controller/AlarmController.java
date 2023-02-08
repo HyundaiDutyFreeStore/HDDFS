@@ -93,15 +93,15 @@ public class AlarmController {
 		log.info(prod.getPname() + "상품에 대해 재입고 알람전송");
 
 		// 문자전송
-		String api_key = "NCSV9YPHH2FZBOFA";
-		String api_secret = "6IPHQ0HNXF2OCJXVYMXVMQI74SRT67YB";
+		String api_key = "NCSY13OOAOSIADGF";
+		String api_secret = "CIJG1N2EXGCMRXWDDGGPV3IE4UOOIXXI";
 		Message coolsms = new Message(api_key, api_secret);
 
 		for (AlarmVO vo : list) {
 			log.info("알람전송-고객ID: "+vo.getMid()+" 고객전화번호: "+vo.getMphone());
 			HashMap<String, String> set = new HashMap<String, String>();
 			set.put("to", vo.getMphone()); // 수신번호
-			set.put("from", "01067901284"); // 발신번호
+			set.put("from", "01023665058"); // 발신번호
 			set.put("text", "[현대백화점 인터넷면세점]"+prod.getPname()+" 상품 재입고 알림입니다."); // 문자내용
 			set.put("type", "sms"); // 문자 타입
 			set.put("app_version", "test app 1.2");
