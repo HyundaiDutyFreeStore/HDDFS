@@ -61,7 +61,7 @@ public class CartController {
 	@Autowired
 	private MemberService memberservice;
 
-	// 장바구니 목록을 가져옴
+	//장바구니 목록을 가져옴
 	@GetMapping("/cartlist")
 	public void cartlist(String align, Model model,Principal prin,HttpSession session) throws Exception {
 		String mid = prin.getName();
