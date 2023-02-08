@@ -685,7 +685,7 @@ function tab_change(el){
 		$.ajax({
 			method:"post",
 			data : Data,
-			url : "/order/cancelorder",
+			url : "/order/deleteorder",
 			success : function(data){
 			if(data=='yes'){
 				$('#settInfoLayerPopupmodal').hide();

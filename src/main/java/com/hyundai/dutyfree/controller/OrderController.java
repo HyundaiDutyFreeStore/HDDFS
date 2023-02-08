@@ -398,6 +398,61 @@ public class OrderController {
 
 	}
 	
+	@RequestMapping("/deleteorder")
+	@ResponseBody
+	public String deleteorder(String oid,double order_dollar, Principal prin,HttpSession session) throws Exception {
+		
+				//메일에 보낼 값들을 세션에서 제거
+				session.removeAttribute("total_bill_dollar_text");
+				session.removeAttribute("total_bill_won_text");
+				session.removeAttribute("totalDcUsd");
+				session.removeAttribute("totalDcKrw");
+				session.removeAttribute("totalSettUsd");
+				session.removeAttribute("wontotalSettKrw");
+				
+				OrderListVO olv=orderservice.getorderlist(oid);
+				MemberVO member= new MemberVO();
+				String mid;
+				//관리자가 결제취소할때
+				if(prin.getName().equals("admin")) {
+					System.out.println("총금액: "+order_dollar);
+					mid = orderservice.getOrderMid(oid);
+					System.out.println("관리자에서 주문취소하려고함 mid: "+mid);
+					
+					member.setMid(mid);
+					member.setMhpoint(-1*(olv.getOhpoint()));
+					member.setMtotal(-1*order_dollar);
+				}
+				//사용자가 결제취소할때
+				else {
+					mid = prin.getName();
+					member.setMid(prin.getName());
+					member.setMhpoint(-1*(olv.getOhpoint()));
+					member.setMtotal(-1*order_dollar);
+				}
+				memberservice.updateMhpoint(member);
+				
+				List<OrderItemVO>oiv=orderservice.getOrderitemlist(oid);
+				
+				for(OrderItemVO oi : oiv) {
+					ProductVO product=productservice.productdetail(oi.getPcode());
+					cartservice.redproductcnt(product.getPcode(), product.getPstock()+oi.getOamount(), product.getPsel()-oi.getOamount());
+				}
+				List<CouponVO>couponlist=couponservice.GetCouponInfo(mid);
+				for(CouponVO coupon : couponlist) {
+					if(coupon.getOid()==null) continue;
+					if(coupon.getOid().equals(oid)) {
+						String cid=coupon.getCid();
+						couponservice.UpdateCouponOid("", cid);
+						couponservice.UpdateCenabled("ENABLED", cid);
+					}
+				}
+
+				
+				orderservice.deleteorder(oid);
+				return "yes";
+	}
+	
 	//주문을 취소한다.
 	@RequestMapping("/cancelorder")
 	@ResponseBody
